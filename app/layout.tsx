@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
+import { project } from "@/config/project"
+
 export const metadata: Metadata = {
   title: "LIEND | Utility liquidity for migrated tokens",
   description:
     "Borrow against supported migrated token positions on Solana without making a market sale your first move",
-  metadataBase: new URL("https://liend.xyz"),
+  metadataBase: new URL(project.siteUrl),
   openGraph: {
     title: "LIEND | Hold the position, access the liquidity",
     description:

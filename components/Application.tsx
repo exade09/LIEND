@@ -13,7 +13,11 @@ import { getMigratedTokens } from "@/services/markets"
 import { getTransactionTrace } from "@/services/solana"
 import type { Market, TransactionTraceStep } from "@/types"
 
-type AppView = "markets" | "borrow" | "swap" | "trace"
+export type AppView = "markets" | "borrow" | "swap" | "trace"
+
+type ApplicationProps = {
+  initialView?: AppView
+}
 
 const appTabs: Array<{ id: AppView; label: string; icon: "token" | "borrow" | "swap" | "transaction" }> = [
   { id: "markets", label: "Markets", icon: "token" },
@@ -22,8 +26,8 @@ const appTabs: Array<{ id: AppView; label: string; icon: "token" | "borrow" | "s
   { id: "trace", label: "Trace", icon: "transaction" },
 ]
 
-export function Application() {
-  const [view, setView] = useState<AppView>("markets")
+export function Application({ initialView }: ApplicationProps = {}) {
+  const [view, setView] = useState<AppView>(initialView ?? "markets")
   const [markets, setMarkets] = useState<Market[]>([])
   const [selected, setSelected] = useState<Market | null>(null)
   const [trace, setTrace] = useState<TransactionTraceStep[]>([])

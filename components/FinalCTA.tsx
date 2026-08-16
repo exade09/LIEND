@@ -1,37 +1,60 @@
-import { Icon } from "@/components/Icon";
-import { project } from "@/config/project";
+import Image from "next/image"
+import { Icon } from "@/components/Icon"
+import { project } from "@/config/project"
+import styles from "./FinalCTA.module.css"
 
 export function FinalCTA() {
+  const pumpDestination = project.pumpUrl || "#holder-access"
+
   return (
     <section
-      className="final-cta section-shell"
+      className={styles.section}
       id="launch"
       aria-labelledby="final-cta-title"
     >
-      <div className="edge-surface edge-surface--violet" aria-hidden="true" />
-      <div className="edge-surface edge-surface--cyan" aria-hidden="true" />
+      <div className={styles.scene} aria-hidden="true">
+        <div className={styles.coordinateField} />
+        <picture className={styles.material}>
+          <source
+            media="(max-width: 640px)"
+            srcSet="/assets/liend-final-material-mobile-v2.png"
+          />
+          <Image
+            src="/assets/liend-final-material-v2.png"
+            alt=""
+            fill
+            sizes="100vw"
+          />
+        </picture>
+        <div className={styles.refraction} />
+      </div>
 
-      <div className="final-cta__content">
-        <p className="eyebrow">
+      <div className={styles.frame} aria-hidden="true">
+        <span>LIEND / SOLANA</span>
+        <span>POSITION LIQUIDITY</span>
+      </div>
+
+      <div className={styles.content}>
+        <p className={styles.eyebrow}>
           LEND {"\u2022"} BORROW {"\u2022"} BUILD
         </p>
-        <h2 className="liquid-display" id="final-cta-title">
-          <span>KEEP THE POSITION</span>
+        <h2 className={styles.title} id="final-cta-title">
+          <span className={styles.titleLine}>KEEP THE POSITION</span>
           {" "}
-          <span>ACCESS THE LIQUIDITY</span>
+          <span className={styles.titleLine}>ACCESS THE LIQUIDITY</span>
         </h2>
-        <p className="final-cta__copy">
+        <p className={styles.copy}>
           A second route for supported migrated token positions on Solana
         </p>
 
-        <div className="final-cta__actions">
-          <a className="button button--primary" href="#app">
+        <div className={styles.actions}>
+          <a className="button button--primary" href="#product-stage">
             Launch App
             <Icon name="arrow" size={18} />
           </a>
           <a
             className="button button--secondary"
-            href={project.pumpUrl || "#holder-access"}
+            href={pumpDestination}
             target={project.pumpUrl ? "_blank" : undefined}
             rel={project.pumpUrl ? "noreferrer" : undefined}
           >
@@ -40,7 +63,7 @@ export function FinalCTA() {
           </a>
         </div>
 
-        <nav className="final-cta__links" aria-label="LIEND external links">
+        <nav className={styles.links} aria-label="LIEND external links">
           <a
             href={project.pumpUrl || "#"}
             target={project.pumpUrl ? "_blank" : undefined}
@@ -71,5 +94,5 @@ export function FinalCTA() {
         </nav>
       </div>
     </section>
-  );
+  )
 }

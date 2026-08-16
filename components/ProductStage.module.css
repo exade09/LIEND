@@ -1,0 +1,626 @@
+.stage {
+  position: relative;
+  height: calc(var(--product-stage-steps) * 100svh + 24svh);
+  min-height: 3100px;
+  background:
+    radial-gradient(ellipse at 12% 36%, rgba(104, 66, 245, 0.08), transparent 31%),
+    radial-gradient(ellipse at 89% 68%, rgba(31, 198, 219, 0.06), transparent 30%),
+    linear-gradient(180deg, #04050e 0%, #070914 52%, #03040d 100%);
+  isolation: isolate;
+}
+
+.canvas {
+  position: sticky;
+  top: 0;
+  display: grid;
+  width: 100%;
+  height: 100svh;
+  min-height: 690px;
+  overflow: clip;
+  align-items: center;
+  padding: clamp(84px, 9svh, 110px) 0 clamp(24px, 4svh, 46px);
+}
+
+.ambient {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient::before,
+.ambient::after {
+  position: absolute;
+  border-radius: 50%;
+  content: "";
+  filter: blur(80px);
+  opacity: 0.38;
+}
+
+.ambient::before {
+  top: 4%;
+  left: -12%;
+  width: 44vw;
+  height: 44vw;
+  background: rgba(92, 52, 229, 0.16);
+  transform: translate3d(calc(var(--product-stage-progress) * 7vw), calc(var(--product-stage-progress) * 5vh), 0);
+}
+
+.ambient::after {
+  right: -14%;
+  bottom: -4%;
+  width: 48vw;
+  height: 48vw;
+  background: rgba(20, 184, 207, 0.12);
+  transform: translate3d(calc(var(--product-stage-progress) * -8vw), calc(var(--product-stage-progress) * -6vh), 0);
+}
+
+.violetSurface,
+.cyanSurface {
+  position: absolute;
+  width: min(38vw, 590px);
+  aspect-ratio: 0.76;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 44% 56% 51% 49% / 37% 42% 58% 63%;
+  opacity: 0.36;
+  filter: saturate(110%);
+  mask-image: radial-gradient(ellipse at center, #000 52%, transparent 82%);
+}
+
+.violetSurface {
+  top: 12%;
+  left: -16vw;
+  background:
+    radial-gradient(circle at 70% 31%, rgba(223, 210, 255, 0.2), transparent 12%),
+    linear-gradient(135deg, rgba(160, 112, 255, 0.35), rgba(47, 32, 143, 0.04) 56%, rgba(111, 210, 234, 0.12));
+  box-shadow: inset -32px 20px 80px rgba(179, 138, 255, 0.18), 32px 0 100px rgba(74, 48, 205, 0.1);
+  transform: translate3d(calc(var(--product-stage-progress) * 10vw), calc(var(--product-stage-progress) * 4vh), 0) rotate(-18deg);
+}
+
+.cyanSurface {
+  right: -15vw;
+  bottom: 7%;
+  background:
+    radial-gradient(circle at 30% 35%, rgba(206, 251, 255, 0.2), transparent 13%),
+    linear-gradient(225deg, rgba(55, 224, 234, 0.3), rgba(20, 103, 146, 0.04) 58%, rgba(116, 85, 241, 0.11));
+  box-shadow: inset 30px 18px 85px rgba(105, 237, 244, 0.14), -30px 0 100px rgba(19, 145, 181, 0.08);
+  transform: translate3d(calc(var(--product-stage-progress) * -10vw), calc(var(--product-stage-progress) * -4vh), 0) rotate(17deg);
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(161, 179, 208, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(161, 179, 208, 0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+}
+
+.frame {
+  display: grid;
+  width: min(1540px, calc(100vw - 64px));
+  height: 100%;
+  min-height: 0;
+  margin-inline: auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.intro {
+  display: grid;
+  align-items: end;
+  gap: 48px;
+  padding: 0 0 clamp(18px, 3svh, 30px) clamp(250px, 18vw, 310px);
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.45fr);
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 9px;
+  color: #7667bc;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.intro h2 {
+  max-width: 790px;
+  margin: 0;
+  color: #edf0f7;
+  font-size: clamp(27px, 3vw, 47px);
+  font-weight: 510;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.intro p {
+  max-width: 390px;
+  margin: 0 0 3px;
+  color: #7d879a;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.workspace {
+  display: grid;
+  min-height: 0;
+  border-top: 1px solid rgba(181, 197, 231, 0.18);
+  border-bottom: 1px solid rgba(181, 197, 231, 0.14);
+  background: rgba(4, 6, 14, 0.32);
+  box-shadow: 0 38px 100px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(12px);
+  grid-template-columns: minmax(235px, 0.23fr) minmax(0, 1fr);
+}
+
+.rail {
+  position: relative;
+  min-height: 0;
+  padding: clamp(20px, 3svh, 38px) 24px;
+  border-right: 1px solid rgba(181, 197, 231, 0.14);
+}
+
+.rail ol {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  grid-template-rows: repeat(var(--product-stage-steps), minmax(0, 1fr));
+  list-style: none;
+}
+
+.rail li {
+  display: flex;
+  min-height: 0;
+  align-items: center;
+}
+
+.rail button {
+  display: grid;
+  width: 100%;
+  min-height: 64px;
+  align-items: start;
+  padding: 11px 8px 11px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #667185;
+  text-align: left;
+  grid-template-columns: 31px minmax(0, 1fr);
+  transition: color 220ms ease, background 220ms ease;
+}
+
+.rail button:hover {
+  background: rgba(255, 255, 255, 0.025);
+  color: #aeb6c5;
+}
+
+.activeStep button {
+  background: linear-gradient(90deg, rgba(111, 78, 231, 0.09), rgba(37, 166, 190, 0.025));
+  color: #f0f2f7;
+}
+
+.stepIndex {
+  padding-top: 2px;
+  color: #6557a5;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.activeStep .stepIndex {
+  color: #63d5e1;
+}
+
+.stepCopy strong,
+.stepCopy small {
+  display: block;
+}
+
+.stepCopy strong {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stepCopy small {
+  max-width: 180px;
+  margin-top: 5px;
+  color: #596477;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.activeStep .stepCopy small {
+  color: #858fa2;
+}
+
+.progressTrack {
+  position: absolute;
+  z-index: 2;
+  top: clamp(31px, 4svh, 49px);
+  bottom: clamp(31px, 4svh, 49px);
+  left: 24px;
+  width: 1px;
+  overflow: hidden;
+  background: rgba(177, 191, 219, 0.14);
+}
+
+.progressTrack span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #8c62ff, #34d8e7);
+  box-shadow: 0 0 10px rgba(66, 205, 225, 0.45);
+  transform: scaleY(var(--product-stage-progress));
+  transform-origin: top;
+}
+
+.productViewport {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  background: rgba(3, 5, 12, 0.72);
+  grid-template-rows: 40px minmax(0, 1fr);
+}
+
+.viewportBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(181, 197, 231, 0.12);
+  color: #505b6e;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.11em;
+}
+
+.viewportBar span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewportBar i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #42d4df;
+  box-shadow: 0 0 9px rgba(66, 212, 223, 0.55);
+}
+
+.viewportBody {
+  position: relative;
+  min-height: 0;
+}
+
+.pane {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  pointer-events: none;
+  scrollbar-color: rgba(90, 111, 143, 0.55) transparent;
+  scrollbar-width: thin;
+  transform: translate3d(0, 16px, 0) scale(0.992);
+  transition: opacity 340ms ease, transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 340ms;
+  visibility: hidden;
+}
+
+.pane::-webkit-scrollbar {
+  width: 7px;
+}
+
+.pane::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 20px;
+  background: rgba(90, 111, 143, 0.55);
+  background-clip: padding-box;
+}
+
+.visiblePane {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  visibility: visible;
+}
+
+.paneLabel {
+  display: none;
+}
+
+.pane :global(.section) {
+  padding-block: clamp(34px, 5svh, 64px);
+}
+
+.pane :global(.page-shell) {
+  width: min(100% - 48px, 1260px);
+}
+
+.pane :global(.holder-section),
+.pane :global(.application-section) {
+  border-top: 0;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.pane :global(.holder-layout) {
+  gap: clamp(42px, 5vw, 80px);
+}
+
+.stageFooter {
+  display: flex;
+  min-height: 34px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  color: #475164;
+  font-size: 8px;
+  letter-spacing: 0.11em;
+}
+
+@media (max-height: 800px) and (min-width: 901px) {
+  .canvas {
+    padding-top: 78px;
+    padding-bottom: 18px;
+  }
+
+  .intro {
+    padding-bottom: 16px;
+  }
+
+  .intro h2 {
+    font-size: clamp(25px, 2.5vw, 38px);
+  }
+
+  .intro p {
+    display: none;
+  }
+
+  .rail {
+    padding-block: 15px;
+  }
+
+  .progressTrack {
+    top: 25px;
+    bottom: 25px;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .frame {
+    width: calc(100vw - 36px);
+  }
+
+  .intro {
+    padding-left: 220px;
+  }
+
+  .workspace {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .rail {
+    padding-inline: 17px;
+  }
+
+  .progressTrack {
+    left: 17px;
+  }
+
+  .stepCopy small {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .stage {
+    height: auto;
+    min-height: 0;
+    background:
+      radial-gradient(ellipse at 0% 18%, rgba(101, 64, 238, 0.09), transparent 27rem),
+      radial-gradient(ellipse at 100% 76%, rgba(26, 184, 207, 0.07), transparent 29rem),
+      #050711;
+  }
+
+  .canvas {
+    position: relative;
+    display: block;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 110px 0;
+  }
+
+  .ambient::before,
+  .ambient::after,
+  .violetSurface,
+  .cyanSurface {
+    transform: none;
+  }
+
+  .violetSurface,
+  .cyanSurface {
+    width: min(72vw, 520px);
+    opacity: 0.2;
+  }
+
+  .frame {
+    display: block;
+    width: min(100% - 32px, 1080px);
+    height: auto;
+  }
+
+  .intro {
+    display: grid;
+    padding: 0 0 40px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .intro h2 {
+    font-size: clamp(36px, 7vw, 58px);
+  }
+
+  .intro p {
+    max-width: 520px;
+  }
+
+  .workspace {
+    display: block;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .rail {
+    overflow-x: auto;
+    padding: 0 0 22px;
+    border: 0;
+    scrollbar-width: none;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail ol {
+    display: flex;
+    width: max-content;
+    height: auto;
+    gap: 7px;
+  }
+
+  .rail li {
+    display: block;
+  }
+
+  .rail button {
+    width: 150px;
+    min-height: 60px;
+    padding: 11px 12px;
+    border: 1px solid rgba(181, 197, 231, 0.12);
+    grid-template-columns: 25px 1fr;
+  }
+
+  .stepCopy small {
+    display: none;
+  }
+
+  .progressTrack {
+    display: none;
+  }
+
+  .productViewport {
+    display: block;
+    background: transparent;
+  }
+
+  .viewportBar {
+    display: none;
+  }
+
+  .viewportBody {
+    display: grid;
+    gap: 76px;
+  }
+
+  .pane,
+  .visiblePane {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    transition: none;
+    visibility: visible;
+  }
+
+  .paneLabel {
+    display: flex;
+    min-height: 43px;
+    align-items: center;
+    margin-bottom: 16px;
+    border-top: 1px solid rgba(181, 197, 231, 0.18);
+    border-bottom: 1px solid rgba(181, 197, 231, 0.1);
+    color: #7061b0;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pane :global(.section) {
+    padding-block: 0;
+  }
+
+  .pane :global(.page-shell) {
+    width: 100%;
+  }
+
+  .stageFooter {
+    margin-top: 40px;
+  }
+
+  .stageFooter span:first-child {
+    display: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .canvas {
+    padding: 94px 0;
+  }
+
+  .frame {
+    width: calc(100% - 24px);
+  }
+
+  .intro {
+    padding-bottom: 30px;
+  }
+
+  .intro h2 {
+    font-size: 38px;
+  }
+
+  .rail {
+    overflow-x: visible;
+  }
+
+  .rail ol {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rail button {
+    width: 100%;
+  }
+
+  .viewportBody {
+    gap: 62px;
+  }
+
+  .stageFooter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pane,
+  .rail button,
+  .progressTrack span {
+    transition: none;
+  }
+}

@@ -1,36 +1,33 @@
-import { ActivityFeed } from "@/components/ActivityFeed"
-import { Application } from "@/components/Application"
+import DataExperience from "@/components/DataExperience"
 import { FAQ } from "@/components/FAQ"
 import { FinalCTA } from "@/components/FinalCTA"
 import { Footer } from "@/components/Footer"
 import { Header } from "@/components/Header"
 import { Hero } from "@/components/Hero"
-import { HolderGate } from "@/components/HolderGate"
 import { HowItWorks } from "@/components/HowItWorks"
-import { Leaderboard } from "@/components/Leaderboard"
-import { LoanCalculator } from "@/components/LoanCalculator"
 import { NetworkStats } from "@/components/NetworkStats"
-import { OnchainExamples } from "@/components/OnchainExamples"
+import { OnchainJourney } from "@/components/OnchainJourney"
 import { ProductConcept } from "@/components/ProductConcept"
-import { ProtocolArchitecture } from "@/components/ProtocolArchitecture"
+import ProductStage from "@/components/ProductStage"
+import styles from "./page.module.css"
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main id="main-content">
+      <main className={styles.main} id="main-content">
         <Hero />
-        <NetworkStats />
+        <div className={styles.statsScene}>
+          <NetworkStats />
+        </div>
         <ProductConcept />
         <HowItWorks />
-        <HolderGate />
-        <Application />
-        <LoanCalculator />
-        <OnchainExamples />
-        <ActivityFeed />
-        <Leaderboard />
-        <ProtocolArchitecture />
-        <FAQ />
+        <ProductStage />
+        <DataExperience />
+        <OnchainJourney />
+        <div className={styles.faqScene}>
+          <FAQ />
+        </div>
         <FinalCTA />
       </main>
       <Footer />

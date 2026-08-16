@@ -63,7 +63,7 @@ export function Header() {
               <span className="sr-only">Docs</span>
             </a>
           </div>
-          <a className="button button--small button--primary launch-nav" href="#app">
+          <a className="button button--small button--primary launch-nav" href="#product-stage">
             Launch App
           </a>
           <button
@@ -100,7 +100,7 @@ export function Header() {
             <Icon name="docs" /> Docs
           </a>
         </div>
-        <a className="button button--primary button--wide" href="#app" onClick={() => setOpen(false)}>
+        <a className="button button--primary button--wide" href="#product-stage" onClick={() => setOpen(false)}>
           Launch App
         </a>
       </div>

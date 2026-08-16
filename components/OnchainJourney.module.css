@@ -1,0 +1,616 @@
+.journeyGroup {
+  position: relative;
+  isolation: isolate;
+  background: #04060d;
+}
+
+.journey {
+  --journey-progress: 0;
+  --journey-line: 4.5%;
+  --journey-drift: -16px;
+  position: relative;
+  height: 230vh;
+  min-height: 1380px;
+  background: linear-gradient(180deg, #050711 0%, #060913 46%, #03050c 100%);
+  isolation: isolate;
+}
+
+.scene {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scene::before {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(84, 94, 190, 0.075), transparent 31%),
+    linear-gradient(90deg, rgba(105, 76, 226, 0.035), transparent 27%, transparent 73%, rgba(29, 177, 195, 0.028));
+  content: "";
+}
+
+.sceneGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(169, 187, 221, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(169, 187, 221, 0.028) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 77%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 77%, transparent);
+  opacity: 0.48;
+}
+
+.surface {
+  position: absolute;
+  top: 12vh;
+  width: min(47vw, 760px);
+  height: min(78vh, 820px);
+  border: 1px solid rgba(190, 204, 239, 0.09);
+  border-radius: 48% 52% 42% 58% / 58% 44% 56% 42%;
+  mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
+  opacity: 0.66;
+  transform: translateY(var(--journey-drift));
+  transition: transform 80ms linear;
+}
+
+.surface::before,
+.surface::after {
+  position: absolute;
+  border: 1px solid currentColor;
+  border-radius: inherit;
+  content: "";
+}
+
+.surface::before {
+  inset: 9% 15% 13% 8%;
+  opacity: 0.18;
+  transform: rotate(8deg);
+}
+
+.surface::after {
+  inset: 22% 5% 7% 23%;
+  opacity: 0.12;
+  transform: rotate(-12deg);
+}
+
+.surfaceViolet {
+  left: -23vw;
+  color: #a28aff;
+  background: linear-gradient(128deg, transparent 18%, rgba(120, 84, 255, 0.04) 40%, rgba(177, 149, 255, 0.19) 51%, rgba(74, 42, 191, 0.045) 65%, transparent 80%);
+  box-shadow: inset -18px 6px 44px rgba(151, 124, 255, 0.11), 20px 0 70px rgba(74, 45, 191, 0.055);
+  transform: translateY(var(--journey-drift)) rotate(-13deg);
+}
+
+.surfaceCyan {
+  right: -23vw;
+  color: #56e2ed;
+  background: linear-gradient(232deg, transparent 17%, rgba(34, 196, 217, 0.035) 39%, rgba(96, 230, 235, 0.16) 51%, rgba(31, 103, 154, 0.04) 66%, transparent 81%);
+  box-shadow: inset 18px 6px 44px rgba(79, 219, 231, 0.09), -20px 0 70px rgba(26, 144, 171, 0.045);
+  transform: translateY(var(--journey-drift)) rotate(14deg);
+}
+
+.horizon {
+  position: absolute;
+  top: 50vh;
+  right: 8vw;
+  left: 8vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(125, 98, 240, 0.24), rgba(50, 206, 220, 0.2), transparent);
+  box-shadow: 0 0 34px rgba(76, 105, 222, 0.12);
+  opacity: var(--journey-horizon-opacity, 0.28);
+}
+
+.stickyStage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  width: min(1500px, calc(100% - 72px));
+  height: 100vh;
+  min-height: 700px;
+  margin-inline: auto;
+  padding: 84px 0 30px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.stageRail,
+.stageFooter,
+.inspectorLabel,
+.context,
+.simpleRoute {
+  display: flex;
+  align-items: center;
+}
+
+.stageRail {
+  justify-content: space-between;
+  padding: 0 0 12px;
+  border-bottom: 1px solid rgba(176, 190, 220, 0.13);
+  color: #566177;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+}
+
+.stageGrid {
+  display: grid;
+  min-height: 0;
+  align-items: center;
+  gap: clamp(25px, 3vw, 54px);
+  grid-template-columns: minmax(230px, 0.7fr) minmax(300px, 0.76fr) minmax(440px, 1.28fr);
+}
+
+.intro {
+  align-self: center;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #8372d0;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.intro h2 {
+  max-width: 470px;
+  margin: 20px 0 0;
+  font-size: clamp(36px, 4.2vw, 68px);
+  font-weight: 520;
+  letter-spacing: -0.052em;
+  line-height: 0.96;
+}
+
+.intro h2 span {
+  display: block;
+  margin-top: 8px;
+  background: linear-gradient(100deg, #aaa0e9, #7990ed 48%, #6acfd9);
+  background-clip: text;
+  color: transparent;
+}
+
+.lede {
+  max-width: 400px;
+  margin: 25px 0 0;
+  color: #808a9e;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.context {
+  gap: 9px;
+  margin-top: 26px;
+}
+
+.context > span {
+  display: inline-flex;
+  min-height: 29px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  border: 1px solid rgba(176, 190, 220, 0.14);
+  border-radius: 6px;
+  color: #798398;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+}
+
+.context .demoBadge {
+  border-color: rgba(132, 102, 239, 0.24);
+  background: rgba(113, 79, 225, 0.055);
+  color: #9182cb;
+}
+
+.simpleRoute {
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 34px;
+  color: #7e899e;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+
+.simpleRoute span {
+  padding: 7px 8px;
+  border: 1px solid rgba(176, 190, 220, 0.12);
+  border-radius: 5px;
+  background: rgba(4, 7, 15, 0.55);
+}
+
+.simpleRoute svg {
+  color: #6759a6;
+}
+
+.routePanel {
+  position: relative;
+  align-self: center;
+  padding-block: 8px;
+}
+
+.routeLine {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 15px;
+  width: 1px;
+  overflow: hidden;
+  background: rgba(144, 160, 194, 0.13);
+}
+
+.routeLine span {
+  display: block;
+  width: 100%;
+  height: var(--journey-line);
+  background: linear-gradient(180deg, #8461f3, #3373d8 54%, #2dd7dc);
+  box-shadow: 0 0 10px rgba(64, 175, 222, 0.34);
+}
+
+.routeList {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 2px;
+  list-style: none;
+}
+
+.routeStep {
+  position: relative;
+  display: grid;
+  min-height: 55px;
+  align-items: center;
+  padding: 4px 9px 4px 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  grid-template-columns: 31px 28px minmax(0, 1fr) auto;
+  opacity: 0.34;
+  transition: opacity 220ms ease, border-color 220ms ease, background 220ms ease, transform 220ms ease;
+}
+
+.routeStep.isPassed {
+  opacity: 0.76;
+}
+
+.routeStep.isCurrent {
+  border-color: rgba(116, 99, 209, 0.19);
+  background: linear-gradient(90deg, rgba(107, 76, 219, 0.075), rgba(31, 122, 155, 0.025));
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.routeNode {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border: 1px solid rgba(151, 162, 190, 0.2);
+  border-radius: 50%;
+  background: #070a13;
+  color: #68758c;
+  transition: border-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
+}
+
+.isPassed .routeNode {
+  border-color: rgba(119, 96, 225, 0.34);
+  color: #9480e8;
+}
+
+.isCurrent .routeNode {
+  border-color: rgba(60, 211, 222, 0.48);
+  color: #56dbe3;
+  box-shadow: 0 0 18px rgba(47, 184, 207, 0.18);
+}
+
+.routeIndex {
+  color: #526075;
+  font-size: 7px;
+  text-align: center;
+}
+
+.routeCopy {
+  min-width: 0;
+}
+
+.routeCopy strong,
+.routeCopy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.routeCopy strong {
+  color: #a5aebd;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+}
+
+.routeCopy small {
+  margin-top: 2px;
+  color: #566276;
+  font-size: 7px;
+}
+
+.routeStatus {
+  color: #685c8c;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.inspector {
+  min-width: 0;
+  align-self: center;
+  padding: 9px;
+  border: 1px solid rgba(176, 190, 220, 0.13);
+  border-radius: 12px;
+  background: rgba(4, 6, 14, 0.82);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(15px);
+}
+
+.inspectorLabel {
+  min-height: 29px;
+  justify-content: space-between;
+  padding: 0 7px 8px;
+  color: #515d70;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+}
+
+.trace {
+  max-height: min(67vh, 650px);
+  overflow: auto;
+  scrollbar-color: rgba(105, 88, 187, 0.4) transparent;
+  scrollbar-width: thin;
+}
+
+.stageFooter {
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(176, 190, 220, 0.12);
+  color: #4e596c;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.stageFooter p {
+  margin: 0;
+}
+
+.stageFooter > span {
+  color: #655a93;
+  font-weight: 650;
+}
+
+@media (max-width: 1180px) {
+  .stickyStage {
+    width: min(1100px, calc(100% - 44px));
+  }
+
+  .stageGrid {
+    gap: 24px;
+    grid-template-columns: minmax(220px, 0.68fr) minmax(255px, 0.68fr) minmax(390px, 1.14fr);
+  }
+
+  .intro h2 {
+    font-size: clamp(34px, 4.4vw, 52px);
+  }
+
+  .routeStep {
+    min-height: 51px;
+  }
+}
+
+@media (min-width: 1101px) and (max-width: 1239px) {
+  .trace :global(.transaction-trace__header) {
+    gap: 9px;
+    padding-inline: 11px;
+  }
+
+  .trace :global(.transaction-trace__icon),
+  .trace :global(.transaction-trace__controls > .demo-badge),
+  .trace :global(.trace-step__value) {
+    display: none;
+  }
+
+  .trace :global(.transaction-trace__controls) {
+    gap: 5px;
+  }
+
+  .trace :global(.trace-view-toggle button) {
+    min-width: 48px;
+  }
+
+  .trace :global(.trace-step__summary) {
+    padding-inline: 10px;
+    grid-template-columns: minmax(115px, 1fr) 78px 18px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .journey {
+    height: auto;
+    min-height: 0;
+    padding: 105px 0;
+  }
+
+  .surface {
+    top: 7%;
+    width: 70vw;
+    height: 520px;
+    opacity: 0.45;
+    transform: none;
+  }
+
+  .surfaceViolet {
+    left: -40vw;
+    transform: rotate(-12deg);
+  }
+
+  .surfaceCyan {
+    top: auto;
+    right: -42vw;
+    bottom: 9%;
+    transform: rotate(14deg);
+  }
+
+  .horizon {
+    top: 43%;
+  }
+
+  .stickyStage {
+    position: relative;
+    width: min(100% - 32px, 720px);
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    grid-template-rows: auto;
+  }
+
+  .stageRail {
+    display: none;
+  }
+
+  .stageGrid {
+    gap: 56px;
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    max-width: 610px;
+  }
+
+  .intro h2 {
+    font-size: clamp(42px, 9vw, 66px);
+  }
+
+  .routePanel {
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
+  }
+
+  .routeStep,
+  .routeStep.isPassed,
+  .routeStep.isCurrent {
+    min-height: 62px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .routeNode {
+    border-color: rgba(79, 205, 221, 0.3);
+    color: #78cbd8;
+  }
+
+  .inspector {
+    width: 100%;
+  }
+
+  .trace {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stageFooter {
+    margin-top: 56px;
+  }
+
+  .stageFooter > span {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .journey {
+    padding: 88px 0;
+  }
+
+  .stickyStage {
+    width: calc(100% - 24px);
+  }
+
+  .stageGrid {
+    gap: 44px;
+  }
+
+  .intro h2 {
+    font-size: clamp(38px, 12vw, 54px);
+  }
+
+  .lede {
+    font-size: 11px;
+  }
+
+  .context,
+  .simpleRoute {
+    align-items: flex-start;
+  }
+
+  .routeStep {
+    grid-template-columns: 31px 23px minmax(0, 1fr) auto;
+  }
+
+  .routeCopy small {
+    white-space: normal;
+  }
+
+  .routeStatus {
+    display: none;
+  }
+
+  .inspector {
+    padding: 5px;
+  }
+
+  .stageFooter {
+    line-height: 1.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey {
+    height: auto;
+    min-height: 0;
+    padding: 110px 0;
+  }
+
+  .stickyStage {
+    position: relative;
+    width: min(100% - 44px, 1180px);
+    height: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .stageGrid {
+    margin-block: 44px;
+  }
+
+  .surface,
+  .routeStep {
+    transition: none;
+  }
+
+  .routeStep,
+  .routeStep.isPassed,
+  .routeStep.isCurrent {
+    opacity: 1;
+    transform: none;
+  }
+
+  .trace {
+    max-height: none;
+  }
+}

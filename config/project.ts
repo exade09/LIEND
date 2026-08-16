@@ -3,6 +3,7 @@ export const project = {
   ticker: "LIEND",
   network: "Solana",
   cluster: "mainnet-beta",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://liend.xyz",
   // Replace these service-root placeholders with the official LIEND destinations
   pumpUrl: "https://pump.fun/",
   xUrl: "https://x.com/",
