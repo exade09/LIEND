@@ -60,7 +60,7 @@ export function TokenDetail({ market, onBorrow, onSwap }: TokenDetailProps) {
           </div>
         </div>
         <div className="token-detail__status">
-          <span className="demo-badge">DEMO DATA</span>
+          <span className="demo-badge">NOT LIVE</span>
           <span className="status-tag status-tag--eligible"><i /> {market.migrationStatus}</span>
         </div>
       </header>

@@ -1,4 +1,5 @@
 import { Icon } from "@/components/Icon";
+import { ProductLink } from "@/components/ProductLink";
 import { project } from "@/config/project";
 
 const questions = [
@@ -24,7 +25,7 @@ const questions = [
   },
   {
     question: "Do I need LIEND to use the platform",
-    answer: "Initial testing access may require holding LIEND",
+    answer: "LIEND utility requires holding LIEND once the token launches",
   },
   {
     question: "Where can I get LIEND",
@@ -72,7 +73,6 @@ export function FAQ() {
   return (
     <section className="faq section-shell" id="faq" aria-labelledby="faq-title">
       <div className="section-kicker" aria-hidden="true">
-        <span>09</span>
         <span>FAQ</span>
       </div>
 
@@ -83,17 +83,11 @@ export function FAQ() {
           <p className="faq__lede">
             Product access, position risk and onchain execution explained clearly
           </p>
-          <a
-            className="text-link"
-            href={project.docsUrl || "#"}
-            target={project.docsUrl ? "_blank" : undefined}
-            rel={project.docsUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.docsUrl || undefined}
-          >
+          <ProductLink className="text-link" href={project.docsUrl}>
             <Icon name="docs" size={18} />
             <span>Read Docs</span>
             <Icon name="external-link" size={15} />
-          </a>
+          </ProductLink>
         </header>
 
         <div className="faq__items">
@@ -109,16 +103,10 @@ export function FAQ() {
               <div className="faq__answer">
                 <p>{item.answer}</p>
                 {"link" in item ? (
-                  <a
-                    className="faq__answer-link"
-                    href={project.docsUrl || "#"}
-                    target={project.docsUrl ? "_blank" : undefined}
-                    rel={project.docsUrl ? "noreferrer" : undefined}
-                    aria-disabled={!project.docsUrl || undefined}
-                  >
+                  <ProductLink className="faq__answer-link" href={project.docsUrl}>
                     Open Docs
                     <Icon name="external-link" size={14} />
-                  </a>
+                  </ProductLink>
                 ) : null}
               </div>
             </details>

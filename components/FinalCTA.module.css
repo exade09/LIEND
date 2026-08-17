@@ -28,31 +28,6 @@
   content: "";
 }
 
-.coordinateField {
-  position: absolute;
-  inset: 4% 3%;
-  border: 1px solid rgba(165, 184, 217, 0.055);
-  background-image:
-    linear-gradient(rgba(165, 184, 217, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(165, 184, 217, 0.025) 1px, transparent 1px);
-  background-size: 96px 96px;
-  mask-image: radial-gradient(ellipse at center, black, transparent 74%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 74%);
-}
-
-.material {
-  position: absolute;
-  inset: clamp(18px, 2.2vw, 36px);
-  display: block;
-  opacity: 0.88;
-  animation: materialFloat 22s ease-in-out infinite alternate;
-}
-
-.material img {
-  object-fit: contain;
-  object-position: center;
-}
-
 .refraction {
   position: absolute;
   top: 50%;
@@ -66,21 +41,6 @@
   mask-image: radial-gradient(ellipse at center, black, transparent 72%);
   -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 72%);
   transform: translate(-50%, -50%) rotate(-6deg);
-}
-
-.frame {
-  position: absolute;
-  top: 31px;
-  right: max(36px, calc((100vw - 1440px) / 2));
-  left: max(36px, calc((100vw - 1440px) / 2));
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 13px;
-  border-bottom: 1px solid rgba(176, 190, 220, 0.11);
-  color: #4e596d;
-  font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.14em;
 }
 
 .content {
@@ -154,16 +114,11 @@
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: color 180ms ease;
+  transition: color var(--t-color);
 }
 
 .links a:hover {
   color: var(--cyan);
-}
-
-@keyframes materialFloat {
-  from { transform: translate3d(-5px, -3px, 0); }
-  to { transform: translate3d(5px, 4px, 0); }
 }
 
 @keyframes titleRefraction {
@@ -177,11 +132,6 @@
     padding: 120px 24px;
   }
 
-  .frame {
-    right: 22px;
-    left: 22px;
-  }
-
   .title {
     font-size: clamp(52px, 11vw, 86px);
   }
@@ -191,25 +141,6 @@
   .section {
     min-height: 760px;
     padding: 115px 16px 100px;
-  }
-
-  .frame {
-    top: 23px;
-    right: 14px;
-    left: 14px;
-  }
-
-  .frame span:last-child {
-    display: none;
-  }
-
-  .coordinateField {
-    background-size: 60px 60px;
-  }
-
-  .material {
-    inset: 10px;
-    animation-duration: 28s;
   }
 
   .eyebrow {
@@ -251,7 +182,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .material,
   .titleLine {
     animation: none;
   }

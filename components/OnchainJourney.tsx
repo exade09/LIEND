@@ -41,7 +41,6 @@ export function OnchainJourney() {
       if (staticPresentation.matches) {
         journey.style.setProperty("--journey-progress", "1")
         journey.style.setProperty("--journey-line", "100%")
-        journey.style.setProperty("--journey-horizon-opacity", "0.78")
         setActiveStep(demonstration.trace.length - 1)
         return
       }
@@ -56,11 +55,6 @@ export function OnchainJourney() {
 
       journey.style.setProperty("--journey-progress", progress.toFixed(4))
       journey.style.setProperty("--journey-line", `${Math.max(0.045, progress) * 100}%`)
-      journey.style.setProperty("--journey-drift", `${(progress - 0.5) * 32}px`)
-      journey.style.setProperty(
-        "--journey-horizon-opacity",
-        (0.28 + progress * 0.5).toFixed(3),
-      )
       setActiveStep((current) => (current === nextStep ? current : nextStep))
     }
 
@@ -98,13 +92,6 @@ export function OnchainJourney() {
         </div>
 
         <div className={styles.stickyStage}>
-          <div className={styles.stageRail} aria-hidden="true">
-            <span>ONCHAIN ROUTE</span>
-            <span>
-              {String(activeStep + 1).padStart(2, "0")} / {String(demonstration.trace.length).padStart(2, "0")}
-            </span>
-          </div>
-
           <div className={styles.stageGrid}>
             <header className={styles.intro}>
               <p className={styles.eyebrow}>TRANSACTION CORRIDOR</p>
@@ -123,7 +110,7 @@ export function OnchainJourney() {
                   <Icon name="sol" size={15} />
                   {project.network}
                 </span>
-                <span className={styles.demoBadge}>DEMO ROUTE</span>
+                <span className={styles.demoBadge}>EXAMPLE ROUTE</span>
               </div>
 
               <div className={styles.simpleRoute} aria-label="Simple route">
@@ -168,10 +155,6 @@ export function OnchainJourney() {
             </div>
 
             <div className={styles.inspector}>
-              <div className={styles.inspectorLabel}>
-                <span>INSPECTABLE ROUTE</span>
-                <span>STATIC FIXTURE</span>
-              </div>
               <TransactionTrace
                 className={styles.trace}
                 steps={demonstration.trace}

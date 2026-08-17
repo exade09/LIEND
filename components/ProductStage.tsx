@@ -183,15 +183,13 @@ export default function ProductStage({
     >
       <div className={styles.canvas}>
         <div className={styles.ambient} aria-hidden="true">
-          <span className={styles.violetSurface} />
-          <span className={styles.cyanSurface} />
           <span className={styles.grid} />
         </div>
 
         <div className={styles.frame}>
           <header className={styles.intro}>
             <div>
-              <span className={styles.kicker}>04 • PRODUCT STAGE</span>
+              <span className={styles.kicker}>PRODUCT STAGE</span>
               <h2 id={headingId}>Position to liquidity in one visible route</h2>
             </div>
             <p>Scroll through the route, then use the product interface directly</p>
@@ -223,11 +221,6 @@ export default function ProductStage({
             </nav>
 
             <div className={styles.productViewport}>
-              <header className={styles.viewportBar}>
-                <span><i /> GUIDED PRODUCT VIEW</span>
-                <span>{activeStep?.label.toUpperCase() ?? "ACCESS"} • INTERACTIVE PREVIEW</span>
-              </header>
-
               <div className={styles.viewportBody}>
                 <div
                   className={`${styles.pane} ${styles.accessPane} ${showAccess ? styles.visiblePane : ""}`}

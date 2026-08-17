@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { Icon } from "@/components/Icon"
+import { ProductLink } from "@/components/ProductLink"
 import { project } from "@/config/project"
 import { connectWallet } from "@/services/solana"
 
@@ -26,8 +27,8 @@ export function HolderGate() {
   const stateCopy: Record<PreviewState, string> = {
     "NOT CONNECTED": "Connect a Solana wallet to begin the eligibility check",
     CHECKING: "Checking LIEND balance and active access parameters",
-    ELIGIBLE: "This preview shows the interface available to an eligible holder",
-    "NOT ELIGIBLE": "The connected wallet does not meet the current testing requirement",
+    ELIGIBLE: "This wallet meets the LIEND holding requirement",
+    "NOT ELIGIBLE": "This wallet does not meet the LIEND holding requirement",
     "WRONG NETWORK": "Switch the wallet provider to the configured Solana network",
   }
 
@@ -36,16 +37,16 @@ export function HolderGate() {
       <div className="holder-section__glow" aria-hidden="true" />
       <div className="page-shell holder-layout">
         <div className="holder-copy">
-          <div className="section-kicker"><span>03</span>HOLDER ACCESS</div>
-          <h2>Enter the <span className="accent-text">test layer</span></h2>
-          <p>Testing access is available to eligible LIEND holders</p>
+          <div className="section-kicker">HOLDER ACCESS</div>
+          <h2>Enter the <span className="accent-text">utility layer</span></h2>
+          <p>LIEND utility is available to eligible LIEND holders</p>
 
           <div className="access-flow" aria-label="Access sequence">
             {[
               ["01", "Obtain LIEND after migration", "Open the official Pump.fun destination"],
               ["02", "Connect a Solana wallet", "Use a standard wallet provider"],
               ["03", "Verify the position", "Read balance through the configured adapter"],
-              ["04", "Enter the testing environment", "Available only after an eligible result"],
+              ["04", "Use LIEND utility", "Available only after an eligible result"],
             ].map(([index, title, copy]) => (
               <div key={index}>
                 <span>{index}</span>
@@ -55,17 +56,17 @@ export function HolderGate() {
             ))}
           </div>
 
-          <a className="inline-link" href={project.pumpUrl} target="_blank" rel="noreferrer">
+          <ProductLink className="inline-link" href={project.pumpUrl}>
             <Icon name="pump-fun" size={18} />
             Open LIEND on Pump.fun
             <Icon name="external-link" size={14} />
-          </a>
+          </ProductLink>
         </div>
 
         <div className="holder-gate-card">
           <div className="holder-gate-card__topline">
             <span><i /> ACCESS GATE</span>
-            <span className="demo-badge">STATE PREVIEW</span>
+            <span className="demo-badge">ACCESS STATES</span>
           </div>
 
           <div className="gate-identity">
@@ -75,11 +76,11 @@ export function HolderGate() {
           </div>
 
           <div className="state-preview-control">
-            <label htmlFor="eligibility-preview">Preview eligibility state</label>
+            <label htmlFor="eligibility-preview">Eligibility state</label>
             <select id="eligibility-preview" value={state} onChange={(event) => { setState(event.target.value as PreviewState); setMessage("") }}>
               {previewStates.map((item) => <option key={item}>{item}</option>)}
             </select>
-            <small>UI demonstration only, no wallet data is created</small>
+            <small>Interface states — no wallet data is created</small>
           </div>
 
           <dl className={`gate-readout ${state === "CHECKING" ? "is-checking" : ""}`}>
@@ -94,7 +95,7 @@ export function HolderGate() {
           {state === "ELIGIBLE" ? (
             <a className="button button--primary button--wide" href="#app">Enter App <Icon name="arrow" size={17} /></a>
           ) : state === "NOT ELIGIBLE" ? (
-            <a className="button button--primary button--wide" href={project.pumpUrl} target="_blank" rel="noreferrer">Get LIEND <Icon name="external-link" size={15} /></a>
+            <ProductLink className="button button--primary button--wide" href={project.pumpUrl}>Get LIEND <Icon name="external-link" size={15} /></ProductLink>
           ) : state === "WRONG NETWORK" ? (
             <button className="button button--primary button--wide" type="button" disabled>Switch to Solana</button>
           ) : state === "CHECKING" ? (

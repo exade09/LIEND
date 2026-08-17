@@ -1,10 +1,9 @@
-import Image from "next/image"
 import { Icon } from "@/components/Icon"
+import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
 import { project } from "@/config/project"
 import styles from "./FinalCTA.module.css"
 
 export function FinalCTA() {
-  const pumpDestination = project.pumpUrl || "#holder-access"
 
   return (
     <section
@@ -13,25 +12,7 @@ export function FinalCTA() {
       aria-labelledby="final-cta-title"
     >
       <div className={styles.scene} aria-hidden="true">
-        <div className={styles.coordinateField} />
-        <picture className={styles.material}>
-          <source
-            media="(max-width: 640px)"
-            srcSet="/assets/liend-final-material-mobile-v2.png"
-          />
-          <Image
-            src="/assets/liend-final-material-v2.png"
-            alt=""
-            fill
-            sizes="100vw"
-          />
-        </picture>
         <div className={styles.refraction} />
-      </div>
-
-      <div className={styles.frame} aria-hidden="true">
-        <span>LIEND / SOLANA</span>
-        <span>POSITION LIQUIDITY</span>
       </div>
 
       <div className={styles.content}>
@@ -48,49 +29,23 @@ export function FinalCTA() {
         </p>
 
         <div className={styles.actions}>
-          <a className="button button--primary" href="#product-stage">
-            Launch App
-            <Icon name="arrow" size={18} />
-          </a>
-          <a
-            className="button button--secondary"
-            href={pumpDestination}
-            target={project.pumpUrl ? "_blank" : undefined}
-            rel={project.pumpUrl ? "noreferrer" : undefined}
-          >
-            <Icon name="pump-fun" size={18} />
-            Get LIEND
-          </a>
+          <LaunchAppLink />
+          <ExtensionCta className="button button--secondary" />
         </div>
 
         <nav className={styles.links} aria-label="LIEND external links">
-          <a
-            href={project.pumpUrl || "#"}
-            target={project.pumpUrl ? "_blank" : undefined}
-            rel={project.pumpUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.pumpUrl || undefined}
-          >
+          <ProductLink href={project.pumpUrl}>
             <Icon name="pump-fun" size={17} />
             Pump.fun
-          </a>
-          <a
-            href={project.xUrl || "#"}
-            target={project.xUrl ? "_blank" : undefined}
-            rel={project.xUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.xUrl || undefined}
-          >
+          </ProductLink>
+          <ProductLink href={project.xUrl}>
             <Icon name="x" size={16} />
             X
-          </a>
-          <a
-            href={project.docsUrl || "#"}
-            target={project.docsUrl ? "_blank" : undefined}
-            rel={project.docsUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.docsUrl || undefined}
-          >
+          </ProductLink>
+          <ProductLink href={project.docsUrl}>
             <Icon name="docs" size={17} />
             Docs
-          </a>
+          </ProductLink>
         </nav>
       </div>
     </section>

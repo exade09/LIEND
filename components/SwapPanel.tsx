@@ -68,9 +68,9 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
       <div className="panel-heading">
         <div>
           <span className="overline">LIEND-NATIVE ROUTING</span>
-          <h3>Preview a swap route</h3>
+          <h3>Swap route</h3>
         </div>
-        <div className="panel-heading__meta"><span className="demo-badge">MOCK ADAPTER</span><span className="network-chip">Solana</span></div>
+        <div className="panel-heading__meta"><span className="demo-badge">NOT CONNECTED</span><span className="network-chip">Solana</span></div>
       </div>
 
       <div className="swap-shell">
@@ -118,7 +118,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
       </div>
 
       <div className="swap-route-card">
-        <div className="swap-route-card__head"><span><Icon name="transaction" size={16} /> Route</span><span className="demo-badge">DEMO</span></div>
+        <div className="swap-route-card__head"><span><Icon name="transaction" size={16} /> Route</span><span className="demo-badge">NOT LIVE</span></div>
         {quote?.routes.length ? (
           <div className="route-options" role="radiogroup" aria-label="Swap routes">
             {quote.routes.map((route) => (
@@ -146,9 +146,9 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
         </button>
       </div>
 
-      <Modal open={reviewOpen} onClose={() => setReviewOpen(false)} eyebrow="TRANSACTION PREVIEW" title="Review swap route">
+      <Modal open={reviewOpen} onClose={() => setReviewOpen(false)} eyebrow="REVIEW ROUTE" title="Review swap route">
         <div className="transaction-preview">
-          <div className="preview-banner"><span className="demo-badge">NON-EXECUTABLE DEMO</span><p>{quote?.notice}</p></div>
+          <div className="preview-banner"><span className="demo-badge">NOT EXECUTABLE</span><p>{quote?.notice}</p></div>
           <div className="swap-review-pair">
             <div><small>YOU PAY</small><strong>{formatNumber(amount)} {market.ticker}</strong></div>
             <Icon name="arrow" size={20} />

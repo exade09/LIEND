@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading"
 import { SwapPanel } from "@/components/SwapPanel"
 import { TokenDetail } from "@/components/TokenDetail"
 import { TransactionTrace } from "@/components/TransactionTrace"
+import { ProductLink } from "@/components/ProductLink"
 import { project } from "@/config/project"
 import { getMigratedTokens } from "@/services/markets"
 import { getTransactionTrace } from "@/services/solana"
@@ -58,7 +59,7 @@ export function Application({ initialView }: ApplicationProps = {}) {
           index="04"
           eyebrow="MIGRATED MARKETS"
           title={<>Read the position <span className="accent-text">review the route</span></>}
-          copy={<><p>Explore supported migrated tokens, configure collateral and inspect each step before a wallet request is built</p><span className="estimate-note"><Icon name="status" size={15} /> Testing interface with clearly separated demo adapters</span></>}
+          copy={<><p>Explore supported migrated tokens, configure collateral and inspect each step before a wallet request is built</p><span className="estimate-note"><Icon name="status" size={15} /> Live data sources are not connected yet</span></>}
         />
 
         <div className="application-shell" id="app">
@@ -66,10 +67,10 @@ export function Application({ initialView }: ApplicationProps = {}) {
             <div className="application-brand">
               <span>LIEND</span>
               <i />
-              <small>APP PREVIEW</small>
+              <small>PRODUCT INTERFACE</small>
             </div>
             <div className="application-status">
-              <span><i /> {project.status.toUpperCase()}</span>
+              <span><i /> UTILITY NOT ACTIVE</span>
               <span>{project.network.toUpperCase()} · {project.cluster.toUpperCase()}</span>
               <button className="wallet-pill" type="button" disabled><Icon name="wallet" size={15} /> Wallet not connected</button>
             </div>
@@ -83,7 +84,7 @@ export function Application({ initialView }: ApplicationProps = {}) {
                 </button>
               ))}
             </div>
-            <a href={project.docsUrl} target="_blank" rel="noreferrer"><Icon name="docs" size={17} /> Docs <Icon name="external-link" size={12} /></a>
+            <ProductLink href={project.docsUrl}><Icon name="docs" size={17} /> Docs <Icon name="external-link" size={12} /></ProductLink>
           </nav>
 
           <div className="application-view">

@@ -72,7 +72,7 @@ export function TransactionTrace({
         </div>
 
         <div className="transaction-trace__controls">
-          {demoState ? <span className="demo-badge">DEMO DATA</span> : null}
+          {demoState ? <span className="demo-badge">NOT LIVE</span> : null}
           <div className="trace-view-toggle" role="group" aria-label="Transaction trace detail">
             <button
               className={view === "simple" ? "is-active" : ""}

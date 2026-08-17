@@ -1,0 +1,27 @@
+.wordmark {
+  position: relative;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.letter {
+  position: absolute;
+  display: block;
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--sx, 1), var(--sy, 1));
+  transform-origin: 50% 65%;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.letter img {
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    transform: none !important;
+  }
+}

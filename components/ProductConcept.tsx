@@ -1,46 +1,12 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-
 import { Icon } from "@/components/Icon"
+import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./ProductConcept.module.css"
 
 const sellRoute = ["Token", "Market Sale", "SOL", "Position Reduced"] as const
 const liendRoute = ["Token", "Position", "Borrow", "SOL", "Exposure Maintained"] as const
-
-function useScenePresence() {
-  const sceneRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const scene = sceneRef.current
-
-    if (!scene) return
-
-    scene.dataset.presence = "ready"
-
-    if (!("IntersectionObserver" in window)) {
-      scene.dataset.presence = "visible"
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return
-
-        scene.dataset.presence = "visible"
-        observer.disconnect()
-      },
-      { rootMargin: "-10% 0px", threshold: 0.05 },
-    )
-
-    observer.observe(scene)
-
-    return () => observer.disconnect()
-  }, [])
-
-  return sceneRef
-}
 
 function Route({
   label,
@@ -59,7 +25,6 @@ function Route({
           <span>{variant === "sell" ? "EXISTING ACTION" : "ADDITIONAL ACTION"}</span>
           <h3>{label}</h3>
         </div>
-        <span className={styles.routeState}>{variant === "sell" ? "REDUCE" : "HOLD"}</span>
       </header>
 
       <ol className={styles.steps} aria-label={`${label} route`}>
@@ -76,11 +41,6 @@ function Route({
           </li>
         ))}
       </ol>
-
-      <footer className={styles.routeFooter}>
-        <span>{variant === "sell" ? "MARKET EXECUTION" : "BORROW EXECUTION"}</span>
-        <strong>{steps.at(-1)}</strong>
-      </footer>
     </article>
   )
 }
@@ -99,18 +59,11 @@ export function ProductConcept() {
       <div className={styles.stage}>
         <div className={styles.atmosphere} aria-hidden="true">
           <div className={styles.baseField} />
-          <div className={styles.sellField} />
-          <div className={styles.liendField} />
-          <div className={styles.gridField} />
-          <div className={styles.axis} />
         </div>
 
         <div className={`${styles.canvas} page-shell`}>
           <header className={styles.intro}>
-            <p className={`${styles.eyebrow} eyebrow`}>
-              <span>02</span>
-              Another route to liquidity
-            </p>
+            <p className={`${styles.eyebrow} eyebrow`}>Another route to liquidity</p>
             <h2 id="product-concept-title">
               <span>Selling is one route</span>
               <span>LIEND adds another</span>

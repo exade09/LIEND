@@ -47,37 +47,15 @@ export default function DataExperience() {
   return (
     <div ref={experienceRef} className={styles.experience}>
       <section className={`${styles.scene} ${styles.labScene}`} id="liquidity-lab" aria-labelledby="liquidity-lab-title">
-        <div className={styles.labLinework} aria-hidden="true">
-          <span className={styles.labGrid} />
-          <span className={styles.labArc} />
-          <span className={styles.labScanline} />
-        </div>
-
         <div className={styles.shell}>
           <header className={`${styles.sceneIntro} ${styles.labIntro}`} data-reveal>
-            <p className={styles.eyebrow}><span>05</span> LIQUIDITY LAB</p>
+            <p className={styles.eyebrow}>LIQUIDITY LAB</p>
             <h2 id="liquidity-lab-title">Model the position before the wallet</h2>
             <p className={styles.introCopy}>Explore collateral, estimated SOL and remaining exposure through a transparent public model</p>
           </header>
 
-          <div className={styles.labTelemetry} data-reveal>
-            <span><i /> ESTIMATE MODE</span>
-            <span>NO WALLET DATA</span>
-            <span>DEMO PARAMETERS</span>
-          </div>
-
           <div className={`${styles.componentMount} ${styles.calculatorMount}`} data-reveal>
-            <span className={`${styles.corner} ${styles.cornerTopLeft}`} aria-hidden="true" />
-            <span className={`${styles.corner} ${styles.cornerBottomRight}`} aria-hidden="true" />
             <LoanCalculator />
-          </div>
-
-          <div className={styles.labRoute} aria-hidden="true" data-reveal>
-            <span><b>01</b> POSITION VALUE</span>
-            <i />
-            <span><b>02</b> COLLATERAL MODEL</span>
-            <i />
-            <span><b>03</b> ESTIMATED SOL</span>
           </div>
         </div>
       </section>
@@ -92,31 +70,21 @@ export default function DataExperience() {
         <div className={styles.shell}>
           <header className={`${styles.sceneIntro} ${styles.dataIntro}`} data-reveal>
             <div>
-              <p className={styles.eyebrow}><span>06</span> PROTOCOL DATA</p>
+              <p className={styles.eyebrow}>PROTOCOL DATA</p>
               <h2 id="protocol-data-title">Read activity as infrastructure</h2>
             </div>
             <div className={styles.dataContext}>
               <p>Public protocol events and wallet analytics presented as operational records</p>
-              <span><i /> SOLANA &bull; DEMO ADAPTER</span>
+              <span><i /> SOLANA &bull; DATA SOURCE NOT CONNECTED</span>
             </div>
           </header>
 
           <div className={styles.analyticsField}>
             <div className={`${styles.componentMount} ${styles.analyticsMount}`} data-reveal>
-              <span className={styles.fieldIndex} aria-hidden="true">DATA / 01</span>
               <ActivityFeed />
             </div>
 
-            <div className={styles.dataDivider} aria-hidden="true" data-reveal>
-              <span>EVENTS</span>
-              <i />
-              <b />
-              <i />
-              <span>AGGREGATION</span>
-            </div>
-
             <div className={`${styles.componentMount} ${styles.analyticsMount}`} data-reveal>
-              <span className={styles.fieldIndex} aria-hidden="true">DATA / 02</span>
               <Leaderboard />
             </div>
           </div>

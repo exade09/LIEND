@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { project } from "@/config/project"
 import { Icon } from "@/components/Icon"
+import { LaunchAppLink, ProductLink } from "@/components/ProductLink"
 
 const navigation = [
   { label: "Product", href: "#product" },
@@ -50,22 +51,20 @@ export function Header() {
 
         <div className="nav-actions">
           <div className="nav-utility" aria-label="Project links">
-            <a href={project.pumpUrl} target="_blank" rel="noreferrer" aria-label="LIEND on Pump.fun">
+            <ProductLink href={project.pumpUrl} aria-label="LIEND on Pump.fun">
               <Icon name="pump-fun" size={17} />
               <span>Pump.fun</span>
-            </a>
-            <a href={project.xUrl} target="_blank" rel="noreferrer" aria-label="LIEND on X">
+            </ProductLink>
+            <ProductLink href={project.xUrl} aria-label="LIEND on X">
               <Icon name="x" size={15} />
               <span className="sr-only">X</span>
-            </a>
-            <a href={project.docsUrl} target="_blank" rel="noreferrer" aria-label="LIEND Docs">
+            </ProductLink>
+            <ProductLink href={project.docsUrl} aria-label="LIEND Docs">
               <Icon name="docs" size={17} />
               <span className="sr-only">Docs</span>
-            </a>
+            </ProductLink>
           </div>
-          <a className="button button--small button--primary launch-nav" href="#product-stage">
-            Launch App
-          </a>
+          <LaunchAppLink className="button button--small button--primary launch-nav" />
           <button
             className="menu-button"
             type="button"
@@ -90,15 +89,15 @@ export function Header() {
           ))}
         </nav>
         <div className="mobile-menu__utility">
-          <a href={project.pumpUrl} target="_blank" rel="noreferrer">
+          <ProductLink href={project.pumpUrl}>
             <Icon name="pump-fun" /> Pump.fun
-          </a>
-          <a href={project.xUrl} target="_blank" rel="noreferrer">
+          </ProductLink>
+          <ProductLink href={project.xUrl}>
             <Icon name="x" /> X
-          </a>
-          <a href={project.docsUrl} target="_blank" rel="noreferrer">
+          </ProductLink>
+          <ProductLink href={project.docsUrl}>
             <Icon name="docs" /> Docs
-          </a>
+          </ProductLink>
         </div>
         <a className="button button--primary button--wide" href="#product-stage" onClick={() => setOpen(false)}>
           Launch App

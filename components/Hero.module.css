@@ -1,9 +1,17 @@
 .story {
   position: relative;
-  min-height: 225svh;
-  background: #03040d;
+  min-height: 345svh;
   view-timeline-axis: block;
   view-timeline-name: --liend-hero;
+}
+
+.topAnchor {
+  position: absolute;
+  top: 130svh;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
 }
 
 .stage {
@@ -16,10 +24,7 @@
 }
 
 .atmosphere,
-.baseField,
-.assetField,
-.coordinateField,
-.refraction {
+.baseField {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -35,72 +40,7 @@
     radial-gradient(ellipse 42% 62% at 5% 50%, rgba(94, 47, 217, 0.16), transparent 72%),
     radial-gradient(ellipse 43% 58% at 95% 46%, rgba(17, 157, 194, 0.13), transparent 70%),
     radial-gradient(ellipse 58% 32% at 50% 76%, rgba(38, 50, 114, 0.1), transparent 72%),
-    linear-gradient(180deg, #02030b 0%, #050611 52%, #03040d 100%);
-}
-
-.assetField {
-  inset: clamp(72px, 8svh, 112px) clamp(16px, 3vw, 54px) clamp(58px, 8svh, 104px);
-  background-image: url("/assets/liend-hero-material-v2.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  filter: drop-shadow(0 30px 80px rgba(48, 44, 178, 0.14));
-  mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
-  opacity: 0.78;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
-}
-
-.violetSurface,
-.cyanSurface {
-  position: absolute;
-  width: min(42vw, 660px);
-  height: min(72svh, 760px);
-  border: 1px solid rgba(255, 255, 255, 0.055);
-  pointer-events: none;
-}
-
-.violetSurface {
-  top: 17%;
-  left: -20%;
-  border-radius: 32% 68% 48% 52% / 54% 38% 62% 46%;
-  background:
-    linear-gradient(126deg, rgba(168, 135, 255, 0.12), rgba(78, 48, 188, 0.025) 46%, transparent 72%),
-    radial-gradient(circle at 72% 34%, rgba(132, 95, 255, 0.2), transparent 46%);
-  box-shadow:
-    inset -24px 0 70px rgba(138, 102, 255, 0.08),
-    24px 0 80px rgba(65, 42, 167, 0.06);
-  mask-image: radial-gradient(ellipse at 64% 50%, #000 0 47%, transparent 78%);
-  transform: rotate(12deg);
-}
-
-.cyanSurface {
-  right: -20%;
-  bottom: 10%;
-  border-radius: 64% 36% 58% 42% / 42% 61% 39% 58%;
-  background:
-    linear-gradient(232deg, rgba(73, 229, 237, 0.12), rgba(23, 127, 172, 0.025) 48%, transparent 74%),
-    radial-gradient(circle at 28% 58%, rgba(36, 210, 226, 0.16), transparent 48%);
-  box-shadow:
-    inset 24px 0 70px rgba(63, 220, 233, 0.065),
-    -24px 0 80px rgba(19, 127, 171, 0.05);
-  mask-image: radial-gradient(ellipse at 36% 50%, #000 0 47%, transparent 78%);
-  transform: rotate(-10deg);
-}
-
-.refraction {
-  inset: 15% 24%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(125, 124, 245, 0.05), transparent 65%);
-  filter: blur(26px);
-}
-
-.coordinateField {
-  background-image:
-    linear-gradient(rgba(148, 166, 200, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 166, 200, 0.028) 1px, transparent 1px);
-  background-size: 76px 76px;
-  mask-image: linear-gradient(to bottom, transparent 4%, #000 30%, #000 67%, transparent 94%);
-  opacity: 0.58;
+    linear-gradient(180deg, rgba(2, 3, 11, 0.82) 0%, rgba(5, 6, 17, 0.72) 52%, rgba(3, 4, 13, 0.82) 100%);
 }
 
 .frame {
@@ -108,36 +48,7 @@
   display: grid;
   height: 100%;
   padding-block: clamp(88px, 10svh, 116px) clamp(26px, 4svh, 54px);
-  grid-template-rows: auto 1fr auto;
-}
-
-.topline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: rgba(132, 143, 164, 0.54);
-  font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.17em;
-}
-
-.topline::before,
-.topline::after {
-  position: absolute;
-  top: clamp(76px, 9svh, 104px);
-  width: 20vw;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(150, 166, 197, 0.13));
-  content: "";
-}
-
-.topline::before {
-  right: calc(100% + 22px);
-}
-
-.topline::after {
-  left: calc(100% + 22px);
-  transform: scaleX(-1);
+  grid-template-rows: 1fr auto;
 }
 
 .content {
@@ -162,30 +73,9 @@
   margin-left: 7px;
 }
 
-.sourceWordmark {
-  position: relative;
+.wordmarkSlot {
   width: min(620px, 72vw);
-  height: clamp(160px, 11.5vw, 164px);
-  overflow: hidden;
   margin: clamp(12px, 2svh, 24px) auto clamp(12px, 2svh, 20px);
-  isolation: isolate;
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-
-.sourceWordmarkImage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  width: 214%;
-  aspect-ratio: 3 / 1;
-  background: url("/assets/liend-banner.png") center / 100% 100% no-repeat;
-  filter:
-    saturate(1.06)
-    drop-shadow(0 14px 34px rgba(73, 70, 218, 0.2));
-  mix-blend-mode: screen;
-  transform: translate(-50%, -42%);
 }
 
 .headline {
@@ -240,7 +130,7 @@
   font-weight: 650;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  transition: color 160ms ease;
+  transition: color var(--t-color);
 }
 
 .secondary a:hover {
@@ -305,28 +195,9 @@
   transform-origin: left;
 }
 
-.sideReadout {
-  position: absolute;
-  top: 50%;
-  left: -34px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: rgba(126, 139, 163, 0.5);
-  font-size: 7px;
-  letter-spacing: 0.18em;
-  transform: rotate(-90deg) translateX(-50%);
-  transform-origin: left top;
-}
-
-.sideReadout i {
-  width: 42px;
-  height: 1px;
-  background: linear-gradient(90deg, #6c58d6, #39b8ca);
-}
-
 .scrollCue {
   position: absolute;
+  z-index: 6;
   right: max(22px, calc((100vw - min(1440px, calc(100vw - 72px))) / 2));
   bottom: clamp(26px, 4svh, 48px);
   display: flex;
@@ -341,31 +212,6 @@
 
 .scrollCue svg {
   transform: rotate(90deg);
-}
-
-@keyframes hero-asset-travel {
-  0% {
-    opacity: 0.78;
-    transform: scale(0.985);
-  }
-  54% {
-    opacity: 0.86;
-    transform: scale(1.018);
-  }
-  100% {
-    opacity: 0.2;
-    transform: scale(1.065);
-  }
-}
-
-@keyframes hero-violet-travel {
-  from { transform: translate3d(-3%, 2%, 0) rotate(12deg) scale(0.95); }
-  to { transform: translate3d(13%, -7%, 0) rotate(7deg) scale(1.08); }
-}
-
-@keyframes hero-cyan-travel {
-  from { transform: translate3d(4%, -2%, 0) rotate(-10deg) scale(0.96); }
-  to { transform: translate3d(-14%, 8%, 0) rotate(-5deg) scale(1.09); }
 }
 
 @keyframes hero-copy-travel {
@@ -387,20 +233,10 @@
   100% { filter: saturate(0.92) brightness(0.95); transform: translateY(-5px); }
 }
 
-@keyframes hero-material-shift {
-  from { filter: hue-rotate(-2deg) drop-shadow(0 16px 34px rgba(73, 70, 218, 0.18)); }
-  to { filter: hue-rotate(4deg) drop-shadow(0 20px 42px rgba(41, 156, 201, 0.18)); }
-}
-
 @keyframes hero-route-progress {
   0% { transform: scaleX(0.12); }
   68%,
   100% { transform: scaleX(1); }
-}
-
-@keyframes hero-refraction-shift {
-  from { opacity: 0.35; transform: translate3d(-8%, 4%, 0) scale(0.92); }
-  to { opacity: 0.8; transform: translate3d(8%, -5%, 0) scale(1.12); }
 }
 
 @keyframes hero-fallback-enter {
@@ -408,15 +244,20 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/*
+ * These animations keep the existing `entry 100% exit 0%` full-timeline
+ * range even though .story grew to accommodate the liquid curtain. That is
+ * intentional, not an oversight: every property here already holds its
+ * resting value for the first 34-62% of the range (hero-copy-travel holds to
+ * 62%, hero-liquidity-focus plateaus 34-72%, hero-route-progress fills to
+ * 68%), and the curtain clears at ~53% of the same range. The hold windows
+ * already absorb the curtain's travel, so content is static-and-hidden while
+ * covered and lands mid-plateau the moment it's revealed.
+ */
 @supports (animation-timeline: view()) {
-  .assetField,
-  .violetSurface,
-  .cyanSurface,
   .content,
   .liquidityLine,
-  .sourceWordmarkImage,
   .routeLine::after,
-  .refraction,
   .scrollCue {
     animation-duration: 1ms;
     animation-fill-mode: both;
@@ -425,14 +266,9 @@
     animation-range: entry 100% exit 0%;
   }
 
-  .assetField { animation-name: hero-asset-travel; }
-  .violetSurface { animation-name: hero-violet-travel; }
-  .cyanSurface { animation-name: hero-cyan-travel; }
   .content { animation-name: hero-copy-travel; }
   .liquidityLine { animation-name: hero-liquidity-focus; }
-  .sourceWordmarkImage { animation-name: hero-material-shift; }
   .routeLine::after { animation-name: hero-route-progress; }
-  .refraction { animation-name: hero-refraction-shift; }
   .scrollCue { animation-name: hero-copy-travel; }
 }
 
@@ -455,63 +291,19 @@
 
 @media (max-width: 780px) {
   .story {
-    min-height: 178svh;
+    min-height: 298svh;
+  }
+
+  .topAnchor {
+    top: 108svh;
   }
 
   .stage {
     min-height: 700px;
   }
 
-  .assetField {
-    inset: 60px 6px 58px;
-    background-image: url("/assets/liend-hero-material-mobile-v2.png");
-    background-size: contain;
-    opacity: 0.76;
-  }
-
-  .assetField::after {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      #03040d 0%,
-      #03040d 15%,
-      transparent 32%,
-      transparent 68%,
-      #03040d 86%,
-      #03040d 100%
-    );
-    content: "";
-  }
-
-  .violetSurface,
-  .cyanSurface {
-    width: 76vw;
-    height: 48svh;
-    opacity: 0.58;
-  }
-
-  .violetSurface {
-    top: 20%;
-    left: -47%;
-  }
-
-  .cyanSurface {
-    right: -48%;
-    bottom: 13%;
-  }
-
-  .coordinateField {
-    background-size: 54px 54px;
-    opacity: 0.4;
-  }
-
   .frame {
     padding-block: 84px 24px;
-  }
-
-  .topline span:last-child {
-    display: none;
   }
 
   .content {
@@ -523,15 +315,9 @@
     font-size: 8px;
   }
 
-  .sourceWordmark {
+  .wordmarkSlot {
     width: min(350px, 90vw);
-    height: 112px;
     margin-block: 14px 16px;
-  }
-
-  .sourceWordmarkImage {
-    width: 214%;
-    transform: translate(-50%, -42%);
   }
 
   .headline {
@@ -580,7 +366,6 @@
     letter-spacing: 0.12em;
   }
 
-  .sideReadout,
   .scrollCue {
     display: none;
   }
@@ -609,14 +394,9 @@
     min-height: 760px;
   }
 
-  .assetField,
-  .violetSurface,
-  .cyanSurface,
   .content,
   .liquidityLine,
-  .sourceWordmarkImage,
   .routeLine::after,
-  .refraction,
   .scrollCue {
     animation: none !important;
     opacity: 1;

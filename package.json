@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "typecheck:all": "npm run typecheck --workspaces --if-present && npm run typecheck",
+    "test:all": "npm run test --workspaces --if-present"
   },
   "dependencies": {
     "next": "latest",
@@ -23,5 +25,9 @@
     "eslint-config-next": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

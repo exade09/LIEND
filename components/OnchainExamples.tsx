@@ -117,7 +117,7 @@ export function OnchainExamples() {
       />
 
       <div className="onchain-examples__provenance">
-        <span className="demo-badge">DEMO DATA</span>
+        <span className="demo-badge">NOT LIVE</span>
         <span>Static interface fixtures, not live Solana activity</span>
         <span>{String(demoTransactions.length).padStart(2, "0")} EXAMPLES</span>
       </div>
@@ -186,7 +186,7 @@ export function OnchainExamples() {
       <Modal
         open={selectedTransaction !== null}
         onClose={() => setSelectedTransaction(null)}
-        eyebrow="DEMONSTRATION TRANSACTION"
+        eyebrow="EXAMPLE ROUTE"
         title={selectedTransaction ? `${selectedTransaction.asset} borrow route` : "Borrow route"}
         size="wide"
       >

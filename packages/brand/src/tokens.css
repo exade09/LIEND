@@ -1,0 +1,47 @@
+/**
+ * LIEND design tokens.
+ *
+ * Values mirror the landing's established identity (app/globals.css) so all
+ * three surfaces share one visual system. The landing is NOT refactored to
+ * import this file — it is regression-sensitive and stays as-is. This is the
+ * shared source for the App and, later, the Extension.
+ */
+
+:root {
+  /* Surfaces — near-black base */
+  --liend-ink: #03040d;
+  --liend-ink-raised: #070913;
+  --liend-ink-soft: #0a0d19;
+  --liend-ink-muted: #101421;
+
+  /* Lines */
+  --liend-line: rgba(176, 190, 220, 0.14);
+  --liend-line-strong: rgba(181, 197, 231, 0.24);
+
+  /* Text */
+  --liend-text: #f4f6fb;
+  --liend-text-soft: #bbc2d2;
+  --liend-text-muted: #747e94;
+
+  /* Accent — violet / blue / cyan */
+  --liend-violet: #7957ff;
+  --liend-violet-soft: #a68dff;
+  --liend-blue: #3d78ff;
+  --liend-cyan: #26d8e8;
+  --liend-teal: #28cfbc;
+
+  /* Semantic */
+  --liend-danger: #ff7f96;
+  --liend-warning: #eec781;
+  --liend-success: #53e0bd;
+
+  /* Type */
+  --liend-font-ui: Inter, "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+  --liend-font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+
+  /* Shape + motion */
+  --liend-radius: 12px;
+  --liend-radius-lg: 16px;
+  --liend-t-color: 150ms ease-in;
+  --liend-t-surface: 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}

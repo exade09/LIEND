@@ -46,7 +46,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
       setQuote(nextQuote)
       setReviewOpen(true)
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Unable to prepare the demo quote")
+      setError(caught instanceof Error ? caught.message : "Unable to prepare the quote")
     } finally {
       setLoading(false)
     }
@@ -60,7 +60,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
           <h3>Configure a SOL borrow</h3>
         </div>
         <div className="panel-heading__meta">
-          <span className="demo-badge">ESTIMATED DEMO</span>
+          <span className="demo-badge">ESTIMATE ONLY</span>
           <span className="network-chip">Solana</span>
         </div>
       </div>
@@ -169,11 +169,11 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
         </div>
       </div>
 
-      <Modal open={reviewOpen} onClose={() => setReviewOpen(false)} eyebrow="TRANSACTION PREVIEW" title="Review borrow route" size="wide">
+      <Modal open={reviewOpen} onClose={() => setReviewOpen(false)} eyebrow="REVIEW ROUTE" title="Review borrow route" size="wide">
         {quote ? (
           <div className="transaction-preview">
             <div className="preview-banner">
-              <span className="demo-badge">NON-EXECUTABLE DEMO</span>
+              <span className="demo-badge">NOT EXECUTABLE</span>
               <p>{quote.notice}</p>
             </div>
             <div className="preview-route">

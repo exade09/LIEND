@@ -7,10 +7,9 @@
 .journey {
   --journey-progress: 0;
   --journey-line: 4.5%;
-  --journey-drift: -16px;
   position: relative;
-  height: 230vh;
-  min-height: 1380px;
+  height: 175vh;
+  min-height: 1050px;
   background: linear-gradient(180deg, #050711 0%, #060913 46%, #03050c 100%);
   isolation: isolate;
 }
@@ -54,8 +53,6 @@
   mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
   opacity: 0.66;
-  transform: translateY(var(--journey-drift));
-  transition: transform 80ms linear;
 }
 
 .surface::before,
@@ -83,7 +80,7 @@
   color: #a28aff;
   background: linear-gradient(128deg, transparent 18%, rgba(120, 84, 255, 0.04) 40%, rgba(177, 149, 255, 0.19) 51%, rgba(74, 42, 191, 0.045) 65%, transparent 80%);
   box-shadow: inset -18px 6px 44px rgba(151, 124, 255, 0.11), 20px 0 70px rgba(74, 45, 191, 0.055);
-  transform: translateY(var(--journey-drift)) rotate(-13deg);
+  transform: rotate(-13deg);
 }
 
 .surfaceCyan {
@@ -91,7 +88,7 @@
   color: #56e2ed;
   background: linear-gradient(232deg, transparent 17%, rgba(34, 196, 217, 0.035) 39%, rgba(96, 230, 235, 0.16) 51%, rgba(31, 103, 154, 0.04) 66%, transparent 81%);
   box-shadow: inset 18px 6px 44px rgba(79, 219, 231, 0.09), -20px 0 70px rgba(26, 144, 171, 0.045);
-  transform: translateY(var(--journey-drift)) rotate(14deg);
+  transform: rotate(14deg);
 }
 
 .horizon {
@@ -102,7 +99,7 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(125, 98, 240, 0.24), rgba(50, 206, 220, 0.2), transparent);
   box-shadow: 0 0 34px rgba(76, 105, 222, 0.12);
-  opacity: var(--journey-horizon-opacity, 0.28);
+  opacity: 0.4;
 }
 
 .stickyStage {
@@ -117,23 +114,11 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
-.stageRail,
 .stageFooter,
-.inspectorLabel,
 .context,
 .simpleRoute {
   display: flex;
   align-items: center;
-}
-
-.stageRail {
-  justify-content: space-between;
-  padding: 0 0 12px;
-  border-bottom: 1px solid rgba(176, 190, 220, 0.13);
-  color: #566177;
-  font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.16em;
 }
 
 .stageGrid {
@@ -357,16 +342,6 @@
   backdrop-filter: blur(15px);
 }
 
-.inspectorLabel {
-  min-height: 29px;
-  justify-content: space-between;
-  padding: 0 7px 8px;
-  color: #515d70;
-  font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-}
-
 .trace {
   max-height: min(67vh, 650px);
   overflow: auto;
@@ -476,10 +451,6 @@
     min-height: 0;
     padding: 0;
     grid-template-rows: auto;
-  }
-
-  .stageRail {
-    display: none;
   }
 
   .stageGrid {

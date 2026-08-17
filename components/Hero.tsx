@@ -1,72 +1,35 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 
 import { Icon } from "@/components/Icon"
+import { LiquidCurtain } from "@/components/LiquidCurtain"
+import { Wordmark } from "@/components/Wordmark"
+import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
 import { project } from "@/config/project"
+import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./Hero.module.css"
 
-function useScenePresence() {
-  const sceneRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const scene = sceneRef.current
-
-    if (!scene) return
-
-    scene.dataset.presence = "ready"
-
-    if (!("IntersectionObserver" in window)) {
-      scene.dataset.presence = "visible"
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return
-
-        scene.dataset.presence = "visible"
-        observer.disconnect()
-      },
-      { rootMargin: "-8% 0px", threshold: 0.05 },
-    )
-
-    observer.observe(scene)
-
-    return () => observer.disconnect()
-  }, [])
-
-  return sceneRef
-}
-
 export function Hero() {
-  const sceneRef = useScenePresence()
+  const sceneRef = useScenePresence("-8% 0px")
+  const stageRef = useRef<HTMLDivElement>(null)
 
   return (
     <section
       className={styles.story}
       data-presence="idle"
-      id="top"
       ref={sceneRef}
       aria-labelledby="hero-title"
     >
-      <div className={styles.stage}>
+      <span id="top" className={styles.topAnchor} aria-hidden="true" />
+
+      <div className={styles.stage} ref={stageRef}>
         <div className={styles.atmosphere} aria-hidden="true">
           <div className={styles.baseField} />
-          <div className={styles.assetField} />
-          <div className={styles.violetSurface} />
-          <div className={styles.cyanSurface} />
-          <div className={styles.refraction} />
-          <div className={styles.coordinateField} />
         </div>
 
         <div className={`${styles.frame} page-shell`}>
-          <div className={styles.topline} aria-hidden="true">
-            <span>LIEND / UTILITY LAYER</span>
-            <span>NETWORK 01 / SOLANA</span>
-          </div>
-
           <div className={styles.content}>
             <div className={`${styles.eyebrow} eyebrow`}>
               <span className="status-light" />
@@ -74,8 +37,8 @@ export function Hero() {
               <span className="network-chip">Solana</span>
             </div>
 
-            <div className={styles.sourceWordmark} role="img" aria-label="LIEND">
-              <span className={styles.sourceWordmarkImage} aria-hidden="true" />
+            <div className={styles.wordmarkSlot}>
+              <Wordmark />
             </div>
 
             <h1 className={styles.headline} id="hero-title">
@@ -88,22 +51,17 @@ export function Hero() {
             </p>
 
             <div className={styles.actions}>
-              <a className="button button--primary" href="#product-stage">
-                Launch App
-                <Icon name="arrow" size={18} />
-              </a>
-              <a className="button button--ghost" href="#how-it-works">
-                How It Works
-              </a>
+              <LaunchAppLink />
+              <ExtensionCta />
             </div>
 
             <div className={styles.secondary}>
               <span className={styles.brandLine}>LEND <b>•</b> BORROW <b>•</b> BUILD</span>
-              <a href={project.pumpUrl} target="_blank" rel="noreferrer">
+              <ProductLink href={project.pumpUrl}>
                 <Icon name="pump-fun" size={17} />
                 Get LIEND on Pump.fun
                 <Icon name="external-link" size={14} />
-              </a>
+              </ProductLink>
             </div>
           </div>
 
@@ -123,13 +81,9 @@ export function Hero() {
               <strong>SOL</strong>
             </li>
           </ol>
-
-          <div className={styles.sideReadout} aria-hidden="true">
-            <span>POSITION</span>
-            <i />
-            <span>LIQUIDITY</span>
-          </div>
         </div>
+
+        <LiquidCurtain storyRef={sceneRef} stageRef={stageRef} />
 
         <a className={styles.scrollCue} href="#product" aria-label="Scroll to the product concept">
           <span>Scroll to follow the route</span>

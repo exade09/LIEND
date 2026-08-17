@@ -1,0 +1,36 @@
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: clip;
+  contain: paint;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.dropletBox {
+  position: absolute;
+  aspect-ratio: 1;
+}
+
+.dropletMotion {
+  position: absolute;
+  inset: 0;
+  transform: translate(var(--tx, 0%), var(--ty, 0px)) rotate(var(--rot, 0deg)) scale(var(--sx, 1), var(--sy, 1));
+  transform-origin: 50% 40%;
+}
+
+.dropletMotion :global(img) {
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce), (max-height: 720px) {
+  .root {
+    display: none;
+  }
+}

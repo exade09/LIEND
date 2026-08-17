@@ -16,10 +16,7 @@
 }
 
 .atmosphere,
-.baseField,
-.corridorField,
-.gridField,
-.sweep {
+.baseField {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -32,43 +29,11 @@
 
 .baseField {
   background:
+    radial-gradient(ellipse 70% 50% at 50% 55%, rgba(74, 99, 189, 0.05), transparent 70%),
     radial-gradient(ellipse 64% 36% at 50% 52%, rgba(61, 85, 179, 0.13), transparent 72%),
     radial-gradient(ellipse 34% 48% at 14% 48%, rgba(91, 57, 195, 0.075), transparent 72%),
     radial-gradient(ellipse 34% 48% at 86% 48%, rgba(17, 157, 183, 0.075), transparent 72%),
     linear-gradient(180deg, #03060e, #050a14 52%, #030710);
-}
-
-.corridorField {
-  inset: 14% 3% 10%;
-  border: 1px solid rgba(141, 159, 194, 0.055);
-  border-radius: 48%;
-  background:
-    linear-gradient(90deg, transparent, rgba(103, 76, 219, 0.04) 28%, rgba(45, 125, 192, 0.05) 64%, transparent),
-    radial-gradient(ellipse at center, rgba(74, 99, 189, 0.06), transparent 68%);
-  box-shadow:
-    inset 0 0 90px rgba(72, 83, 174, 0.045),
-    0 0 110px rgba(30, 90, 153, 0.035);
-  mask-image: radial-gradient(ellipse at center, #000 0 58%, transparent 87%);
-}
-
-.gridField {
-  inset: 19% 0 10%;
-  background-image:
-    linear-gradient(rgba(135, 157, 194, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(135, 157, 194, 0.028) 1px, transparent 1px);
-  background-size: 64px 46px;
-  mask-image: radial-gradient(ellipse at center, #000 0 48%, transparent 83%);
-  transform: perspective(900px) rotateX(58deg) scaleX(1.16);
-  transform-origin: center 62%;
-}
-
-.sweep {
-  right: auto;
-  left: 12%;
-  width: 28%;
-  background: linear-gradient(90deg, transparent, rgba(80, 211, 226, 0.038), transparent);
-  filter: blur(8px);
-  opacity: 0.4;
 }
 
 .canvas {
@@ -127,23 +92,10 @@
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.18);
 }
 
-.routeTopline {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: 14px;
-  border-bottom: 1px solid rgba(165, 182, 214, 0.1);
-  color: #697489;
-  font-size: 7px;
-  font-weight: 650;
-  letter-spacing: 0.13em;
-}
-
 .track {
   position: absolute;
   z-index: 1;
-  top: 101px;
+  top: 58px;
   right: calc(100% / 12);
   left: calc(100% / 12);
   height: 1px;
@@ -209,13 +161,6 @@
   border-right: 1px solid rgba(156, 173, 207, 0.1);
 }
 
-.signal {
-  color: #637086;
-  font-size: 7px;
-  font-weight: 650;
-  letter-spacing: 0.13em;
-}
-
 .step h3 {
   margin: 9px 0 11px;
   color: #d2d6df;
@@ -229,25 +174,6 @@
   color: #858fa2;
   font-size: 11px;
   line-height: 1.58;
-}
-
-.routeReadout {
-  display: flex;
-  min-height: 40px;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border-top: 1px solid rgba(158, 175, 209, 0.1);
-  color: #606c80;
-  font-size: 7px;
-  font-weight: 650;
-  letter-spacing: 0.12em;
-}
-
-.routeReadout i {
-  width: clamp(24px, 4vw, 58px);
-  height: 1px;
-  background: linear-gradient(90deg, rgba(112, 89, 219, 0.34), rgba(47, 193, 211, 0.32));
 }
 
 .technicalNote {
@@ -306,12 +232,6 @@
   100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
 }
 
-@keyframes route-sweep {
-  from { opacity: 0; transform: translateX(-65vw); }
-  45% { opacity: 0.55; }
-  to { opacity: 0; transform: translateX(110vw); }
-}
-
 @keyframes route-intro-travel {
   0%,
   72% { opacity: 1; transform: translateY(0); }
@@ -326,7 +246,6 @@
 @supports (animation-timeline: view()) {
   .track i,
   .step,
-  .sweep,
   .intro {
     animation-duration: 1ms;
     animation-fill-mode: both;
@@ -342,7 +261,6 @@
   .step:nth-child(4) { animation-name: route-step-04; }
   .step:nth-child(5) { animation-name: route-step-05; }
   .step:nth-child(6) { animation-name: route-step-06; }
-  .sweep { animation-name: route-sweep; }
   .intro { animation-name: route-intro-travel; }
 
   .step:nth-child(1) .node,
@@ -433,12 +351,8 @@
     min-height: 0;
   }
 
-  .routeTopline span:last-child {
-    display: none;
-  }
-
   .track {
-    top: 83px;
+    top: 41px;
     right: auto;
     bottom: 74px;
     left: 43px;
@@ -490,10 +404,6 @@
     border-bottom: 1px solid rgba(156, 173, 207, 0.1);
   }
 
-  .routeReadout {
-    display: none;
-  }
-
   .technicalNote {
     justify-self: start;
   }
@@ -539,7 +449,6 @@
 
   .track i,
   .step,
-  .sweep,
   .intro {
     animation: none !important;
     filter: none !important;

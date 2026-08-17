@@ -1,4 +1,5 @@
 import { Icon } from "@/components/Icon";
+import { ProductLink } from "@/components/ProductLink";
 import { project } from "@/config/project";
 
 const footerLinks = [
@@ -23,37 +24,18 @@ export function Footer() {
               {link.label}
             </a>
           ))}
-          <a
-            href={project.docsUrl || "#"}
-            target={project.docsUrl ? "_blank" : undefined}
-            rel={project.docsUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.docsUrl || undefined}
-          >
-            Docs
-          </a>
+          <ProductLink href={project.docsUrl}>Docs</ProductLink>
         </nav>
 
         <nav className="site-footer__social" aria-label="LIEND social links">
-          <a
-            href={project.xUrl || "#"}
-            target={project.xUrl ? "_blank" : undefined}
-            rel={project.xUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.xUrl || undefined}
-            aria-label="LIEND on X"
-          >
+          <ProductLink href={project.xUrl} aria-label="LIEND on X">
             <Icon name="x" size={17} />
             <span>X</span>
-          </a>
-          <a
-            href={project.pumpUrl || "#"}
-            target={project.pumpUrl ? "_blank" : undefined}
-            rel={project.pumpUrl ? "noreferrer" : undefined}
-            aria-disabled={!project.pumpUrl || undefined}
-            aria-label="LIEND on Pump.fun"
-          >
+          </ProductLink>
+          <ProductLink href={project.pumpUrl} aria-label="LIEND on Pump.fun">
             <Icon name="pump-fun" size={18} />
             <span>Pump.fun</span>
-          </a>
+          </ProductLink>
         </nav>
       </div>
 
@@ -64,7 +46,7 @@ export function Footer() {
           <strong>{project.network}</strong>
         </div>
         <p>{project.name} utility interface</p>
-        <p>{project.status} environment</p>
+        <p>Utility activates after token launch</p>
       </div>
     </footer>
   );

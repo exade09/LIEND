@@ -52,7 +52,7 @@ export function LoanCalculator() {
           </div>
 
           <div className="calculator-output">
-            <header><span>ESTIMATED OUTPUT</span><span className="demo-badge">DEMO PARAMETERS</span></header>
+            <header><span>ESTIMATED OUTPUT</span><span className="demo-badge">ESTIMATE ONLY</span></header>
             <div className="calculator-output__primary">
               <span>Estimated SOL</span>
               <strong>{formatSol(result.estimatedSol, 4)}</strong>

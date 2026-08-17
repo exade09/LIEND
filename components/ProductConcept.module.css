@@ -16,11 +16,7 @@
 }
 
 .atmosphere,
-.baseField,
-.sellField,
-.liendField,
-.gridField,
-.axis {
+.baseField {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -33,39 +29,12 @@
 
 .baseField {
   background:
+    radial-gradient(ellipse 46% 42% at 10% 57%, rgba(121, 91, 158, 0.06), transparent 60%),
+    radial-gradient(ellipse 46% 42% at 88% 52%, rgba(23, 174, 197, 0.1), transparent 58%),
+    radial-gradient(ellipse 40% 40% at 63% 68%, rgba(107, 72, 226, 0.085), transparent 54%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.02), transparent 55%),
     linear-gradient(90deg, rgba(18, 18, 29, 0.96) 0 49.9%, rgba(5, 12, 22, 0.94) 50.1% 100%),
     #05050e;
-}
-
-.sellField {
-  inset: 8% 50% 7% 0;
-  background:
-    radial-gradient(ellipse at 20% 58%, rgba(121, 91, 158, 0.075), transparent 58%),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.025), transparent 60%);
-  mask-image: linear-gradient(to right, #000 0 72%, transparent 100%);
-}
-
-.liendField {
-  inset: 7% 0 6% 50%;
-  background:
-    radial-gradient(ellipse at 76% 52%, rgba(23, 174, 197, 0.12), transparent 58%),
-    radial-gradient(ellipse at 26% 70%, rgba(107, 72, 226, 0.105), transparent 54%);
-  mask-image: linear-gradient(to left, #000 0 72%, transparent 100%);
-}
-
-.gridField {
-  background-image:
-    linear-gradient(rgba(142, 158, 189, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(142, 158, 189, 0.025) 1px, transparent 1px);
-  background-size: 68px 68px;
-  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-}
-
-.axis {
-  right: auto;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent 4%, rgba(159, 175, 207, 0.14) 24%, rgba(64, 196, 216, 0.25) 70%, transparent 96%);
 }
 
 .canvas {
@@ -153,8 +122,7 @@
 }
 
 .routeHeader,
-.routeHeader > div,
-.routeFooter {
+.routeHeader > div {
   display: flex;
   align-items: center;
 }
@@ -182,9 +150,7 @@
   flex-direction: column;
 }
 
-.routeHeader > div > span,
-.routeState,
-.routeFooter span {
+.routeHeader > div > span {
   color: #626d80;
   font-size: 7px;
   font-weight: 650;
@@ -195,17 +161,6 @@
   margin: 2px 0 0;
   font-size: 12px;
   letter-spacing: 0.2em;
-}
-
-.routeState {
-  padding: 6px 8px;
-  border: 1px solid rgba(165, 180, 209, 0.13);
-  border-radius: 5px;
-}
-
-.liendRoute .routeState {
-  border-color: rgba(64, 203, 219, 0.2);
-  color: #76cbd7;
 }
 
 .steps {
@@ -296,25 +251,6 @@
   background: linear-gradient(90deg, rgba(116, 91, 230, 0.34), rgba(49, 197, 215, 0.3));
 }
 
-.routeFooter {
-  justify-content: space-between;
-  gap: 16px;
-  padding-top: 17px;
-  border-top: 1px solid rgba(166, 181, 210, 0.1);
-}
-
-.routeFooter strong {
-  color: #a9b1bf;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.liendRoute .routeFooter strong {
-  color: #79d5df;
-}
-
 .pivot {
   position: relative;
   display: grid;
@@ -377,17 +313,6 @@
   100% { filter: saturate(1); opacity: 1; transform: translateX(0); }
 }
 
-@keyframes concept-liend-field {
-  0% { filter: saturate(0.65); opacity: 0.3; transform: scale(0.94); }
-  58%,
-  100% { filter: saturate(1); opacity: 1; transform: scale(1.05); }
-}
-
-@keyframes concept-axis-draw {
-  from { opacity: 0.25; transform: scaleY(0.18); }
-  to { opacity: 1; transform: scaleY(1); }
-}
-
 @keyframes concept-pivot-draw {
   0% { transform: scaleY(0.12); }
   68%,
@@ -408,8 +333,6 @@
 @supports (animation-timeline: view()) {
   .sellRoute,
   .liendRoute,
-  .liendField,
-  .axis,
   .pivot i,
   .intro {
     animation-duration: 1ms;
@@ -421,8 +344,6 @@
 
   .sellRoute { animation-name: concept-sell-decision; }
   .liendRoute { animation-name: concept-liend-decision; }
-  .liendField { animation-name: concept-liend-field; }
-  .axis { animation-name: concept-axis-draw; transform-origin: top; }
   .pivot i { animation-name: concept-pivot-draw; transform-origin: top; }
   .intro { animation-name: concept-intro-travel; }
 }
@@ -476,10 +397,6 @@
     height: auto;
     min-height: 0;
     overflow: hidden;
-  }
-
-  .axis {
-    display: none;
   }
 
   .canvas {
@@ -604,8 +521,6 @@
 
   .sellRoute,
   .liendRoute,
-  .liendField,
-  .axis,
   .pivot i,
   .intro {
     animation: none !important;
