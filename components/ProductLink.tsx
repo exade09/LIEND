@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Icon } from "@/components/Icon"
-import { extensionCtaLabel, project } from "@/config/project"
+import { extensionCtaLabel, extensionInstallHref, project } from "@/config/project"
 
 /**
  * External product link.
@@ -65,18 +65,11 @@ export function LaunchAppLink({ className = "button button--primary" }: { classN
 export function ExtensionCta({ className = "button button--ghost" }: { className?: string }) {
   const [open, setOpen] = useState(false)
   const label = extensionCtaLabel()
-
-  if (!project.extensionUrl) {
-    return (
-      <span className={className} aria-disabled="true" title="Extension download is not configured">
-        {label}
-      </span>
-    )
-  }
+  const href = extensionInstallHref()
 
   if (project.extensionMode === "webstore") {
     return (
-      <a className={className} href={project.extensionUrl} target="_blank" rel="noreferrer">
+      <a className={className} href={href} target="_blank" rel="noreferrer">
         {label}
       </a>
     )
@@ -87,8 +80,41 @@ export function ExtensionCta({ className = "button button--ghost" }: { className
       <button className={className} type="button" onClick={() => setOpen(true)}>
         {label}
       </button>
-      {open && <InstallGuide onClose={() => setOpen(false)} />}
+      {open && <InstallGuide href={href} onClose={() => setOpen(false)} />}
     </>
+  )
+}
+
+function ChromeMark() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path fill="#EA4335" d="M12 2a10 10 0 0 1 8.66 5H12z" />
+      <path fill="#FBBC05" d="M20.66 7A10 10 0 0 1 12 22l-4.33-7.5H12z" />
+      <path fill="#34A853" d="M12 22A10 10 0 0 1 3.34 7h8.66L7.67 14.5z" />
+      <circle cx="12" cy="12" r="4.35" fill="#fff" />
+      <circle cx="12" cy="12" r="2.7" fill="#4285F4" />
+    </svg>
+  )
+}
+
+/**
+ * Header plaque: Chrome mark + "Add to Chrome". Downloads the packaged zip
+ * so the extension can be loaded unpacked and used on pump.fun.
+ */
+export function AddToChromeBadge({ className }: { className?: string }) {
+  const href = extensionInstallHref()
+  const isArchive = project.extensionMode !== "webstore"
+
+  return (
+    <a
+      className={["chrome-badge", className].filter(Boolean).join(" ")}
+      href={href}
+      {...(isArchive ? { download: "liend-extension.zip" } : { target: "_blank", rel: "noreferrer" })}
+      aria-label="Add LIEND to Chrome"
+    >
+      <ChromeMark />
+      <span>Add to Chrome</span>
+    </a>
   )
 }
 
@@ -99,7 +125,7 @@ export function ExtensionCta({ className = "button button--ghost" }: { className
  * mode steps that only matter at the moment of installing, and the landing
  * should not carry standing technical instructions.
  */
-function InstallGuide({ onClose }: { onClose: () => void }) {
+function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) {
   const steps = [
     "Download and extract the archive",
     "Open chrome://extensions",
@@ -133,7 +159,7 @@ function InstallGuide({ onClose }: { onClose: () => void }) {
           ))}
         </ol>
 
-        <a className="button button--primary button--wide" href={project.extensionUrl ?? "#"} download>
+        <a className="button button--primary button--wide" href={href} download="liend-extension.zip">
           Download archive
           <Icon name="arrow" size={17} />
         </a>

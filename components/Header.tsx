@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { project } from "@/config/project"
 import { Icon } from "@/components/Icon"
-import { LaunchAppLink, ProductLink } from "@/components/ProductLink"
+import { LaunchAppLink, ProductLink, AddToChromeBadge } from "@/components/ProductLink"
 
 const navigation = [
   { label: "Product", href: "#product" },
@@ -63,6 +63,7 @@ export function Header() {
               <span className="sr-only">Docs</span>
             </ProductLink>
           </div>
+          <AddToChromeBadge />
           <LaunchAppLink className="button button--small button--primary launch-nav" />
           <span className="window-controls" aria-hidden="true">
             <i />
@@ -93,6 +94,7 @@ export function Header() {
           ))}
         </nav>
         <div className="mobile-menu__utility">
+          <AddToChromeBadge />
           <ProductLink href={project.pumpUrl}>
             <Icon name="pump-fun" /> Pump.fun
           </ProductLink>

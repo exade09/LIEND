@@ -65,6 +65,9 @@ export const project = {
   extensionUrl: url(process.env.NEXT_PUBLIC_EXTENSION_URL),
   extensionMode,
 
+  /** Packaged MV3 archive served from this site for developer-mode install. */
+  extensionArchive: "/liend-extension.zip",
+
   /** Community and docs. All null until the real destinations exist. */
   pumpUrl: url(process.env.NEXT_PUBLIC_PUMPFUN_URL),
   xUrl: url(process.env.NEXT_PUBLIC_X_URL),
@@ -93,4 +96,12 @@ export type ProjectConfig = typeof project
 /** Label for the extension CTA, driven by distribution mode. */
 export function extensionCtaLabel(): string {
   return project.extensionMode === "webstore" ? "Add to Chrome" : "Download Extension"
+}
+
+/** Archive path or Web Store URL the header badge and download CTA should hit. */
+export function extensionInstallHref(): string {
+  if (project.extensionMode === "webstore" && project.extensionUrl) {
+    return project.extensionUrl
+  }
+  return project.extensionUrl ?? project.extensionArchive
 }
