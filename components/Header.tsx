@@ -49,16 +49,14 @@ export function Header() {
         </nav>
 
         <div className="nav-actions">
-          <div className="header-chips" aria-label="Project links">
-            <ProductLink className="header-chip" href={project.pumpUrl} aria-label="LIEND on Pump.fun">
-              <Icon name="pump-fun" size={15} />
-              <span>Pump.fun</span>
-            </ProductLink>
-            <ProductLink className="header-chip" href={project.docsUrl} aria-label="LIEND Docs">
-              <Icon name="docs" size={15} />
-              <span>Docs</span>
-            </ProductLink>
-          </div>
+          <ProductLink className="header-chip header-chip--pump" href={project.pumpUrl} aria-label="LIEND on Pump.fun">
+            <Icon name="pump-fun" size={18} />
+            <span>Pump.fun</span>
+          </ProductLink>
+          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="LIEND Docs">
+            <Icon name="docs" size={18} />
+            <span>Docs</span>
+          </ProductLink>
           <div className="nav-utility" aria-label="Social links">
             <ProductLink href={project.xUrl} aria-label="LIEND on X">
               <Icon name="x" size={15} />
@@ -97,10 +95,10 @@ export function Header() {
         </nav>
         <div className="mobile-menu__utility">
           <AddToChromeBadge />
-          <ProductLink className="header-chip" href={project.pumpUrl}>
+          <ProductLink className="header-chip header-chip--pump" href={project.pumpUrl}>
             <Icon name="pump-fun" /> Pump.fun
           </ProductLink>
-          <ProductLink className="header-chip" href={project.docsUrl}>
+          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl}>
             <Icon name="docs" /> Docs
           </ProductLink>
           <ProductLink href={project.xUrl}>
