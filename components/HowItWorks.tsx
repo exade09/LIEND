@@ -64,7 +64,8 @@ export function HowItWorks() {
       <div className={styles.stage}>
         <div className={styles.atmosphere} aria-hidden="true">
           <div className={styles.baseField} />
-          <SceneLoop src="/assets/loops/scan.gif" className={styles.loop} />
+          <SceneLoop src="/assets/loops/meadow.gif" className={styles.loop} />
+          <span className={styles.veil} />
         </div>
 
         <div className={`${styles.canvas} page-shell`}>

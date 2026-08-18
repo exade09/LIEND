@@ -12,7 +12,6 @@ import {
 } from "react"
 import { Application } from "@/components/Application"
 import { HolderGate } from "@/components/HolderGate"
-import { SceneMedia } from "@/components/SceneMedia"
 import styles from "./ProductStage.module.css"
 
 export type ProductStageStep = {
@@ -183,13 +182,9 @@ export default function ProductStage({
       data-active-stage={activeStep?.id ?? "access"}
     >
       <div className={styles.canvas}>
-        <div className={styles.ambient} aria-hidden="true">
-          <SceneMedia src="/assets/webcore-sky.png" className={styles.sky} pixelated />
-          <span className={styles.skyVeil} />
-        </div>
-
-        <div className={styles.monitor}>
-          <div className={styles.screen}>
+        <div className={styles.set}>
+          <div className={styles.frame}>
+            <div className={styles.screen}>
             <div className={styles.scanlines} aria-hidden="true" />
             <div className={styles.screenGlare} aria-hidden="true" />
 
@@ -258,10 +253,11 @@ export default function ProductStage({
 
           <img
             className={styles.bezel}
-            src="/assets/crt-monitor.png"
+            src="/assets/webcore-desk-crt.png"
             alt=""
             draggable={false}
           />
+          </div>
 
           <footer className={styles.stageFooter}>
             <span>SCROLL TO FOLLOW THE ROUTE</span>

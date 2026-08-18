@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 import { ActivityFeed } from "@/components/ActivityFeed"
 import { LoanCalculator } from "@/components/LoanCalculator"
+import { SceneMedia } from "@/components/SceneMedia"
 import styles from "./DataExperience.module.css"
 
 export default function DataExperience() {
@@ -15,18 +16,27 @@ export default function DataExperience() {
     const revealItems = Array.from(experience.querySelectorAll<HTMLElement>("[data-reveal]"))
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
 
+    const showIfInView = () => {
+      const viewportBottom = window.innerHeight
+      revealItems.forEach((item) => {
+        if (item.getAttribute("data-visible") === "true") return
+        const bounds = item.getBoundingClientRect()
+        if (bounds.top < viewportBottom && bounds.bottom > 0) {
+          item.setAttribute("data-visible", "true")
+        }
+      })
+    }
+
     if (reducedMotion.matches || !("IntersectionObserver" in window)) {
       revealItems.forEach((item) => item.setAttribute("data-visible", "true"))
       return
     }
 
-    revealItems.forEach((item) => {
-      const bounds = item.getBoundingClientRect()
-      if (bounds.top < window.innerHeight * 0.92 && bounds.bottom > 0) {
-        item.setAttribute("data-visible", "true")
-      }
+    const start = window.requestAnimationFrame(() => {
+      showIfInView()
+      experience.setAttribute("data-reveal-ready", "true")
+      showIfInView()
     })
-    experience.setAttribute("data-reveal-ready", "true")
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,15 +46,35 @@ export default function DataExperience() {
           observer.unobserve(entry.target)
         })
       },
-      { rootMargin: "0px 0px -8%", threshold: 0.12 },
+      { rootMargin: "0px 0px 0px 0px", threshold: 0 },
     )
 
     revealItems.forEach((item) => observer.observe(item))
-    return () => observer.disconnect()
+    window.addEventListener("scroll", showIfInView, { passive: true })
+    window.addEventListener("resize", showIfInView)
+
+    return () => {
+      window.cancelAnimationFrame(start)
+      window.removeEventListener("scroll", showIfInView)
+      window.removeEventListener("resize", showIfInView)
+      observer.disconnect()
+    }
   }, [])
 
   return (
     <div ref={experienceRef} className={styles.experience}>
+      <div className={styles.atmosphere} aria-hidden="true">
+        <div className={styles.skyStack}>
+          <div className={styles.skyCell}>
+            <SceneMedia src="/assets/webcore-sky.png" pixelated />
+          </div>
+          <div className={`${styles.skyCell} ${styles.skyMirror}`}>
+            <SceneMedia src="/assets/webcore-sky.png" pixelated />
+          </div>
+        </div>
+        <span className={styles.veil} />
+      </div>
+
       <section className={`${styles.scene} ${styles.labScene}`} id="liquidity-lab" aria-labelledby="liquidity-lab-title">
         <div className={styles.shell}>
           <header className={`${styles.sceneIntro} ${styles.labIntro}`} data-reveal>

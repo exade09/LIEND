@@ -40,26 +40,43 @@ export function mountTrigger(onOpen: () => void): () => void {
   style.textContent = `
     .liend-trigger {
       pointer-events: auto;
+      isolation: isolate;
       display: inline-flex;
+      overflow: hidden;
       align-items: center;
       gap: 8px;
       height: 36px;
       padding: 0 14px;
-      border: 1px solid rgba(181,197,231,0.24);
-      border-radius: 10px;
-      background: rgba(3,4,13,0.92);
-      color: #f4f6fb;
-      font: 600 12px/1 Inter, "Segoe UI", system-ui, sans-serif;
-      letter-spacing: 0.06em;
+      border: 2px solid rgba(196, 255, 188, 0.62);
+      border-radius: 3px;
+      background:
+        linear-gradient(180deg, rgba(186, 255, 178, 0.38) 0%, rgba(77, 255, 90, 0.2) 46%, rgba(12, 48, 24, 0.55) 100%);
+      color: #f4fff6;
+      font: 400 10px/1 Silkscreen, "Press Start 2P", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.42);
-      transition: border-color 150ms ease-in, color 150ms ease-in;
+      box-shadow:
+        inset 1px 1px 0 rgba(255, 255, 255, 0.58),
+        inset -1px -1px 0 rgba(8, 40, 16, 0.42),
+        4px 6px 0 rgba(4, 10, 40, 0.45);
     }
-    .liend-trigger:hover { border-color: #26d8e8; color: #26d8e8; }
-    .liend-trigger:focus-visible { outline: 2px solid #26d8e8; outline-offset: 2px; }
+    .liend-trigger::before {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.06) 32%, transparent 58%);
+      content: "";
+      pointer-events: none;
+    }
+    .liend-trigger { position: relative; }
+    .liend-trigger:hover { border-color: rgba(220, 255, 214, 0.88); }
+    .liend-trigger:focus-visible { outline: 2px solid #4dff5a; outline-offset: 2px; }
     .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: linear-gradient(135deg, #7957ff, #26d8e8);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4dff5a;
+      box-shadow: 0 0 8px rgba(77, 255, 90, 0.7);
     }
     @media (prefers-reduced-motion: reduce) { .liend-trigger { transition: none; } }
   `
