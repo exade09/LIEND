@@ -26,13 +26,17 @@ export const metadata: Metadata = {
     title: "LIEND | Hold the position, access the liquidity",
     description:
       "A utility lending interface for supported migrated token positions on Solana",
-    images: ["/assets/liend-banner.png"],
+    images: ["/assets/liend-card.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "LIEND",
     description: "Utility liquidity for migrated tokens on Solana",
-    images: ["/assets/liend-banner.png"],
+    images: ["/assets/liend-card.png"],
+  },
+  icons: {
+    icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
+    apple: "/assets/liend-icon.png",
   },
 }
 

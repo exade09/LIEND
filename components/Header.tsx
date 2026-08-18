@@ -35,7 +35,7 @@ export function Header() {
       <div className="nav-shell">
         <a className="brand-compact" href="/" aria-label="LIEND home" onClick={() => setOpen(false)}>
           <span className="brand-compact__avatar">
-            <Image src="/assets/liend-avatar.png" alt="" width={32} height={32} priority />
+            <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={64} height={64} unoptimized priority />
           </span>
           <span>LIEND</span>
         </a>
