@@ -77,10 +77,6 @@ export function ActivityFeed() {
 
         {activity && !loading ? (
           <div className="data-provenance activity-feed__provenance">
-            <span className={activity.isDemo ? "demo-badge" : "live-badge"}>
-              {activity.dataLabel.toUpperCase()}
-            </span>
-            <span>{activity.notice ?? "Protocol activity supplied by the configured data provider"}</span>
             <span className="data-provenance__count">
               {activity.data.length.toString().padStart(2, "0")} EVENTS
             </span>

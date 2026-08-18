@@ -27,7 +27,7 @@ function Sparkline({ values }: { values: number[] }) {
     .join(" ")
 
   return (
-    <svg className="sparkline" viewBox="0 0 100 42" preserveAspectRatio="none" role="img" aria-label="Demonstration market activity chart">
+    <svg className="sparkline" viewBox="0 0 100 42" preserveAspectRatio="none" role="img" aria-label="Market activity chart">
       <defs>
         <linearGradient id={`spark-${values.join("")}`} x1="0" x2="1">
           <stop offset="0" stopColor="#7b5cff" />
@@ -60,7 +60,6 @@ export function TokenDetail({ market, onBorrow, onSwap }: TokenDetailProps) {
           </div>
         </div>
         <div className="token-detail__status">
-          <span className="demo-badge">NOT LIVE</span>
           <span className="status-tag status-tag--eligible"><i /> {market.migrationStatus}</span>
         </div>
       </header>
@@ -100,7 +99,7 @@ export function TokenDetail({ market, onBorrow, onSwap }: TokenDetailProps) {
           <Icon name="external-link" size={13} />
         </a>
       </div>
-      {!market.eligible ? <p className="inline-notice">No borrow route available for this demonstration market</p> : null}
+      {!market.eligible ? <p className="inline-notice">No borrow route available for this market</p> : null}
     </article>
   )
 }

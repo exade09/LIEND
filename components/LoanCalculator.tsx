@@ -1,7 +1,6 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { Icon } from "@/components/Icon"
 import { SectionHeading } from "@/components/SectionHeading"
 import { calculateLoanEstimate } from "@/lib/calculations"
 import { formatCurrency, formatPercent, formatSol } from "@/lib/formatting"
@@ -23,7 +22,7 @@ export function LoanCalculator() {
           index="05"
           eyebrow="PUBLIC CALCULATOR"
           title={<>Model the position <span className="accent-text">before connecting</span></>}
-          copy={<><p>Explore an illustrative collateral and borrow relationship using transparent assumptions</p><span className="estimate-note"><Icon name="status" size={15} /> Estimates only, not a live protocol quote</span></>}
+          copy={<><p>Explore an illustrative collateral and borrow relationship using transparent assumptions</p></>}
         />
 
         <div className="calculator-shell">
@@ -52,7 +51,7 @@ export function LoanCalculator() {
           </div>
 
           <div className="calculator-output">
-            <header><span>ESTIMATED OUTPUT</span><span className="demo-badge">ESTIMATE ONLY</span></header>
+            <header><span>ESTIMATED OUTPUT</span></header>
             <div className="calculator-output__primary">
               <span>Estimated SOL</span>
               <strong>{formatSol(result.estimatedSol, 4)}</strong>

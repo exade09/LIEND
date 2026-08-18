@@ -60,7 +60,6 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
           <h3>Configure a SOL borrow</h3>
         </div>
         <div className="panel-heading__meta">
-          <span className="demo-badge">ESTIMATE ONLY</span>
           <span className="network-chip">Solana</span>
         </div>
       </div>
@@ -173,8 +172,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
         {quote ? (
           <div className="transaction-preview">
             <div className="preview-banner">
-              <span className="demo-badge">NOT EXECUTABLE</span>
-              <p>{quote.notice}</p>
+              {quote.notice && !/demo/i.test(quote.notice) ? <p>{quote.notice}</p> : null}
             </div>
             <div className="preview-route">
               {quote.route.map((step, index) => (

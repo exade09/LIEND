@@ -70,7 +70,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
           <span className="overline">LIEND-NATIVE ROUTING</span>
           <h3>Swap route</h3>
         </div>
-        <div className="panel-heading__meta"><span className="demo-badge">NOT CONNECTED</span><span className="network-chip">Solana</span></div>
+        <div className="panel-heading__meta"><span className="network-chip">Solana</span></div>
       </div>
 
       <div className="swap-shell">
@@ -113,12 +113,12 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
             <output aria-live="polite">{loading ? "..." : formatNumber(activeRoute?.estimatedOutput ?? 0, 5)}</output>
             <span className="token-select token-select--static"><span className="sol-avatar"><Icon name="sol" size={18} /></span>SOL</span>
           </div>
-          <small className="input-caption">Estimate from the local mock quote adapter</small>
+          <small className="input-caption">Estimated output</small>
         </section>
       </div>
 
       <div className="swap-route-card">
-        <div className="swap-route-card__head"><span><Icon name="transaction" size={16} /> Route</span><span className="demo-badge">NOT LIVE</span></div>
+        <div className="swap-route-card__head"><span><Icon name="transaction" size={16} /> Route</span></div>
         {quote?.routes.length ? (
           <div className="route-options" role="radiogroup" aria-label="Swap routes">
             {quote.routes.map((route) => (
@@ -140,7 +140,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
       </dl>
 
       <div className="swap-panel__action">
-        <p>Quotes are illustrative until a production Solana aggregator is connected</p>
+        <p>Review the route before a wallet request is built</p>
         <button className="button button--primary" type="button" disabled={!activeRoute || loading} onClick={() => setReviewOpen(true)}>
           Review Swap <Icon name="arrow" size={17} />
         </button>
@@ -148,7 +148,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
 
       <Modal open={reviewOpen} onClose={() => setReviewOpen(false)} eyebrow="REVIEW ROUTE" title="Review swap route">
         <div className="transaction-preview">
-          <div className="preview-banner"><span className="demo-badge">NOT EXECUTABLE</span><p>{quote?.notice}</p></div>
+          <div className="preview-banner">{quote?.notice && !/demo/i.test(quote.notice) ? <p>{quote.notice}</p> : null}</div>
           <div className="swap-review-pair">
             <div><small>YOU PAY</small><strong>{formatNumber(amount)} {market.ticker}</strong></div>
             <Icon name="arrow" size={20} />

@@ -1,6 +1,6 @@
 .experience {
   position: relative;
-  background: #03040d;
+  background: #1238c8;
   isolation: isolate;
 }
 
@@ -18,11 +18,10 @@
 
 .labScene {
   padding: clamp(140px, 15vw, 230px) 0 clamp(150px, 16vw, 250px);
-  border-top: 1px solid rgba(176, 190, 220, 0.1);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
   background:
-    radial-gradient(ellipse at 18% 42%, rgba(113, 75, 239, 0.105), transparent 29rem),
-    radial-gradient(ellipse at 84% 60%, rgba(30, 181, 204, 0.075), transparent 34rem),
-    linear-gradient(180deg, #050711 0%, #070a15 54%, #04060f 100%);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #1238c8 0%, #0b1c72 100%);
 }
 
 .dataLinework {
@@ -49,24 +48,25 @@
   align-items: center;
   gap: 12px;
   margin: 0 0 7px;
-  color: #6c7589;
+  color: #77819a;
+  font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
 }
 
 .eyebrow span {
-  color: #8d77e2;
-  font-family: "SFMono-Regular", Consolas, monospace;
+  color: #9c86ef;
 }
 
 .sceneIntro h2 {
   margin: 0;
-  color: #eef1f7;
-  font-size: clamp(43px, 5.4vw, 78px);
-  font-weight: 500;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 
 .introCopy,
@@ -81,8 +81,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #41ceda;
-  box-shadow: 0 0 10px rgba(65, 206, 218, 0.52);
+  background: var(--signal);
+  box-shadow: 0 0 10px rgba(77, 255, 195, 0.6);
 }
 
 .componentMount {
@@ -119,10 +119,10 @@
 
 .dataScene {
   padding: clamp(150px, 16vw, 250px) 0 clamp(130px, 14vw, 215px);
-  border-top: 1px solid rgba(176, 190, 220, 0.1);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
   background:
-    linear-gradient(90deg, transparent 0%, rgba(91, 75, 162, 0.025) 48%, transparent 100%),
-    #03040d;
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    #1238c8;
 }
 
 .dataLinework {
@@ -147,15 +147,15 @@
   left: 25%;
   width: 6px;
   height: 6px;
-  border: 1px solid #65559f;
+  border: 1px solid #7263b8;
   border-radius: 50%;
-  background: #03040d;
+  background: #1238c8;
   transform: translateX(-50%);
 }
 
 .dataLinework span:first-child { top: 19%; }
-.dataLinework span:nth-child(2) { top: 48%; border-color: #456d88; }
-.dataLinework span:nth-child(3) { top: 79%; border-color: #3e8793; }
+.dataLinework span:nth-child(2) { top: 48%; border-color: #4d7d9c; }
+.dataLinework span:nth-child(3) { top: 79%; border-color: #439aa8; }
 
 .dataIntro {
   display: grid;
@@ -179,10 +179,11 @@
   align-items: center;
   gap: 9px;
   margin-top: 22px;
-  color: #5d687a;
+  color: #68738a;
+  font-family: var(--font-mono);
   font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
 }
 
 .analyticsField {
@@ -218,14 +219,15 @@
   padding-top: 34px;
   margin-top: clamp(80px, 10vw, 145px);
   border-top: 1px solid rgba(176, 190, 220, 0.11);
-  color: #4f596b;
+  color: #58637a;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.16em;
 }
 
 .dataFooter span:first-child {
-  color: #6f61aa;
-  font-weight: 650;
+  color: #7d6dbe;
+  font-weight: 500;
 }
 
 .experience[data-reveal-ready="true"] [data-reveal] {

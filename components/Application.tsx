@@ -59,7 +59,7 @@ export function Application({ initialView }: ApplicationProps = {}) {
           index="04"
           eyebrow="MIGRATED MARKETS"
           title={<>Read the position <span className="accent-text">review the route</span></>}
-          copy={<><p>Explore supported migrated tokens, configure collateral and inspect each step before a wallet request is built</p><span className="estimate-note"><Icon name="status" size={15} /> Live data sources are not connected yet</span></>}
+          copy={<><p>Explore supported migrated tokens, configure collateral and inspect each step before a wallet request is built</p></>}
         />
 
         <div className="application-shell" id="app">
@@ -70,7 +70,6 @@ export function Application({ initialView }: ApplicationProps = {}) {
               <small>PRODUCT INTERFACE</small>
             </div>
             <div className="application-status">
-              <span><i /> UTILITY NOT ACTIVE</span>
               <span>{project.network.toUpperCase()} · {project.cluster.toUpperCase()}</span>
               <button className="wallet-pill" type="button" disabled><Icon name="wallet" size={15} /> Wallet not connected</button>
             </div>
@@ -92,7 +91,7 @@ export function Application({ initialView }: ApplicationProps = {}) {
               <>
                 <div className="application-view__heading">
                   <div><span className="overline">MARKET EXPLORER</span><h3>Migrated markets</h3></div>
-                  <p>Select a market to inspect its demonstration data and available actions</p>
+                  <p>Select a market to inspect its data and available actions</p>
                 </div>
                 <MarketExplorer markets={markets} selectedId={selected?.id ?? null} onSelect={setSelected} loading={loading} />
                 {selected ? <TokenDetail market={selected} onBorrow={() => openView("borrow")} onSwap={() => openView("swap")} /> : !loading ? <div className="empty-state"><Icon name="token" /><strong>No supported positions found</strong></div> : null}
@@ -104,14 +103,13 @@ export function Application({ initialView }: ApplicationProps = {}) {
             {view === "trace" ? (
               <div className="app-trace-view">
                 <div className="application-view__heading"><div><span className="overline">ROUTE INSPECTOR</span><h3>Transaction Trace</h3></div><p>Switch between the user route and its complete onchain sequence</p></div>
-                <TransactionTrace steps={trace} isDemo />
+                <TransactionTrace steps={trace} />
               </div>
             ) : null}
           </div>
 
           <footer className="application-footer">
-            <span><i /> LOCAL MOCK ADAPTER</span>
-            <span>No external API calls · No executable transactions</span>
+            <span>{project.network.toUpperCase()}</span>
           </footer>
         </div>
       </div>

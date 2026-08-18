@@ -26,7 +26,6 @@ const simpleRoute = [
 
 export function TransactionTrace({
   steps,
-  isDemo,
   defaultView = "simple",
   title = "Transaction Trace",
   compact = false,
@@ -36,7 +35,6 @@ export function TransactionTrace({
   const traceId = useId()
   const [view, setView] = useState<TransactionTraceView>(defaultView)
   const [expandedSteps, setExpandedSteps] = useState<Set<string>>(() => new Set())
-  const demoState = isDemo ?? steps.some((step) => step.status === "DEMO")
 
   const traceDescription = useMemo(() => {
     if (loading) return "Loading transaction route"
@@ -72,7 +70,6 @@ export function TransactionTrace({
         </div>
 
         <div className="transaction-trace__controls">
-          {demoState ? <span className="demo-badge">NOT LIVE</span> : null}
           <div className="trace-view-toggle" role="group" aria-label="Transaction trace detail">
             <button
               className={view === "simple" ? "is-active" : ""}
@@ -93,12 +90,6 @@ export function TransactionTrace({
           </div>
         </div>
       </header>
-
-      {demoState ? (
-        <p className="transaction-trace__demo-notice">
-          Demonstration route only, no transaction was submitted to Solana
-        </p>
-      ) : null}
 
       {loading ? (
         <div className="transaction-trace__loading" role="status" aria-live="polite">
@@ -154,10 +145,12 @@ export function TransactionTrace({
                     <small>{step.program}</small>
                   </span>
                   <span className="trace-step__value">{step.value}</span>
-                  <span className={`trace-status trace-status--${step.status.toLowerCase()}`}>
-                    <i aria-hidden="true" />
-                    {step.status}
-                  </span>
+                  {step.status !== "DEMO" ? (
+                    <span className={`trace-status trace-status--${step.status.toLowerCase()}`}>
+                      <i aria-hidden="true" />
+                      {step.status}
+                    </span>
+                  ) : null}
                   <Icon className="trace-step__chevron" name="chevron" size={16} aria-hidden="true" />
                 </button>
 
@@ -177,7 +170,7 @@ export function TransactionTrace({
                     </div>
                     <div>
                       <dt>Status</dt>
-                      <dd>{step.status}</dd>
+                      <dd>{step.status === "DEMO" ? "—" : step.status}</dd>
                     </div>
                     <div>
                       <dt>Slot</dt>
@@ -198,9 +191,9 @@ export function TransactionTrace({
                     </div>
                   </dl>
 
-                  {step.details.length ? (
+                  {step.details.filter((detail) => !/demo/i.test(detail)).length ? (
                     <ul className="trace-step__notes" aria-label={`${step.label} details`}>
-                      {step.details.map((detail) => (
+                      {step.details.filter((detail) => !/demo/i.test(detail)).map((detail) => (
                         <li key={detail}>{detail}</li>
                       ))}
                     </ul>

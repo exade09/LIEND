@@ -7,11 +7,10 @@
   position: relative;
   overflow: clip;
   padding: 0 0 clamp(74px, 8vw, 118px);
-  border-bottom: 1px solid rgba(176, 190, 220, 0.08);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   background:
-    radial-gradient(ellipse at 20% 5%, rgba(104, 74, 225, 0.09), transparent 34rem),
-    radial-gradient(ellipse at 82% 100%, rgba(25, 174, 196, 0.055), transparent 31rem),
-    linear-gradient(180deg, #03040d 0%, #050711 100%);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #1238c8 0%, #1540d4 100%);
 }
 
 .statsScene::after {
@@ -20,25 +19,24 @@
   bottom: 25px;
   left: 9%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(114, 89, 220, 0.2), rgba(42, 196, 212, 0.16), transparent);
+  background: linear-gradient(90deg, transparent, rgba(123, 92, 255, 0.26), rgba(47, 220, 240, 0.2), transparent);
   content: "";
 }
 
 .statsScene :global(.network-stats) {
   position: relative;
   z-index: 1;
-  background: rgba(4, 6, 14, 0.45);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
 .faqScene {
   position: relative;
   overflow: clip;
-  border-top: 1px solid rgba(176, 190, 220, 0.09);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
   background:
-    radial-gradient(ellipse at 19% 40%, rgba(97, 67, 214, 0.085), transparent 30rem),
-    radial-gradient(ellipse at 88% 75%, rgba(24, 163, 187, 0.055), transparent 32rem),
-    linear-gradient(180deg, #050711 0%, #060812 58%, #03050c 100%);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #1238c8 0%, #0b1c72 100%);
   isolation: isolate;
 }
 

@@ -4,8 +4,29 @@
   touch-action: pan-y;
 }
 
+/*
+ * Backlight for the wordmark.
+ *
+ * Deliberately a separate, stationary layer rather than a `filter` on the
+ * letters: the letters are driven by a per-frame spring, and a filter anywhere
+ * in that subtree forces the whole thing to re-rasterise on every tick. A
+ * static bloom behind them buys the same lit-glass reading for free.
+ */
+.wordmark::before {
+  position: absolute;
+  z-index: 0;
+  inset: -22% -12%;
+  background:
+    radial-gradient(46% 52% at 32% 48%, rgba(77, 255, 90, 0.22), transparent 70%),
+    radial-gradient(42% 48% at 72% 54%, rgba(90, 140, 255, 0.28), transparent 72%);
+  content: "";
+  filter: blur(26px);
+  pointer-events: none;
+}
+
 .letter {
   position: absolute;
+  z-index: 1;
   display: block;
   transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--sx, 1), var(--sy, 1));
   transform-origin: 50% 65%;

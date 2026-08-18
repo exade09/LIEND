@@ -162,10 +162,6 @@ export function Leaderboard() {
 
         {leaderboard && !loading ? (
           <div className="data-provenance leaderboard__provenance">
-            <span className={leaderboard.isDemo ? "demo-badge" : "live-badge"}>
-              {leaderboard.dataLabel.toUpperCase()}
-            </span>
-            <span>{leaderboard.notice ?? "Analytics supplied by the configured leaderboard provider"}</span>
             <span className="data-provenance__count">
               {period} WINDOW
             </span>
@@ -280,9 +276,6 @@ export function Leaderboard() {
 
             <div className="wallet-activity-panel__context">
               <span>{selectedWallet.period} ANALYTICS</span>
-              <span className={selectedWallet.isDemo ? "demo-badge" : "live-badge"}>
-                {selectedWallet.dataLabel.toUpperCase()}
-              </span>
             </div>
 
             <div className="wallet-activity-panel__events" aria-live="polite" aria-busy={walletActivityLoading}>

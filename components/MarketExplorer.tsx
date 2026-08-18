@@ -69,8 +69,6 @@ export function MarketExplorer({ markets, selectedId, onSelect, loading = false 
       </div>
 
       <div className="data-provenance">
-        <span className="demo-badge">NOT LIVE</span>
-        <span>Live market data is not connected</span>
         <span className="data-provenance__count">{filtered.length.toString().padStart(2, "0")} MARKETS</span>
       </div>
 

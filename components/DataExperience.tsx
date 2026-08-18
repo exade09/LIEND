@@ -91,7 +91,6 @@ export default function DataExperience() {
 
           <footer className={styles.dataFooter} data-reveal>
             <span>PUBLIC ANALYTICS LAYER</span>
-            <span>Mock records remain separated from live protocol data</span>
           </footer>
         </div>
       </section>

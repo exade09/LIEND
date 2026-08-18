@@ -1,7 +1,7 @@
 .story {
   position: relative;
   min-height: 205svh;
-  background: #05050e;
+  background: #1238c8;
   view-timeline-axis: block;
   view-timeline-name: --liend-concept;
 }
@@ -27,14 +27,14 @@
   overflow: hidden;
 }
 
+/* The hard 50% split is the point of the scene: two routes, one boundary. It
+   stays, but the halves are now tinted rather than merely light and dark. */
 .baseField {
   background:
-    radial-gradient(ellipse 46% 42% at 10% 57%, rgba(121, 91, 158, 0.06), transparent 60%),
-    radial-gradient(ellipse 46% 42% at 88% 52%, rgba(23, 174, 197, 0.1), transparent 58%),
-    radial-gradient(ellipse 40% 40% at 63% 68%, rgba(107, 72, 226, 0.085), transparent 54%),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.02), transparent 55%),
-    linear-gradient(90deg, rgba(18, 18, 29, 0.96) 0 49.9%, rgba(5, 12, 22, 0.94) 50.1% 100%),
-    #05050e;
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(90deg, rgba(18, 40, 140, 0.55) 0 49.9%, rgba(21, 64, 212, 0.35) 50.1% 100%),
+    #1238c8;
 }
 
 .canvas {
@@ -69,10 +69,12 @@
 }
 
 .intro h2 {
-  font-size: clamp(43px, 5vw, 73px);
-  font-weight: 510;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: #fff;
 }
 
 .intro h2 span {
@@ -81,9 +83,8 @@
 
 .intro h2 span:last-child {
   margin-top: 6px;
-  background: linear-gradient(100deg, #b3a2ff 6%, #7c86ff 48%, #57d6e1 96%);
-  background-clip: text;
-  color: transparent;
+  color: var(--signal);
+  background: none;
 }
 
 .intro > p:last-child {
@@ -94,13 +95,40 @@
   line-height: 1.65;
 }
 
+/* Both routes are framed inside one glass window, so the comparison reads as a
+   single instrument showing two states rather than as two separate cards. */
 .comparison {
+  position: relative;
   display: grid;
   min-height: 365px;
+  overflow: hidden;
   align-self: center;
-  border-top: 1px solid rgba(172, 187, 217, 0.17);
-  border-bottom: 1px solid rgba(172, 187, 217, 0.14);
+  padding-top: 32px;
+  border: 2px solid var(--chrome-hi);
+  border-radius: var(--radius-window);
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel), var(--shadow-window);
   grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr);
+}
+
+.comparison::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--titlebar);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 32px;
+  content: "route.exe";
+  pointer-events: none;
 }
 
 .route {
@@ -112,13 +140,13 @@
 }
 
 .sellRoute {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), transparent 68%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.024), transparent 68%);
 }
 
 .liendRoute {
   background:
-    radial-gradient(circle at 80% 60%, rgba(31, 192, 210, 0.065), transparent 45%),
-    linear-gradient(220deg, rgba(89, 70, 214, 0.07), transparent 65%);
+    radial-gradient(circle at 80% 60%, rgba(47, 220, 240, 0.09), transparent 45%),
+    linear-gradient(220deg, rgba(107, 84, 235, 0.1), transparent 65%);
 }
 
 .routeHeader,
@@ -151,16 +179,19 @@
 }
 
 .routeHeader > div > span {
-  color: #626d80;
+  color: #6b7789;
+  font-family: var(--font-mono);
   font-size: 7px;
-  font-weight: 650;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
 }
 
 .routeHeader h3 {
   margin: 2px 0 0;
+  font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.22em;
 }
 
 .steps {
@@ -194,23 +225,27 @@
   width: 28px;
   height: 28px;
   place-items: center;
-  border: 1px solid rgba(168, 182, 211, 0.15);
+  border: 1px solid rgba(168, 182, 211, 0.16);
   border-radius: 50%;
-  background: rgba(5, 7, 15, 0.82);
-  color: #717c90;
+  background: linear-gradient(180deg, rgba(150, 168, 220, 0.08), rgba(5, 7, 15, 0.82));
+  box-shadow: var(--bevel);
+  color: #7a8599;
+  font-family: var(--font-mono);
   font-size: 7px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .liendRoute .stepIndex {
-  border-color: rgba(100, 114, 237, 0.28);
-  color: #a192ef;
+  border-color: rgba(120, 134, 245, 0.32);
+  color: #ac9dfa;
 }
 
+/* The terminal step of the LIEND route is the payoff — the only node allowed
+   to actually emit light. */
 .liendRoute .step:last-child .stepIndex {
-  border-color: rgba(56, 205, 221, 0.32);
-  color: #6edbe5;
-  box-shadow: 0 0 20px rgba(43, 185, 208, 0.09);
+  border-color: rgba(77, 255, 195, 0.36);
+  box-shadow: var(--bevel), 0 0 22px rgba(77, 255, 195, 0.22);
+  color: var(--signal);
 }
 
 .step strong {
@@ -266,13 +301,15 @@
   width: 36px;
   height: 36px;
   place-items: center;
-  border: 1px solid rgba(156, 172, 201, 0.17);
+  border: 1px solid rgba(156, 172, 201, 0.2);
   border-radius: 50%;
-  background: #080a13;
-  color: #737e91;
+  background: linear-gradient(180deg, rgba(150, 168, 220, 0.12), rgba(8, 10, 19, 0.95));
+  box-shadow: var(--bevel);
+  color: #7c8798;
+  font-family: var(--font-mono);
   font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
 }
 
 .pivot i {
@@ -290,9 +327,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  color: #606b7e;
+  color: #6a7688;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 

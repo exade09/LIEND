@@ -65,6 +65,11 @@ export function Header() {
             </ProductLink>
           </div>
           <LaunchAppLink className="button button--small button--primary launch-nav" />
+          <span className="window-controls" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
           <button
             className="menu-button"
             type="button"

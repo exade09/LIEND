@@ -1,7 +1,21 @@
 import type { Metadata, Viewport } from "next"
+import { IBM_Plex_Mono, Silkscreen } from "next/font/google"
 import "./globals.css"
+import "./webcore.css"
 
 import { project } from "@/config/project"
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex",
+})
+
+const silkscreen = Silkscreen({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-silk",
+})
 
 export const metadata: Metadata = {
   title: "LIEND | Utility liquidity for migrated tokens",
@@ -23,13 +37,13 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#03040d",
+  themeColor: "#1540d4",
   colorScheme: "dark",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${plexMono.variable} ${silkscreen.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content

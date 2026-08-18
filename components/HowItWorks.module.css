@@ -1,7 +1,7 @@
 .story {
   position: relative;
   min-height: 245svh;
-  background: #030710;
+  background: #1238c8;
   view-timeline-axis: block;
   view-timeline-name: --liend-route;
 }
@@ -29,11 +29,9 @@
 
 .baseField {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 55%, rgba(74, 99, 189, 0.05), transparent 70%),
-    radial-gradient(ellipse 64% 36% at 50% 52%, rgba(61, 85, 179, 0.13), transparent 72%),
-    radial-gradient(ellipse 34% 48% at 14% 48%, rgba(91, 57, 195, 0.075), transparent 72%),
-    radial-gradient(ellipse 34% 48% at 86% 48%, rgba(17, 157, 183, 0.075), transparent 72%),
-    linear-gradient(180deg, #03060e, #050a14 52%, #030710);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #0b1c72, #1540d4);
 }
 
 .canvas {
@@ -68,10 +66,12 @@
 }
 
 .intro h2 {
-  font-size: clamp(43px, 5vw, 73px);
-  font-weight: 510;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: #fff;
 }
 
 .intro > p:last-child {
@@ -85,17 +85,39 @@
 .routeFrame {
   position: relative;
   min-height: 390px;
+  overflow: hidden;
   align-self: center;
-  border-top: 1px solid rgba(172, 188, 218, 0.18);
-  border-bottom: 1px solid rgba(172, 188, 218, 0.16);
-  background: linear-gradient(180deg, rgba(7, 13, 25, 0.76), rgba(4, 8, 17, 0.5));
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.18);
+  padding-top: 32px;
+  border: 2px solid var(--chrome-hi);
+  border-radius: var(--radius-window);
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel), var(--shadow-window);
+}
+
+.routeFrame::before {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--titlebar);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 32px;
+  content: "flow.exe";
+  pointer-events: none;
 }
 
 .track {
   position: absolute;
   z-index: 1;
-  top: 58px;
+  top: 90px;
   right: calc(100% / 12);
   left: calc(100% / 12);
   height: 1px;
@@ -107,8 +129,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #735be0, #627aed 48%, #32c6d8);
-  box-shadow: 0 0 10px rgba(57, 194, 216, 0.36);
+  background: linear-gradient(90deg, #7b5cff, #6b84f5 48%, #2fdcf0);
+  box-shadow: 0 0 12px rgba(47, 220, 240, 0.45);
   transform: scaleX(0.05);
   transform-origin: left;
 }
@@ -126,6 +148,8 @@
   min-width: 0;
 }
 
+/* Each node is a beveled glass button seated on the track, ringed by an opaque
+   halo so the track line appears to pass behind it rather than through it. */
 .node {
   position: relative;
   z-index: 2;
@@ -135,19 +159,20 @@
   align-items: center;
   justify-content: center;
   margin-inline: auto;
-  border: 1px solid rgba(154, 172, 208, 0.17);
+  border: 1px solid rgba(160, 178, 216, 0.2);
   border-radius: 50%;
-  background: #070c17;
-  color: #69768e;
-  box-shadow: 0 0 0 6px rgba(5, 9, 18, 0.92);
+  background: linear-gradient(180deg, rgba(150, 168, 220, 0.14), rgba(7, 12, 23, 0.96));
+  color: #74819a;
+  box-shadow: var(--bevel), 0 0 0 6px rgba(5, 9, 18, 0.92);
 }
 
 .node span {
   position: absolute;
   top: -20px;
-  color: #59657a;
+  color: #626e83;
+  font-family: var(--font-mono);
   font-size: 7px;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.14em;
 }
 
 .step article {
@@ -163,10 +188,11 @@
 
 .step h3 {
   margin: 9px 0 11px;
-  color: #d2d6df;
+  color: #d8dde8;
+  font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 640;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
 }
 
 .step p {
@@ -179,9 +205,10 @@
 .technicalNote {
   justify-self: end;
   margin: 0;
-  color: #606b7f;
+  color: #6a7688;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -269,13 +296,15 @@
   .step:nth-child(4) .node,
   .step:nth-child(5) .node,
   .step:nth-child(6) .node {
-    border-color: rgba(95, 105, 228, 0.31);
-    color: #a18ff2;
+    border-color: rgba(114, 124, 240, 0.34);
+    color: #ac9dfa;
   }
 
+  /* Arrival: the last node is the only one that emits the signal colour. */
   .step:last-child .node {
-    border-color: rgba(48, 202, 220, 0.36);
-    color: #65dbe5;
+    border-color: rgba(77, 255, 195, 0.38);
+    box-shadow: var(--bevel), 0 0 0 6px rgba(5, 9, 18, 0.92), 0 0 24px rgba(77, 255, 195, 0.22);
+    color: var(--signal);
   }
 }
 

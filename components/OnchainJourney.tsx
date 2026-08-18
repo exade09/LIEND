@@ -110,7 +110,6 @@ export function OnchainJourney() {
                   <Icon name="sol" size={15} />
                   {project.network}
                 </span>
-                <span className={styles.demoBadge}>EXAMPLE ROUTE</span>
               </div>
 
               <div className={styles.simpleRoute} aria-label="Simple route">
@@ -147,7 +146,7 @@ export function OnchainJourney() {
                         <strong>{step.label}</strong>
                         <small>{step.instruction}</small>
                       </span>
-                      <span className={styles.routeStatus}>{step.status}</span>
+                      <span className={styles.routeStatus}>{step.status === "DEMO" ? "" : step.status}</span>
                     </li>
                   )
                 })}
@@ -158,7 +157,6 @@ export function OnchainJourney() {
               <TransactionTrace
                 className={styles.trace}
                 steps={demonstration.trace}
-                isDemo
                 defaultView="full"
                 title="Transaction Trace"
                 compact
@@ -167,9 +165,6 @@ export function OnchainJourney() {
           </div>
 
           <footer className={styles.stageFooter}>
-            <p>
-              Demonstration data only, no transaction was submitted to Solana
-            </p>
             <span aria-hidden="true">SCROLL TO FOLLOW ROUTE</span>
           </footer>
         </div>

@@ -1,7 +1,7 @@
 .journeyGroup {
   position: relative;
   isolation: isolate;
-  background: #04060d;
+  background: #1238c8;
 }
 
 .journey {
@@ -10,7 +10,7 @@
   position: relative;
   height: 175vh;
   min-height: 1050px;
-  background: linear-gradient(180deg, #050711 0%, #060913 46%, #03050c 100%);
+  background: linear-gradient(180deg, #0b1c72 0%, #1540d4 46%, #1238c8 100%);
   isolation: isolate;
 }
 
@@ -135,27 +135,29 @@
 
 .eyebrow {
   margin: 0;
-  color: #8372d0;
+  color: #9484e0;
+  font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-weight: 500;
+  letter-spacing: 0.22em;
 }
 
 .intro h2 {
   max-width: 470px;
   margin: 20px 0 0;
-  font-size: clamp(36px, 4.2vw, 68px);
-  font-weight: 520;
-  letter-spacing: -0.052em;
-  line-height: 0.96;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 42px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.12;
+  color: #fff;
 }
 
 .intro h2 span {
   display: block;
   margin-top: 8px;
-  background: linear-gradient(100deg, #aaa0e9, #7990ed 48%, #6acfd9);
-  background-clip: text;
-  color: transparent;
+  color: var(--signal);
+  background: none;
 }
 
 .lede {
@@ -177,39 +179,44 @@
   align-items: center;
   gap: 7px;
   padding: 0 9px;
-  border: 1px solid rgba(176, 190, 220, 0.14);
-  border-radius: 6px;
-  color: #798398;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-chip);
+  background: var(--glass);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #838da2;
+  font-family: var(--font-mono);
   font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.1em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
 }
 
 .context .demoBadge {
-  border-color: rgba(132, 102, 239, 0.24);
-  background: rgba(113, 79, 225, 0.055);
-  color: #9182cb;
+  border-color: rgba(146, 116, 255, 0.28);
+  background: linear-gradient(180deg, rgba(123, 92, 255, 0.16), rgba(113, 79, 225, 0.04));
+  color: #a294dc;
 }
 
 .simpleRoute {
   flex-wrap: wrap;
   gap: 7px;
   margin-top: 34px;
-  color: #7e899e;
+  color: #8892a6;
+  font-family: var(--font-mono);
   font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
 }
 
 .simpleRoute span {
-  padding: 7px 8px;
-  border: 1px solid rgba(176, 190, 220, 0.12);
-  border-radius: 5px;
-  background: rgba(4, 7, 15, 0.55);
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-chip);
+  background: linear-gradient(180deg, var(--glass-strong), rgba(4, 7, 15, 0.6));
+  box-shadow: var(--bevel);
 }
 
 .simpleRoute svg {
-  color: #6759a6;
+  color: #7263b8;
 }
 
 .routePanel {
@@ -232,8 +239,8 @@
   display: block;
   width: 100%;
   height: var(--journey-line);
-  background: linear-gradient(180deg, #8461f3, #3373d8 54%, #2dd7dc);
-  box-shadow: 0 0 10px rgba(64, 175, 222, 0.34);
+  background: linear-gradient(180deg, #7b5cff, #3f7bff 54%, #2fdcf0);
+  box-shadow: 0 0 12px rgba(47, 220, 240, 0.42);
 }
 
 .routeList {
@@ -262,8 +269,9 @@
 }
 
 .routeStep.isCurrent {
-  border-color: rgba(116, 99, 209, 0.19);
-  background: linear-gradient(90deg, rgba(107, 76, 219, 0.075), rgba(31, 122, 155, 0.025));
+  border-color: var(--line);
+  background: linear-gradient(90deg, rgba(123, 92, 255, 0.14), rgba(47, 220, 240, 0.03));
+  box-shadow: var(--bevel);
   opacity: 1;
   transform: translateX(4px);
 }
@@ -275,26 +283,29 @@
   width: 31px;
   height: 31px;
   place-items: center;
-  border: 1px solid rgba(151, 162, 190, 0.2);
+  border: 1px solid rgba(158, 170, 200, 0.22);
   border-radius: 50%;
-  background: #070a13;
-  color: #68758c;
+  background: linear-gradient(180deg, rgba(150, 168, 220, 0.12), rgba(7, 10, 19, 0.95));
+  box-shadow: var(--bevel);
+  color: #717e95;
   transition: border-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
 }
 
 .isPassed .routeNode {
-  border-color: rgba(119, 96, 225, 0.34);
-  color: #9480e8;
+  border-color: rgba(134, 112, 240, 0.36);
+  color: #a08cf2;
 }
 
+/* Only the step currently under the playhead emits light. */
 .isCurrent .routeNode {
-  border-color: rgba(60, 211, 222, 0.48);
-  color: #56dbe3;
-  box-shadow: 0 0 18px rgba(47, 184, 207, 0.18);
+  border-color: rgba(77, 255, 195, 0.5);
+  box-shadow: var(--bevel), 0 0 20px rgba(77, 255, 195, 0.24);
+  color: var(--signal);
 }
 
 .routeIndex {
-  color: #526075;
+  color: #5c6a80;
+  font-family: var(--font-mono);
   font-size: 7px;
   text-align: center;
 }
@@ -312,34 +323,39 @@
 }
 
 .routeCopy strong {
-  color: #a5aebd;
+  color: #adb6c5;
+  font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 650;
-  letter-spacing: 0.06em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
 }
 
 .routeCopy small {
   margin-top: 2px;
-  color: #566276;
+  color: #606c80;
+  font-family: var(--font-mono);
   font-size: 7px;
 }
 
 .routeStatus {
-  color: #685c8c;
+  color: #7a6ca0;
+  font-family: var(--font-mono);
   font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
 }
 
+/* The trace inspector is a glass window mounted beside the route. */
 .inspector {
   min-width: 0;
   align-self: center;
   padding: 9px;
-  border: 1px solid rgba(176, 190, 220, 0.13);
-  border-radius: 12px;
-  background: rgba(4, 6, 14, 0.82);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(15px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-window);
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass) 42%, var(--glass-tint));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel), var(--shadow-window);
 }
 
 .trace {
@@ -353,9 +369,10 @@
   justify-content: space-between;
   padding-top: 12px;
   border-top: 1px solid rgba(176, 190, 220, 0.12);
-  color: #4e596c;
+  color: #58637a;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
 }
 
 .stageFooter p {
@@ -363,8 +380,8 @@
 }
 
 .stageFooter > span {
-  color: #655a93;
-  font-weight: 650;
+  color: #7568a6;
+  font-weight: 500;
 }
 
 @media (max-width: 1180px) {

@@ -66,7 +66,6 @@ export function HolderGate() {
         <div className="holder-gate-card">
           <div className="holder-gate-card__topline">
             <span><i /> ACCESS GATE</span>
-            <span className="demo-badge">ACCESS STATES</span>
           </div>
 
           <div className="gate-identity">

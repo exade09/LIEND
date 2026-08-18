@@ -9,10 +9,10 @@
 
 :root {
   /* Surfaces — near-black base */
-  --liend-ink: #03040d;
-  --liend-ink-raised: #070913;
-  --liend-ink-soft: #0a0d19;
-  --liend-ink-muted: #101421;
+  --liend-ink: #0b1c72;
+  --liend-ink-raised: #10268a;
+  --liend-ink-soft: #1632a4;
+  --liend-ink-muted: #1c3cbe;
 
   /* Lines */
   --liend-line: rgba(176, 190, 220, 0.14);
@@ -33,11 +33,9 @@
   /* Semantic */
   --liend-danger: #ff7f96;
   --liend-warning: #eec781;
-  --liend-success: #53e0bd;
-
-  /* Type */
-  --liend-font-ui: Inter, "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
-  --liend-font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  --liend-success: #4dff5a;
+  --liend-font-ui: "IBM Plex Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  --liend-font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
   /* Shape + motion */
   --liend-radius: 12px;

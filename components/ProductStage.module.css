@@ -3,9 +3,8 @@
   height: calc(var(--product-stage-steps) * 78svh + 20svh);
   min-height: 2420px;
   background:
-    radial-gradient(ellipse at 12% 36%, rgba(104, 66, 245, 0.08), transparent 31%),
-    radial-gradient(ellipse at 89% 68%, rgba(31, 198, 219, 0.06), transparent 30%),
-    linear-gradient(180deg, #04050e 0%, #070914 52%, #03040d 100%);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #0b1c72 0%, #1540d4 52%, #1238c8 100%);
   isolation: isolate;
 }
 
@@ -86,20 +85,22 @@
 .kicker {
   display: block;
   margin-bottom: 9px;
-  color: #7667bc;
+  color: #8776cc;
+  font-family: var(--font-mono);
   font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
 }
 
 .intro h2 {
   max-width: 790px;
   margin: 0;
-  color: #edf0f7;
-  font-size: clamp(27px, 3vw, 47px);
-  font-weight: 510;
-  letter-spacing: -0.045em;
-  line-height: 1.02;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 36px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
 }
 
 .intro p {
@@ -110,15 +111,39 @@
   line-height: 1.6;
 }
 
+/* The scroll-driven product tour is itself a window: a rail on the left, a
+   viewport on the right, both inside one beveled glass frame. */
 .workspace {
+  position: relative;
   display: grid;
   min-height: 0;
-  border-top: 1px solid rgba(181, 197, 231, 0.18);
-  border-bottom: 1px solid rgba(181, 197, 231, 0.14);
-  background: rgba(4, 6, 14, 0.32);
-  box-shadow: 0 38px 100px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(12px);
+  overflow: hidden;
+  padding-top: 32px;
+  border: 2px solid var(--chrome-hi);
+  border-radius: var(--radius-window);
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel), var(--shadow-window);
   grid-template-columns: minmax(235px, 0.23fr) minmax(0, 1fr);
+}
+
+.workspace::before {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--titlebar);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 32px;
+  content: "liend.exe";
+  pointer-events: none;
 }
 
 .rail {
@@ -151,35 +176,38 @@
   min-height: 64px;
   align-items: start;
   padding: 11px 8px 11px 18px;
-  border: 0;
-  border-radius: 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: #667185;
+  color: #6f7b91;
   text-align: left;
   grid-template-columns: 31px minmax(0, 1fr);
-  transition: color var(--t-color), background var(--t-color);
+  transition: color var(--t-color), background var(--t-color), box-shadow var(--t-surface);
 }
 
 .rail button:hover {
-  background: rgba(255, 255, 255, 0.025);
-  color: #aeb6c5;
+  background: var(--glass);
+  color: #b4bccc;
 }
 
+/* The step you are on is a lit glass plate raised out of the rail. */
 .activeStep button {
-  background: linear-gradient(90deg, rgba(111, 78, 231, 0.09), rgba(37, 166, 190, 0.025));
-  color: #f0f2f7;
+  border-color: var(--line);
+  background: linear-gradient(90deg, rgba(123, 92, 255, 0.16), rgba(47, 220, 240, 0.04));
+  box-shadow: var(--bevel);
+  color: #f2f5fd;
 }
 
 .stepIndex {
   padding-top: 2px;
-  color: #6557a5;
-  font-family: "SFMono-Regular", Consolas, monospace;
+  color: #7263b8;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
 }
 
 .activeStep .stepIndex {
-  color: #63d5e1;
+  color: var(--signal);
 }
 
 .stepCopy strong,
@@ -188,9 +216,10 @@
 }
 
 .stepCopy strong {
+  font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -221,8 +250,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #8c62ff, #34d8e7);
-  box-shadow: 0 0 10px rgba(66, 205, 225, 0.45);
+  background: linear-gradient(180deg, #7b5cff, #2fdcf0);
+  box-shadow: 0 0 12px rgba(47, 220, 240, 0.5);
   transform: scaleY(var(--product-stage-progress));
   transform-origin: top;
 }
@@ -231,7 +260,8 @@
   display: grid;
   min-width: 0;
   min-height: 0;
-  background: rgba(3, 5, 12, 0.72);
+  background: rgba(3, 5, 14, 0.66);
+  box-shadow: inset 1px 0 0 rgba(2, 3, 10, 0.5);
   grid-template-rows: minmax(0, 1fr);
 }
 
@@ -301,9 +331,10 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 20px;
-  color: #475164;
+  color: #525d73;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.16em;
 }
 
 @media (max-height: 800px) and (min-width: 901px) {
@@ -484,10 +515,11 @@
     margin-bottom: 16px;
     border-top: 1px solid rgba(181, 197, 231, 0.18);
     border-bottom: 1px solid rgba(181, 197, 231, 0.1);
-    color: #7061b0;
+    color: #8371c2;
+    font-family: var(--font-mono);
     font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 

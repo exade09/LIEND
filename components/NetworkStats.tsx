@@ -15,8 +15,7 @@ export function NetworkStats() {
         <div>
           <h2 id="network-stats-title">NETWORK STATUS</h2>
           <p>
-            {project.network} <span aria-hidden="true">{"\u2022"}</span>{" "}
-            Utility not active
+            {project.network}
           </p>
         </div>
       </div>

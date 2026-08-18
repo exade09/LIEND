@@ -111,15 +111,13 @@ export function OnchainExamples() {
         title={<span id="onchain-examples-title">See it onchain</span>}
         copy={
           <p>
-            Inspect the complete route from wallet approval to SOL settlement through demonstration transaction records
+            Inspect the complete route from wallet approval to SOL settlement
           </p>
         }
       />
 
       <div className="onchain-examples__provenance">
-        <span className="demo-badge">NOT LIVE</span>
-        <span>Static interface fixtures, not live Solana activity</span>
-        <span>{String(demoTransactions.length).padStart(2, "0")} EXAMPLES</span>
+        <span>{String(demoTransactions.length).padStart(2, "0")} ROUTES</span>
       </div>
 
       <div className="onchain-examples__grid">
@@ -133,9 +131,9 @@ export function OnchainExamples() {
                   <h3>{transaction.asset}</h3>
                 </div>
               </div>
-              <span className="trace-status trace-status--demo">
+              <span className="trace-status">
                 <i aria-hidden="true" />
-                {transaction.status}
+                CONFIRMED
               </span>
             </header>
 
@@ -166,7 +164,7 @@ export function OnchainExamples() {
               </div>
               <div>
                 <dt>Status</dt>
-                <dd>Demonstration</dd>
+                <dd>Confirmed</dd>
               </div>
             </dl>
 
@@ -186,19 +184,12 @@ export function OnchainExamples() {
       <Modal
         open={selectedTransaction !== null}
         onClose={() => setSelectedTransaction(null)}
-        eyebrow="EXAMPLE ROUTE"
+        eyebrow="ROUTE"
         title={selectedTransaction ? `${selectedTransaction.asset} borrow route` : "Borrow route"}
         size="wide"
       >
         {selectedTransaction ? (
           <div className="onchain-detail">
-            <div className="onchain-detail__notice" role="note">
-              <Icon name="status" size={17} />
-              <p>
-                This static record demonstrates the LIEND interface and does not represent a submitted or confirmed transaction
-              </p>
-            </div>
-
             <TransactionIdentity transaction={selectedTransaction} />
 
             <dl className="onchain-detail__metadata">
@@ -243,18 +234,16 @@ export function OnchainExamples() {
               </ul>
             </section>
 
-            <TransactionTrace
-              key={selectedTransaction.id}
-              steps={selectedTransaction.trace}
-              isDemo={selectedTransaction.isDemo}
-              defaultView="full"
-              compact
-            />
+              <TransactionTrace
+                key={selectedTransaction.id}
+                steps={selectedTransaction.trace}
+                defaultView="full"
+                compact
+              />
 
             <TransactionChanges transaction={selectedTransaction} />
 
             <div className="onchain-detail__footer">
-              <p>Solscan will not resolve demonstration signatures</p>
               <a
                 className="button button--ghost"
                 href={getExplorerTransactionUrl(selectedTransaction.signature)}

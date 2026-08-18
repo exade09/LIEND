@@ -35,12 +35,18 @@
   overflow: hidden;
 }
 
+/*
+ * Hero substrate. The 64px machine grid matches the one on the page canvas so
+ * the pinned stage reads as the same surface rather than a separate panel, and
+ * it gives the droplets something to visibly distort as they travel over it.
+ */
 .baseField {
   background:
-    radial-gradient(ellipse 42% 62% at 5% 50%, rgba(94, 47, 217, 0.16), transparent 72%),
-    radial-gradient(ellipse 43% 58% at 95% 46%, rgba(17, 157, 194, 0.13), transparent 70%),
-    radial-gradient(ellipse 58% 32% at 50% 76%, rgba(38, 50, 114, 0.1), transparent 72%),
-    linear-gradient(180deg, rgba(2, 3, 11, 0.82) 0%, rgba(5, 6, 17, 0.72) 52%, rgba(3, 4, 13, 0.82) 100%);
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
+    radial-gradient(ellipse 50% 60% at 50% 48%, rgba(20, 48, 160, 0.35), transparent 70%),
+    linear-gradient(180deg, #071448 0%, #0a1c72 52%, #1540d4 100%);
+  mask-image: none;
 }
 
 .frame {
@@ -48,7 +54,7 @@
   display: grid;
   height: 100%;
   padding-block: clamp(88px, 10svh, 116px) clamp(26px, 4svh, 54px);
-  grid-template-rows: 1fr auto;
+  place-items: center;
 }
 
 .content {
@@ -61,12 +67,21 @@
   text-align: center;
 }
 
+/* Seated in a glass capsule so the first thing on the page already states the
+   material the rest of the design is made of. */
 .eyebrow {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #aeb5c4;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass-tint));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel);
+  color: #b6bfd3;
 }
 
 .eyebrow :global(.network-chip) {
@@ -74,13 +89,13 @@
 }
 
 .wordmarkSlot {
-  width: min(620px, 72vw);
-  margin: clamp(12px, 2svh, 24px) auto clamp(12px, 2svh, 20px);
+  width: min(720px, 78vw);
+  margin: 0 auto;
 }
 
 .headline {
   margin: 0;
-  color: #f2f3f8;
+  color: #f4f6fd;
   font-size: clamp(42px, 5.25vw, 78px);
   font-weight: 510;
   letter-spacing: -0.058em;
@@ -93,15 +108,16 @@
 
 .liquidityLine {
   margin-top: 8px;
-  background: linear-gradient(100deg, #f0ebff 4%, #a293ff 38%, #64a9f7 68%, #63e2e7 98%);
+  background: linear-gradient(100deg, #f6f2ff 4%, #b09fff 38%, #6fb4fb 68%, #57ecf2 98%);
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 10px 30px rgba(94, 92, 246, 0.22));
 }
 
 .supportingCopy {
   max-width: 650px;
   margin: 24px auto 0;
-  color: #b5bdcd;
+  color: #b9c2d6;
   font-size: clamp(14px, 1.25vw, 18px);
   line-height: 1.65;
 }
@@ -125,10 +141,11 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #8994a8;
+  color: #8f9ab0;
+  font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 650;
-  letter-spacing: 0.07em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: color var(--t-color);
 }
@@ -138,24 +155,36 @@
 }
 
 .brandLine {
-  color: #a5a2dc;
+  color: #aeaae4;
+  font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 650;
-  letter-spacing: 0.23em;
+  font-weight: 500;
+  letter-spacing: 0.26em;
 }
 
 .brandLine b {
   padding-inline: 4px;
-  color: #65cbdc;
+  color: var(--signal);
 }
 
+/*
+ * The route is the hero's status bar: a glass rail carrying the three product
+ * stages. It deliberately sits below the curtain's stacking order, so the
+ * droplets sweep over it on the way down.
+ */
 .route {
   display: grid;
   width: min(640px, 86%);
   align-items: center;
   justify-self: center;
-  padding: 0;
+  padding: 12px 22px;
   margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass-tint));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel);
   grid-template-columns: auto minmax(28px, 1fr) auto minmax(28px, 1fr) auto;
   list-style: none;
 }
@@ -167,15 +196,18 @@
 }
 
 .route span {
-  color: #626d81;
+  color: #6b7789;
+  font-family: var(--font-mono);
   font-size: 8px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
 }
 
 .route strong {
-  color: #d1d5de;
+  color: #d7dce8;
+  font-family: var(--font-mono);
   font-size: 9px;
-  letter-spacing: 0.16em;
+  font-weight: 500;
+  letter-spacing: 0.2em;
 }
 
 .routeLine {
@@ -183,13 +215,14 @@
   height: 1px;
   overflow: hidden;
   margin-inline: 18px;
-  background: rgba(169, 184, 213, 0.14);
+  background: rgba(169, 184, 213, 0.16);
 }
 
 .routeLine::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, #7770ee 38%, #43cfdf 70%, transparent);
+  background: linear-gradient(90deg, transparent, #7b5cff 38%, #2fdcf0 70%, transparent);
+  box-shadow: 0 0 12px rgba(47, 220, 240, 0.4);
   content: "";
   transform: scaleX(0.18);
   transform-origin: left;
@@ -203,11 +236,25 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #626d81;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--glass-strong), var(--glass-tint));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--bevel);
+  color: #7d8899;
+  font-family: var(--font-mono);
   font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.15em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  transition: color var(--t-color), border-color var(--t-color);
+}
+
+.scrollCue:hover {
+  border-color: rgba(78, 216, 236, 0.4);
+  color: var(--cyan);
 }
 
 .scrollCue svg {
@@ -346,6 +393,7 @@
 
   .route {
     width: 100%;
+    padding: 10px 16px;
     grid-template-columns: auto minmax(14px, 1fr) auto minmax(14px, 1fr) auto;
   }
 
