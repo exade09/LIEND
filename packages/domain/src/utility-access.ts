@@ -19,9 +19,8 @@ export type UtilityAccess =
   /** No wallet connected. Nothing is known. */
   | { state: "disconnected" }
   /**
-   * Wallet connected, but the LIEND token does not exist yet, so utility
-   * cannot be gated or granted. This is a real product state, not a demo or
-   * beta state.
+   * Wallet connected, mint unpublished. Utility is available for this wallet.
+   * This is a real product state, not a demo or beta state.
    */
   | { state: "token-not-launched"; wallet: string }
   /** Token configured; balance lookup in flight. */
@@ -51,9 +50,9 @@ export type UtilityAccess =
 
 export type UtilityAccessState = UtilityAccess["state"]
 
-/** True only for the one state where privileged operations may be offered. */
+/** True when the wallet may use LIEND utility, including unbacked pre-mint access. */
 export function canUseUtility(access: UtilityAccess): boolean {
-  return access.state === "eligible"
+  return access.state === "eligible" || access.state === "token-not-launched"
 }
 
 /**
@@ -101,7 +100,7 @@ export function describeUtilityAccess(access: UtilityAccess): string {
     case "disconnected":
       return "Connect a wallet to check LIEND utility access"
     case "token-not-launched":
-      return "LIEND utility activates after token launch"
+      return "LIEND utility is available for this wallet"
     case "holder-check-pending":
       return "Checking your LIEND balance"
     case "not-eligible":

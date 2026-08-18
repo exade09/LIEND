@@ -39,14 +39,14 @@ export function HolderGate() {
         <div className="holder-copy">
           <div className="section-kicker">HOLDER ACCESS</div>
           <h2>Enter the <span className="accent-text">utility layer</span></h2>
-          <p>LIEND utility is available to eligible LIEND holders</p>
+          <p>LIEND utility is available after a connected wallet is verified</p>
 
           <div className="access-flow" aria-label="Access sequence">
             {[
               ["01", "Obtain LIEND after migration", "Open the official Pump.fun destination"],
               ["02", "Connect a Solana wallet", "Use a standard wallet provider"],
               ["03", "Verify the position", "Read balance through the configured adapter"],
-              ["04", "Use LIEND utility", "Available only after an eligible result"],
+              ["04", "Use LIEND utility", "Available after wallet verification"],
             ].map(([index, title, copy]) => (
               <div key={index}>
                 <span>{index}</span>

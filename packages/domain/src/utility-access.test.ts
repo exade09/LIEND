@@ -10,9 +10,10 @@ describe("deriveUtilityAccess", () => {
     expect(access.state).toBe("disconnected")
   })
 
-  it("reports token-not-launched when no mint is configured", () => {
+  it("reports token-not-launched when no mint is configured, and still grants utility", () => {
     const access = deriveUtilityAccess({ wallet: WALLET, mint: null, required: null, balance: null })
     expect(access.state).toBe("token-not-launched")
+    expect(canUseUtility(access)).toBe(true)
   })
 
   it("stays pending when the balance is unknown", () => {
@@ -62,13 +63,18 @@ describe("deriveUtilityAccess", () => {
     expect(access.state).toBe("not-eligible")
   })
 
-  it("only ever grants utility in the eligible state", () => {
-    const states = [
+  it("grants utility when eligible or when the token has not launched yet", () => {
+    const locked = [
       deriveUtilityAccess({ wallet: null, mint: null, required: null, balance: null }),
-      deriveUtilityAccess({ wallet: WALLET, mint: null, required: null, balance: null }),
       deriveUtilityAccess({ wallet: WALLET, mint: MINT, required: 1n, balance: null }),
       deriveUtilityAccess({ wallet: WALLET, mint: MINT, required: 5n, balance: 1n }),
     ]
-    expect(states.some(canUseUtility)).toBe(false)
+    expect(locked.some(canUseUtility)).toBe(false)
+    expect(
+      canUseUtility(deriveUtilityAccess({ wallet: WALLET, mint: null, required: null, balance: null })),
+    ).toBe(true)
+    expect(
+      canUseUtility(deriveUtilityAccess({ wallet: WALLET, mint: MINT, required: 1n, balance: 1n })),
+    ).toBe(true)
   })
 })

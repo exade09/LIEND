@@ -52,7 +52,7 @@ describe("deriveView", () => {
   })
 
   it("maps every utility state", () => {
-    expect(deriveView(snap({ utility: { state: "token-not-launched" } }))).toBe("token-not-launched")
+    expect(deriveView(snap({ utility: { state: "token-not-launched" } }))).toBe("eligible")
     expect(deriveView(snap({ utility: { state: "holder-check-pending" } }))).toBe("holder-check-pending")
     expect(deriveView(snap({ utility: { state: "not-eligible", requirementPublished: true } }))).toBe("not-eligible")
     expect(deriveView(snap({ utility: { state: "eligible" } }))).toBe("eligible")
@@ -64,9 +64,9 @@ describe("deriveView", () => {
 })
 
 describe("copyFor", () => {
-  it("uses the approved pre-launch wording, not beta/demo/test", () => {
+  it("treats pre-mint utility as available, without beta/demo/test wording", () => {
     const copy = copyFor("token-not-launched", snap({ utility: { state: "token-not-launched" } }))
-    expect(copy.title.toLowerCase()).toContain("activates after launch")
+    expect(copy.title.toLowerCase()).toContain("available")
     const all = `${copy.title} ${copy.body}`.toLowerCase()
     for (const banned of ["beta", "demo", "test", "prototype", "coming soon"]) {
       expect(all).not.toContain(banned)
@@ -124,11 +124,12 @@ describe("copyFor", () => {
 })
 
 describe("toneFor — semantic colour cannot drift from meaning", () => {
-  it("only eligible reads as success", () => {
+  it("eligible and pre-mint utility read as success", () => {
     expect(toneFor("eligible")).toBe("ok")
+    expect(toneFor("token-not-launched")).toBe("ok")
     const others = [
       "first-install", "disconnected", "pairing", "detecting", "token-loading",
-      "unsupported-page", "supported-no-token", "token-not-launched",
+      "unsupported-page", "supported-no-token",
       "holder-check-pending", "not-eligible", "session-expired", "error",
       "detection-failed", "not-configured",
     ] as const

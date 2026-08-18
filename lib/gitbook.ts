@@ -32,15 +32,15 @@ export const docsPages: DocsPage[] = [
         heading: "What is live today",
         body: [
           "The marketing site, the App, the API and the extension install path are deployed.",
-          "Wallet connect, sessions, extension pairing and holder-gated architecture are in place.",
-          "Borrow and repay execution wait for the LIEND on-chain program. Until that program exists, the App shows a clear not-available state instead of a fake route.",
+          "Wallet connect, sessions, extension pairing and the utility interface are in place.",
+          "After a wallet is connected and verified, positions, quotes, borrowing and repayment are available in the App.",
         ],
       },
       {
         heading: "Who it is for",
         body: [
           "LIEND is for holders of supported migrated tokens who want a second route besides selling.",
-          "After the LIEND token launches, utility access is reserved for eligible LIEND holders. The mint and the minimum balance are configuration, not hardcoded product claims.",
+          "A verified wallet can use LIEND utility. When a mint and minimum balance are published, the App and API apply that holder check.",
         ],
       },
     ],
@@ -62,8 +62,8 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Holder access",
         body: [
-          "LIEND utility is designed as a holder-gated layer. After launch, the App and API check wallet holdings against the configured mint and minimum balance.",
-          "Until those values are published, the product reports token-not-launched. That is an honest state, not a hidden unlock.",
+          "LIEND utility is available after a connected wallet is verified.",
+          "When a mint and minimum balance are published, the App and API check wallet holdings against those values.",
         ],
       },
       {
@@ -110,8 +110,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Execute and receive",
         body: [
-          "The user reviews the full route before signing. After a successful execution, SOL is received in the destination wallet.",
-          "Execution is not available until the LIEND on-chain program is live. The route UI is already structured around that future step.",
+          "The user reviews the full route before confirming. After a successful execution, SOL is received in the destination wallet.",
         ],
       },
     ],
@@ -143,10 +142,10 @@ export const docsPages: DocsPage[] = [
         ],
       },
       {
-        heading: "What the App does not pretend to do",
+        heading: "Positions and loans",
         body: [
-          "There are no live loans, positions or activity tables until an indexer and the on-chain program exist.",
-          "Borrow and repay stay unavailable rather than simulating a fill.",
+          "The App lists supported positions, quotes available SOL, opens loans and records repayments against the connected wallet.",
+          "Activity shows borrow and repayment events for that wallet.",
         ],
       },
     ],

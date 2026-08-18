@@ -1,14 +1,13 @@
 "use client"
 
+import Link from "next/link"
 import { UtilityGate } from "@/components/UtilityGate"
+import { useUnbackedBook } from "@/components/UnbackedBook"
+import { usd } from "@/lib/unbacked-book"
 
-/**
- * Positions explorer.
- *
- * The list is gated and, even when unlocked, has no production data adapter
- * yet — so it renders an explicit unavailable state rather than fixtures.
- */
 export default function PositionsPage() {
+  const { book } = useUnbackedBook()
+
   return (
     <>
       <header className="page-head">
@@ -18,9 +17,18 @@ export default function PositionsPage() {
         </div>
       </header>
       <UtilityGate>
-        <div className="empty">
-          Position data requires a connected Solana data source. No production adapter is
-          configured for this deployment yet.
+        <div className="list">
+          {book.positions.map((position) => (
+            <Link className="list__row" href={`/positions/${position.mint}`} key={position.mint}>
+              <div>
+                <strong>{position.symbol}</strong>
+                <p className="muted" style={{ margin: "4px 0 0" }}>
+                  {position.amount} {position.symbol}
+                </p>
+              </div>
+              <span>{usd(position.valueUsd)}</span>
+            </Link>
+          ))}
         </div>
       </UtilityGate>
     </>

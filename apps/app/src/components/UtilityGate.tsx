@@ -1,19 +1,21 @@
 "use client"
 
 import Link from "next/link"
-import { describeUtilityAccess, type UtilityAccess } from "@liend/domain"
+import { canUseUtility, describeUtilityAccess, type UtilityAccess } from "@liend/domain"
 import { useSession } from "./SessionProvider"
 
 /** Small status chip used across the App header and dashboard. */
 export function UtilityBadge({ access }: { access: UtilityAccess }) {
   const tone =
-    access.state === "eligible" ? "ok" : access.state === "disconnected" ? "idle" : "locked"
+    access.state === "eligible" || access.state === "token-not-launched"
+      ? "ok"
+      : access.state === "disconnected"
+        ? "idle"
+        : "locked"
   const label =
-    access.state === "eligible"
+    access.state === "eligible" || access.state === "token-not-launched"
       ? "Utility available"
-      : access.state === "token-not-launched"
-        ? "Pre-launch"
-        : access.state === "holder-check-pending"
+      : access.state === "holder-check-pending"
           ? "Checking"
           : access.state === "disconnected"
             ? "Not connected"
@@ -31,9 +33,8 @@ export function UtilityBadge({ access }: { access: UtilityAccess }) {
 /**
  * Wraps any privileged surface.
  *
- * Renders children only in the `eligible` state. Every other state gets an
- * explicit, truthful explanation — never a disabled-looking version of a
- * feature that would imply it exists and is merely switched off.
+ * Renders children when the wallet may use utility, including unbacked access
+ * before a mint exists. Every other state gets an explicit explanation.
  *
  * This is presentation. The server independently enforces the same rule.
  */
@@ -68,17 +69,12 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (access.state === "eligible") return <>{children}</>
+  if (canUseUtility(access)) return <>{children}</>
 
   return (
     <div className="notice">
       <strong>{describeUtilityAccess(access)}</strong>
-      {access.state === "token-not-launched" ? (
-        <p>
-          The LIEND token has not launched yet. Borrowing, positions and loans activate once the
-          token is live and this wallet meets the holding requirement.
-        </p>
-      ) : access.state === "holder-check-pending" ? (
+      {access.state === "holder-check-pending" ? (
         <p>Your LIEND balance could not be verified yet. This does not mean you are ineligible.</p>
       ) : access.state === "not-eligible" ? (
         <p>

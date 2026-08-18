@@ -66,16 +66,15 @@ export async function resolveUtilityAccess(wallet: string | null): Promise<Utili
 }
 
 /**
- * Gate for privileged operations. Throws a typed failure unless the wallet is
- * verifiably eligible right now — pending and error states are refused.
+ * Gate for privileged operations. Throws a typed failure unless the wallet
+ * may use utility right now — pending and error states are refused.
  */
 export async function requireUtilityAccess(wallet: string): Promise<void> {
   const access = await resolveUtilityAccess(wallet)
   switch (access.state) {
     case "eligible":
-      return
     case "token-not-launched":
-      throw new ApiFailure("token_not_launched", "LIEND utility activates after token launch")
+      return
     case "holder-check-pending":
       throw new ApiFailure("adapter_unavailable", "LIEND holdings could not be verified")
     case "not-eligible":

@@ -40,7 +40,7 @@ export default function SettingsPage() {
             <span className="muted">
               {config.token.status === "launched"
                 ? "Holder requirement applies"
-                : "Activates after token launch"}
+                : "Open for connected wallets"}
             </span>
           </div>
         </div>

@@ -4,17 +4,14 @@ import Link from "next/link"
 import { use } from "react"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
+import { useUnbackedBook } from "@/components/UnbackedBook"
+import { findPosition, maxBorrowSol, sol, usd } from "@/lib/unbacked-book"
 
-/**
- * Position detail — the future Extension deep-link target.
- *
- * The mint arrives from an untrusted source (a URL a content script built),
- * so it is validated here before anything renders. Financial values are never
- * read from the link; they will come from the API once adapters exist.
- */
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
   const valid = parseMint(mint)
+  const { book } = useUnbackedBook()
+  const position = valid ? findPosition(book, valid) : null
 
   if (!valid) {
     return (
@@ -38,22 +35,48 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
     <>
       <header className="page-head">
         <div>
-          <h1>Position</h1>
+          <h1>{position?.symbol ?? "Position"}</h1>
           <p className="mono">{valid}</p>
         </div>
       </header>
       <UtilityGate>
-        <div className="stack">
-          <div className="empty">
-            Token identity, balance and borrowing capacity require production data sources that are
-            not connected for this deployment yet.
+        {position ? (
+          <div className="stack" style={{ maxWidth: 640 }}>
+            <div className="panel">
+              <h2>Position</h2>
+              <div className="list">
+                <div className="list__row">
+                  <span>Token</span>
+                  <span>{position.name}</span>
+                </div>
+                <div className="list__row">
+                  <span>Balance</span>
+                  <span>
+                    {position.amount} {position.symbol}
+                  </span>
+                </div>
+                <div className="list__row">
+                  <span>Value</span>
+                  <span>{usd(position.valueUsd)}</span>
+                </div>
+                <div className="list__row">
+                  <span>Available to borrow</span>
+                  <span>{sol(maxBorrowSol(position))}</span>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <Link className="button button--ghost" href="/positions">
+                Back to positions
+              </Link>
+              <Link className="button button--primary" href={`/positions/${valid}/borrow`}>
+                Borrow SOL
+              </Link>
+            </div>
           </div>
-          <div className="row">
-            <Link className="button button--primary" href={`/positions/${valid}/borrow`}>
-              Continue to borrow
-            </Link>
-          </div>
-        </div>
+        ) : (
+          <div className="empty">This wallet has no position in that token</div>
+        )}
       </UtilityGate>
     </>
   )

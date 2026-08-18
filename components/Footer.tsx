@@ -45,7 +45,6 @@ export function Footer() {
           <strong>{project.network}</strong>
         </div>
         <p>{project.name} utility interface</p>
-        <p>Utility activates after token launch</p>
       </div>
     </footer>
   );

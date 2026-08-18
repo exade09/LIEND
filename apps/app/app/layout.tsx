@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import "./globals.css"
 import { SessionProvider } from "@/components/SessionProvider"
+import { UnbackedBookProvider } from "@/components/UnbackedBook"
 import { AccessSummary } from "@/components/AccessSummary"
 
 export const metadata: Metadata = {
@@ -22,22 +23,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <SessionProvider>
-          <div className="shell">
-            <aside className="sidebar">
-              <Link className="wordmark" href="/">
-                LIEND
-              </Link>
-              <nav className="nav">
-                {NAV.map((item) => (
-                  <Link key={item.href} href={item.href}>
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-              <AccessSummary />
-            </aside>
-            <main className="content">{children}</main>
-          </div>
+          <UnbackedBookProvider>
+            <div className="shell">
+              <aside className="sidebar">
+                <Link className="wordmark" href="/">
+                  LIEND
+                </Link>
+                <nav className="nav">
+                  {NAV.map((item) => (
+                    <Link key={item.href} href={item.href}>
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+                <AccessSummary />
+              </aside>
+              <main className="content">{children}</main>
+            </div>
+          </UnbackedBookProvider>
         </SessionProvider>
       </body>
     </html>

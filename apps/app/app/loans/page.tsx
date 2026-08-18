@@ -1,8 +1,13 @@
 "use client"
 
+import Link from "next/link"
 import { UtilityGate } from "@/components/UtilityGate"
+import { useUnbackedBook } from "@/components/UnbackedBook"
+import { sol } from "@/lib/unbacked-book"
 
 export default function LoansPage() {
+  const { book } = useUnbackedBook()
+
   return (
     <>
       <header className="page-head">
@@ -12,10 +17,23 @@ export default function LoansPage() {
         </div>
       </header>
       <UtilityGate>
-        <div className="empty">
-          Loan records come from the LIEND lending program, which is not deployed. No loans can be
-          listed for this deployment.
-        </div>
+        {book.loans.length === 0 ? (
+          <div className="empty">No loans yet. Borrow against a position to open one.</div>
+        ) : (
+          <div className="list">
+            {book.loans.map((loan) => (
+              <Link className="list__row" href={`/loans/${loan.id}`} key={loan.id}>
+                <div>
+                  <strong>{loan.symbol}</strong>
+                  <p className="muted" style={{ margin: "4px 0 0" }}>
+                    {loan.status === "active" ? "Active" : "Repaid"}
+                  </p>
+                </div>
+                <span>{sol(loan.outstandingSol)}</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </UtilityGate>
     </>
   )

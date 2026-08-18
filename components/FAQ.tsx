@@ -25,7 +25,7 @@ const questions = [
   },
   {
     question: "Do I need LIEND to use the platform",
-    answer: "LIEND utility requires holding LIEND once the token launches",
+    answer: "LIEND utility is available after a connected wallet is verified",
   },
   {
     question: "Where can I get LIEND",

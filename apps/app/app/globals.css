@@ -311,6 +311,38 @@ body::before {
 }
 .list__row:first-child { border-top: 1px solid var(--liend-line); }
 
+a.list__row { color: inherit; }
+a.list__row:hover { color: var(--liend-text); }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field > span:first-child {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liend-text-muted);
+}
+
+.field input {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--liend-line-strong);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  font: inherit;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--liend-cyan);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

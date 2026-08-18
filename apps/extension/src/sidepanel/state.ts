@@ -60,7 +60,7 @@ export function deriveView(snapshot: PanelSnapshot): PanelView {
 
   switch (snapshot.utility.state) {
     case "token-not-launched":
-      return "token-not-launched"
+      return "eligible"
     case "holder-check-pending":
       return "holder-check-pending"
     case "not-eligible":
@@ -171,8 +171,8 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
       return { title: "Loading", body: "Checking LIEND context for this token.", primary: null, secondary: null }
     case "token-not-launched":
       return {
-        title: "Utility activates after launch",
-        body: "LIEND utility becomes available once the LIEND token is live.",
+        title: "LIEND utility available",
+        body: "Continue in the LIEND app to review this position and available liquidity.",
         primary: { label: "Open in LIEND", action: "OPEN_IN_LIEND" },
         secondary: null,
       }
@@ -207,15 +207,15 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
  * Semantic colour for the state block's left rail.
  *
  * Kept separate from copy so the visual layer cannot drift from the meaning:
- * only `eligible` reads as success, and a pending check never reads as a
- * denial.
+ * `eligible` and pre-mint utility read as success, and a pending check never
+ * reads as a denial.
  */
 export function toneFor(view: PanelView): "brand" | "ok" | "locked" | "error" {
   switch (view) {
     case "eligible":
+    case "token-not-launched":
       return "ok"
     case "not-eligible":
-    case "token-not-launched":
     case "session-expired":
       return "locked"
     case "error":
