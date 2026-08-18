@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Icon, type IconName } from "@/components/Icon"
-import { OnchainExamples } from "@/components/OnchainExamples"
+import { SceneLoop } from "@/components/SceneLoop"
 import { TransactionTrace } from "@/components/TransactionTrace"
 import { project } from "@/config/project"
 import { demoTransactions } from "@/data/demoTransactions"
@@ -89,6 +89,7 @@ export function OnchainJourney() {
           <div className={`${styles.surface} ${styles.surfaceViolet}`} />
           <div className={`${styles.surface} ${styles.surfaceCyan}`} />
           <div className={styles.horizon} />
+          <SceneLoop src="/assets/loops/rain.gif" className={styles.loop} />
         </div>
 
         <div className={styles.stickyStage}>
@@ -169,8 +170,6 @@ export function OnchainJourney() {
           </footer>
         </div>
       </section>
-
-      <OnchainExamples />
     </div>
   )
 }

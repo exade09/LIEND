@@ -6,7 +6,6 @@ const footerLinks = [
   { label: "Product", href: "#product" },
   { label: "Markets", href: "#markets" },
   { label: "Onchain", href: "#onchain" },
-  { label: "Leaderboard", href: "#leaderboard" },
   { label: "FAQ", href: "#faq" },
 ] as const;
 

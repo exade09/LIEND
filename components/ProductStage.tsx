@@ -12,6 +12,7 @@ import {
 } from "react"
 import { Application } from "@/components/Application"
 import { HolderGate } from "@/components/HolderGate"
+import { SceneMedia } from "@/components/SceneMedia"
 import styles from "./ProductStage.module.css"
 
 export type ProductStageStep = {
@@ -183,71 +184,84 @@ export default function ProductStage({
     >
       <div className={styles.canvas}>
         <div className={styles.ambient} aria-hidden="true">
-          <span className={styles.grid} />
+          <SceneMedia src="/assets/webcore-sky.png" className={styles.sky} pixelated />
+          <span className={styles.skyVeil} />
         </div>
 
-        <div className={styles.frame}>
-          <header className={styles.intro}>
-            <div>
-              <span className={styles.kicker}>PRODUCT STAGE</span>
-              <h2 id={headingId}>Position to liquidity in one visible route</h2>
-            </div>
-            <p>Scroll through the route, then use the product interface directly</p>
-          </header>
+        <div className={styles.monitor}>
+          <div className={styles.screen}>
+            <div className={styles.scanlines} aria-hidden="true" />
+            <div className={styles.screenGlare} aria-hidden="true" />
 
-          <div className={styles.workspace}>
-            <nav className={styles.rail} aria-label="Product stage progress">
-              <div className={styles.progressTrack} aria-hidden="true">
-                <span />
+            <header className={styles.intro}>
+              <div>
+                <span className={styles.kicker}>PRODUCT STAGE</span>
+                <h2 id={headingId}>Position to liquidity in one visible route</h2>
               </div>
-              <ol>
-                {steps.map((step, index) => (
-                  <li key={`${step.id}-${index}`} className={index === activeIndex ? styles.activeStep : undefined}>
-                    <button
-                      type="button"
-                      onClick={() => navigateToStep(index)}
-                      aria-current={index === activeIndex ? "step" : undefined}
-                      aria-label={`Go to ${step.label} stage`}
-                    >
-                      <span className={styles.stepIndex}>{String(index + 1).padStart(2, "0")}</span>
-                      <span className={styles.stepCopy}>
-                        <strong>{step.label}</strong>
-                        <small>{step.caption}</small>
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+              <p>Scroll through the route, then use the product interface directly</p>
+            </header>
 
-            <div className={styles.productViewport}>
-              <div className={styles.viewportBody}>
-                <div
-                  className={`${styles.pane} ${styles.accessPane} ${showAccess ? styles.visiblePane : ""}`}
-                  data-stage-pane="access"
-                  inert={!showAccess}
-                  aria-hidden={!showAccess}
-                  onFocusCapture={() => setFocusedPane("access")}
-                  onBlurCapture={(event) => releaseFocusLock("access", event)}
-                >
-                  <div className={styles.paneLabel}>Access</div>
-                  {access}
+            <div className={styles.workspace}>
+              <nav className={styles.rail} aria-label="Product stage progress">
+                <div className={styles.progressTrack} aria-hidden="true">
+                  <span />
                 </div>
+                <ol>
+                  {steps.map((step, index) => (
+                    <li key={`${step.id}-${index}`} className={index === activeIndex ? styles.activeStep : undefined}>
+                      <button
+                        type="button"
+                        onClick={() => navigateToStep(index)}
+                        aria-current={index === activeIndex ? "step" : undefined}
+                        aria-label={`Go to ${step.label} stage`}
+                      >
+                        <span className={styles.stepIndex}>{String(index + 1).padStart(2, "0")}</span>
+                        <span className={styles.stepCopy}>
+                          <strong>{step.label}</strong>
+                          <small>{step.caption}</small>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
 
-                <div
-                  className={`${styles.pane} ${styles.applicationPane} ${showApplication ? styles.visiblePane : ""}`}
-                  data-stage-pane="application"
-                  inert={!showApplication}
-                  aria-hidden={!showApplication}
-                  onFocusCapture={() => setFocusedPane("application")}
-                  onBlurCapture={(event) => releaseFocusLock("application", event)}
-                >
-                  <div className={styles.paneLabel}>Product interface</div>
-                  {applicationContent}
+              <div className={styles.productViewport}>
+                <div className={styles.viewportBody}>
+                  <div
+                    className={`${styles.pane} ${styles.accessPane} ${showAccess ? styles.visiblePane : ""}`}
+                    data-stage-pane="access"
+                    inert={!showAccess}
+                    aria-hidden={!showAccess}
+                    onFocusCapture={() => setFocusedPane("access")}
+                    onBlurCapture={(event) => releaseFocusLock("access", event)}
+                  >
+                    <div className={styles.paneLabel}>Access</div>
+                    {access}
+                  </div>
+
+                  <div
+                    className={`${styles.pane} ${styles.applicationPane} ${showApplication ? styles.visiblePane : ""}`}
+                    data-stage-pane="application"
+                    inert={!showApplication}
+                    aria-hidden={!showApplication}
+                    onFocusCapture={() => setFocusedPane("application")}
+                    onBlurCapture={(event) => releaseFocusLock("application", event)}
+                  >
+                    <div className={styles.paneLabel}>Product interface</div>
+                    {applicationContent}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <img
+            className={styles.bezel}
+            src="/assets/crt-monitor.png"
+            alt=""
+            draggable={false}
+          />
 
           <footer className={styles.stageFooter}>
             <span>SCROLL TO FOLLOW THE ROUTE</span>

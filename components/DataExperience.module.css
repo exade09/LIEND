@@ -17,11 +17,39 @@
 }
 
 .labScene {
+  position: relative;
   padding: clamp(140px, 15vw, 230px) 0 clamp(150px, 16vw, 250px);
   border-top: 2px solid rgba(255, 255, 255, 0.2);
   background:
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
     linear-gradient(180deg, #1238c8 0%, #0b1c72 100%);
+}
+
+.labScene::after,
+.dataScene::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(77, 255, 90, 0.07) 0 2px,
+    transparent 2px 7px
+  );
+  background-size: 100% 220%;
+  content: "";
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  pointer-events: none;
+  animation: data-scan 22s linear infinite;
+}
+
+@keyframes data-scan {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 220%;
+  }
 }
 
 .dataLinework {
@@ -118,6 +146,7 @@
 }
 
 .dataScene {
+  position: relative;
   padding: clamp(150px, 16vw, 250px) 0 clamp(130px, 14vw, 215px);
   border-top: 2px solid rgba(255, 255, 255, 0.2);
   background:
@@ -343,6 +372,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .labScene::after,
+  .dataScene::after {
+    animation: none;
+    opacity: 0.2;
+  }
+
   .experience[data-reveal-ready="true"] [data-reveal],
   .experience[data-reveal-ready="true"] [data-reveal][data-visible="true"] {
     opacity: 1;

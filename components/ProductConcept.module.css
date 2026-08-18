@@ -27,6 +27,13 @@
   overflow: hidden;
 }
 
+.loop {
+  position: absolute;
+  inset: 0;
+  opacity: 0.42;
+  mix-blend-mode: screen;
+}
+
 /* The hard 50% split is the point of the scene: two routes, one boundary. It
    stays, but the halves are now tinted rather than merely light and dark. */
 .baseField {
@@ -547,6 +554,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .loop {
+    display: none;
+  }
+
   .story {
     min-height: auto;
   }

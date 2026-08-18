@@ -6,9 +6,6 @@
   overflow: hidden;
   place-items: center;
   padding: 145px max(36px, calc((100vw - 1440px) / 2));
-  background:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
-    linear-gradient(180deg, #1238c8 0%, #0b1c72 100%);
   text-align: center;
   isolation: isolate;
 }
@@ -21,14 +18,18 @@
   pointer-events: none;
 }
 
+.field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+}
+
 .scene::before {
   position: absolute;
+  z-index: 1;
   inset: 0;
   background:
-    linear-gradient(rgba(158, 178, 226, 0.016) 1px, transparent 1px) 0 0 / 64px 64px,
-    linear-gradient(90deg, rgba(158, 178, 226, 0.016) 1px, transparent 1px) 0 0 / 64px 64px,
-    radial-gradient(ellipse at 50% 49%, rgba(100, 88, 226, 0.17), transparent 31%),
-    radial-gradient(ellipse at 50% 52%, rgba(40, 190, 208, 0.06), transparent 48%);
+    linear-gradient(180deg, rgba(8, 22, 92, 0.45) 0%, rgba(10, 28, 96, 0.58) 100%);
   content: "";
 }
 
@@ -36,6 +37,7 @@
    is the whole design language compressed into one shape. */
 .refraction {
   position: absolute;
+  z-index: 2;
   top: 50%;
   left: 50%;
   width: min(68vw, 980px);

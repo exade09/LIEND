@@ -2,9 +2,7 @@
   position: relative;
   height: calc(var(--product-stage-steps) * 78svh + 20svh);
   min-height: 2420px;
-  background:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
-    linear-gradient(180deg, #0b1c72 0%, #1540d4 52%, #1238c8 100%);
+  background: #1a7dff;
   isolation: isolate;
 }
 
@@ -14,10 +12,10 @@
   display: grid;
   width: 100%;
   height: 100svh;
-  min-height: 690px;
+  min-height: 720px;
   overflow: clip;
-  align-items: center;
-  padding: clamp(84px, 9svh, 110px) 0 clamp(24px, 4svh, 46px);
+  place-items: center;
+  padding: 58px 10px 6px;
 }
 
 .ambient {
@@ -28,13 +26,29 @@
   pointer-events: none;
 }
 
+.sky {
+  position: absolute;
+  inset: 0;
+}
+
+.sky :global(img) {
+  object-position: 68% 82%;
+}
+
+.skyVeil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 28, 110, 0.08) 0%, rgba(12, 40, 140, 0.04) 50%, rgba(6, 18, 70, 0.22) 100%);
+}
+
+.grid {
+  display: none;
+}
+
 .ambient::before,
 .ambient::after {
-  position: absolute;
-  border-radius: 50%;
-  content: "";
-  filter: blur(80px);
-  opacity: 0.38;
+  display: none;
 }
 
 .ambient::before {
@@ -65,91 +79,130 @@
   mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
 }
 
-.frame {
-  display: grid;
-  width: min(1540px, calc(100vw - 64px));
-  height: 100%;
-  min-height: 0;
+.frame,
+.monitor {
+  position: relative;
+  width: min(96vw, calc((100svh - 72px) * 694 / 641));
+  height: auto;
+  aspect-ratio: 694 / 641;
   margin-inline: auto;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.screen {
+  position: absolute;
+  z-index: 1;
+  top: 11.2%;
+  right: 10.75%;
+  bottom: 27.55%;
+  left: 10.88%;
+  display: grid;
+  overflow: hidden;
+  border-radius: 0;
+  background: #070b1c;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.45);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.scanlines,
+.screenGlare {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.45;
+  animation: crt-flicker 5s steps(2) infinite;
+}
+
+.screenGlare {
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0 16%, transparent 38%);
+}
+
+.bezel {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
 }
 
 .intro {
+  position: relative;
+  z-index: 2;
   display: grid;
-  align-items: end;
-  gap: 48px;
-  padding: 0 0 clamp(18px, 3svh, 30px) clamp(250px, 18vw, 310px);
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.45fr);
+  gap: 4px;
+  padding: 7px 10px 6px;
+  border-bottom: 1px solid rgba(120, 255, 160, 0.14);
+  background: linear-gradient(180deg, rgba(24, 48, 140, 0.92), rgba(8, 16, 48, 0.88));
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr);
 }
 
 .kicker {
   display: block;
-  margin-bottom: 9px;
-  color: #8776cc;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  margin-bottom: 3px;
+  color: var(--signal);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
 }
 
 .intro h2 {
-  max-width: 790px;
+  max-width: none;
   margin: 0;
-  color: #fff;
+  color: #f4fff6;
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.6vw, 36px);
+  font-size: clamp(14px, 1.7vw, 22px);
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.15;
 }
 
 .intro p {
-  max-width: 390px;
-  margin: 0 0 3px;
-  color: #7d879a;
-  font-size: 11px;
-  line-height: 1.6;
+  max-width: none;
+  margin: 0;
+  align-self: end;
+  color: #8aa0b8;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.4;
 }
 
-/* The scroll-driven product tour is itself a window: a rail on the left, a
-   viewport on the right, both inside one beveled glass frame. */
 .workspace {
   position: relative;
+  z-index: 2;
   display: grid;
   min-height: 0;
   overflow: hidden;
-  padding-top: 32px;
-  border: 2px solid var(--chrome-hi);
-  border-radius: var(--radius-window);
-  background: var(--glass-tint);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--bevel), var(--shadow-window);
-  grid-template-columns: minmax(235px, 0.23fr) minmax(0, 1fr);
+  padding-top: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  grid-template-columns: minmax(132px, 0.28fr) minmax(0, 1fr);
 }
 
 .workspace::before {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 32px;
-  padding: 0 12px;
-  background: var(--titlebar);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-  color: #fff;
-  font-family: var(--font-pixel);
-  font-size: 11px;
-  line-height: 32px;
-  content: "liend.exe";
-  pointer-events: none;
+  display: none;
 }
 
 .rail {
   position: relative;
   min-height: 0;
-  padding: clamp(20px, 3svh, 38px) 24px;
+  padding: 10px 8px;
   border-right: 1px solid rgba(181, 197, 231, 0.14);
 }
 
@@ -173,15 +226,15 @@
 .rail button {
   display: grid;
   width: 100%;
-  min-height: 64px;
+  min-height: 44px;
   align-items: start;
-  padding: 11px 8px 11px 18px;
+  padding: 6px 4px 6px 10px;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background: transparent;
   color: #6f7b91;
   text-align: left;
-  grid-template-columns: 31px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr);
   transition: color var(--t-color), background var(--t-color), box-shadow var(--t-surface);
 }
 
@@ -224,11 +277,7 @@
 }
 
 .stepCopy small {
-  max-width: 180px;
-  margin-top: 5px;
-  color: #596477;
-  font-size: 8px;
-  line-height: 1.45;
+  display: none;
 }
 
 .activeStep .stepCopy small {
@@ -238,9 +287,9 @@
 .progressTrack {
   position: absolute;
   z-index: 2;
-  top: clamp(31px, 4svh, 49px);
-  bottom: clamp(31px, 4svh, 49px);
-  left: 24px;
+  top: 12px;
+  bottom: 12px;
+  left: 8px;
   width: 1px;
   overflow: hidden;
   background: rgba(177, 191, 219, 0.14);
@@ -306,12 +355,102 @@
   display: none;
 }
 
-.pane :global(.section) {
-  padding-block: clamp(34px, 5svh, 64px);
+@media (min-width: 901px) {
+  .pane :global(.section) {
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+  }
+
+  .pane :global(.page-shell) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .pane :global(.section-heading),
+  .pane :global(.holder-copy),
+  .pane :global(.holder-section__glow),
+  .pane :global(.access-flow) {
+    display: none;
+  }
+
+  .pane :global(.holder-layout) {
+    display: block;
+    height: 100%;
+    min-height: 100%;
+    padding: 0;
+    gap: 0;
+  }
+
+  .pane :global(.holder-gate-card),
+  .pane :global(.application-shell) {
+    display: flex;
+    width: 100% !important;
+    max-width: none;
+    height: 100%;
+    min-height: 100%;
+    border-radius: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .pane :global(.holder-gate-card > *) {
+    margin-inline: 14px;
+  }
+
+  .pane :global(.holder-gate-card__topline),
+  .pane :global(.application-bar) {
+    min-height: 34px;
+    padding-left: 48px;
+  }
+
+  .pane :global(.holder-gate-card__topline::before),
+  .pane :global(.application-bar::before) {
+    left: 14px;
+  }
+
+  .pane :global(.application-view) {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .pane :global(.holder-section),
+  .pane :global(.application-section) {
+    border: 0;
+    background: transparent;
+  }
 }
 
-.pane :global(.page-shell) {
-  width: min(100% - 48px, 1260px);
+.stageFooter {
+  position: absolute;
+  z-index: 5;
+  right: 18%;
+  bottom: 4.8%;
+  left: 18%;
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #5c5044;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0.55; }
+  48% { opacity: 0.7; }
+  52% { opacity: 0.42; }
 }
 
 .pane :global(.holder-section),
@@ -322,72 +461,31 @@
 }
 
 .pane :global(.holder-layout) {
-  gap: clamp(42px, 5vw, 80px);
-}
-
-.stageFooter {
-  display: flex;
-  min-height: 34px;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  color: #525d73;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: 0.16em;
+  gap: 16px;
 }
 
 @media (max-height: 800px) and (min-width: 901px) {
   .canvas {
-    padding-top: 78px;
-    padding-bottom: 18px;
-  }
-
-  .intro {
-    padding-bottom: 16px;
-  }
-
-  .intro h2 {
-    font-size: clamp(25px, 2.5vw, 38px);
+    padding-top: 64px;
+    padding-bottom: 8px;
   }
 
   .intro p {
     display: none;
   }
-
-  .rail {
-    padding-block: 15px;
-  }
-
-  .progressTrack {
-    top: 25px;
-    bottom: 25px;
-  }
 }
 
 @media (max-width: 1100px) and (min-width: 901px) {
-  .frame {
-    width: calc(100vw - 36px);
-  }
-
-  .intro {
-    padding-left: 220px;
-  }
-
   .workspace {
-    grid-template-columns: 210px minmax(0, 1fr);
+    grid-template-columns: 120px minmax(0, 1fr);
   }
 
   .rail {
-    padding-inline: 17px;
+    padding-inline: 6px;
   }
 
   .progressTrack {
-    left: 17px;
-  }
-
-  .stepCopy small {
-    max-width: 150px;
+    left: 6px;
   }
 }
 
@@ -395,10 +493,7 @@
   .stage {
     height: auto;
     min-height: 0;
-    background:
-      radial-gradient(ellipse at 0% 18%, rgba(101, 64, 238, 0.09), transparent 27rem),
-      radial-gradient(ellipse at 100% 76%, rgba(26, 184, 207, 0.07), transparent 29rem),
-      #050711;
+    background: #1a7dff;
   }
 
   .canvas {
@@ -410,20 +505,38 @@
     padding: 110px 0;
   }
 
-  .ambient::before,
-  .ambient::after {
-    transform: none;
+  .sky {
+    opacity: 0.55;
   }
 
+  .monitor,
   .frame {
     display: block;
     width: min(100% - 32px, 1080px);
     height: auto;
+    aspect-ratio: auto;
+  }
+
+  .bezel,
+  .scanlines,
+  .screenGlare {
+    display: none;
+  }
+
+  .screen {
+    position: relative;
+    inset: auto;
+    display: block;
+    overflow: visible;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .intro {
     display: grid;
     padding: 0 0 40px;
+    border: 0;
     grid-template-columns: 1fr;
     gap: 18px;
   }
@@ -434,6 +547,15 @@
 
   .intro p {
     max-width: 520px;
+  }
+
+  .stageFooter {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    margin-top: 40px;
+    color: #8b93a3;
   }
 
   .workspace {
@@ -545,6 +667,7 @@
     padding: 94px 0;
   }
 
+  .monitor,
   .frame {
     width: calc(100% - 24px);
   }

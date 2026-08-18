@@ -11,7 +11,6 @@ const navigation = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Markets", href: "#markets" },
   { label: "Onchain", href: "#onchain" },
-  { label: "Leaderboard", href: "#leaderboard" },
   { label: "FAQ", href: "#faq" },
 ]
 

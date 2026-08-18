@@ -159,3 +159,83 @@ h1, h2, h3, h4 {
   background: var(--titlebar);
   color: #fff;
 }
+
+/* Liquid glass controls: translucent slab, specular lip, webcore bevel. */
+.button {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.button::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.08) 28%,
+    transparent 58%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.button--primary {
+  border-color: rgba(196, 255, 188, 0.62);
+  background:
+    linear-gradient(180deg, rgba(186, 255, 178, 0.38) 0%, rgba(77, 255, 90, 0.2) 46%, rgba(12, 48, 24, 0.28) 100%);
+  color: #f4fff6;
+  text-shadow: 0 1px 0 rgba(4, 22, 10, 0.4);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.58),
+    inset -1px -1px 0 rgba(8, 40, 16, 0.42),
+    0 10px 28px rgba(77, 255, 90, 0.16);
+}
+
+.button--primary:hover:not(:disabled) {
+  border-color: rgba(220, 255, 214, 0.88);
+  background:
+    linear-gradient(180deg, rgba(210, 255, 200, 0.5) 0%, rgba(77, 255, 90, 0.28) 48%, rgba(12, 48, 24, 0.32) 100%);
+  color: #fff;
+  filter: none;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.7),
+    inset -1px -1px 0 rgba(8, 40, 16, 0.4),
+    0 12px 32px rgba(77, 255, 90, 0.22);
+}
+
+.button--primary:not(:disabled):active {
+  box-shadow: var(--bevel-pressed), 0 4px 16px rgba(77, 255, 90, 0.12);
+}
+
+.button--primary:disabled {
+  border-color: rgba(181, 197, 231, 0.16);
+  background: rgba(120, 132, 168, 0.1);
+  color: #8a93a8;
+  text-shadow: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.button--ghost,
+.button--secondary {
+  border-color: rgba(236, 242, 252, 0.34);
+  background:
+    linear-gradient(180deg, rgba(236, 242, 252, 0.26) 0%, rgba(16, 36, 110, 0.2) 100%);
+  color: #f2f5fd;
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.42),
+    inset -1px -1px 0 rgba(8, 12, 40, 0.38);
+}
+
+.button--ghost:hover:not(:disabled),
+.button--secondary:hover:not(:disabled) {
+  border-color: rgba(94, 232, 255, 0.48);
+  background:
+    linear-gradient(180deg, rgba(214, 244, 255, 0.28) 0%, rgba(16, 36, 110, 0.24) 100%);
+  color: #fff;
+}

@@ -27,6 +27,13 @@
   overflow: hidden;
 }
 
+.loop {
+  position: absolute;
+  inset: 0;
+  opacity: 0.38;
+  mix-blend-mode: screen;
+}
+
 .baseField {
   background:
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
@@ -466,6 +473,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .loop {
+    display: none;
+  }
+
   .story {
     min-height: auto;
   }

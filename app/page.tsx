@@ -9,6 +9,7 @@ import { NetworkStats } from "@/components/NetworkStats"
 import { OnchainJourney } from "@/components/OnchainJourney"
 import { ProductConcept } from "@/components/ProductConcept"
 import ProductStage from "@/components/ProductStage"
+import { SceneMedia } from "@/components/SceneMedia"
 import styles from "./page.module.css"
 
 export default function Home() {
@@ -26,6 +27,11 @@ export default function Home() {
         <DataExperience />
         <OnchainJourney />
         <div className={styles.faqScene}>
+          <SceneMedia
+            src="/assets/loops/webcore-field.mp4"
+            poster="/assets/webcore-sky.png"
+            className={styles.faqMedia}
+          />
           <FAQ />
         </div>
         <FinalCTA />

@@ -1,0 +1,30 @@
+.loop {
+  pointer-events: none;
+}
+
+.loop img {
+  display: block;
+  width: 118%;
+  height: 118%;
+  max-width: none;
+  object-fit: cover;
+  image-rendering: pixelated;
+  animation: drift 28s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-7.5%, -5%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loop {
+    display: none;
+  }
+}

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 import { ActivityFeed } from "@/components/ActivityFeed"
-import { Leaderboard } from "@/components/Leaderboard"
 import { LoanCalculator } from "@/components/LoanCalculator"
 import styles from "./DataExperience.module.css"
 
@@ -74,7 +73,7 @@ export default function DataExperience() {
               <h2 id="protocol-data-title">Read activity as infrastructure</h2>
             </div>
             <div className={styles.dataContext}>
-              <p>Public protocol events and wallet analytics presented as operational records</p>
+              <p>Public protocol events presented as operational records</p>
               <span><i /> SOLANA &bull; DATA SOURCE NOT CONNECTED</span>
             </div>
           </header>
@@ -82,10 +81,6 @@ export default function DataExperience() {
           <div className={styles.analyticsField}>
             <div className={`${styles.componentMount} ${styles.analyticsMount}`} data-reveal>
               <ActivityFeed />
-            </div>
-
-            <div className={`${styles.componentMount} ${styles.analyticsMount}`} data-reveal>
-              <Leaderboard />
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { Icon } from "@/components/Icon"
+import { SceneLoop } from "@/components/SceneLoop"
 import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./ProductConcept.module.css"
@@ -59,6 +60,7 @@ export function ProductConcept() {
       <div className={styles.stage}>
         <div className={styles.atmosphere} aria-hidden="true">
           <div className={styles.baseField} />
+          <SceneLoop src="/assets/loops/lattice.gif" className={styles.loop} />
         </div>
 
         <div className={`${styles.canvas} page-shell`}>
