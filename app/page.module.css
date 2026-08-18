@@ -30,6 +30,41 @@
   backdrop-filter: var(--glass-blur);
 }
 
+.cloudBand {
+  position: relative;
+  background: #3f9ce2;
+}
+
+.cloudSky {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100svh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cloudLoop {
+  position: absolute;
+  inset: 0;
+}
+
+.cloudScenes {
+  position: relative;
+  z-index: 1;
+  margin-top: -100svh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloudSky {
+    display: none;
+  }
+
+  .cloudScenes {
+    margin-top: 0;
+  }
+}
+
 .faqScene {
   position: relative;
   overflow: clip;

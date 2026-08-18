@@ -95,7 +95,8 @@ export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
         const driftFactor = Math.sin(Math.PI * Math.min(1, Math.max(0, local)))
         const tx = handle.drift * driftFactor
         const rotSign = handle.drift >= 0 ? 1 : -1
-        const rot = handle.rot + 5 * driftFactor * rotSign
+        const rotWobble = handle.drift === 0 ? 0 : 5 * driftFactor * rotSign
+        const rot = handle.rot + rotWobble
 
         const squash = handle.squash * squashAmplitude(local)
         const sx = 1 + squash

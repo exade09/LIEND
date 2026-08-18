@@ -21,56 +21,68 @@ export type DropletInstance = {
   squash: number // 0 - 0.06, peak squash/stretch amplitude
 }
 
-// The full 16-instance desktop field. Tablet and mobile are literal subsets/
-// replacements below rather than a CSS-hidden overflow, so hidden instances
-// are never fetched or decoded (see LiquidCurtain.tsx).
+function cell(
+  id: DropletId,
+  tier: Tier,
+  depth: Depth,
+  x: number,
+  y: number,
+  w: number,
+  extra?: { flip?: boolean },
+): DropletInstance {
+  return { id, tier, depth, x, y, w, rot: 0, drift: 0, squash: 0, travel: 1, ...extra }
+}
+
+// Dense overlapping field so the pixel teardrops (which leave transparent
+// corners in their square boxes) still fully cover the stage at rest.
+// Fall is straight down: rot/drift/squash stay 0.
 export const DESKTOP_INSTANCES: readonly DropletInstance[] = [
-  // far (background, blurred, slowest to arrive)
-  { id: "a", tier: "lg", depth: "far", x: 10, y: 20, w: 58, rot: -6, travel: 0.92, drift: -4, squash: 0.03 },
-  { id: "c", tier: "lg", depth: "far", x: 46, y: 8, w: 54, rot: 8, flip: true, travel: 1.05, drift: 3, squash: 0.025 },
-  { id: "e", tier: "lg", depth: "far", x: 82, y: 22, w: 60, rot: -9, travel: 0.88, drift: -3, squash: 0.035 },
-  { id: "d", tier: "md", depth: "far", x: 64, y: 4, w: 42, rot: 5, travel: 1.1, drift: 5, squash: 0.02 },
+  cell("a", "lg", "far", 8, 8, 80),
+  cell("c", "lg", "far", 40, 0, 78, { flip: true }),
+  cell("e", "lg", "far", 74, 10, 82),
+  cell("d", "lg", "far", 100, 4, 76, { flip: true }),
+  cell("b", "md", "far", 24, 26, 68),
+  cell("a", "md", "far", 58, 22, 66, { flip: true }),
 
-  // mid
-  { id: "b", tier: "md", depth: "mid", x: 2, y: 46, w: 46, rot: -11, travel: 0.95, drift: -5, squash: 0.04 },
-  { id: "d", tier: "md", depth: "mid", x: 26, y: 58, w: 50, rot: 7, flip: true, travel: 1.08, drift: 2, squash: 0.035 },
-  { id: "a", tier: "md", depth: "mid", x: 52, y: 40, w: 44, rot: -4, travel: 1.0, drift: -2, squash: 0.03 },
-  { id: "e", tier: "lg", depth: "mid", x: 70, y: 54, w: 56, rot: 10, travel: 0.9, drift: 4, squash: 0.045 },
-  { id: "c", tier: "md", depth: "mid", x: 92, y: 38, w: 48, rot: -13, travel: 1.15, drift: -6, squash: 0.025 },
-  { id: "b", tier: "sm", depth: "mid", x: 38, y: 66, w: 34, rot: 6, flip: true, travel: 1.2, drift: 1, squash: 0.02 },
+  cell("b", "lg", "mid", 0, 44, 78, { flip: true }),
+  cell("d", "lg", "mid", 26, 50, 80),
+  cell("a", "lg", "mid", 52, 42, 76, { flip: true }),
+  cell("e", "lg", "mid", 78, 48, 80),
+  cell("c", "lg", "mid", 100, 38, 74),
+  cell("b", "md", "mid", 14, 64, 64, { flip: true }),
+  cell("d", "md", "mid", 44, 62, 62),
+  cell("a", "md", "mid", 88, 66, 64, { flip: true }),
 
-  // near (foreground, sharpest, first to arrive)
-  { id: "d", tier: "lg", depth: "near", x: 14, y: 78, w: 72, rot: -8, travel: 1.0, drift: -3, squash: 0.04 },
-  { id: "c", tier: "lg", depth: "near", x: 0, y: 92, w: 64, rot: 12, flip: true, travel: 0.95, drift: 5, squash: 0.035 },
-  { id: "e", tier: "md", depth: "near", x: 34, y: 88, w: 50, rot: -6, travel: 1.12, drift: -4, squash: 0.03 },
-  { id: "a", tier: "lg", depth: "near", x: 58, y: 82, w: 68, rot: 9, travel: 0.98, drift: 3, squash: 0.045 },
-  { id: "b", tier: "md", depth: "near", x: 80, y: 94, w: 52, rot: -10, flip: true, travel: 1.24, drift: -2, squash: 0.025 },
-  { id: "d", tier: "sm", depth: "near", x: 98, y: 80, w: 40, rot: 14, travel: 1.05, drift: 6, squash: 0.02 },
+  cell("d", "lg", "near", 6, 80, 86),
+  cell("c", "lg", "near", 34, 88, 84, { flip: true }),
+  cell("a", "lg", "near", 62, 78, 86),
+  cell("e", "lg", "near", 90, 86, 82, { flip: true }),
+  cell("b", "lg", "near", 0, 98, 80),
+  cell("d", "md", "near", 22, 72, 66, { flip: true }),
+  cell("e", "md", "near", 50, 98, 70),
+  cell("c", "md", "near", 76, 70, 64),
 ]
 
-// Tablet: drop the lightest 4 far/mid instances, keep the full near layer
-// (the near layer carries the "liquid floor" the brief calls for at 65-85%).
-const DROP_ON_TABLET = new Set([3, 5, 8, 9]) // indices into DESKTOP_INSTANCES: far#4(d/md), mid#6(d/md), mid#9(c/md), mid#10(b/sm)
+const DROP_ON_TABLET = new Set([4, 5, 11, 13, 19])
 export const TABLET_INSTANCES: readonly DropletInstance[] = DESKTOP_INSTANCES.filter(
   (_, index) => !DROP_ON_TABLET.has(index),
 )
 
-// Mobile: a distinct portrait-tuned layout — bigger relative droplets, not
-// more of them, spread down the tall viewport.
 export const MOBILE_INSTANCES: readonly DropletInstance[] = [
-  { id: "d", tier: "md", depth: "far", x: 30, y: 8, w: 78, rot: 6, travel: 0.9, drift: -3, squash: 0.03 },
-  { id: "b", tier: "md", depth: "far", x: 82, y: 14, w: 68, rot: -10, flip: true, travel: 1.05, drift: 3, squash: 0.025 },
-  { id: "a", tier: "md", depth: "mid", x: 6, y: 32, w: 72, rot: -6, travel: 1.0, drift: -4, squash: 0.035 },
-  { id: "e", tier: "md", depth: "mid", x: 60, y: 40, w: 80, rot: 9, travel: 0.92, drift: 4, squash: 0.04 },
-  { id: "c", tier: "sm", depth: "mid", x: 28, y: 54, w: 60, rot: -12, flip: true, travel: 1.15, drift: -2, squash: 0.02 },
-  { id: "d", tier: "md", depth: "near", x: 84, y: 62, w: 74, rot: 8, travel: 1.0, drift: 3, squash: 0.04 },
-  { id: "b", tier: "md", depth: "near", x: 20, y: 76, w: 82, rot: -8, travel: 1.1, drift: -3, squash: 0.03 },
-  { id: "a", tier: "sm", depth: "near", x: 70, y: 88, w: 62, rot: 11, flip: true, travel: 0.95, drift: 5, squash: 0.025 },
-  { id: "e", tier: "md", depth: "near", x: 42, y: 96, w: 76, rot: -5, travel: 1.2, drift: -4, squash: 0.02 },
+  cell("d", "lg", "far", 18, 4, 92),
+  cell("b", "lg", "far", 82, 10, 90, { flip: true }),
+  cell("a", "lg", "mid", 4, 30, 88),
+  cell("e", "lg", "mid", 58, 36, 94, { flip: true }),
+  cell("c", "lg", "mid", 28, 52, 86),
+  cell("d", "lg", "near", 86, 58, 90, { flip: true }),
+  cell("b", "lg", "near", 12, 74, 94),
+  cell("a", "lg", "near", 64, 82, 90, { flip: true }),
+  cell("e", "lg", "near", 36, 96, 92),
+  cell("c", "md", "near", 96, 40, 78),
 ]
 
 export const DEPTH_BLUR_PX: Record<Depth, number> = {
-  far: 10,
+  far: 0,
   mid: 0,
   near: 0,
 }

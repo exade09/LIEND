@@ -27,6 +27,7 @@
 
 .dropletMotion :global(img) {
   object-fit: contain;
+  image-rendering: pixelated;
 }
 
 @media (prefers-reduced-motion: reduce), (max-height: 720px) {

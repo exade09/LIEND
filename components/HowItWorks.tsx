@@ -1,7 +1,6 @@
 "use client"
 
 import { Icon, type IconName } from "@/components/Icon"
-import { SceneLoop } from "@/components/SceneLoop"
 import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./HowItWorks.module.css"
@@ -64,8 +63,6 @@ export function HowItWorks() {
       <div className={styles.stage}>
         <div className={styles.atmosphere} aria-hidden="true">
           <div className={styles.baseField} />
-          <SceneLoop src="/assets/loops/meadow.gif" className={styles.loop} />
-          <span className={styles.veil} />
         </div>
 
         <div className={`${styles.canvas} page-shell`}>

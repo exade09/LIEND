@@ -34,9 +34,10 @@ export function Wordmark() {
           }}
         >
           <Image
-            src={`/assets/wordmark/liend-${box.letter}.webp`}
+            src={`/assets/wordmark/pixel/liend-${box.letter}.png`}
             alt=""
             fill
+            unoptimized
             sizes="(max-width: 780px) 45vw, 25vw"
             priority
             draggable={false}

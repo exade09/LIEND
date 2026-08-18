@@ -114,9 +114,10 @@ export function LiquidCurtain({ storyRef, stageRef }: LiquidCurtainProps) {
                   }
                 >
                   <Image
-                    src={`/assets/curtain/droplet-${inst.id}-${inst.tier}.webp`}
+                    src={`/assets/curtain/pixel/droplet-${inst.id}-${inst.tier}.png`}
                     alt=""
                     fill
+                    unoptimized
                     sizes="(max-width: 640px) 70vw, (max-width: 1024px) 45vw, 30vw"
                     priority={isLargeNear}
                     fetchPriority={isLargeNear ? "high" : "auto"}

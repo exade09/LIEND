@@ -9,6 +9,7 @@ import { NetworkStats } from "@/components/NetworkStats"
 import { OnchainJourney } from "@/components/OnchainJourney"
 import { ProductConcept } from "@/components/ProductConcept"
 import ProductStage from "@/components/ProductStage"
+import { SceneLoop } from "@/components/SceneLoop"
 import { SceneMedia } from "@/components/SceneMedia"
 import styles from "./page.module.css"
 
@@ -21,8 +22,15 @@ export default function Home() {
         <div className={styles.statsScene}>
           <NetworkStats />
         </div>
-        <ProductConcept />
-        <HowItWorks />
+        <div className={styles.cloudBand}>
+          <div className={styles.cloudSky} aria-hidden="true">
+            <SceneLoop src="/assets/loops/meadow-sky.gif" className={styles.cloudLoop} />
+          </div>
+          <div className={styles.cloudScenes}>
+            <ProductConcept />
+            <HowItWorks />
+          </div>
+        </div>
         <ProductStage />
         <DataExperience />
         <OnchainJourney />

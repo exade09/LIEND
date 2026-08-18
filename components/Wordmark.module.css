@@ -37,6 +37,7 @@
 
 .letter img {
   object-fit: contain;
+  image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
 }
