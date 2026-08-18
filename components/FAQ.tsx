@@ -64,7 +64,7 @@ const questions = [
   {
     question: "Where can I read the documentation",
     answer:
-      "The Docs link will direct users to the LIEND GitBook when documentation is published",
+      "The Docs control in the header opens the LIEND GitBook",
     link: true,
   },
 ] as const;

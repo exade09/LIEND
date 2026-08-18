@@ -7,11 +7,9 @@ import { extensionCtaLabel, extensionInstallHref, project } from "@/config/proje
 /**
  * External product link.
  *
- * Renders nothing when the destination is not configured. That is deliberate:
- * the previous behaviour pointed unset links at service roots
- * (`https://pump.fun/`, `https://x.com/`), which reads to a visitor as an
- * official LIEND destination while going somewhere unrelated. A missing
- * affordance is honest; a misleading one is not.
+ * Renders nothing when the destination is not configured. Relative paths
+ * (the in-product GitBook at `/docs`) stay on this origin. Absolute http(s)
+ * links open in a new tab.
  */
 export function ProductLink({
   href,
@@ -25,8 +23,14 @@ export function ProductLink({
   className?: string
 }) {
   if (!href) return null
+  const external = /^https?:/i.test(href)
   return (
-    <a className={className} href={href} target="_blank" rel="noreferrer" {...rest}>
+    <a
+      className={className}
+      href={href}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      {...rest}
+    >
       {children}
     </a>
   )

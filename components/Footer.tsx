@@ -3,17 +3,18 @@ import { ProductLink } from "@/components/ProductLink";
 import { project } from "@/config/project";
 
 const footerLinks = [
-  { label: "Product", href: "#product" },
-  { label: "Markets", href: "#markets" },
-  { label: "Onchain", href: "#onchain" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Product", href: "/#product" },
+  { label: "Markets", href: "/#markets" },
+  { label: "Onchain", href: "/#onchain" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Docs", href: "/docs" },
 ] as const;
 
 export function Footer() {
   return (
     <footer className="site-footer section-shell">
       <div className="site-footer__main">
-        <a className="site-footer__brand" href="#top" aria-label="LIEND home">
+        <a className="site-footer__brand" href="/" aria-label="LIEND home">
           <span>{project.name}</span>
         </a>
 
@@ -23,7 +24,6 @@ export function Footer() {
               {link.label}
             </a>
           ))}
-          <ProductLink href={project.docsUrl}>Docs</ProductLink>
         </nav>
 
         <nav className="site-footer__social" aria-label="LIEND social links">

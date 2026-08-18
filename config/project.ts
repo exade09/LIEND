@@ -8,14 +8,14 @@
  * PRODUCT FACTS (approved, and encoded here rather than guessed):
  *  - The LIEND token is not launched: there is no mint and no published
  *    holder requirement.
- *  - The real Pump.fun, X and docs destinations do not exist yet.
+ *  - Pump.fun currently points at the board (`https://pump.fun`). When the
+ *    LIEND token exists, set NEXT_PUBLIC_PUMPFUN_URL to the coin page.
+ *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
  *  - There is no Chrome Web Store listing, so the extension ships as a
  *    downloadable archive.
  *
  * Unset destinations resolve to `null`. A null link means the surface must
- * hide or disable that affordance — it must never fall back to a service root
- * such as `https://pump.fun/`, which would read as an official LIEND
- * destination while going somewhere unrelated.
+ * hide or disable that affordance. X stays hidden until NEXT_PUBLIC_X_URL is set.
  */
 
 /** Normalises an absolute URL, returning null when unset or malformed. */
@@ -68,10 +68,17 @@ export const project = {
   /** Packaged MV3 archive served from this site for developer-mode install. */
   extensionArchive: "/liend-extension.zip",
 
-  /** Community and docs. All null until the real destinations exist. */
-  pumpUrl: url(process.env.NEXT_PUBLIC_PUMPFUN_URL),
+  /**
+   * Pump.fun destination.
+   * Defaults to the public board until NEXT_PUBLIC_PUMPFUN_URL is the token page.
+   */
+  pumpUrl: url(process.env.NEXT_PUBLIC_PUMPFUN_URL) ?? "https://pump.fun",
   xUrl: url(process.env.NEXT_PUBLIC_X_URL),
-  docsUrl: url(process.env.NEXT_PUBLIC_DOCS_URL),
+  /**
+   * Docs. Relative `/docs` is the in-product GitBook. Override with an absolute
+   * GitBook origin via NEXT_PUBLIC_DOCS_URL when that space is published.
+   */
+  docsUrl: url(process.env.NEXT_PUBLIC_DOCS_URL) ?? "/docs",
 
   /** Public block explorer — a real third-party service, not a LIEND claim. */
   explorerUrl: "https://solscan.io",

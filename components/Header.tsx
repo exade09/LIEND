@@ -7,11 +7,11 @@ import { Icon } from "@/components/Icon"
 import { LaunchAppLink, ProductLink, AddToChromeBadge } from "@/components/ProductLink"
 
 const navigation = [
-  { label: "Product", href: "#product" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Markets", href: "#markets" },
-  { label: "Onchain", href: "#onchain" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Product", href: "/#product" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Markets", href: "/#markets" },
+  { label: "Onchain", href: "/#onchain" },
+  { label: "FAQ", href: "/#faq" },
 ]
 
 export function Header() {
@@ -33,7 +33,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="nav-shell">
-        <a className="brand-compact" href="#top" aria-label="LIEND home" onClick={() => setOpen(false)}>
+        <a className="brand-compact" href="/" aria-label="LIEND home" onClick={() => setOpen(false)}>
           <span className="brand-compact__avatar">
             <Image src="/assets/liend-avatar.png" alt="" width={32} height={32} priority />
           </span>
@@ -49,18 +49,20 @@ export function Header() {
         </nav>
 
         <div className="nav-actions">
-          <div className="nav-utility" aria-label="Project links">
-            <ProductLink href={project.pumpUrl} aria-label="LIEND on Pump.fun">
-              <Icon name="pump-fun" size={17} />
+          <div className="header-chips" aria-label="Project links">
+            <ProductLink className="header-chip" href={project.pumpUrl} aria-label="LIEND on Pump.fun">
+              <Icon name="pump-fun" size={15} />
               <span>Pump.fun</span>
             </ProductLink>
+            <ProductLink className="header-chip" href={project.docsUrl} aria-label="LIEND Docs">
+              <Icon name="docs" size={15} />
+              <span>Docs</span>
+            </ProductLink>
+          </div>
+          <div className="nav-utility" aria-label="Social links">
             <ProductLink href={project.xUrl} aria-label="LIEND on X">
               <Icon name="x" size={15} />
               <span className="sr-only">X</span>
-            </ProductLink>
-            <ProductLink href={project.docsUrl} aria-label="LIEND Docs">
-              <Icon name="docs" size={17} />
-              <span className="sr-only">Docs</span>
             </ProductLink>
           </div>
           <AddToChromeBadge />
@@ -95,17 +97,17 @@ export function Header() {
         </nav>
         <div className="mobile-menu__utility">
           <AddToChromeBadge />
-          <ProductLink href={project.pumpUrl}>
+          <ProductLink className="header-chip" href={project.pumpUrl}>
             <Icon name="pump-fun" /> Pump.fun
+          </ProductLink>
+          <ProductLink className="header-chip" href={project.docsUrl}>
+            <Icon name="docs" /> Docs
           </ProductLink>
           <ProductLink href={project.xUrl}>
             <Icon name="x" /> X
           </ProductLink>
-          <ProductLink href={project.docsUrl}>
-            <Icon name="docs" /> Docs
-          </ProductLink>
         </div>
-        <a className="button button--primary button--wide" href="#product-stage" onClick={() => setOpen(false)}>
+        <a className="button button--primary button--wide" href="/#product-stage" onClick={() => setOpen(false)}>
           Launch App
         </a>
       </div>
