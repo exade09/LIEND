@@ -10,8 +10,9 @@ import { findPosition, maxBorrowSol, sol, usd } from "@/lib/unbacked-book"
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
   const valid = parseMint(mint)
-  const { book } = useUnbackedBook()
+  const { book, loadingPositions } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
+  const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
 
   if (!valid) {
     return (
@@ -61,7 +62,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                 </div>
                 <div className="list__row">
                   <span>Available to borrow</span>
-                  <span>{sol(maxBorrowSol(position))}</span>
+                  <span>{sol(maxBorrowSol(position, book.solUsd))}</span>
                 </div>
               </div>
             </div>
@@ -69,11 +70,17 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
               <Link className="button button--ghost" href="/positions">
                 Back to positions
               </Link>
-              <Link className="button button--primary" href={`/positions/${valid}/borrow`}>
+              <Link
+                className="button button--primary"
+                href={`/positions/${valid}/borrow`}
+                aria-disabled={ceiling <= 0}
+              >
                 Borrow SOL
               </Link>
             </div>
           </div>
+        ) : loadingPositions ? (
+          <div className="empty">Reading token accounts…</div>
         ) : (
           <div className="empty">This wallet has no position in that token</div>
         )}

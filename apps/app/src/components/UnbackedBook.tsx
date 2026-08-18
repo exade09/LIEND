@@ -1,8 +1,11 @@
 "use client"
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import type { WalletPosition } from "@liend/domain"
+import { getApiClient } from "@/lib/api"
 import {
   clearQuote,
+  DEFAULT_SOL_USD,
   emptyBook,
   loadBook,
   loadQuote,
@@ -11,6 +14,7 @@ import {
   saveBook,
   saveQuote,
   type UnbackedBook,
+  type UnbackedPosition,
   type UnbackedQuote,
 } from "@/lib/unbacked-book"
 import { useSession } from "./SessionProvider"
@@ -18,6 +22,8 @@ import { useSession } from "./SessionProvider"
 type BookApi = {
   book: UnbackedBook
   ready: boolean
+  loadingPositions: boolean
+  positionsError: string | null
   setQuote: (quote: UnbackedQuote) => void
   readQuote: () => UnbackedQuote | null
   confirmBorrow: (quote: UnbackedQuote) => string | null
@@ -26,15 +32,73 @@ type BookApi = {
 
 const BookContext = createContext<BookApi | null>(null)
 
+function toPosition(row: WalletPosition): UnbackedPosition {
+  return {
+    mint: row.mint,
+    symbol: row.symbol,
+    name: row.name,
+    amount: row.amount,
+    valueUsd: row.valueUsd ?? 0,
+  }
+}
+
 export function UnbackedBookProvider({ children }: { children: React.ReactNode }) {
-  const { wallet } = useSession()
+  const { wallet, authenticated, loading } = useSession()
   const [book, setBook] = useState<UnbackedBook>(emptyBook)
   const [ready, setReady] = useState(false)
+  const [loadingPositions, setLoadingPositions] = useState(false)
+  const [positionsError, setPositionsError] = useState<string | null>(null)
 
   useEffect(() => {
-    setBook(loadBook(wallet))
+    if (loading) return
+
+    const local = loadBook(wallet)
+    setBook(local)
+    setPositionsError(null)
+
+    if (!authenticated || !wallet) {
+      setLoadingPositions(false)
+      setReady(true)
+      return
+    }
+
+    const client = getApiClient()
+    if (!client) {
+      setReady(true)
+      return
+    }
+
+    let cancelled = false
+    setLoadingPositions(true)
     setReady(true)
-  }, [wallet])
+
+    client
+      .walletPositions()
+      .then((response) => {
+        if (cancelled) return
+        setBook((current) => {
+          const next: UnbackedBook = {
+            ...current,
+            positions: response.positions.map(toPosition),
+            solUsd: response.solUsd ?? current.solUsd ?? DEFAULT_SOL_USD,
+          }
+          saveBook(wallet, next)
+          return next
+        })
+        setPositionsError(null)
+      })
+      .catch((caught: unknown) => {
+        if (cancelled) return
+        setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingPositions(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [authenticated, loading, wallet])
 
   const persist = useCallback(
     (next: UnbackedBook) => {
@@ -72,8 +136,8 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
   )
 
   const value = useMemo<BookApi>(
-    () => ({ book, ready, setQuote, readQuote, confirmBorrow, confirmRepay }),
-    [book, ready, setQuote, readQuote, confirmBorrow, confirmRepay],
+    () => ({ book, ready, loadingPositions, positionsError, setQuote, readQuote, confirmBorrow, confirmRepay }),
+    [book, ready, loadingPositions, positionsError, setQuote, readQuote, confirmBorrow, confirmRepay],
   )
 
   return <BookContext.Provider value={value}>{children}</BookContext.Provider>

@@ -18,6 +18,7 @@ import {
   ExtensionDeviceSchema,
   PairingRequestSchema,
   UtilityAccessSchema,
+  WalletPositionsResponseSchema,
   type ApiErrorCode,
 } from "@liend/domain"
 
@@ -150,6 +151,9 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
 
     /** Server-derived utility access. The client never computes this itself. */
     utilityAccess: () => request("/api/utility-access", UtilityAccessSchema),
+
+    /** On-chain SPL token accounts for the authenticated session wallet. */
+    walletPositions: () => request("/api/positions", WalletPositionsResponseSchema),
 
     createPairingRequest: () =>
       request("/api/pairing/requests", PairingRequestSchema, { method: "POST" }),

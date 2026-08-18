@@ -4,13 +4,10 @@
  * This is the only source the server accepts when deciding utility access.
  * A balance supplied by a client, a query parameter, or a future extension
  * message is never used for authorization.
- *
- * No production adapter exists yet: there is no configured RPC endpoint and
- * no launched token. `getLiendBalance` therefore reports `unavailable`, and
- * every caller must handle that rather than assuming zero.
  */
 
 import { readServerEnv } from "../env"
+import { readTokenBalance } from "../solana-rpc"
 
 export type BalanceLookup =
   | { status: "ok"; balance: bigint }
@@ -22,19 +19,23 @@ export interface BalanceProvider {
   getTokenBalance(owner: string, mint: string): Promise<BalanceLookup>
 }
 
-/**
- * Placeholder provider. Deliberately returns `unavailable` rather than 0 so
- * that no code path can mistake "we cannot check" for "holds nothing".
- */
-export const unavailableBalanceProvider: BalanceProvider = {
-  async getTokenBalance(): Promise<BalanceLookup> {
-    return { status: "unavailable", reason: "no-rpc" }
+const rpcBalanceProvider: BalanceProvider = {
+  async getTokenBalance(owner, mint) {
+    try {
+      const balance = await readTokenBalance(owner, mint)
+      return { status: "ok", balance }
+    } catch (error) {
+      return {
+        status: "error",
+        message: error instanceof Error ? error.message : "Balance lookup failed",
+      }
+    }
   },
 }
 
-let provider: BalanceProvider = unavailableBalanceProvider
+let provider: BalanceProvider = rpcBalanceProvider
 
-/** Phase 3 installs a real RPC-backed provider here. */
+/** Tests may swap the provider. Request handling uses the RPC implementation. */
 export function setBalanceProvider(next: BalanceProvider): void {
   provider = next
 }
@@ -43,9 +44,6 @@ export async function getLiendBalance(owner: string): Promise<BalanceLookup> {
   const env = readServerEnv()
   if (env.token.status !== "launched") {
     return { status: "unavailable", reason: "token-not-launched" }
-  }
-  if (!env.rpcUrl) {
-    return { status: "unavailable", reason: "no-rpc" }
   }
   return provider.getTokenBalance(owner, env.token.mint)
 }

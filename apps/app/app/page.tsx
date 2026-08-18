@@ -8,7 +8,7 @@ import { availableSol, outstandingSol, positionValueUsd, sol, usd } from "@/lib/
 
 export default function DashboardPage() {
   const { access, loading, wallet } = useSession()
-  const { book } = useUnbackedBook()
+  const { book, loadingPositions } = useUnbackedBook()
   const open = book.loans.filter((loan) => loan.status === "active")
 
   return (
@@ -27,7 +27,9 @@ export default function DashboardPage() {
           <div className="metric">
             <p className="metric__label">Position value</p>
             <p className="metric__value">{usd(positionValueUsd(book))}</p>
-            <p className="metric__hint">{book.positions.length} supported positions</p>
+            <p className="metric__hint">
+              {loadingPositions ? "Reading wallet" : `${book.positions.length} token positions`}
+            </p>
           </div>
           <div className="metric">
             <p className="metric__label">Available liquidity</p>

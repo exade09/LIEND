@@ -1,8 +1,8 @@
 /**
- * Unbacked utility book.
+ * Utility book for a connected wallet.
  *
- * Positions, quotes and loans live in the connected wallet's browser until a
- * lending program exists. The interface is fully operable. Nothing here is
+ * Positions come from on-chain token accounts. Quotes, loans and activity
+ * stay in the browser until a lending program exists — nothing here is
  * settled on Solana.
  */
 
@@ -53,47 +53,24 @@ export type UnbackedBook = {
   positions: UnbackedPosition[]
   loans: UnbackedLoan[]
   activity: UnbackedActivity[]
+  solUsd: number
 }
 
-export const SOL_USD = 148.2
+export const DEFAULT_SOL_USD = 148.2
 export const MAX_LTV_BPS = 5000
 export const FEE_BPS = 30
 export const INTEREST_RATE_BPS = 850
 
-const SEED_POSITIONS: UnbackedPosition[] = [
-  {
-    mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
-    symbol: "BONK",
-    name: "Bonk",
-    amount: "12,840,000",
-    valueUsd: 1842.5,
-  },
-  {
-    mint: "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-    symbol: "WIF",
-    name: "dogwifhat",
-    amount: "420.50",
-    valueUsd: 1261.2,
-  },
-  {
-    mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-    symbol: "POPCAT",
-    name: "POPCAT",
-    amount: "8,900",
-    valueUsd: 712,
-  },
-]
-
 function storageKey(wallet: string) {
-  return `liend.unbacked.v1.${wallet}`
+  return `liend.book.v2.${wallet}`
 }
 
 function quoteKey(wallet: string) {
-  return `liend.unbacked.quote.${wallet}`
+  return `liend.book.quote.${wallet}`
 }
 
 export function emptyBook(): UnbackedBook {
-  return { positions: SEED_POSITIONS.map((position) => ({ ...position })), loans: [], activity: [] }
+  return { positions: [], loans: [], activity: [], solUsd: DEFAULT_SOL_USD }
 }
 
 export function loadBook(wallet: string | null): UnbackedBook {
@@ -101,12 +78,12 @@ export function loadBook(wallet: string | null): UnbackedBook {
   try {
     const raw = window.localStorage.getItem(storageKey(wallet))
     if (!raw) return emptyBook()
-    const parsed = JSON.parse(raw) as UnbackedBook
-    if (!Array.isArray(parsed.positions) || parsed.positions.length === 0) return emptyBook()
+    const parsed = JSON.parse(raw) as Partial<UnbackedBook>
     return {
-      positions: parsed.positions,
+      positions: Array.isArray(parsed.positions) ? parsed.positions : [],
       loans: Array.isArray(parsed.loans) ? parsed.loans : [],
       activity: Array.isArray(parsed.activity) ? parsed.activity : [],
+      solUsd: typeof parsed.solUsd === "number" && parsed.solUsd > 0 ? parsed.solUsd : DEFAULT_SOL_USD,
     }
   } catch {
     return emptyBook()
@@ -144,13 +121,26 @@ export function findLoan(book: UnbackedBook, id: string) {
   return book.loans.find((loan) => loan.id === id) ?? null
 }
 
-export function maxBorrowSol(position: UnbackedPosition) {
-  return (position.valueUsd * (MAX_LTV_BPS / 10_000)) / SOL_USD
+function solPrice(bookOrUsd?: UnbackedBook | number) {
+  if (typeof bookOrUsd === "number") return bookOrUsd > 0 ? bookOrUsd : DEFAULT_SOL_USD
+  if (bookOrUsd && bookOrUsd.solUsd > 0) return bookOrUsd.solUsd
+  return DEFAULT_SOL_USD
 }
 
-export function quoteBorrow(position: UnbackedPosition, borrowSol: number): UnbackedQuote {
-  const capped = Math.min(Math.max(borrowSol, 0), maxBorrowSol(position))
-  const ltvBps = Math.round(((capped * SOL_USD) / position.valueUsd) * 10_000)
+export function maxBorrowSol(position: UnbackedPosition, solUsd = DEFAULT_SOL_USD) {
+  if (position.valueUsd <= 0) return 0
+  return (position.valueUsd * (MAX_LTV_BPS / 10_000)) / solPrice(solUsd)
+}
+
+export function quoteBorrow(
+  position: UnbackedPosition,
+  borrowSol: number,
+  solUsd = DEFAULT_SOL_USD,
+): UnbackedQuote {
+  const price = solPrice(solUsd)
+  const capped = Math.min(Math.max(borrowSol, 0), maxBorrowSol(position, price))
+  const ltvBps =
+    position.valueUsd > 0 ? Math.round(((capped * price) / position.valueUsd) * 10_000) : 0
   return {
     mint: position.mint,
     symbol: position.symbol,
@@ -226,11 +216,18 @@ export function outstandingSol(book: UnbackedBook) {
 }
 
 export function availableSol(book: UnbackedBook) {
-  const capacity = (positionValueUsd(book) * (MAX_LTV_BPS / 10_000)) / SOL_USD
+  const capacity = (positionValueUsd(book) * (MAX_LTV_BPS / 10_000)) / solPrice(book)
   return Math.max(0, capacity - outstandingSol(book))
 }
 
 export function usd(value: number) {
+  if (value > 0 && value < 0.01) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 6,
+    }).format(value)
+  }
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
 

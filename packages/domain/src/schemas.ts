@@ -70,6 +70,25 @@ export const HolderEligibilitySchema = z.object({
   checkedAt: z.number().int().positive(),
 })
 
+export const WalletPositionSchema = z.object({
+  mint: Base58Address,
+  symbol: z.string().min(1).max(32),
+  name: z.string().min(1).max(128),
+  decimals: z.number().int().min(0).max(18),
+  /** Display amount, already decimal-adjusted. */
+  amount: z.string().min(1).max(48),
+  amountRaw: BaseUnitAmount,
+  /** Null when no market price is available. */
+  valueUsd: z.number().nonnegative().nullable(),
+})
+
+export const WalletPositionsResponseSchema = z.object({
+  wallet: Base58Address,
+  asOf: z.number().int().positive(),
+  solUsd: z.number().positive().nullable(),
+  positions: z.array(WalletPositionSchema),
+})
+
 export const UtilityAccessSchema = z.discriminatedUnion("state", [
   z.object({ state: z.literal("disconnected") }),
   z.object({ state: z.literal("token-not-launched"), wallet: Base58Address }),
@@ -180,3 +199,5 @@ export type PairingRequest = z.infer<typeof PairingRequestSchema>
 export type ExtensionDevice = z.infer<typeof ExtensionDeviceSchema>
 export type ApiErrorCode = z.infer<typeof ApiErrorCodeSchema>
 export type ApiError = z.infer<typeof ApiErrorSchema>
+export type WalletPosition = z.infer<typeof WalletPositionSchema>
+export type WalletPositionsResponse = z.infer<typeof WalletPositionsResponseSchema>

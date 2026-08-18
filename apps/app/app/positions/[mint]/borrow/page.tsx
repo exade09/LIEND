@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { use, useMemo, useState } from "react"
+import { use, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
@@ -14,12 +14,16 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
   const router = useRouter()
   const { book, setQuote } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
-  const ceiling = position ? maxBorrowSol(position) : 0
-  const [amount, setAmount] = useState(ceiling ? (ceiling * 0.4).toFixed(3) : "0")
+  const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
+  const [amount, setAmount] = useState("0")
   const quote = useMemo(
-    () => (position ? quoteBorrow(position, Number(amount) || 0) : null),
-    [amount, position],
+    () => (position ? quoteBorrow(position, Number(amount) || 0, book.solUsd) : null),
+    [amount, book.solUsd, position],
   )
+
+  useEffect(() => {
+    setAmount(ceiling > 0 ? (ceiling * 0.4).toFixed(3) : "0")
+  }, [ceiling, valid])
 
   return (
     <>

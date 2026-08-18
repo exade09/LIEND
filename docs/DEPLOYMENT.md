@@ -95,7 +95,7 @@ the repo root, which is what makes the workspace linking work.
 | `DATABASE_URL` | **yes in production** | Postgres connection string. See *Persistence*. |
 | `LIEND_ALLOWED_ORIGINS` | **yes** | Comma-separated exact origins. Deny-by-default: empty blocks all cross-origin browser access. |
 | `LIEND_SESSION_SECRET` | **yes in production** | HMAC key for session cookies. Generate with `openssl rand -base64 32`. |
-| `LIEND_SOLANA_RPC_URL` | no | Required before any balance lookup can succeed. |
+| `LIEND_SOLANA_RPC_URL` | no | Solana JSON-RPC. Unset falls back to public mainnet endpoints for wallet token reads. |
 | `LIEND_TOKEN_MINT` | no | Server-side copy. Unset ⇒ utility is `token-not-launched`. |
 | `LIEND_MIN_HOLDER_BALANCE` | no | Base units, integer string. |
 | `LIEND_API_VERSION` | no | Reported by `/api/health`. |
@@ -162,11 +162,10 @@ in `/settings/devices` cascades to every extension session derived from it.
 
 ## What is deliberately not deployable yet
 
-- **Borrow / repay execution** — there is no LIEND on-chain program. The API
-  exposes no execution endpoint and the App renders "not available" states.
-- **Positions / loans / activity data** — no RPC or indexer is connected.
+- **Borrow / repay settlement** — there is no LIEND on-chain program. Quotes
+  and loans stay in the App until execution exists.
 - **Holder gating** — architecture is complete and enforced server-side, but
-  inert until `LIEND_TOKEN_MINT` and a working RPC exist.
+  inert until `LIEND_TOKEN_MINT` is published.
 - **Distributed rate limiting** — the in-process limiter is per-instance only.
   See `apps/api/src/lib/rate-limit.ts`; a shared store (Redis/Upstash) has not
   been selected.
