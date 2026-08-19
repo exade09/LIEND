@@ -42,15 +42,14 @@
 
 .viewport {
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 28px), transparent);
 }
 
 .track {
   display: flex;
-  width: max-content;
+  width: 100%;
   height: 100%;
   align-items: center;
-  animation: marquee 42s linear infinite;
 }
 
 .group {
@@ -61,9 +60,16 @@
   padding-inline: 8px;
 }
 
-.tape:hover .track,
-.tape[data-paused="true"] .track {
-  animation-play-state: paused;
+.idle {
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  opacity: 0.82;
+}
+
+.fresh {
+  animation: slideIn 320ms ease;
 }
 
 .item {
@@ -247,19 +253,19 @@
   padding-bottom: 4px;
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.45; }
 }
 
+@keyframes slideIn {
+  from { transform: translateX(-16px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .live i,
-  .track { animation: none; }
+  .fresh { animation: none; }
   .viewport { overflow-x: auto; mask-image: none; }
 }
 

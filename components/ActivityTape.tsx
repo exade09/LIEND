@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { Icon } from "@/components/Icon"
 import { Modal } from "@/components/Modal"
-import { kindLabel, tapeEvents, type TapeEvent, type TapeKind } from "@/data/activityTape"
+import { kindLabel, type TapeEvent, type TapeKind } from "@/data/activityTape"
 import { getExplorerAddressUrl, getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
 import styles from "./ActivityTape.module.css"
 
@@ -14,58 +14,111 @@ function kindIcon(kind: TapeKind) {
   return "swap" as const
 }
 
-function timeAgo(offsetMs: number, now: number) {
-  const delta = Math.max(4, Math.floor((now % 900_000 + offsetMs) / 1000) % 480)
+function timeAgo(occurredAt: number, now: number) {
+  const delta = Math.max(1, Math.floor((now - occurredAt) / 1000))
   if (delta < 60) return `${delta}s`
-  return `${Math.floor(delta / 60)}m`
+  if (delta < 3600) return `${Math.floor(delta / 60)}m`
+  return `${Math.floor(delta / 3600)}h`
+}
+
+function nextDelay() {
+  return 5_000 + Math.floor(Math.random() * 20_000)
+}
+
+async function loadPool(): Promise<TapeEvent[]> {
+  const response = await fetch("/api/activity-tape", { cache: "no-store" })
+  if (!response.ok) return []
+  const body = (await response.json()) as { events?: TapeEvent[] }
+  return Array.isArray(body.events) ? body.events : []
 }
 
 export function ActivityTape() {
+  const [events, setEvents] = useState<TapeEvent[]>([])
   const [selected, setSelected] = useState<TapeEvent | null>(null)
+  const [freshId, setFreshId] = useState<string | null>(null)
   const [now, setNow] = useState(0)
-  const [held, setHeld] = useState(false)
 
   useEffect(() => {
     setNow(Date.now())
-    const timer = window.setInterval(() => setNow(Date.now()), 4000)
+    const timer = window.setInterval(() => setNow(Date.now()), 4_000)
     return () => window.clearInterval(timer)
   }, [])
 
+  useEffect(() => {
+    let cancelled = false
+    let timer = 0
+    let pool: TapeEvent[] = []
+    const seen = new Set<string>()
+
+    const reveal = (event: TapeEvent) => {
+      seen.add(event.signature)
+      setFreshId(event.signature)
+      setEvents((current) => [event, ...current.filter((item) => item.signature !== event.signature)].slice(0, 8))
+    }
+
+    const tick = async () => {
+      if (cancelled) return
+      if (pool.length === 0) {
+        pool = await loadPool()
+      }
+      const unused = pool.filter((item) => !seen.has(item.signature))
+      const source = unused.length > 0 ? unused : pool
+      if (source.length > 0) {
+        const next = source[Math.floor(Math.random() * source.length)]
+        if (next) reveal(next)
+      } else {
+        pool = await loadPool()
+      }
+      if (unused.length <= 2) {
+        void loadPool().then((fresh) => {
+          if (!cancelled && fresh.length > 0) pool = fresh
+        })
+      }
+      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay())
+    }
+
+    void (async () => {
+      pool = await loadPool()
+      if (cancelled) return
+      timer = window.setTimeout(() => void tick(), nextDelay())
+    })()
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timer)
+    }
+  }, [])
+
   return (
-    <div className={styles.tape} data-paused={selected || held ? "true" : undefined}>
+    <div className={styles.tape}>
       <span className={styles.live} aria-hidden="true">
         <i />
         LIVE
       </span>
-      <div
-        className={styles.viewport}
-        onPointerDown={() => setHeld(true)}
-        onPointerUp={() => setHeld(false)}
-        onPointerCancel={() => setHeld(false)}
-        onPointerLeave={() => setHeld(false)}
-      >
+      <div className={styles.viewport}>
         <div className={styles.track}>
-          {[0, 1].map((copy) => (
-            <div className={styles.group} key={copy} aria-hidden={copy === 1}>
-              {tapeEvents.map((event) => (
-                  <button
-                    className={styles.item}
-                    type="button"
-                    key={`${copy}-${event.id}`}
-                    tabIndex={copy === 1 ? -1 : undefined}
-                    aria-label={`${kindLabel[event.kind]} ${event.amount} · ${shortenAddress(event.wallet, 4, 4)} · open transaction`}
-                    onClick={() => setSelected(event)}
-                  >
+          <div className={styles.group}>
+            {events.length === 0 ? (
+              <span className={styles.idle}>listening for routes</span>
+            ) : (
+              events.map((event) => (
+                <button
+                  className={`${styles.item} ${freshId === event.signature ? styles.fresh : ""}`}
+                  type="button"
+                  key={event.signature}
+                  aria-label={`${kindLabel[event.kind]} ${event.amount} · ${shortenAddress(event.wallet, 4, 4)} · open transaction`}
+                  onClick={() => setSelected(event)}
+                >
                   <Icon name={kindIcon(event.kind)} size={13} />
                   <b>{kindLabel[event.kind]}</b>
                   <code>{shortenAddress(event.wallet, 4, 4)}</code>
                   <span>{event.route}</span>
                   <strong>{event.amount}</strong>
-                  <em>{now ? timeAgo(event.offsetMs, now) : "now"}</em>
+                  <em>{now ? timeAgo(event.occurredAt, now) : "now"}</em>
                 </button>
-              ))}
-            </div>
-          ))}
+              ))
+            )}
+          </div>
         </div>
       </div>
 
