@@ -4,6 +4,7 @@ import "./globals.css"
 import { SessionProvider } from "@/components/SessionProvider"
 import { UnbackedBookProvider } from "@/components/UnbackedBook"
 import { StageBackdrop } from "@/components/StageBackdrop"
+import { ActivityTape } from "@/components/ActivityTape"
 import { AppHeader } from "@/components/AppHeader"
 
 const plexMono = IBM_Plex_Mono({
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SessionProvider>
           <UnbackedBookProvider>
             <div className="shell">
+              <ActivityTape />
               <AppHeader />
               <main className="content">{children}</main>
             </div>

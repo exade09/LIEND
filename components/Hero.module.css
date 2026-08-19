@@ -71,7 +71,7 @@
   position: relative;
   display: grid;
   height: 100%;
-  padding-block: clamp(88px, 10svh, 116px) clamp(26px, 4svh, 54px);
+  padding-block: clamp(122px, 12svh, 150px) clamp(26px, 4svh, 54px);
   place-items: center;
 }
 
@@ -368,7 +368,7 @@
   }
 
   .frame {
-    padding-block: 84px 24px;
+    padding-block: 118px 24px;
   }
 
   .content {

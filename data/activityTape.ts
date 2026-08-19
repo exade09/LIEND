@@ -1,0 +1,166 @@
+export type TapeKind = "borrow" | "repay" | "swap-out" | "swap-in"
+
+export type TapeEvent = {
+  id: string
+  kind: TapeKind
+  wallet: string
+  signature: string
+  asset: string
+  title: string
+  route: string
+  amount: string
+  description: string
+  tokenDelta: string
+  solDelta: string
+  offsetMs: number
+}
+
+export const tapeEvents: TapeEvent[] = [
+  {
+    id: "tape-01",
+    kind: "borrow",
+    wallet: "7YmaK5wR9cT2xN6vB3dH8qP4sE7jF2uG5zM9nC3kW8a",
+    signature: "4xTq7mK2vR9cW5yN8sH3aP6dE2jF7uG4zB9nC5kM8wQ3rT6yV2pD7sX4aH9eJ5uF8cN3kR6wY2mQ7tPzB8n",
+    asset: "LIEND",
+    title: "Borrow opened",
+    route: "LIEND → SOL",
+    amount: "11.27 SOL",
+    description: "Wallet posted LIEND as collateral and opened a borrow. Settlement paid out 11.27 SOL.",
+    tokenDelta: "− 18,400 LIEND",
+    solDelta: "+ 11.27 SOL",
+    offsetMs: 18_000,
+  },
+  {
+    id: "tape-02",
+    kind: "swap-out",
+    wallet: "3QvN8cR5wT2yK7sM4aH9xP6dE3jF8uG5zB2nW7kC4qV",
+    signature: "8pR3wN6cT2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5mH8bV3s",
+    asset: "KITE",
+    title: "Token swapped to SOL",
+    route: "KITE → SOL",
+    amount: "15.93 SOL",
+    description: "Migrated KITE was routed through the liquidity desk and settled into SOL.",
+    tokenDelta: "− 412,900 KITE",
+    solDelta: "+ 15.93 SOL",
+    offsetMs: 41_000,
+  },
+  {
+    id: "tape-03",
+    kind: "swap-in",
+    wallet: "9mC4qV7wR2yK5sN8aH3xP6dE9jF4uG7zB2nW5kT8cM3",
+    signature: "2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5pR3wN6cT8vX3aJ6eQ4uF7dS2cN9kR5wY8mH2pD6sEbA4",
+    asset: "LIEND",
+    title: "SOL swapped to token",
+    route: "SOL → LIEND",
+    amount: "240,800 LIEND",
+    description: "SOL was swapped back into LIEND on the return route after the borrow window closed.",
+    tokenDelta: "+ 240,800 LIEND",
+    solDelta: "− 8.40 SOL",
+    offsetMs: 73_000,
+  },
+  {
+    id: "tape-04",
+    kind: "repay",
+    wallet: "5sV8aH3xP6dE9jF4uG7zB2nW5kT8cM3qR6yK2mN9vC4",
+    signature: "6nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5mH8pR3wN6cT2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC9dP4",
+    asset: "LIEND",
+    title: "Position repaid",
+    route: "SOL → LIEND vault",
+    amount: "4.80 SOL",
+    description: "Outstanding borrow was repaid in SOL and the LIEND collateral lock was released.",
+    tokenDelta: "+ 9,120 LIEND",
+    solDelta: "− 4.80 SOL",
+    offsetMs: 112_000,
+  },
+  {
+    id: "tape-05",
+    kind: "borrow",
+    wallet: "8cM3qR6yK2mN9vC4sV7aH5xP8dE3jF6uG2zB4nW7kT5",
+    signature: "9wY5mH8pR3wN6cT2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kZ8tR",
+    asset: "FOLI",
+    title: "Borrow opened",
+    route: "FOLI → SOL",
+    amount: "7.27 SOL",
+    description: "FOLI collateral was posted against the market and 7.27 SOL was borrowed out.",
+    tokenDelta: "− 61,250 FOLI",
+    solDelta: "+ 7.27 SOL",
+    offsetMs: 148_000,
+  },
+  {
+    id: "tape-06",
+    kind: "swap-out",
+    wallet: "4nW7kT5sV8aH3xP6dE9jF2uG5zB8cM3qR6yK9mN4vC7",
+    signature: "3aJ6eQ4uF7cN2kR9wY5mH8pR3wN6cT2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX1wQ",
+    asset: "LIEND",
+    title: "Token swapped to SOL",
+    route: "LIEND → SOL",
+    amount: "3.14 SOL",
+    description: "A LIEND bag was swapped into SOL on the same desk used for borrow settlement.",
+    tokenDelta: "− 52,600 LIEND",
+    solDelta: "+ 3.14 SOL",
+    offsetMs: 191_000,
+  },
+  {
+    id: "tape-07",
+    kind: "swap-in",
+    wallet: "2qW7kC4nM9rT5yP8dS3vX6aJ9eQ1uF4cN7kR2wY5mH8",
+    signature: "5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5mH8pR3wN6cT2yK7sV4aH9xD6nB",
+    asset: "KITE",
+    title: "SOL swapped to token",
+    route: "SOL → KITE",
+    amount: "88,420 KITE",
+    description: "SOL was rotated back into KITE after the wallet closed the previous borrow leg.",
+    tokenDelta: "+ 88,420 KITE",
+    solDelta: "− 2.61 SOL",
+    offsetMs: 226_000,
+  },
+  {
+    id: "tape-08",
+    kind: "borrow",
+    wallet: "6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5",
+    signature: "7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5mH8pR3wN6cT2yK4fM",
+    asset: "ARC",
+    title: "Borrow opened",
+    route: "ARC → SOL",
+    amount: "9.02 SOL",
+    description: "ARC was locked as collateral and the wallet borrowed 9.02 SOL against the position.",
+    tokenDelta: "− 27,800 ARC",
+    solDelta: "+ 9.02 SOL",
+    offsetMs: 263_000,
+  },
+  {
+    id: "tape-09",
+    kind: "repay",
+    wallet: "9xP6dE3jF8uG5zB2nW7kC4qV7wR2yK5sN8aH3mT6cM",
+    signature: "1cN2kR9wY5mH8pR3wN6cT2yK7sV4aH9xD5mE8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7bK",
+    asset: "KITE",
+    title: "Position repaid",
+    route: "SOL → KITE vault",
+    amount: "6.18 SOL",
+    description: "The KITE borrow was closed with a SOL repayment and collateral returned to the wallet.",
+    tokenDelta: "+ 155,200 KITE",
+    solDelta: "− 6.18 SOL",
+    offsetMs: 301_000,
+  },
+  {
+    id: "tape-10",
+    kind: "swap-out",
+    wallet: "1uF4cN7kR2wY5mH8qW3kC6nM9rT5yP8dS2vX7aJ4eQ",
+    signature: "8jF3uG6zB2qW7kC4nM9rT5yP2dS8vX3aJ6eQ4uF7cN2kR9wY5mH8pR3wN6cT2yK7sV4aH9xD5mE9tL",
+    asset: "FOLI",
+    title: "Token swapped to SOL",
+    route: "FOLI → SOL",
+    amount: "12.40 SOL",
+    description: "FOLI was swapped into SOL after the wallet took liquidity off the migrated position.",
+    tokenDelta: "− 98,750 FOLI",
+    solDelta: "+ 12.40 SOL",
+    offsetMs: 344_000,
+  },
+]
+
+export const kindLabel: Record<TapeKind, string> = {
+  borrow: "BORROW",
+  repay: "REPAY",
+  "swap-out": "SWAP",
+  "swap-in": "SWAP",
+}

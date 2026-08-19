@@ -1,5 +1,6 @@
 "use client"
 
+import { ActivityTape } from "@/components/ActivityTape"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { project } from "@/config/project"
@@ -31,7 +32,9 @@ export function Header() {
   }, [])
 
   return (
-    <header className="site-header">
+    <div className="chrome-top">
+      <ActivityTape />
+      <header className="site-header">
       <div className="nav-shell">
         <a className="brand-compact" href="/" aria-label="LIEND home" onClick={() => setOpen(false)}>
           <span className="brand-compact__avatar">
@@ -108,7 +111,8 @@ export function Header() {
         <a className="button button--primary button--wide" href="/#product-stage" onClick={() => setOpen(false)}>
           Launch App
         </a>
-      </div>
-    </header>
+        </div>
+      </header>
+    </div>
   )
 }
