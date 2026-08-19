@@ -127,7 +127,7 @@
   align-items: center;
   gap: 12px;
   margin: 0 0 7px;
-  color: #77819a;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 500;
@@ -140,7 +140,7 @@
 
 .sceneIntro h2 {
   margin: 0;
-  color: #fff;
+  color: #ffffff;
   font-family: var(--font-display);
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 400;
@@ -151,7 +151,7 @@
 .introCopy,
 .dataContext p {
   margin: 0;
-  color: #f7f9ff;
+  color: #ffffff;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -256,7 +256,7 @@
   align-items: center;
   gap: 9px;
   margin-top: 22px;
-  color: #f7f9ff;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 8px;
   font-weight: 500;
@@ -296,14 +296,14 @@
   padding-top: 34px;
   margin-top: clamp(80px, 10vw, 145px);
   border-top: 1px solid rgba(176, 190, 220, 0.11);
-  color: #58637a;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.16em;
 }
 
 .dataFooter span:first-child {
-  color: #7d6dbe;
+  color: #ffffff;
   font-weight: 500;
 }
 

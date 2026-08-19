@@ -19,9 +19,9 @@
   --liend-line-strong: rgba(181, 197, 231, 0.24);
 
   /* Text */
-  --liend-text: #f4f6fb;
-  --liend-text-soft: #bbc2d2;
-  --liend-text-muted: #747e94;
+  --liend-text: #ffffff;
+  --liend-text-soft: #ffffff;
+  --liend-text-muted: #ffffff;
 
   /* Accent — violet / blue / cyan */
   --liend-violet: #7957ff;

@@ -33,7 +33,7 @@ h1, h2, h3, h4 {
 .token-detail__header,
 .panel-heading {
   background: var(--titlebar);
-  color: #fff;
+  color: #ffffff;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
   font-family: var(--font-pixel);
 }
@@ -51,7 +51,7 @@ h1, h2, h3, h4 {
 .application-brand small,
 .application-status,
 .application-status span {
-  color: #fff !important;
+  color: #ffffff !important;
   font-family: var(--font-pixel);
   letter-spacing: 0.04em;
 }
@@ -71,7 +71,7 @@ h1, h2, h3, h4 {
 .application-nav button.is-active {
   background: linear-gradient(180deg, rgba(236, 242, 252, 0.55), rgba(200, 214, 240, 0.2));
   box-shadow: var(--bevel);
-  color: #fff;
+  color: #ffffff;
 }
 
 .wallet-pill {
@@ -87,7 +87,7 @@ h1, h2, h3, h4 {
 .faq__question,
 .faq__number {
   font-family: var(--font-pixel);
-  color: #fff;
+  color: #ffffff;
 }
 
 .network-stats {
@@ -114,7 +114,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-pixel);
   font-size: 10px;
   background: var(--titlebar);
-  color: #fff;
+  color: #ffffff;
 }
 
 .market-table td {
@@ -157,7 +157,7 @@ h1, h2, h3, h4 {
 .modal-panel header,
 .modal-header {
   background: var(--titlebar);
-  color: #fff;
+  color: #ffffff;
 }
 
 /* Liquid glass controls: translucent slab, specular lip, webcore bevel. */
@@ -184,7 +184,7 @@ h1, h2, h3, h4 {
   border-color: rgba(196, 255, 188, 0.62);
   background:
     linear-gradient(180deg, rgba(186, 255, 178, 0.38) 0%, rgba(77, 255, 90, 0.2) 46%, rgba(12, 48, 24, 0.28) 100%);
-  color: #f4fff6;
+  color: #ffffff;
   text-shadow: 0 1px 0 rgba(4, 22, 10, 0.4);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
   backdrop-filter: blur(18px) saturate(180%);
@@ -198,7 +198,7 @@ h1, h2, h3, h4 {
   border-color: rgba(220, 255, 214, 0.88);
   background:
     linear-gradient(180deg, rgba(210, 255, 200, 0.5) 0%, rgba(77, 255, 90, 0.28) 48%, rgba(12, 48, 24, 0.32) 100%);
-  color: #fff;
+  color: #ffffff;
   filter: none;
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.7),
@@ -213,7 +213,7 @@ h1, h2, h3, h4 {
 .button--primary:disabled {
   border-color: rgba(181, 197, 231, 0.16);
   background: rgba(120, 132, 168, 0.1);
-  color: #8a93a8;
+  color: #ffffff;
   text-shadow: none;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -224,7 +224,7 @@ h1, h2, h3, h4 {
   border-color: rgba(236, 242, 252, 0.34);
   background:
     linear-gradient(180deg, rgba(236, 242, 252, 0.26) 0%, rgba(16, 36, 110, 0.2) 100%);
-  color: #f2f5fd;
+  color: #ffffff;
   -webkit-backdrop-filter: blur(16px) saturate(170%);
   backdrop-filter: blur(16px) saturate(170%);
   box-shadow:
@@ -237,5 +237,5 @@ h1, h2, h3, h4 {
   border-color: rgba(94, 232, 255, 0.48);
   background:
     linear-gradient(180deg, rgba(214, 244, 255, 0.28) 0%, rgba(16, 36, 110, 0.24) 100%);
-  color: #fff;
+  color: #ffffff;
 }

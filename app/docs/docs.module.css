@@ -25,7 +25,7 @@
   padding: 0 12px;
   border-bottom: 2px solid rgba(8, 12, 40, 0.3);
   background: var(--titlebar);
-  color: #fff;
+  color: #ffffff;
   font-family: var(--font-pixel);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -51,7 +51,7 @@
   padding: 8px 10px;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  color: #d5dcef;
+  color: #ffffff;
   font-family: var(--font-pixel);
   font-size: 10px;
   letter-spacing: 0.03em;
@@ -60,7 +60,7 @@
 }
 
 .nav a small {
-  color: #9aa8c8;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.14em;
@@ -77,7 +77,7 @@
 
 .nav a:hover small,
 .nav a[aria-current="page"] small {
-  color: #3c4860;
+  color: #ffffff;
 }
 
 .article {
@@ -89,7 +89,7 @@
 
 .kicker {
   margin: 0 0 10px;
-  color: #9aa8c8;
+  color: #ffffff;
   font-family: var(--font-pixel);
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -98,14 +98,14 @@
 
 .article h1 {
   margin: 0 0 12px;
-  color: #f7f9ff;
+  color: #ffffff;
   font-size: clamp(22px, 3vw, 34px);
 }
 
 .lede {
   margin: 0 0 28px;
   max-width: 62ch;
-  color: #d5dcef;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.6;
@@ -122,14 +122,14 @@
 
 .section h2 {
   margin: 0 0 10px;
-  color: #f7f9ff;
+  color: #ffffff;
   font-size: 16px;
 }
 
 .section p {
   margin: 0 0 12px;
   max-width: 68ch;
-  color: #d5dcef;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.65;

@@ -166,7 +166,7 @@
 .intro h2 {
   max-width: none;
   margin: 0;
-  color: #f4fff6;
+  color: #ffffff;
   font-family: var(--font-display);
   font-size: 9px;
   font-weight: 400;
@@ -232,7 +232,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background: transparent;
-  color: #6f7b91;
+  color: #ffffff;
   text-align: left;
   grid-template-columns: 16px minmax(0, 1fr);
   transition: color var(--t-color), background var(--t-color), box-shadow var(--t-surface);
@@ -240,7 +240,7 @@
 
 .rail button:hover {
   background: var(--glass);
-  color: #b4bccc;
+  color: #ffffff;
 }
 
 /* The step you are on is a lit glass plate raised out of the rail. */
@@ -248,12 +248,12 @@
   border-color: var(--line);
   background: linear-gradient(90deg, rgba(123, 92, 255, 0.16), rgba(47, 220, 240, 0.04));
   box-shadow: var(--bevel);
-  color: #f2f5fd;
+  color: #ffffff;
 }
 
 .stepIndex {
   padding-top: 2px;
-  color: #7263b8;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.12em;
@@ -281,7 +281,7 @@
 }
 
 .activeStep .stepCopy small {
-  color: #858fa2;
+  color: #ffffff;
 }
 
 .progressTrack {
@@ -746,7 +746,7 @@
     display: block;
     max-width: 520px;
     margin: 0;
-    color: #8aa0b8;
+    color: #ffffff;
     font-family: var(--font-mono);
     font-size: 13px;
     line-height: 1.4;
@@ -773,7 +773,7 @@
     left: auto;
     display: flex;
     margin-top: 40px;
-    color: #8b93a3;
+    color: #ffffff;
   }
 
   .rail {
@@ -847,7 +847,7 @@
     margin-bottom: 16px;
     border-top: 1px solid rgba(181, 197, 231, 0.18);
     border-bottom: 1px solid rgba(181, 197, 231, 0.1);
-    color: #8371c2;
+    color: #ffffff;
     font-family: var(--font-mono);
     font-size: 9px;
     font-weight: 500;

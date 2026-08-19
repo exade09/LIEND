@@ -18,7 +18,7 @@
 
 .eyebrow {
   margin: 0;
-  color: #9a90c4;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 500;
@@ -32,12 +32,12 @@
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.05;
-  color: #fff;
+  color: #ffffff;
 }
 
 .titleLine {
   display: block;
-  color: #fff;
+  color: #ffffff;
   background: none;
 }
 
@@ -48,7 +48,7 @@
 
 .copy {
   margin: 36px 0 0;
-  color: #8993a5;
+  color: #ffffff;
   font-size: 14px;
 }
 
@@ -73,7 +73,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: #7b8699;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 500;
