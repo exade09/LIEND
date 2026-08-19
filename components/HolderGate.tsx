@@ -16,8 +16,6 @@ import { discoverWallets, type DiscoveredWallet } from "@/lib/wallet"
 
 type GateState = "NOT CONNECTED" | "CHECKING" | "ELIGIBLE" | "NOT ELIGIBLE" | "WRONG NETWORK"
 
-const gateStates: GateState[] = ["NOT CONNECTED", "CHECKING", "ELIGIBLE", "NOT ELIGIBLE", "WRONG NETWORK"]
-
 function stateFromAccess(access: HolderAccessDto): GateState {
   switch (access.state) {
     case "disconnected":
@@ -227,10 +225,8 @@ export function HolderGate() {
           </div>
 
           <div className="state-preview-control">
-            <label htmlFor="eligibility-state">Eligibility state</label>
-            <select id="eligibility-state" value={state} disabled aria-readonly="true">
-              {gateStates.map((item) => <option key={item}>{item}</option>)}
-            </select>
+            <span className="state-preview-control__label">Eligibility state</span>
+            <div className="state-preview-value" aria-live="polite">{state}</div>
             <small>
               {state === "NOT CONNECTED"
                 ? "Resolved from the connected wallet"

@@ -4,8 +4,29 @@
   isolation: isolate;
 }
 
+.experience::before,
+.experience::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  left: 0;
+  height: min(20vh, 160px);
+  pointer-events: none;
+  content: "";
+}
+
+.experience::before {
+  top: 0;
+  background: linear-gradient(180deg, #1238c8, transparent);
+}
+
+.experience::after {
+  bottom: 0;
+  background: linear-gradient(180deg, transparent, #1238c8);
+}
+
 .atmosphere,
-.skyStack,
+.skyFill,
 .veil {
   position: absolute;
   inset: 0;
@@ -17,30 +38,23 @@
   overflow: hidden;
 }
 
-.skyStack {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-}
-
-.skyCell {
-  position: relative;
-  overflow: hidden;
-}
-
-.skyMirror {
-  transform: scaleY(-1);
+.skyFill :global(img),
+.skyFill :global(video) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  image-rendering: pixelated;
 }
 
 .veil {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8, 24, 96, 0.4) 0%,
-      rgba(10, 28, 110, 0.48) 38%,
-      rgba(6, 18, 72, 0.58) 50%,
-      rgba(10, 28, 110, 0.5) 64%,
-      rgba(6, 16, 64, 0.68) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(8, 24, 96, 0.22) 0%,
+    rgba(10, 28, 110, 0.18) 42%,
+    rgba(8, 22, 88, 0.3) 100%
+  );
 }
 
 .scene {
@@ -59,7 +73,7 @@
 .labScene {
   position: relative;
   padding: clamp(140px, 15vw, 230px) 0 clamp(90px, 10vw, 140px);
-  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 0;
   background: transparent;
 }
 
@@ -137,7 +151,7 @@
 .introCopy,
 .dataContext p {
   margin: 0;
-  color: #8d96a8;
+  color: #f7f9ff;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -242,7 +256,7 @@
   align-items: center;
   gap: 9px;
   margin-top: 22px;
-  color: #68738a;
+  color: #f7f9ff;
   font-family: var(--font-mono);
   font-size: 8px;
   font-weight: 500;

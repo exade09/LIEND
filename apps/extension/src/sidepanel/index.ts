@@ -125,7 +125,7 @@ function render(snapshot: PanelSnapshot): void {
     foot.append(button("Disconnect this browser", "DISCONNECT", "quiet"))
   }
   const meta = el("div", "meta")
-  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "pump.fun"))
+  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "liend.app"))
   foot.append(meta)
 
   root.append(renderHeader(snapshot), body, foot)

@@ -2,8 +2,20 @@
   position: relative;
   height: calc(var(--product-stage-steps) * 78svh + 20svh);
   min-height: 2420px;
-  background: #0002f1;
+  background: #1238c8;
   isolation: isolate;
+}
+
+.stage::after {
+  position: absolute;
+  z-index: 6;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: min(26vh, 220px);
+  background: linear-gradient(180deg, transparent 0%, rgba(18, 56, 200, 0.55) 55%, #1238c8 100%);
+  pointer-events: none;
+  content: "";
 }
 
 .canvas {
@@ -352,7 +364,11 @@
 
   .workspace {
     height: 100%;
-    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    display: none;
   }
 
   .stepCopy {
@@ -440,13 +456,14 @@
   }
 
   .pane :global(.holder-gate-card > *) {
-    margin-inline: 8px;
+    margin-inline: 10px;
+    flex-shrink: 0;
   }
 
   .pane :global(.holder-gate-card__topline),
   .pane :global(.application-bar) {
-    min-height: 26px;
-    padding: 0 8px 0 38px;
+    min-height: 22px;
+    padding: 0 8px 0 42px;
     margin-inline: 0;
     flex: 0 0 auto;
   }
@@ -458,46 +475,56 @@
 
   .pane :global(.gate-identity) {
     gap: 8px;
-    padding: 8px 0;
+    padding: 6px 0 4px;
   }
 
   .pane :global(.gate-identity img) {
-    width: 40px !important;
-    height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
   }
 
   .pane :global(.gate-identity div strong) {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .pane :global(.state-preview-control) {
-    padding: 8px;
+    padding: 6px 8px;
   }
 
-  .pane :global(.state-preview-control select) {
-    height: 28px;
-    font-size: 9px;
+  .pane :global(.state-preview-control select),
+  .pane :global(.state-preview-value) {
+    height: 24px;
+    font-size: 8px;
+  }
+
+  .pane :global(.state-preview-control small) {
+    margin-top: 4px;
+    font-size: 7px;
   }
 
   .pane :global(.gate-readout) {
     min-height: 0;
+    flex: 1 1 auto;
+    overflow: auto;
     gap: 0;
+    margin-top: 6px;
+    padding: 2px 0;
   }
 
   .pane :global(.gate-readout > div) {
-    min-height: 28px;
-    padding-block: 4px;
+    min-height: 22px;
+    padding-block: 2px;
   }
 
   .pane :global(.gate-message) {
     min-height: 0;
-    padding: 6px 0;
-    font-size: 8px;
+    padding: 4px 0 6px;
+    font-size: 7px;
   }
 
   .pane :global(.holder-gate-card > .button),
   .pane :global(.wallet-picker .button) {
-    min-height: 28px;
+    min-height: 26px;
     margin-bottom: 8px;
   }
 
@@ -604,7 +631,7 @@
 }
 
 .pane :global(.holder-layout) {
-  gap: 16px;
+  gap: 0;
 }
 
 @media (min-width: 1400px) {
@@ -615,15 +642,11 @@
 
 @media (max-width: 1100px) and (min-width: 901px) {
   .workspace {
-    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .rail {
-    padding-inline: 6px;
-  }
-
-  .progressTrack {
-    left: 6px;
+    display: none;
   }
 }
 

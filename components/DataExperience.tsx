@@ -64,13 +64,8 @@ export default function DataExperience() {
   return (
     <div ref={experienceRef} className={styles.experience}>
       <div className={styles.atmosphere} aria-hidden="true">
-        <div className={styles.skyStack}>
-          <div className={styles.skyCell}>
-            <SceneMedia src="/assets/webcore-sky.png" pixelated />
-          </div>
-          <div className={`${styles.skyCell} ${styles.skyMirror}`}>
-            <SceneMedia src="/assets/webcore-sky.png" pixelated />
-          </div>
+        <div className={styles.skyFill}>
+          <SceneMedia src="/assets/webcore-sky.png" pixelated />
         </div>
         <span className={styles.veil} />
       </div>

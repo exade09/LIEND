@@ -9,6 +9,18 @@
   background: #1238c8;
 }
 
+.cloudBand::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: min(30vh, 240px);
+  background: linear-gradient(180deg, transparent 0%, rgba(18, 56, 200, 0.42) 46%, #1238c8 100%);
+  content: "";
+  pointer-events: none;
+}
+
 .cloudSky {
   position: sticky;
   top: 0;
@@ -60,7 +72,8 @@
 
 .closeBand {
   position: relative;
-  background: #0a1c72;
+  margin-top: -96px;
+  background: #1238c8;
 }
 
 .closeSky {
@@ -72,11 +85,32 @@
   pointer-events: none;
 }
 
+.closeSky::before,
 .closeSky::after {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(8, 22, 92, 0.38) 0%, rgba(10, 28, 96, 0.5) 100%);
+  right: 0;
+  left: 0;
   content: "";
+  pointer-events: none;
+}
+
+.closeSky::before {
+  z-index: 1;
+  top: 0;
+  height: min(52vh, 420px);
+  background: linear-gradient(
+    180deg,
+    #1238c8 0%,
+    rgba(18, 56, 200, 0.92) 18%,
+    rgba(18, 56, 200, 0.55) 42%,
+    rgba(18, 56, 200, 0.18) 72%,
+    transparent 100%
+  );
+}
+
+.closeSky::after {
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 28, 96, 0.22) 100%);
 }
 
 .closeLoop {

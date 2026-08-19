@@ -4,6 +4,18 @@
   background: #1238c8;
 }
 
+.journeyGroup::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: min(36vh, 280px);
+  background: linear-gradient(180deg, transparent 0%, rgba(18, 56, 200, 0.5) 48%, #1238c8 100%);
+  content: "";
+  pointer-events: none;
+}
+
 .journey {
   --journey-progress: 0;
   --journey-line: 4.5%;
@@ -99,18 +111,12 @@
 }
 
 .horizon {
-  position: absolute;
-  top: 50vh;
-  right: 8vw;
-  left: 8vw;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(125, 98, 240, 0.24), rgba(50, 206, 220, 0.2), transparent);
-  box-shadow: 0 0 34px rgba(76, 105, 222, 0.12);
-  opacity: 0.4;
+  display: none;
 }
 
 .stickyStage {
   position: sticky;
+  z-index: 1;
   top: 0;
   display: grid;
   width: min(1500px, calc(100% - 72px));

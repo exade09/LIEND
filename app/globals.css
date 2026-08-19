@@ -1522,7 +1522,7 @@ button:disabled {
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px),
     linear-gradient(180deg, rgba(123, 92, 255, 0.14), rgba(47, 220, 240, 0.05));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -1px 0 rgba(2, 3, 10, 0.4);
-  color: #9aa5bd;
+  color: #f7f9ff;
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 500;
@@ -1579,7 +1579,7 @@ button:disabled {
 }
 
 .gate-identity div span {
-  color: var(--text-muted);
+  color: #f7f9ff;
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.18em;
@@ -1602,13 +1602,15 @@ button:disabled {
 }
 
 .state-preview-control label,
+.state-preview-control__label,
 .state-preview-control small {
   display: block;
 }
 
-.state-preview-control label {
+.state-preview-control label,
+.state-preview-control__label {
   margin-bottom: 8px;
-  color: #939daf;
+  color: #f7f9ff;
   font-size: 9px;
   font-weight: 650;
   letter-spacing: 0.12em;
@@ -1623,6 +1625,25 @@ button:disabled {
   border-radius: var(--radius-sm);
   background: linear-gradient(180deg, #10142a, #080b18);
   box-shadow: var(--bevel);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.state-preview-value {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #10142a, #080b18);
+  box-shadow: var(--bevel);
+  color: #f7f9ff;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -1642,7 +1663,7 @@ button:disabled {
 
 .state-preview-control small {
   margin-top: 8px;
-  color: #596477;
+  color: #f7f9ff;
   font-size: 9px;
 }
 
@@ -1664,7 +1685,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #7c889f;
+  color: #f7f9ff;
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.14em;
@@ -1673,7 +1694,7 @@ button:disabled {
 
 .gate-readout dd {
   margin: 0;
-  color: #ccd3e4;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -1688,7 +1709,7 @@ button:disabled {
 }
 
 .eligibility--eligible { color: var(--success); }
-.eligibility--not-connected { color: #939daf; }
+.eligibility--not-connected { color: #f7f9ff; }
 .eligibility--not-eligible,
 .eligibility--wrong-network { color: var(--warning); }
 .eligibility--checking { color: #b4a8ff; }
@@ -1713,7 +1734,7 @@ button:disabled {
   align-items: flex-start;
   gap: 9px;
   padding: 16px 0 13px;
-  color: #778296;
+  color: #f7f9ff;
   font-size: 10px;
   line-height: 1.5;
 }
@@ -1731,7 +1752,7 @@ button:disabled {
 .security-copy {
   padding: 15px 0 23px;
   margin-top: 0;
-  color: #535e71;
+  color: #f7f9ff;
   font-size: 8px;
   letter-spacing: 0.06em;
   text-align: center;
