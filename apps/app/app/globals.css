@@ -25,8 +25,11 @@
     inset -2px -2px 0 rgba(255, 255, 255, 0.16);
   --line: rgba(236, 242, 255, 0.34);
   --line-strong: rgba(255, 255, 255, 0.5);
-  --signal: #4dff5a;
+    --signal: #4dff5a;
   --signal-ink: #04160a;
+  --liend-text: #ffffff;
+  --liend-text-soft: #ffffff;
+  --liend-text-muted: #ffffff;
   --titlebar: linear-gradient(180deg, #2c5ae8 0%, #1639b4 100%);
   --shadow-window: 4px 6px 0 rgba(4, 10, 40, 0.45), 0 28px 70px rgba(4, 10, 40, 0.35);
   --shadow-raised: 3px 3px 0 rgba(4, 10, 40, 0.35);
@@ -47,7 +50,7 @@ body {
   margin: 0;
   min-width: 320px;
   background: transparent;
-  color: var(--liend-text);
+  color: #ffffff;
   font-family: var(--font-ui);
   font-size: 14px;
   font-weight: 500;
@@ -121,7 +124,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .nav-pill a {
   padding: 8px 12px;
   border-radius: var(--radius);
-  color: var(--liend-text-muted);
+  color: #ffffff;
   font-family: var(--font-pixel);
   font-size: 11px;
   letter-spacing: 0.02em;
@@ -190,7 +193,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .page-head p {
   margin: 6px 0 0;
-  color: var(--liend-text-muted);
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -200,7 +203,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--liend-text-muted);
+  color: #ffffff;
   margin: 0 0 6px;
 }
 
@@ -235,7 +238,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--liend-text-muted);
+  color: #ffffff;
   margin: 0 0 8px;
 }
 
@@ -252,13 +255,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-size: 14px;
   font-weight: 450;
   letter-spacing: 0;
-  color: var(--liend-text-soft);
+  color: #ffffff;
 }
 
 .metric__hint {
   margin: 7px 0 0;
   font-size: 11.5px;
-  color: var(--liend-text-muted);
+  color: #ffffff;
 }
 
 /* ---------------- surfaces ---------------- */
@@ -272,6 +275,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   box-shadow: var(--bevel), var(--shadow-window);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
+  color: #ffffff;
 }
 
 .panel {
@@ -320,14 +324,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .notice p {
   margin: 0;
-  color: var(--liend-text-soft);
+  color: #ffffff;
   font-size: 13px;
 }
 
 .empty {
   padding: 44px 24px;
   text-align: center;
-  color: var(--liend-text-muted);
+  color: #ffffff;
   font-size: 13px;
 }
 
@@ -347,14 +351,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--liend-text-muted);
+  color: #ffffff;
   white-space: nowrap;
 }
 
 .pill::before { content: ""; width: 6px; height: 6px; background: currentColor; }
 .pill[data-tone="ok"] { color: var(--signal); }
 .pill[data-tone="locked"] { color: var(--liend-warning); }
-.pill[data-tone="idle"] { color: var(--liend-text-muted); }
+.pill[data-tone="idle"] { color: #ffffff; }
 
 .button {
   position: relative;
@@ -412,7 +416,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .stack { display: flex; flex-direction: column; gap: 14px; }
 .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.muted { color: var(--liend-text-muted); font-size: 13px; }
+.muted { color: #ffffff; font-size: 13px; }
 .mono { font-family: var(--font-ui); font-size: 12px; word-break: break-all; }
 
 .list { display: flex; flex-direction: column; }
@@ -444,7 +448,7 @@ a.list__row:hover { color: var(--liend-text); }
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--liend-text-muted);
+  color: #ffffff;
 }
 
 .field input {

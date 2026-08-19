@@ -1,7 +1,7 @@
 .stage {
   position: relative;
-  height: calc(var(--product-stage-steps) * 78svh + 20svh);
-  min-height: 2420px;
+  height: 100svh;
+  min-height: 720px;
   background: #1238c8;
   isolation: isolate;
 }
@@ -19,11 +19,10 @@
 }
 
 .canvas {
-  position: sticky;
-  top: 0;
+  position: relative;
   display: grid;
   width: 100%;
-  height: 100svh;
+  height: 100%;
   min-height: 720px;
   overflow: clip;
   place-items: stretch;
@@ -88,19 +87,17 @@
 .screenGlare {
   position: absolute;
   inset: 0;
-  z-index: 6;
+  z-index: 1;
   pointer-events: none;
 }
 
 .scanlines {
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.12) 0 1px,
+    rgba(0, 0, 0, 0.08) 0 1px,
     transparent 1px 3px
   );
-  mix-blend-mode: multiply;
-  opacity: 0.45;
-  animation: crt-flicker 5s steps(2) infinite;
+  opacity: 0.28;
 }
 
 .screenGlare {
@@ -185,6 +182,7 @@
   position: relative;
   z-index: 2;
   display: grid;
+  height: 100%;
   min-height: 0;
   overflow: hidden;
   padding-top: 0;
@@ -194,7 +192,7 @@
   box-shadow: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  grid-template-columns: 54px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .workspace::before {
@@ -324,15 +322,11 @@
 .pane {
   position: absolute;
   inset: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  opacity: 0;
-  pointer-events: none;
-  scrollbar-color: rgba(90, 111, 143, 0.55) transparent;
-  scrollbar-width: thin;
-  transition: opacity 220ms ease, visibility 0s linear 220ms;
-  visibility: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .pane::-webkit-scrollbar {
@@ -349,8 +343,23 @@
 .visiblePane {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 220ms ease, visibility 0s linear 0s;
   visibility: visible;
+}
+
+.pane :global(.holder-copy),
+.pane :global(.access-flow),
+.pane :global(.holder-section__glow),
+.pane :global(.section-heading) {
+  display: none;
+}
+
+.pane :global(.gate-identity div span),
+.pane :global(.state-preview-control__label),
+.pane :global(.state-preview-control small),
+.pane :global(.gate-readout dt),
+.pane :global(.gate-readout dd),
+.pane :global(.gate-message) {
+  color: #ffffff;
 }
 
 .paneLabel {
@@ -388,11 +397,8 @@
   }
 
   .pane {
-    overflow: auto;
-  }
-
-  .applicationPane {
     overflow: hidden;
+    overscroll-behavior: none;
   }
 
   .pane :global(.section) {
@@ -506,6 +512,7 @@
     min-height: 0;
     flex: 1 1 auto;
     overflow: auto;
+    overscroll-behavior: none;
     gap: 0;
     margin-top: 6px;
     padding: 2px 0;
