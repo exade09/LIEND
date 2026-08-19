@@ -20,18 +20,20 @@ export default function LoansPage() {
         {book.loans.length === 0 ? (
           <div className="empty">No loans yet. Borrow against a position to open one.</div>
         ) : (
-          <div className="list">
-            {book.loans.map((loan) => (
-              <Link className="list__row" href={`/loans/${loan.id}`} key={loan.id}>
-                <div>
-                  <strong>{loan.symbol}</strong>
-                  <p className="muted" style={{ margin: "4px 0 0" }}>
-                    {loan.status === "active" ? "Active" : "Repaid"}
-                  </p>
-                </div>
-                <span>{sol(loan.outstandingSol)}</span>
-              </Link>
-            ))}
+          <div className="panel">
+            <div className="list">
+              {book.loans.map((loan) => (
+                <Link className="list__row" href={`/loans/${loan.id}`} key={loan.id}>
+                  <div>
+                    <strong>{loan.symbol}</strong>
+                    <p className="muted" style={{ margin: "4px 0 0" }}>
+                      {loan.status === "active" ? "Active" : "Repaid"}
+                    </p>
+                  </div>
+                  <span>{sol(loan.outstandingSol)}</span>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </UtilityGate>

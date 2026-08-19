@@ -152,6 +152,14 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     /** Server-derived utility access. The client never computes this itself. */
     utilityAccess: () => request("/api/utility-access", UtilityAccessSchema),
 
+    /**
+     * Unauthenticated holder preview for a public wallet address.
+     * Presentation only — does not create a session.
+     * Extra display fields such as `amount` are stripped by the access schema.
+     */
+    holderCheck: (wallet: string) =>
+      request(`/api/holder-check?wallet=${encodeURIComponent(wallet)}`, UtilityAccessSchema),
+
     /** On-chain SPL token accounts for the authenticated session wallet. */
     walletPositions: () => request("/api/positions", WalletPositionsResponseSchema),
 

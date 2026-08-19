@@ -11,6 +11,7 @@ import {
   useState,
 } from "react"
 import { Application } from "@/components/Application"
+import { DeskClock } from "@/components/DeskClock"
 import { HolderGate } from "@/components/HolderGate"
 import styles from "./ProductStage.module.css"
 
@@ -184,6 +185,13 @@ export default function ProductStage({
       <div className={styles.canvas}>
         <div className={styles.set}>
           <div className={styles.frame}>
+          <img
+            className={styles.bezel}
+            src="/assets/webcore-desk-crt.png"
+            alt=""
+            draggable={false}
+          />
+          <div className={styles.monitor}>
             <div className={styles.screen}>
             <div className={styles.scanlines} aria-hidden="true" />
             <div className={styles.screenGlare} aria-hidden="true" />
@@ -250,13 +258,14 @@ export default function ProductStage({
               </div>
             </div>
           </div>
-
-          <img
-            className={styles.bezel}
-            src="/assets/webcore-desk-crt.png"
-            alt=""
-            draggable={false}
-          />
+            <img
+              className={styles.monitorBezel}
+              src="/assets/webcore-desk-crt.png"
+              alt=""
+              draggable={false}
+            />
+          </div>
+          <DeskClock />
           </div>
 
           <footer className={styles.stageFooter}>

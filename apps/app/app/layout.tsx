@@ -1,43 +1,28 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import "./globals.css"
 import { SessionProvider } from "@/components/SessionProvider"
 import { UnbackedBookProvider } from "@/components/UnbackedBook"
-import { AccessSummary } from "@/components/AccessSummary"
+import { StageBackdrop } from "@/components/StageBackdrop"
+import { AppHeader } from "@/components/AppHeader"
 
 export const metadata: Metadata = {
   title: "LIEND",
   description: "Utility liquidity for migrated token positions on Solana",
+  icons: {
+    icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
+    apple: "/assets/liend-icon.png",
+  },
 }
-
-const NAV = [
-  { href: "/", label: "Dashboard" },
-  { href: "/positions", label: "Positions" },
-  { href: "/loans", label: "Loans" },
-  { href: "/activity", label: "Activity" },
-  { href: "/settings", label: "Settings" },
-]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <StageBackdrop />
         <SessionProvider>
           <UnbackedBookProvider>
             <div className="shell">
-              <aside className="sidebar">
-                <Link className="wordmark" href="/">
-                  LIEND
-                </Link>
-                <nav className="nav">
-                  {NAV.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-                <AccessSummary />
-              </aside>
+              <AppHeader />
               <main className="content">{children}</main>
             </div>
           </UnbackedBookProvider>

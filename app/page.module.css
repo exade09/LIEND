@@ -3,36 +3,10 @@
   isolation: isolate;
 }
 
-.statsScene {
-  position: relative;
-  overflow: clip;
-  padding: 0 0 clamp(74px, 8vw, 118px);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-  background:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 8px),
-    linear-gradient(180deg, #1238c8 0%, #1540d4 100%);
-}
-
-.statsScene::after {
-  position: absolute;
-  right: 9%;
-  bottom: 25px;
-  left: 9%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(123, 92, 255, 0.26), rgba(47, 220, 240, 0.2), transparent);
-  content: "";
-}
-
-.statsScene :global(.network-stats) {
-  position: relative;
-  z-index: 1;
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
 .cloudBand {
   position: relative;
-  background: #3f9ce2;
+  margin-top: -1px;
+  background: #1238c8;
 }
 
 .cloudSky {
@@ -49,6 +23,23 @@
   inset: 0;
 }
 
+.skyFade {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: min(56vh, 520px);
+  background: linear-gradient(
+    180deg,
+    #1238c8 0%,
+    rgba(18, 56, 200, 0.82) 24%,
+    rgba(18, 56, 200, 0.28) 62%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 .cloudScenes {
   position: relative;
   z-index: 1;
@@ -56,46 +47,50 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloudSky {
+  .cloudSky,
+  .closeSky {
     display: none;
   }
 
-  .cloudScenes {
+  .cloudScenes,
+  .closeScenes {
     margin-top: 0;
   }
 }
 
-.faqScene {
+.closeBand {
   position: relative;
-  overflow: clip;
-  border-top: 2px solid rgba(255, 255, 255, 0.2);
-  isolation: isolate;
+  background: #0a1c72;
 }
 
-.faqMedia {
-  position: absolute;
+.closeSky {
+  position: sticky;
+  top: 0;
   z-index: 0;
-  inset: 0;
+  height: 100svh;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.faqScene::before {
+.closeSky::after {
   position: absolute;
-  z-index: 1;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8, 22, 92, 0.62) 0%, rgba(12, 32, 110, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(8, 22, 92, 0.38) 0%, rgba(10, 28, 96, 0.5) 100%);
   content: "";
 }
 
-.faqScene :global(.faq) {
-  position: relative;
-  z-index: 2;
-  border-top: 0;
-  background: transparent;
+.closeLoop {
+  position: absolute;
+  inset: 0;
 }
 
-@media (max-width: 760px) {
-  .statsScene {
-    padding-bottom: 72px;
-  }
+.closeScenes {
+  position: relative;
+  z-index: 1;
+  margin-top: -100svh;
+}
+
+.closeScenes :global(.faq) {
+  border-top: 0;
+  background: transparent;
 }

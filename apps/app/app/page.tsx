@@ -19,7 +19,15 @@ export default function DashboardPage() {
           <h1>Dashboard</h1>
           <p>Your LIEND position and utility status</p>
         </div>
-        {!loading && <UtilityBadge access={access} />}
+        <div className="page-head__actions">
+          {!loading && <UtilityBadge access={access} />}
+          <Link className="button button--solid" href="/positions">
+            View positions
+          </Link>
+          <Link className="button button--ghost" href="/loans">
+            View loans
+          </Link>
+        </div>
       </header>
 
       <UtilityGate>
@@ -69,14 +77,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="row">
-            <Link className="button button--primary" href="/positions">
-              View positions
-            </Link>
-            <Link className="button button--ghost" href="/loans">
-              View loans
-            </Link>
-          </div>
         </section>
       </UtilityGate>
     </>

@@ -1,11 +1,9 @@
 import DataExperience from "@/components/DataExperience"
 import { FAQ } from "@/components/FAQ"
 import { FinalCTA } from "@/components/FinalCTA"
-import { Footer } from "@/components/Footer"
 import { Header } from "@/components/Header"
 import { Hero } from "@/components/Hero"
 import { HowItWorks } from "@/components/HowItWorks"
-import { NetworkStats } from "@/components/NetworkStats"
 import { OnchainJourney } from "@/components/OnchainJourney"
 import { ProductConcept } from "@/components/ProductConcept"
 import ProductStage from "@/components/ProductStage"
@@ -19,13 +17,11 @@ export default function Home() {
       <Header />
       <main className={styles.main} id="main-content">
         <Hero />
-        <div className={styles.statsScene}>
-          <NetworkStats />
-        </div>
         <div className={styles.cloudBand}>
           <div className={styles.cloudSky} aria-hidden="true">
             <SceneLoop src="/assets/loops/meadow-sky.gif" className={styles.cloudLoop} />
           </div>
+          <div className={styles.skyFade} aria-hidden="true" />
           <div className={styles.cloudScenes}>
             <ProductConcept />
             <HowItWorks />
@@ -34,17 +30,21 @@ export default function Home() {
         <ProductStage />
         <DataExperience />
         <OnchainJourney />
-        <div className={styles.faqScene}>
-          <SceneMedia
-            src="/assets/loops/webcore-field.mp4"
-            poster="/assets/webcore-sky.png"
-            className={styles.faqMedia}
-          />
-          <FAQ />
+        <div className={styles.closeBand}>
+          <div className={styles.closeSky} aria-hidden="true">
+            <SceneMedia
+              src="/assets/loops/webcore-field.mp4"
+              poster="/assets/webcore-sky.png"
+              className={styles.closeLoop}
+              pixelated
+            />
+          </div>
+          <div className={styles.closeScenes}>
+            <FAQ />
+            <FinalCTA />
+          </div>
         </div>
-        <FinalCTA />
       </main>
-      <Footer />
     </>
   )
 }

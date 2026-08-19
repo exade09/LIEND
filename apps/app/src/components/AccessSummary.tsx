@@ -2,34 +2,33 @@
 
 import Link from "next/link"
 import { useSession } from "./SessionProvider"
-import { UtilityBadge } from "./UtilityGate"
 
-/** Sidebar footer: who is connected and whether utility is available. */
+/** Header actions: positions CTA and wallet connect, matching the App chrome. */
 export function AccessSummary() {
-  const { loading, authenticated, wallet, access, apiConfigured, logout } = useSession()
-
-  if (!apiConfigured) {
-    return <p className="muted" style={{ marginTop: "auto" }}>API not configured</p>
-  }
-
-  if (loading) {
-    return <p className="muted" style={{ marginTop: "auto" }}>Loading…</p>
-  }
+  const { loading, authenticated, wallet, apiConfigured, logout } = useSession()
 
   return (
-    <div className="stack" style={{ marginTop: "auto", gap: 10 }}>
-      <UtilityBadge access={access} />
+    <div className="header-actions">
       {authenticated && wallet ? (
-        <>
-          <span className="mono" title={wallet}>
-            {wallet.slice(0, 4)}…{wallet.slice(-4)}
-          </span>
-          <button className="button button--ghost" type="button" onClick={() => void logout()}>
-            Disconnect
-          </button>
-        </>
+        <span className="wallet-chip" title={wallet}>
+          {wallet.slice(0, 4)}…{wallet.slice(-4)}
+        </span>
+      ) : null}
+
+      <Link className="button button--solid" href="/positions">
+        View positions
+      </Link>
+
+      {!apiConfigured ? (
+        <span className="muted">API not configured</span>
+      ) : loading ? (
+        <span className="muted">Loading…</span>
+      ) : authenticated ? (
+        <button className="button button--connect" type="button" onClick={() => void logout()}>
+          Disconnect
+        </button>
       ) : (
-        <Link className="button button--primary" href="/auth">
+        <Link className="button button--connect" href="/auth">
           Connect wallet
         </Link>
       )}

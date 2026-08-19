@@ -1,0 +1,112 @@
+.clock {
+  position: absolute;
+  z-index: 5;
+  top: 48.7847%;
+  left: 81.4453%;
+  width: 7.03125%;
+  height: 5.7292%;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+.face {
+  position: absolute;
+  top: 21.2121%;
+  left: 9.7222%;
+  display: flex;
+  width: 83.3333%;
+  height: 69.697%;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.digit {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.digit + .digit {
+  margin-left: 3%;
+}
+
+.digit i {
+  position: absolute;
+  display: block;
+  background: transparent;
+}
+
+.digit[data-segs*="a"] i[data-seg="a"],
+.digit[data-segs*="b"] i[data-seg="b"],
+.digit[data-segs*="c"] i[data-seg="c"],
+.digit[data-segs*="d"] i[data-seg="d"],
+.digit[data-segs*="e"] i[data-seg="e"],
+.digit[data-segs*="f"] i[data-seg="f"],
+.digit[data-segs*="g"] i[data-seg="g"] {
+  background: #4a8f4e;
+}
+
+.digit i[data-seg="a"],
+.digit i[data-seg="d"],
+.digit i[data-seg="g"] {
+  right: 18%;
+  left: 18%;
+  height: 14%;
+}
+
+.digit i[data-seg="a"] { top: 0; }
+.digit i[data-seg="g"] { top: 43%; }
+.digit i[data-seg="d"] { bottom: 0; }
+
+.digit i[data-seg="b"],
+.digit i[data-seg="c"],
+.digit i[data-seg="e"],
+.digit i[data-seg="f"] {
+  width: 16%;
+}
+
+.digit i[data-seg="b"],
+.digit i[data-seg="f"] {
+  top: 6%;
+  height: 40%;
+}
+
+.digit i[data-seg="c"],
+.digit i[data-seg="e"] {
+  bottom: 6%;
+  height: 40%;
+}
+
+.digit i[data-seg="b"],
+.digit i[data-seg="c"] { right: 4%; }
+
+.digit i[data-seg="e"],
+.digit i[data-seg="f"] { left: 4%; }
+
+.colon {
+  display: flex;
+  width: 10%;
+  flex: 0 0 10%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-block: 18%;
+}
+
+.colon i {
+  width: 38%;
+  aspect-ratio: 1;
+  background: transparent;
+}
+
+.colonOn i {
+  background: #4a8f4e;
+}
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .clock {
+    display: none;
+  }
+}

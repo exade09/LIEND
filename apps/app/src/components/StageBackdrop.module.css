@@ -1,0 +1,113 @@
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #9ec7ef;
+}
+
+.drift {
+  position: absolute;
+  inset: -14%;
+  animation: kenburns 64s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.image {
+  object-fit: cover;
+  object-position: 46% 36%;
+}
+
+.flare {
+  position: absolute;
+  top: -22%;
+  right: -16%;
+  width: min(62vw, 820px);
+  height: min(62vw, 820px);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(186, 220, 255, 0.22) 36%,
+    transparent 68%
+  );
+  mix-blend-mode: screen;
+  animation: breathe 9s ease-in-out infinite;
+}
+
+.haze {
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(ellipse at 28% 18%, rgba(255, 255, 255, 0.18), transparent 42%),
+    radial-gradient(ellipse at 78% 8%, rgba(255, 248, 232, 0.2), transparent 38%);
+  animation: haze 28s ease-in-out infinite alternate;
+}
+
+.motes {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1.8px);
+  background-size: 210px 210px, 140px 170px;
+  background-position: 0 0, 40px 70px;
+  opacity: 0.22;
+  animation: motes 42s linear infinite;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 26%, rgba(232, 242, 255, 0.2) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.16), transparent 46%);
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(-2.6%, -1.8%, 0);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.82;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes haze {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(3%, 1.6%, 0);
+  }
+}
+
+@keyframes motes {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-40px, -70px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift,
+  .flare,
+  .haze,
+  .motes {
+    animation: none;
+  }
+}

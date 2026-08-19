@@ -1,4 +1,5 @@
 import { project } from "../config/project";
+import { accessCopy, fetchHolderAccess } from "../lib/holder-access";
 import {
   demoProtocolActivity,
   demoTransactions,
@@ -56,19 +57,51 @@ export const demoSolanaAdapter: SolanaDataProvider = {
   },
 
   async checkLiendEligibility(walletAddress) {
+    if (!walletAddress) {
+      return {
+        state: "NOT CONNECTED",
+        eligible: null,
+        liendBalance: null,
+        minimumBalance: project.access.minimumBalance,
+        walletAddress,
+        reason: "Connect a Solana wallet to begin the eligibility check",
+        source: "live",
+        isDemo: false,
+        dataLabel: "Live data",
+        updatedAt: null,
+      };
+    }
+
+    const access = await fetchHolderAccess(walletAddress);
+    const eligible =
+      access.state === "eligible" || access.state === "token-not-launched"
+        ? true
+        : access.state === "not-eligible"
+          ? false
+          : null;
+    const liendBalance =
+      access.state === "eligible" || access.state === "not-eligible"
+        ? Number(access.balance)
+        : null;
+
     return {
-      state: walletAddress ? "CHECKING" : "NOT CONNECTED",
-      eligible: null,
-      liendBalance: null,
+      state:
+        access.state === "disconnected"
+          ? "NOT CONNECTED"
+          : access.state === "not-eligible"
+            ? "NOT ELIGIBLE"
+            : access.state === "eligible" || access.state === "token-not-launched"
+              ? "ELIGIBLE"
+              : "CHECKING",
+      eligible,
+      liendBalance: Number.isFinite(liendBalance) ? liendBalance : null,
       minimumBalance: project.access.minimumBalance,
       walletAddress,
-      reason: walletAddress
-        ? "Eligibility requires a connected Solana balance provider"
-        : "Connect a Solana wallet to begin the eligibility check",
-      source: "demo",
-      isDemo: true,
-      dataLabel: "Demo data",
-      updatedAt: null,
+      reason: accessCopy(access),
+      source: "live",
+      isDemo: false,
+      dataLabel: "Live data",
+      updatedAt: new Date().toISOString(),
     };
   },
 

@@ -1629,6 +1629,17 @@ button:disabled {
   letter-spacing: 0.1em;
 }
 
+.state-preview-control select:disabled {
+  opacity: 1;
+  color: inherit;
+  cursor: default;
+}
+
+.wallet-picker {
+  display: grid;
+  gap: 8px;
+}
+
 .state-preview-control small {
   margin-top: 8px;
   color: #596477;
@@ -1677,6 +1688,7 @@ button:disabled {
 }
 
 .eligibility--eligible { color: var(--success); }
+.eligibility--not-connected { color: #939daf; }
 .eligibility--not-eligible,
 .eligibility--wrong-network { color: var(--warning); }
 .eligibility--checking { color: #b4a8ff; }

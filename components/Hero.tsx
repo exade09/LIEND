@@ -23,6 +23,14 @@ export function Hero() {
 
       <div className={styles.stage} ref={stageRef}>
         <div className={styles.atmosphere} aria-hidden="true">
+          <img
+            className={styles.heroBanner}
+            src="/assets/hero/pixel-ascent.png"
+            alt=""
+            draggable={false}
+            decoding="async"
+          />
+          <div className={styles.heroWash} />
           <div className={styles.baseField} />
         </div>
 

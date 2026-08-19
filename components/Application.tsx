@@ -49,7 +49,18 @@ export function Application({ initialView }: ApplicationProps = {}) {
 
   const openView = (nextView: AppView) => {
     setView(nextView)
-    window.requestAnimationFrame(() => document.querySelector(".application-shell")?.scrollIntoView({ behavior: "smooth", block: "start" }))
+    window.requestAnimationFrame(() => {
+      const shell = document.querySelector(".application-shell")
+      if (!(shell instanceof HTMLElement)) return
+      const pane = shell.closest("[data-stage-pane]")
+      if (pane instanceof HTMLElement) {
+        pane.scrollTop = 0
+        const view = shell.querySelector(".application-view")
+        if (view instanceof HTMLElement) view.scrollTop = 0
+        return
+      }
+      shell.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
   }
 
   return (

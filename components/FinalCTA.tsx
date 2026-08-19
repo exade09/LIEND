@@ -1,26 +1,15 @@
 import { Icon } from "@/components/Icon"
 import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
-import { SceneMedia } from "@/components/SceneMedia"
 import { project } from "@/config/project"
 import styles from "./FinalCTA.module.css"
 
 export function FinalCTA() {
-
   return (
     <section
       className={styles.section}
       id="launch"
       aria-labelledby="final-cta-title"
     >
-      <div className={styles.scene} aria-hidden="true">
-        <SceneMedia
-          src="/assets/loops/webcore-field.mp4"
-          poster="/assets/webcore-sky.png"
-          className={styles.field}
-        />
-        <div className={styles.refraction} />
-      </div>
-
       <div className={styles.content}>
         <p className={styles.eyebrow}>
           LEND {"\u2022"} BORROW {"\u2022"} BUILD

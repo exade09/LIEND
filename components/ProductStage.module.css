@@ -26,6 +26,15 @@
 }
 
 .frame {
+  --mon-left: 0.371094;
+  --mon-top: 0.25;
+  --mon-w: 0.283203;
+  --mon-h: 0.420139;
+  --mon-scale: 1.13;
+  --hole-left: 0.397461;
+  --hole-top: 0.305556;
+  --hole-w: 0.226562;
+  --hole-h: 0.314236;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -50,16 +59,17 @@
 .screen {
   position: absolute;
   z-index: 1;
-  top: 30.5556%;
-  right: 37.5977%;
-  bottom: 38.0208%;
-  left: 39.7461%;
+  top: calc((var(--hole-top) - var(--mon-top)) / var(--mon-h) * 100%);
+  left: calc((var(--hole-left) - var(--mon-left)) / var(--mon-w) * 100%);
+  width: calc(var(--hole-w) / var(--mon-w) * 100%);
+  height: calc(var(--hole-h) / var(--mon-h) * 100%);
   display: grid;
   overflow: hidden;
+  contain: layout paint;
   border-radius: 2px;
   background: #070b1c;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.45);
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .scanlines,
@@ -87,10 +97,36 @@
 
 .bezel {
   position: absolute;
-  z-index: 4;
+  z-index: 1;
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+.monitor {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--mon-top) * 100%);
+  left: calc(var(--mon-left) * 100%);
+  width: calc(var(--mon-w) * 100%);
+  height: calc(var(--mon-h) * 100%);
+  overflow: hidden;
+  transform: scale(var(--mon-scale));
+  transform-origin: 50% 46%;
+}
+
+.monitorBezel {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--mon-top) / var(--mon-h) * -100%);
+  left: calc(var(--mon-left) / var(--mon-w) * -100%);
+  width: calc(100% / var(--mon-w));
+  height: calc(100% / var(--mon-h));
+  max-width: none;
   object-fit: fill;
   image-rendering: pixelated;
   pointer-events: none;
@@ -310,12 +346,46 @@
 }
 
 @media (min-width: 901px) {
+  .intro {
+    display: none;
+  }
+
+  .workspace {
+    height: 100%;
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+
+  .stepCopy {
+    display: none;
+  }
+
+  .rail button {
+    grid-template-columns: 1fr;
+    padding-inline: 2px;
+    place-items: center;
+  }
+
+  .productViewport,
+  .viewportBody {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .pane {
+    overflow: auto;
+  }
+
+  .applicationPane {
+    overflow: hidden;
+  }
+
   .pane :global(.section) {
     display: flex;
     height: 100%;
-    min-height: 100%;
+    min-height: 0;
     padding: 0;
     margin: 0;
+    overflow: hidden;
     flex-direction: column;
   }
 
@@ -325,6 +395,7 @@
     height: 100%;
     min-height: 0;
     padding: 0;
+    overflow: hidden;
     flex: 1;
     flex-direction: column;
   }
@@ -339,7 +410,7 @@
   .pane :global(.holder-layout) {
     display: block;
     height: 100%;
-    min-height: 100%;
+    min-height: 0;
     padding: 0;
     gap: 0;
   }
@@ -350,31 +421,162 @@
     width: 100% !important;
     max-width: none;
     height: 100%;
-    min-height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    border: 0;
     border-radius: 0;
+    background: #070b1c;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     flex: 1;
     flex-direction: column;
   }
 
+  .pane :global(.holder-gate-card::before),
+  .pane :global(.holder-gate-card::after),
+  .pane :global(.security-copy) {
+    display: none;
+  }
+
   .pane :global(.holder-gate-card > *) {
-    margin-inline: 14px;
+    margin-inline: 8px;
   }
 
   .pane :global(.holder-gate-card__topline),
   .pane :global(.application-bar) {
-    min-height: 34px;
-    padding-left: 48px;
+    min-height: 26px;
+    padding: 0 8px 0 38px;
+    margin-inline: 0;
+    flex: 0 0 auto;
   }
 
   .pane :global(.holder-gate-card__topline::before),
   .pane :global(.application-bar::before) {
-    left: 14px;
+    left: 10px;
+  }
+
+  .pane :global(.gate-identity) {
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .pane :global(.gate-identity img) {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .pane :global(.gate-identity div strong) {
+    font-size: 12px;
+  }
+
+  .pane :global(.state-preview-control) {
+    padding: 8px;
+  }
+
+  .pane :global(.state-preview-control select) {
+    height: 28px;
+    font-size: 9px;
+  }
+
+  .pane :global(.gate-readout) {
+    min-height: 0;
+    gap: 0;
+  }
+
+  .pane :global(.gate-readout > div) {
+    min-height: 28px;
+    padding-block: 4px;
+  }
+
+  .pane :global(.gate-message) {
+    min-height: 0;
+    padding: 6px 0;
+    font-size: 8px;
+  }
+
+  .pane :global(.holder-gate-card > .button),
+  .pane :global(.wallet-picker .button) {
+    min-height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .pane :global(.application-nav) {
+    min-height: 28px;
+    padding: 0 8px;
+    flex: 0 0 auto;
+  }
+
+  .pane :global(.application-nav button),
+  .pane :global(.application-nav > a) {
+    padding-inline: 8px;
+    font-size: 7px;
+    gap: 5px;
+  }
+
+  .pane :global(.application-nav > a),
+  .pane :global(.application-brand small),
+  .pane :global(.application-status > span:first-child),
+  .pane :global(.application-footer) {
+    display: none;
+  }
+
+  .pane :global(.wallet-pill) {
+    min-height: 22px;
+    padding: 0 8px;
+    font-size: 7px;
   }
 
   .pane :global(.application-view) {
-    flex: 1;
-    min-height: 0;
+    flex: 1 1 auto;
+    min-height: 0 !important;
+    padding: 8px 10px 10px;
     overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .pane :global(.application-view__heading) {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .pane :global(.application-view__heading h3),
+  .pane :global(.panel-heading h3) {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .pane :global(.application-view__heading p) {
+    display: none;
+  }
+
+  .pane :global(.empty-state) {
+    min-height: 0;
+    padding: 12px 8px;
+  }
+
+  .pane :global(.token-detail) {
+    margin-top: 8px;
+    padding: 8px;
+  }
+
+  .pane :global(.token-detail__chart) {
+    min-height: 0;
+  }
+
+  .pane :global(.market-table) {
+    min-width: 520px;
+  }
+
+  .pane :global(.market-table-wrap) {
+    max-width: 100%;
+  }
+
+  .pane :global(.market-table th),
+  .pane :global(.market-table td) {
+    height: auto;
+    padding: 6px 8px;
+    font-size: 8px;
   }
 
   .pane :global(.holder-section),
@@ -405,15 +607,15 @@
   gap: 16px;
 }
 
-@media (max-height: 800px) and (min-width: 901px) {
-  .intro p {
-    display: none;
+@media (min-width: 1400px) {
+  .frame {
+    --mon-scale: 1.16;
   }
 }
 
 @media (max-width: 1100px) and (min-width: 901px) {
   .workspace {
-    grid-template-columns: 54px minmax(0, 1fr);
+    grid-template-columns: 32px minmax(0, 1fr);
   }
 
   .rail {
@@ -467,16 +669,27 @@
   }
 
   .bezel,
+  .monitorBezel,
   .scanlines,
   .screenGlare {
     display: none;
   }
 
+  .monitor {
+    transform: none;
+    overflow: visible;
+  }
+
   .screen {
     position: relative;
     inset: auto;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
     display: block;
     overflow: visible;
+    contain: none;
     border-radius: 0;
     background: transparent;
     box-shadow: none;

@@ -61,6 +61,9 @@ export const project = {
   /** LIEND App. Null until configured — the CTA disables rather than guesses. */
   appUrl: url(process.env.NEXT_PUBLIC_APP_URL),
 
+  /** LIEND API. Used by the ACCESS GATE to resolve holder eligibility. */
+  apiUrl: url(process.env.NEXT_PUBLIC_API_URL),
+
   /** Extension archive (download mode) or Web Store listing (webstore mode). */
   extensionUrl: url(process.env.NEXT_PUBLIC_EXTENSION_URL),
   extensionMode,

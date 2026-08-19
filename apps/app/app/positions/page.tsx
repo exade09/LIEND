@@ -24,18 +24,20 @@ export default function PositionsPage() {
         ) : book.positions.length === 0 ? (
           <div className="empty">No SPL token balances in this wallet</div>
         ) : (
-          <div className="list">
-            {book.positions.map((position) => (
-              <Link className="list__row" href={`/positions/${position.mint}`} key={position.mint}>
-                <div>
-                  <strong>{position.symbol}</strong>
-                  <p className="muted" style={{ margin: "4px 0 0" }}>
-                    {position.amount} {position.symbol}
-                  </p>
-                </div>
-                <span>{usd(position.valueUsd)}</span>
-              </Link>
-            ))}
+          <div className="panel">
+            <div className="list">
+              {book.positions.map((position) => (
+                <Link className="list__row" href={`/positions/${position.mint}`} key={position.mint}>
+                  <div>
+                    <strong>{position.symbol}</strong>
+                    <p className="muted" style={{ margin: "4px 0 0" }}>
+                      {position.amount} {position.symbol}
+                    </p>
+                  </div>
+                  <span>{usd(position.valueUsd)}</span>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </UtilityGate>
