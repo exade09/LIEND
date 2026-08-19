@@ -4,110 +4,92 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #9ec7ef;
+  background: #1238c8;
 }
 
-.drift {
+.loop {
   position: absolute;
-  inset: -14%;
-  animation: kenburns 64s ease-in-out infinite alternate;
+  inset: -8% 0;
+  display: flex;
+  width: 200%;
+  height: 116%;
+  animation: drift 56s linear infinite;
   will-change: transform;
 }
 
-.image {
+.tile {
+  flex: 0 0 50%;
+  width: 50%;
+  height: 100%;
   object-fit: cover;
-  object-position: 46% 36%;
+  object-position: 50% 38%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
 }
 
-.flare {
-  position: absolute;
-  top: -22%;
-  right: -16%;
-  width: min(62vw, 820px);
-  height: min(62vw, 820px);
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(186, 220, 255, 0.22) 36%,
-    transparent 68%
-  );
-  mix-blend-mode: screen;
-  animation: breathe 9s ease-in-out infinite;
-}
-
-.haze {
-  position: absolute;
-  inset: -20% -10%;
-  background:
-    radial-gradient(ellipse at 28% 18%, rgba(255, 255, 255, 0.18), transparent 42%),
-    radial-gradient(ellipse at 78% 8%, rgba(255, 248, 232, 0.2), transparent 38%);
-  animation: haze 28s ease-in-out infinite alternate;
-}
-
-.motes {
+.grid {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1.8px),
-    radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1.8px);
-  background-size: 210px 210px, 140px 170px;
-  background-position: 0 0, 40px 70px;
-  opacity: 0.22;
-  animation: motes 42s linear infinite;
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px);
+  mix-blend-mode: overlay;
+}
+
+.clouds {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  image-rendering: pixelated;
+  background-image:
+    radial-gradient(6px 5px at 12% 28%, rgba(255, 255, 255, 0.85) 0 55%, transparent 58%),
+    radial-gradient(10px 6px at 18% 30%, rgba(226, 244, 255, 0.7) 0 55%, transparent 58%),
+    radial-gradient(8px 5px at 62% 18%, rgba(255, 255, 255, 0.8) 0 55%, transparent 58%),
+    radial-gradient(12px 7px at 78% 42%, rgba(198, 236, 255, 0.55) 0 55%, transparent 58%),
+    radial-gradient(7px 4px at 40% 62%, rgba(255, 255, 255, 0.45) 0 55%, transparent 58%);
+  background-size: 280px 160px;
+  animation: clouds 38s linear infinite;
+}
+
+.scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(4, 10, 40, 0.08) 0 1px,
+    transparent 1px 3px
+  );
 }
 
 .wash {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 26%, rgba(232, 242, 255, 0.2) 100%),
-    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.16), transparent 46%);
+    linear-gradient(180deg, rgba(11, 28, 114, 0.12), transparent 28%, rgba(11, 28, 114, 0.28) 100%),
+    radial-gradient(ellipse at 80% 0%, rgba(255, 255, 255, 0.14), transparent 40%);
 }
 
-@keyframes kenburns {
-  from {
-    transform: scale(1) translate3d(0, 0, 0);
-  }
-  to {
-    transform: scale(1.12) translate3d(-2.6%, -1.8%, 0);
-  }
-}
-
-@keyframes breathe {
-  0%,
-  100% {
-    opacity: 0.42;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.82;
-    transform: scale(1.08);
-  }
-}
-
-@keyframes haze {
+@keyframes drift {
   from {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(3%, 1.6%, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-@keyframes motes {
+@keyframes clouds {
   from {
-    transform: translate3d(0, 0, 0);
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
   }
   to {
-    transform: translate3d(-40px, -70px, 0);
+    background-position: 280px 0, 280px 0, 280px 0, 280px 0, 280px 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .drift,
-  .flare,
-  .haze,
-  .motes {
+  .loop,
+  .clouds {
     animation: none;
   }
 }
