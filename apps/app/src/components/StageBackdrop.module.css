@@ -9,11 +9,11 @@
 
 .loop {
   position: absolute;
-  inset: -8% 0;
+  inset: 0;
   display: flex;
   width: 200%;
-  height: 116%;
-  animation: drift 56s linear infinite;
+  height: 100%;
+  animation: drift 64s linear infinite;
   will-change: transform;
 }
 
@@ -22,7 +22,7 @@
   width: 50%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 38%;
+  object-position: 50% 40%;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
 }
@@ -34,21 +34,6 @@
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 8px),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px);
   mix-blend-mode: overlay;
-}
-
-.clouds {
-  position: absolute;
-  inset: 0;
-  opacity: 0.55;
-  image-rendering: pixelated;
-  background-image:
-    radial-gradient(6px 5px at 12% 28%, rgba(255, 255, 255, 0.85) 0 55%, transparent 58%),
-    radial-gradient(10px 6px at 18% 30%, rgba(226, 244, 255, 0.7) 0 55%, transparent 58%),
-    radial-gradient(8px 5px at 62% 18%, rgba(255, 255, 255, 0.8) 0 55%, transparent 58%),
-    radial-gradient(12px 7px at 78% 42%, rgba(198, 236, 255, 0.55) 0 55%, transparent 58%),
-    radial-gradient(7px 4px at 40% 62%, rgba(255, 255, 255, 0.45) 0 55%, transparent 58%);
-  background-size: 280px 160px;
-  animation: clouds 38s linear infinite;
 }
 
 .scan {
@@ -65,8 +50,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(11, 28, 114, 0.12), transparent 28%, rgba(11, 28, 114, 0.28) 100%),
-    radial-gradient(ellipse at 80% 0%, rgba(255, 255, 255, 0.14), transparent 40%);
+    linear-gradient(180deg, rgba(11, 28, 114, 0.1), transparent 30%, rgba(11, 28, 114, 0.22) 100%);
 }
 
 @keyframes drift {
@@ -78,18 +62,8 @@
   }
 }
 
-@keyframes clouds {
-  from {
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
-  }
-  to {
-    background-position: 280px 0, 280px 0, 280px 0, 280px 0, 280px 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .loop,
-  .clouds {
+  .loop {
     animation: none;
   }
 }

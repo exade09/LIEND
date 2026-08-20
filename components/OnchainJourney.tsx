@@ -84,15 +84,14 @@ export function OnchainJourney() {
         ref={journeyRef}
         aria-labelledby="onchain-journey-title"
       >
-        <div className={styles.scene} aria-hidden="true">
-          <div className={styles.sceneGrid} />
-          <div className={`${styles.surface} ${styles.surfaceViolet}`} />
-          <div className={`${styles.surface} ${styles.surfaceCyan}`} />
-          <div className={styles.horizon} />
-          <SceneLoop src="/assets/loops/rain.gif" className={styles.loop} />
-        </div>
-
         <div className={styles.stickyStage}>
+          <div className={styles.scene} aria-hidden="true">
+            <div className={styles.sceneGrid} />
+            <div className={`${styles.surface} ${styles.surfaceViolet}`} />
+            <div className={`${styles.surface} ${styles.surfaceCyan}`} />
+            <div className={styles.horizon} />
+            <SceneLoop src="/assets/loops/rain.gif" className={styles.loop} />
+          </div>
           <div className={styles.stageGrid}>
             <header className={styles.intro}>
               <p className={styles.eyebrow}>TRANSACTION CORRIDOR</p>

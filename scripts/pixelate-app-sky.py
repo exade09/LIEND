@@ -56,5 +56,34 @@ for y in range(h):
         px[x, y] = nearest(px[x, y])
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
+
+def mix(a, b, t):
+    return tuple(int(a[c] + (b[c] - a[c]) * t) for c in range(3))
+
+
+def make_seamless_x(img, blend=40):
+    """Wrap the left edge into the right edge so a horizontal loop has no cut."""
+    w, h = img.size
+    blend = min(blend, w // 3)
+    px = img.load()
+    for y in range(h):
+        for i in range(blend):
+            t = i / max(blend - 1, 1)
+            t = t * t * (3 - 2 * t)
+            left = px[i, y]
+            right = px[w - blend + i, y]
+            px[w - blend + i, y] = nearest(mix(right, left, t))
+    return img
+
+
+src = Image.open(SRC).convert("RGB")
+grid = src.resize(GRID, Image.Resampling.BOX)
+px = grid.load()
+w, h = grid.size
+for y in range(h):
+    for x in range(w):
+        px[x, y] = nearest(px[x, y])
+
+grid = make_seamless_x(grid)
 grid.save(OUT)
 print(OUT, grid.size)

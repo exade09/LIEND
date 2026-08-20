@@ -289,7 +289,18 @@ export function HolderGate() {
           ) : state === "NOT ELIGIBLE" ? (
             <ProductLink className="button button--primary button--wide" href={project.pumpUrl}>Get LIEND <Icon name="external-link" size={15} /></ProductLink>
           ) : state === "WRONG NETWORK" ? (
-            <button className="button button--primary button--wide" type="button" disabled>Switch to Solana</button>
+            <button
+              className="button button--primary button--wide"
+              type="button"
+              disabled={busy !== null}
+              onClick={startConnect}
+            >
+              {busy === "connect" ? (
+                <><span className="button-spinner" /> Connecting</>
+              ) : (
+                <>Switch to Solana</>
+              )}
+            </button>
           ) : state === "CHECKING" && busy === "check" && !failed ? (
             <button className="button button--primary button--wide" type="button" disabled>
               <span className="button-spinner" /> Checking LIEND Balance

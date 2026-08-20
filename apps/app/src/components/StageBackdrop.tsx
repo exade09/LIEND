@@ -8,7 +8,6 @@ export function StageBackdrop() {
         <img className={styles.tile} src="/assets/stage/pixel-sky.png" alt="" />
         <img className={styles.tile} src="/assets/stage/pixel-sky.png" alt="" />
       </div>
-      <div className={styles.clouds} />
       <div className={styles.grid} />
       <div className={styles.scan} />
       <div className={styles.wash} />

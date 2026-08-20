@@ -102,9 +102,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: block;
   width: 32px;
   height: 32px;
+  padding: 3px;
+  object-fit: contain;
   border-radius: var(--radius);
   border: 1px solid var(--line-strong);
-  image-rendering: pixelated;
+  image-rendering: auto;
   box-shadow: var(--bevel);
   background: var(--glass-tint);
 }

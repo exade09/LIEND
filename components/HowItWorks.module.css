@@ -230,50 +230,50 @@
 }
 
 @keyframes route-step-01 {
-  0% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  0% { opacity: 0.28; }
   12%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-step-02 {
   0%,
-  12% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  12% { opacity: 0.28; }
   26%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-step-03 {
   0%,
-  26% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  26% { opacity: 0.28; }
   40%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-step-04 {
   0%,
-  40% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  40% { opacity: 0.28; }
   55%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-step-05 {
   0%,
-  55% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  55% { opacity: 0.28; }
   70%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-step-06 {
   0%,
-  70% { filter: saturate(0.55); opacity: 0.28; transform: translateY(12px); }
+  70% { opacity: 0.28; }
   86%,
-  100% { filter: saturate(1); opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; }
 }
 
 @keyframes route-intro-travel {
   0%,
-  72% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0.35; transform: translateY(-20px); }
+  72% { opacity: 1; }
+  100% { opacity: 0.55; }
 }
 
 @keyframes route-fallback-enter {

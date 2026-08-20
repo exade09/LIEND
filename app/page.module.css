@@ -125,6 +125,13 @@
 }
 
 .closeScenes :global(.faq) {
+  /* Revert target: restore `background: transparent` and drop the glass fill. */
   border-top: 0;
-  background: transparent;
+  padding: 28px 28px 36px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-window);
+  background: rgba(0, 0, 0, 0.22);
+  box-shadow: var(--bevel), var(--shadow-window);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }

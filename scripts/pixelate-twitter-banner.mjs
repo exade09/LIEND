@@ -77,6 +77,19 @@ function setPixel(data, i, color) {
   data[i + 3] = 255
 }
 
+function mixRgb(a, b, t) {
+  return [
+    Math.round(a[0] + (b[0] - a[0]) * t),
+    Math.round(a[1] + (b[1] - a[1]) * t),
+    Math.round(a[2] + (b[2] - a[2]) * t),
+  ]
+}
+
+function smoothstep(edge0, edge1, x) {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)))
+  return t * t * (3 - 2 * t)
+}
+
 function fieldPixel(x, y, w, h) {
   const cx = (w - 1) / 2
   const cy = h * 0.5
@@ -92,8 +105,8 @@ function fieldPixel(x, y, w, h) {
   const dither = bayer[y % 4][x % 4] / 16
   const falloff = Math.max(0, 1 - dist)
   const level = Math.max(0, Math.min(4, Math.floor(Math.pow(falloff, 0.8) * 3.8 + dither * 0.7)))
-  const ramp = x >= cx ? CYAN_RAMP : PURPLE_RAMP
-  return ramp[level] ?? BASE
+  const blend = smoothstep(0.22, 0.78, x / Math.max(1, w - 1))
+  return mixRgb(PURPLE_RAMP[level] ?? BASE, CYAN_RAMP[level] ?? BASE, blend)
 }
 
 async function main() {
@@ -122,7 +135,7 @@ async function main() {
       const g = data[i + 1]
       const b = data[i + 2]
       const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b
-      if (luma < 20) {
+      if (luma < 38) {
         setPixel(out, i, fieldPixel(x, y, w, h))
         continue
       }

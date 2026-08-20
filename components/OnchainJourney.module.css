@@ -124,6 +124,7 @@
   min-height: 700px;
   margin-inline: auto;
   padding: 84px 0 30px;
+  isolation: isolate;
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
@@ -286,7 +287,6 @@
   background: linear-gradient(90deg, rgba(123, 92, 255, 0.14), rgba(47, 220, 240, 0.03));
   box-shadow: var(--bevel);
   opacity: 1;
-  transform: translateX(4px);
 }
 
 .routeNode {

@@ -48,7 +48,7 @@ export function TokenDetail({ market, onBorrow, onSwap }: TokenDetailProps) {
       <header className="token-detail__header">
         <div className="token-detail__identity">
           {market.ticker === "LIEND" ? (
-            <Image className="token-avatar token-avatar--image" src="/assets/logo/pixel/liend-mark.png" alt="LIEND" width={64} height={64} unoptimized />
+            <Image className="token-avatar token-avatar--image" src="/assets/logo/pixel/liend-mark.png" alt="LIEND" width={128} height={128} unoptimized />
           ) : (
             <span className="token-avatar token-avatar--large" style={{ "--token-accent": market.accent } as React.CSSProperties}>
               {market.iconLabel}

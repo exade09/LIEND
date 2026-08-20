@@ -27,8 +27,8 @@ export function AppHeader() {
         <Image
           src="/assets/logo/pixel/liend-mark.png"
           alt=""
-          width={36}
-          height={36}
+          width={64}
+          height={64}
           unoptimized
           priority
         />

@@ -56,12 +56,24 @@ export type DiscoveredWallet = {
   onAccountChange?: (listener: (address: string | null) => void) => () => void
 }
 
-function clusterFromChains(chains: readonly string[] | undefined): SolanaCluster | undefined {
+/**
+ * Wallet Standard `chains` is the set of clusters an account *can* use, not the
+ * cluster currently selected in the extension. Phantom and others advertise
+ * mainnet + devnet + testnet together. Prefer the product cluster when it is
+ * listed; only return another cluster when it is the sole advertised one.
+ */
+function clusterFromChains(
+  chains: readonly string[] | undefined,
+  preferred: SolanaCluster = "mainnet-beta",
+): SolanaCluster | undefined {
   if (!chains?.length) return undefined
   const labels = chains.map((chain) => chain.toLowerCase())
-  if (labels.some((chain) => chain.includes("devnet"))) return "devnet"
-  if (labels.some((chain) => chain.includes("testnet"))) return "testnet"
-  if (labels.some((chain) => chain.includes("mainnet"))) return "mainnet-beta"
+  const detected = new Set<SolanaCluster>()
+  if (labels.some((chain) => chain.includes("mainnet"))) detected.add("mainnet-beta")
+  if (labels.some((chain) => chain.includes("devnet"))) detected.add("devnet")
+  if (labels.some((chain) => chain.includes("testnet"))) detected.add("testnet")
+  if (detected.has(preferred)) return preferred
+  if (detected.size === 1) return [...detected][0]
   return undefined
 }
 
@@ -76,7 +88,7 @@ function fromStandard(wallet: StandardWallet): DiscoveredWallet {
       if (!account) throw new Error("The wallet returned no account")
       return {
         address: account.address,
-        cluster: clusterFromChains(account.chains ?? wallet.chains),
+        cluster: clusterFromChains(account.chains ?? wallet.chains, "mainnet-beta"),
       }
     },
     disconnect: DISCONNECT in wallet.features
