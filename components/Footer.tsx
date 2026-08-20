@@ -9,6 +9,7 @@ const footerLinks = [
   { label: "Onchain", href: "/#onchain" },
   { label: "FAQ", href: "/#faq" },
   { label: "Docs", href: "/docs" },
+  { label: "Privacy", href: "/privacy" },
 ] as const;
 
 export function Footer() {
