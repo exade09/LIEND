@@ -20,11 +20,11 @@ const silkscreen = Silkscreen({
 })
 
 export const metadata: Metadata = {
-  title: "LIEND",
+    title: "Liend",
   description: "Utility liquidity for migrated token positions on Solana",
   icons: {
     icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
-    apple: "/assets/liend-icon.png",
+    apple: "/assets/logo/pixel/liend-mark.png",
   },
 }
 

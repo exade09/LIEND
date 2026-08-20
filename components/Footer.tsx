@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icon } from "@/components/Icon";
 import { ProductLink } from "@/components/ProductLink";
 import { project } from "@/config/project";
@@ -14,8 +15,9 @@ export function Footer() {
   return (
     <footer className="site-footer section-shell">
       <div className="site-footer__main">
-        <a className="site-footer__brand" href="/" aria-label="LIEND home">
-          <span>{project.name}</span>
+        <a className="site-footer__brand" href="/" aria-label="Liend home">
+          <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={64} height={64} unoptimized />
+          <span>Liend</span>
         </a>
 
         <nav className="site-footer__nav" aria-label="Footer navigation">

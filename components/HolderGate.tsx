@@ -219,8 +219,8 @@ export function HolderGate() {
           </div>
 
           <div className="gate-identity">
-            <Image src="/assets/logo/pixel/liend-mark.png" alt="LIEND token" width={128} height={128} unoptimized />
-            <div><span>REQUIRED POSITION</span><strong>LIEND</strong></div>
+            <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized />
+            <div><span>REQUIRED POSITION</span><strong>Liend</strong></div>
             <span className="network-chip">{project.network}</span>
           </div>
 

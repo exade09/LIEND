@@ -36,11 +36,11 @@ export function Header() {
       <ActivityTape />
       <header className="site-header">
       <div className="nav-shell">
-        <a className="brand-compact" href="/" aria-label="LIEND home" onClick={() => setOpen(false)}>
+        <a className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
           <span className="brand-compact__avatar">
             <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
           </span>
-          <span>LIEND</span>
+          <span>Liend</span>
         </a>
 
         <nav className="desktop-nav" aria-label="Primary navigation">

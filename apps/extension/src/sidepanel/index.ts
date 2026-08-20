@@ -43,7 +43,14 @@ function button(label: string, action: PanelAction, variant: "primary" | "ghost"
 
 function renderHeader(snapshot: PanelSnapshot): HTMLElement {
   const head = el("header", "head")
-  head.append(el("span", "brand", "LIEND"))
+  const brand = el("span", "brand")
+  const mark = document.createElement("img")
+  mark.src = "icons/icon48.png"
+  mark.alt = ""
+  mark.width = 18
+  mark.height = 18
+  brand.append(mark, document.createTextNode("Liend"))
+  head.append(brand)
 
   const connected = snapshot.connection === "connected"
   const pairing = snapshot.connection === "pairing"

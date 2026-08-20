@@ -23,7 +23,7 @@ export function AppHeader() {
 
   return (
     <header className="app-bar">
-      <Link className="wordmark" href="/">
+      <Link className="wordmark" href="/" aria-label="Liend App home">
         <Image
           src="/assets/logo/pixel/liend-mark.png"
           alt=""
@@ -32,10 +32,10 @@ export function AppHeader() {
           unoptimized
           priority
         />
-        LIEND
+        Liend App
       </Link>
 
-      <nav className="nav-pill" aria-label="LIEND">
+      <nav className="nav-pill" aria-label="Liend App">
         {NAV.map((item) => (
           <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
             {item.label}

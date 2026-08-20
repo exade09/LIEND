@@ -487,8 +487,11 @@
   .pane :global(.gate-identity img) {
     width: 28px !important;
     height: 28px !important;
-    padding: 2px;
+    padding: 0;
     object-fit: contain;
+    background: none;
+    border: 0;
+    image-rendering: pixelated;
   }
 
   .pane :global(.gate-identity div strong) {
