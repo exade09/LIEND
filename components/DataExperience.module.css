@@ -279,6 +279,10 @@
   background: transparent;
 }
 
+.analyticsMount :global(.activity-feed__intro) {
+  display: none;
+}
+
 .analyticsMount :global(.section-header) {
   margin-bottom: clamp(50px, 6vw, 82px);
 }

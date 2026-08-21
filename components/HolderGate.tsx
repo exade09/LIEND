@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Icon } from "@/components/Icon"
-import { ProductLink } from "@/components/ProductLink"
+import { ProductLink, LaunchAppLink } from "@/components/ProductLink"
 import { project } from "@/config/project"
 import { shortenAddress } from "@/lib/addresses"
 import {
@@ -285,7 +285,9 @@ export function HolderGate() {
               </button>
             </div>
           ) : state === "ELIGIBLE" ? (
-            <a className="button button--primary button--wide" href="#app">Enter App <Icon name="arrow" size={17} /></a>
+            <LaunchAppLink className="button button--primary button--wide">
+              Enter App <Icon name="arrow" size={17} />
+            </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
             <ProductLink className="button button--primary button--wide" href={project.pumpUrl}>Get LIEND <Icon name="external-link" size={15} /></ProductLink>
           ) : state === "WRONG NETWORK" ? (

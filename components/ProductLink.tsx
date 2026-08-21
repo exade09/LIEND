@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Icon } from "@/components/Icon"
-import { extensionCtaLabel, extensionInstallHref, project } from "@/config/project"
+import { extensionCtaLabel, extensionInstallHref, project, resolveAppUrl } from "@/config/project"
 
 /**
  * External product link.
@@ -37,24 +37,43 @@ export function ProductLink({
 }
 
 /**
- * Launch App.
+ * Launch App / Enter App.
  *
- * Uses the configured App origin. When unconfigured the control is rendered
- * disabled rather than navigating somewhere invented — and never falls back
- * to localhost or a Vercel URL.
+ * Uses the configured App origin, or `app.` beside the current landing host.
+ * Never falls back to localhost or a Vercel URL.
  */
-export function LaunchAppLink({ className = "button button--primary" }: { className?: string }) {
-  if (!project.appUrl) {
+export function LaunchAppLink({
+  className = "button button--primary",
+  children,
+  ...rest
+}: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+  children?: React.ReactNode
+}) {
+  const [href, setHref] = useState<string | null>(project.appUrl ?? resolveAppUrl())
+
+  useEffect(() => {
+    if (href) return
+    setHref(resolveAppUrl(window.location.origin))
+  }, [href])
+
+  const content = children ?? (
+    <>
+      Launch App
+      <Icon name="arrow" size={17} />
+    </>
+  )
+
+  if (!href) {
     return (
       <span className={className} aria-disabled="true" title="LIEND App URL is not configured">
-        Launch App
+        {children ?? "Launch App"}
       </span>
     )
   }
+
   return (
-    <a className={className} href={project.appUrl}>
-      Launch App
-      <Icon name="arrow" size={17} />
+    <a className={className} href={href} {...rest}>
+      {content}
     </a>
   )
 }

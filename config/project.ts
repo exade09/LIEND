@@ -33,6 +33,36 @@ function url(value: string | undefined): string | null {
 }
 
 /**
+ * App origin beside a landing origin: `https://example.test` → `https://app.example.test`.
+ * Never invents localhost or a `*.vercel.app` host.
+ */
+function appUrlBeside(site: string | null): string | null {
+  if (!site) return null
+  try {
+    const parsed = new URL(site)
+    const host = parsed.hostname
+    if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".vercel.app")) {
+      return null
+    }
+    if (host.startsWith("app.")) return `${parsed.protocol}//${host}`
+    const apex = host.replace(/^www\./, "")
+    if (!apex.includes(".")) return null
+    return `${parsed.protocol}//app.${apex}`
+  } catch {
+    return null
+  }
+}
+
+/** App origin for CTAs. Env wins; otherwise derive from the landing origin. */
+export function resolveAppUrl(locationHref?: string): string | null {
+  return (
+    url(process.env.NEXT_PUBLIC_APP_URL) ??
+    appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)) ??
+    appUrlBeside(locationHref ? url(locationHref) : null)
+  )
+}
+
+/**
  * How the extension is distributed today.
  *
  * `download` renders "Download Extension" plus manual install steps.
@@ -58,8 +88,8 @@ export const project = {
    */
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
-  /** LIEND App. Null until configured — the CTA disables rather than guesses. */
-  appUrl: url(process.env.NEXT_PUBLIC_APP_URL),
+  /** LIEND App. Env first, otherwise `app.` beside NEXT_PUBLIC_SITE_URL. */
+  appUrl: url(process.env.NEXT_PUBLIC_APP_URL) ?? appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)),
 
   /** LIEND API. Used by the ACCESS GATE to resolve holder eligibility. */
   apiUrl: url(process.env.NEXT_PUBLIC_API_URL),

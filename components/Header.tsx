@@ -108,9 +108,7 @@ export function Header() {
             <Icon name="x" /> X
           </ProductLink>
         </div>
-        <a className="button button--primary button--wide" href="/#product-stage" onClick={() => setOpen(false)}>
-          Launch App
-        </a>
+          <LaunchAppLink className="button button--primary button--wide" onClick={() => setOpen(false)} />
         </div>
       </header>
     </div>

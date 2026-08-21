@@ -98,8 +98,8 @@ export default function DataExperience() {
               <h2 id="protocol-data-title">Read activity as infrastructure</h2>
             </div>
             <div className={styles.dataContext}>
-              <p>Public protocol events presented as operational records</p>
-              <span><i /> SOLANA &bull; DATA SOURCE NOT CONNECTED</span>
+              <p>Public Solana routes on this desk. LIEND program records replace this when the book is onchain</p>
+              <span><i /> SOLANA &bull; LIVE ROUTES</span>
             </div>
           </header>
 
