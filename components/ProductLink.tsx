@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Icon } from "@/components/Icon"
 import { extensionCtaLabel, extensionInstallHref, project, resolveAppUrl } from "@/config/project"
 
@@ -45,17 +45,12 @@ export function ProductLink({
 export function LaunchAppLink({
   className = "button button--primary",
   children,
+  onClick,
   ...rest
 }: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   children?: React.ReactNode
 }) {
-  const [href, setHref] = useState<string | null>(project.appUrl ?? resolveAppUrl())
-
-  useEffect(() => {
-    if (href) return
-    setHref(resolveAppUrl(window.location.origin))
-  }, [href])
-
+  const href = project.appUrl ?? resolveAppUrl() ?? "https://app.liend.app"
   const content = children ?? (
     <>
       Launch App
@@ -63,16 +58,21 @@ export function LaunchAppLink({
     </>
   )
 
-  if (!href) {
-    return (
-      <span className={className} aria-disabled="true" title="LIEND App URL is not configured">
-        {children ?? "Launch App"}
-      </span>
-    )
-  }
-
   return (
-    <a className={className} href={href} {...rest}>
+    <a
+      className={className}
+      href={href}
+      onClick={(event) => {
+        onClick?.(event)
+        if (event.defaultPrevented) return
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+          return
+        }
+        event.preventDefault()
+        window.location.assign(href)
+      }}
+      {...rest}
+    >
       {content}
     </a>
   )

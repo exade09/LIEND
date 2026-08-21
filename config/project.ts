@@ -88,8 +88,11 @@ export const project = {
    */
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
-  /** LIEND App. Env first, otherwise `app.` beside NEXT_PUBLIC_SITE_URL. */
-  appUrl: url(process.env.NEXT_PUBLIC_APP_URL) ?? appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)),
+  /** LIEND App. Env first, then `app.` beside the landing origin, then production. */
+  appUrl:
+    url(process.env.NEXT_PUBLIC_APP_URL) ??
+    appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)) ??
+    "https://app.liend.app",
 
   /** LIEND API. Used by the ACCESS GATE to resolve holder eligibility. */
   apiUrl: url(process.env.NEXT_PUBLIC_API_URL),
