@@ -52,7 +52,6 @@ type Options = {
 const CLEAR_MARGIN_PX = 24
 
 export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
-  const clearDistanceRef = useRef<number[]>([])
   const frameRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -67,15 +66,16 @@ export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
     const shortViewport = window.matchMedia("(max-height: 720px)")
     if (reducedMotion.matches || shortViewport.matches) return
 
-    const measure = () => {
+    // Travel must be measured from the resting box, not the motion node.
+    // getBoundingClientRect() on .dropletMotion includes --ty, so a reload
+    // mid-scroll (or a ResizeObserver after the first scrub) would shrink
+    // the remaining distance to ~0 and freeze the curtain in place.
+    const clearDistanceFor = (handle: CurtainDropletHandle) => {
+      const restEl = handle.el.parentElement ?? handle.el
+      const box = restEl.getBoundingClientRect()
       const stageRect = stage.getBoundingClientRect()
-      clearDistanceRef.current = droplets.map((handle) => {
-        const box = handle.el.getBoundingClientRect()
-        return Math.max(1, stageRect.bottom - box.top + CLEAR_MARGIN_PX)
-      })
+      return Math.max(1, stageRect.bottom - box.top + CLEAR_MARGIN_PX)
     }
-
-    measure()
 
     const render = () => {
       frameRef.current = null
@@ -86,11 +86,12 @@ export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
       const heroProgress = Math.min(1, Math.max(0, -storyRect.top / scrollableDistance))
       const p = Math.min(1, Math.max(0, heroProgress / CURTAIN_SCROLL_FRACTION))
 
-      droplets.forEach((handle, index) => {
+      droplets.forEach((handle) => {
+        if (!handle?.el) return
+
         const local = interpolateCurve(DEPTH_CURVES[handle.depth], p)
         const effectiveLocal = 1 - Math.pow(1 - local, handle.travel)
-        const clearDistance = clearDistanceRef.current[index] ?? 0
-        const ty = effectiveLocal * clearDistance
+        const ty = effectiveLocal * clearDistanceFor(handle)
 
         const driftFactor = Math.sin(Math.PI * Math.min(1, Math.max(0, local)))
         const tx = handle.drift * driftFactor
@@ -109,7 +110,6 @@ export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
         style.setProperty("--sx", sx.toFixed(4))
         style.setProperty("--sy", sy.toFixed(4))
       })
-
     }
 
     const requestRender = () => {
@@ -118,20 +118,19 @@ export function useCurtainProgress({ storyRef, stageRef, droplets }: Options) {
       }
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      measure()
-      requestRender()
-    })
+    const resizeObserver = new ResizeObserver(requestRender)
     resizeObserver.observe(stage)
 
     render()
     window.addEventListener("scroll", requestRender, { passive: true })
     window.addEventListener("resize", requestRender)
+    window.addEventListener("pageshow", requestRender)
 
     return () => {
       resizeObserver.disconnect()
       window.removeEventListener("scroll", requestRender)
       window.removeEventListener("resize", requestRender)
+      window.removeEventListener("pageshow", requestRender)
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current)
       }

@@ -33,34 +33,34 @@ function cell(
   return { id, tier, depth, x, y, w, rot: 0, drift: 0, squash: 0, travel: 1, ...extra }
 }
 
-// Dense overlapping field so the pixel teardrops (which leave transparent
-// corners in their square boxes) still fully cover the stage at rest.
+// Overlapping field of pixel teardrops. Sized to still read as droplets at
+// rest (not one fused plate), with enough overlap to cover the stage.
 // Fall is straight down: rot/drift/squash stay 0.
 export const DESKTOP_INSTANCES: readonly DropletInstance[] = [
-  cell("a", "lg", "far", 8, 8, 80),
-  cell("c", "lg", "far", 40, 0, 78, { flip: true }),
-  cell("e", "lg", "far", 74, 10, 82),
-  cell("d", "lg", "far", 100, 4, 76, { flip: true }),
-  cell("b", "md", "far", 24, 26, 68),
-  cell("a", "md", "far", 58, 22, 66, { flip: true }),
+  cell("a", "lg", "far", 8, 8, 70),
+  cell("c", "lg", "far", 40, 0, 68, { flip: true }),
+  cell("e", "lg", "far", 74, 10, 72),
+  cell("d", "lg", "far", 100, 4, 67, { flip: true }),
+  cell("b", "md", "far", 24, 26, 60),
+  cell("a", "md", "far", 58, 22, 58, { flip: true }),
 
-  cell("b", "lg", "mid", 0, 44, 78, { flip: true }),
-  cell("d", "lg", "mid", 26, 50, 80),
-  cell("a", "lg", "mid", 52, 42, 76, { flip: true }),
-  cell("e", "lg", "mid", 78, 48, 80),
-  cell("c", "lg", "mid", 100, 38, 74),
-  cell("b", "md", "mid", 14, 64, 64, { flip: true }),
-  cell("d", "md", "mid", 44, 62, 62),
-  cell("a", "md", "mid", 88, 66, 64, { flip: true }),
+  cell("b", "lg", "mid", 0, 44, 68, { flip: true }),
+  cell("d", "lg", "mid", 26, 50, 70),
+  cell("a", "lg", "mid", 52, 42, 67, { flip: true }),
+  cell("e", "lg", "mid", 78, 48, 70),
+  cell("c", "lg", "mid", 100, 38, 65),
+  cell("b", "md", "mid", 14, 64, 56, { flip: true }),
+  cell("d", "md", "mid", 44, 62, 54),
+  cell("a", "md", "mid", 88, 66, 56, { flip: true }),
 
-  cell("d", "lg", "near", 6, 80, 86),
-  cell("c", "lg", "near", 34, 88, 84, { flip: true }),
-  cell("a", "lg", "near", 62, 78, 86),
-  cell("e", "lg", "near", 90, 86, 82, { flip: true }),
-  cell("b", "lg", "near", 0, 98, 80),
-  cell("d", "md", "near", 22, 72, 66, { flip: true }),
-  cell("e", "md", "near", 50, 98, 70),
-  cell("c", "md", "near", 76, 70, 64),
+  cell("d", "lg", "near", 6, 80, 75),
+  cell("c", "lg", "near", 34, 88, 73, { flip: true }),
+  cell("a", "lg", "near", 62, 78, 75),
+  cell("e", "lg", "near", 90, 86, 72, { flip: true }),
+  cell("b", "lg", "near", 0, 98, 70),
+  cell("d", "md", "near", 22, 72, 58, { flip: true }),
+  cell("e", "md", "near", 50, 98, 61),
+  cell("c", "md", "near", 76, 70, 56),
 ]
 
 const DROP_ON_TABLET = new Set([4, 5, 11, 13, 19])
@@ -69,16 +69,16 @@ export const TABLET_INSTANCES: readonly DropletInstance[] = DESKTOP_INSTANCES.fi
 )
 
 export const MOBILE_INSTANCES: readonly DropletInstance[] = [
-  cell("d", "lg", "far", 18, 4, 92),
-  cell("b", "lg", "far", 82, 10, 90, { flip: true }),
-  cell("a", "lg", "mid", 4, 30, 88),
-  cell("e", "lg", "mid", 58, 36, 94, { flip: true }),
-  cell("c", "lg", "mid", 28, 52, 86),
-  cell("d", "lg", "near", 86, 58, 90, { flip: true }),
-  cell("b", "lg", "near", 12, 74, 94),
-  cell("a", "lg", "near", 64, 82, 90, { flip: true }),
-  cell("e", "lg", "near", 36, 96, 92),
-  cell("c", "md", "near", 96, 40, 78),
+  cell("d", "lg", "far", 18, 4, 80),
+  cell("b", "lg", "far", 82, 10, 79, { flip: true }),
+  cell("a", "lg", "mid", 4, 30, 77),
+  cell("e", "lg", "mid", 58, 36, 82, { flip: true }),
+  cell("c", "lg", "mid", 28, 52, 75),
+  cell("d", "lg", "near", 86, 58, 79, { flip: true }),
+  cell("b", "lg", "near", 12, 74, 82),
+  cell("a", "lg", "near", 64, 82, 79, { flip: true }),
+  cell("e", "lg", "near", 36, 96, 80),
+  cell("c", "md", "near", 96, 40, 68),
 ]
 
 export const DEPTH_BLUR_PX: Record<Depth, number> = {

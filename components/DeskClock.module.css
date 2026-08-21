@@ -86,19 +86,28 @@
 .digit i[data-seg="f"] { left: 4%; }
 
 .colon {
-  display: flex;
-  width: 10%;
-  flex: 0 0 10%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  padding-block: 18%;
+  position: relative;
+  flex: 0 0 16%;
+  width: 16%;
+  align-self: stretch;
 }
 
 .colon i {
-  width: 38%;
-  aspect-ratio: 1;
+  position: absolute;
+  left: 50%;
+  width: 28%;
+  height: 13%;
   background: transparent;
+  transform: translateX(-50%);
+}
+
+.colon i:first-child {
+  top: 18%;
+}
+
+.colon i:last-child {
+  top: auto;
+  bottom: 18%;
 }
 
 .colonOn i {
