@@ -6,8 +6,8 @@ export function StageBackdrop() {
     <div className={styles.stage} aria-hidden="true">
       <video
         className={styles.sky}
-        src="/assets/stage/pixel-sky-loop.mp4"
-        poster="/assets/stage/pixel-sky-poster.png"
+        src="/assets/stage/pixel-sky-loop.mp4?v=2"
+        poster="/assets/stage/pixel-sky-poster.png?v=2"
         autoPlay
         muted
         loop
