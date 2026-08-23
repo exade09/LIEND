@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { CaPlaque } from "@/components/CaPlaque";
 import { Icon } from "@/components/Icon";
 import { ProductLink } from "@/components/ProductLink";
 import { project } from "@/config/project";
@@ -12,14 +14,14 @@ const footerLinks = [
   { label: "Privacy", href: "/privacy" },
 ] as const;
 
-export function Footer() {
+export function Footer({ initialMint = null }: { initialMint?: string | null }) {
   return (
     <footer className="site-footer section-shell">
       <div className="site-footer__main">
-        <a className="site-footer__brand" href="/" aria-label="Liend home">
+        <Link className="site-footer__brand" href="/" aria-label="Liend home">
           <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={64} height={64} unoptimized />
           <span>Liend</span>
-        </a>
+        </Link>
 
         <nav className="site-footer__nav" aria-label="Footer navigation">
           {footerLinks.map((link) => (
@@ -39,6 +41,10 @@ export function Footer() {
             <span>Pump.fun</span>
           </ProductLink>
         </nav>
+      </div>
+
+      <div className="site-footer__ca">
+        <CaPlaque variant="footer" initialMint={initialMint} />
       </div>
 
       <div className="site-footer__meta">

@@ -18,6 +18,10 @@ FONTS = Path(r"C:\Windows\Fonts")
 PIXEL = ROOT / "tmp" / "live-gif" / "fonts"
 MARK = ROOT / "public" / "assets" / "logo" / "pixel" / "liend-mark-128.png"
 CURSOR = ROOT / "public" / "assets" / "cursor" / "liend-arrow.png"
+LIVE = OUT / "live"
+SHOT_ADD = LIVE / "01-add-to-chrome.png"
+SHOT_DEV = LIVE / "02-developer-mode.png"
+SHOT_LOAD = LIVE / "03-load-unpacked.png"
 
 BORROW_SRC = Path(r"d:\2026-08-23 07-56-00.mp4")
 EXT_SRC = Path(r"d:\2026-08-23 08-04-10.mp4")
@@ -449,32 +453,73 @@ def chrome_extensions_card(width: int, height: int, mode: str) -> Image.Image:
     return card
 
 
+def cover_shot(path: Path, width: int, height: int, focus: str = "center") -> Image.Image:
+    shot = Image.open(path).convert("RGB")
+    scale = max(width / shot.width, height / shot.height)
+    nw = max(1, int(shot.width * scale))
+    nh = max(1, int(shot.height * scale))
+    resample = Image.Resampling.NEAREST if scale > 1.15 else Image.Resampling.LANCZOS
+    shot = shot.resize((nw, nh), resample)
+    if focus == "right":
+        left = nw - width
+    elif focus == "left":
+        left = 0
+    else:
+        left = (nw - width) // 2
+    top = max(0, (nh - height) // 2)
+    return shot.crop((left, top, left + width, top + height))
+
+
+def unzip_window(width: int, height: int) -> Image.Image:
+    card = Image.new("RGBA", (width, height), (8, 22, 92, 255))
+    draw = ImageDraw.Draw(card)
+    bevel(draw, (0, 0, width, height), sunken=True)
+    lines = (
+        "unzip the",
+        "downloaded file",
+        "and add it to",
+        "the browser",
+        "extensions",
+    )
+    body_f = font("Silkscreen-Bold.ttf", 26, pixel=True)
+    y = 48
+    for line in lines:
+        draw.text((28, y), line, font=body_f, fill=(255, 255, 255))
+        y += 42
+    return card
+
+
 def compose_install() -> Path:
     canvas = desktop_plate()
     draw = ImageDraw.Draw(canvas)
-    title = font("Silkscreen-Bold.ttf", 28, pixel=True)
-    body = font("IBMPlexMono-Medium.ttf", 15, pixel=True)
-    draw.text((48, 28), "LOAD THE EXTENSION", font=title, fill=(255, 255, 255))
-    draw.text((48, 68), "add to chrome on the site  then load the unpacked folder", font=body, fill=(186, 204, 255))
+    draw.text((48, 24), "LOAD THE EXTENSION", font=font("Silkscreen-Bold.ttf", 28, pixel=True), fill=(255, 255, 255))
+    draw.text(
+        (48, 62),
+        "add to chrome on the site  then load the unpacked folder",
+        font=font("IBMPlexMono-Medium.ttf", 15, pixel=True),
+        fill=(186, 204, 255),
+    )
 
     panels = [
-        (48, 112, 1824, 430, "01  add to chrome", "the header button downloads the zip"),
-        (48, 560, 592, 488, "02  extensions", "open chrome://extensions"),
-        (664, 560, 592, 488, "03  developer mode", "turn the toggle on"),
-        (1280, 560, 592, 488, "04  unpack and import", "extract on the pc  load unpacked"),
+        (48, 100, 1824, 332, "01  add to chrome", "the header button downloads the zip", SHOT_ADD, "center"),
+        (48, 456, 592, 580, "02  developer mode", "open chrome://extensions  turn it on", SHOT_DEV, "right"),
+        (664, 456, 592, 580, "03  load unpacked", "this button appears after developer mode", SHOT_LOAD, "left"),
     ]
-    for x, y, w, h, label, sub in panels:
+    for x, y, w, h, label, sub, shot, focus in panels:
         draw.rectangle((x, y, x + w, y + h), fill=(12, 28, 110))
         bevel(draw, (x, y, x + w, y + h))
         draw.text((x + 16, y + 10), label, font=font("Silkscreen-Bold.ttf", 16, pixel=True), fill=SIGNAL)
         draw.text((x + 16, y + 34), sub, font=font("IBMPlexMono-Medium.ttf", 12, pixel=True), fill=(196, 210, 255))
+        inner_w, inner_h = w - 32, h - 72
+        fitted = cover_shot(shot, inner_w, inner_h, focus)
+        canvas.paste(fitted, (x + 16, y + 58))
 
-    header = site_header_card(1792, 300)
-    canvas.paste(header, (64, 168), header)
-
-    canvas.paste(chrome_extensions_card(560, 400, "extensions"), (64, 620), chrome_extensions_card(560, 400, "extensions"))
-    canvas.paste(chrome_extensions_card(560, 400, "developer"), (680, 620), chrome_extensions_card(560, 400, "developer"))
-    canvas.paste(chrome_extensions_card(560, 400, "load"), (1296, 620), chrome_extensions_card(560, 400, "load"))
+    text_box = (1280, 456, 592, 580)
+    draw.rectangle((text_box[0], text_box[1], text_box[0] + text_box[2], text_box[1] + text_box[3]), fill=(12, 28, 110))
+    bevel(draw, (text_box[0], text_box[1], text_box[0] + text_box[2], text_box[1] + text_box[3]))
+    draw.text((text_box[0] + 16, text_box[1] + 10), "04  unpack", font=font("Silkscreen-Bold.ttf", 16, pixel=True), fill=SIGNAL)
+    window = unzip_window(560, 500)
+    canvas.paste(window, (text_box[0] + 16, text_box[1] + 58), window)
 
     dest = OUT / "liend-howto-install.jpg"
     rgb = canvas.convert("RGB")

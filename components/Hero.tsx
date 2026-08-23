@@ -2,13 +2,14 @@
 
 import { useRef } from "react"
 
+import { CaPlaque } from "@/components/CaPlaque"
 import { LiquidCurtain } from "@/components/LiquidCurtain"
 import { Wordmark } from "@/components/Wordmark"
 import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./Hero.module.css"
 
-export function Hero() {
+export function Hero({ initialMint = null }: { initialMint?: string | null }) {
   const sceneRef = useScenePresence("-8% 0px")
   const stageRef = useRef<HTMLDivElement>(null)
 
@@ -42,6 +43,9 @@ export function Hero() {
             <div className={styles.wordmarkSlot}>
               <Wordmark />
             </div>
+          </div>
+          <div className={styles.caSlot}>
+            <CaPlaque variant="hero" initialMint={initialMint} />
           </div>
         </div>
 

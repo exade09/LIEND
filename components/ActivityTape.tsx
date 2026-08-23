@@ -39,9 +39,12 @@ export function ActivityTape() {
   const [now, setNow] = useState(0)
 
   useEffect(() => {
-    setNow(Date.now())
+    const frame = window.requestAnimationFrame(() => setNow(Date.now()))
     const timer = window.setInterval(() => setNow(Date.now()), 4_000)
-    return () => window.clearInterval(timer)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearInterval(timer)
+    }
   }, [])
 
   useEffect(() => {

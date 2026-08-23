@@ -1,6 +1,7 @@
 import DataExperience from "@/components/DataExperience"
 import { FAQ } from "@/components/FAQ"
 import { FinalCTA } from "@/components/FinalCTA"
+import { Footer } from "@/components/Footer"
 import { Header } from "@/components/Header"
 import { Hero } from "@/components/Hero"
 import { HowItWorks } from "@/components/HowItWorks"
@@ -45,6 +46,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   )
 }

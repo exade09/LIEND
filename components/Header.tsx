@@ -1,7 +1,9 @@
 "use client"
 
 import { ActivityTape } from "@/components/ActivityTape"
+import { CaPlaque } from "@/components/CaPlaque"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { project } from "@/config/project"
 import { Icon } from "@/components/Icon"
@@ -15,7 +17,7 @@ const navigation = [
   { label: "FAQ", href: "/#faq" },
 ]
 
-export function Header() {
+export function Header({ initialMint = null }: { initialMint?: string | null }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -36,12 +38,12 @@ export function Header() {
       <ActivityTape />
       <header className="site-header">
       <div className="nav-shell">
-        <a className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
+        <Link className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
           <span className="brand-compact__avatar">
             <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
           </span>
           <span>Liend</span>
-        </a>
+        </Link>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navigation.map((item) => (
@@ -52,6 +54,7 @@ export function Header() {
         </nav>
 
         <div className="nav-actions">
+          <CaPlaque variant="header" initialMint={initialMint} />
           <ProductLink className="header-chip header-chip--pump" href={project.pumpUrl} aria-label="LIEND on Pump.fun">
             <Icon name="pump-fun" size={18} />
             <span>Pump.fun</span>
@@ -97,6 +100,7 @@ export function Header() {
           ))}
         </nav>
         <div className="mobile-menu__utility">
+          <CaPlaque variant="menu" initialMint={initialMint} />
           <AddToChromeBadge />
           <ProductLink className="header-chip header-chip--pump" href={project.pumpUrl}>
             <Icon name="pump-fun" /> Pump.fun

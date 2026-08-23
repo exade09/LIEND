@@ -3,6 +3,8 @@ import { IBM_Plex_Mono, Silkscreen } from "next/font/google"
 import "./globals.css"
 import "./webcore.css"
 
+import { PublishedCaProvider } from "@/lib/usePublishedCa"
+import { getPublishedCa } from "@/lib/published-ca"
 import { project } from "@/config/project"
 
 const plexMono = IBM_Plex_Mono({
@@ -45,14 +47,16 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const ca = await getPublishedCa()
+
   return (
     <html lang="en" className={`${plexMono.variable} ${silkscreen.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        {children}
+        <PublishedCaProvider initialValue={ca}>{children}</PublishedCaProvider>
       </body>
     </html>
   )

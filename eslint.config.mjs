@@ -13,5 +13,8 @@ export default defineConfig([
     // Workspace members lint themselves with their own configs.
     "apps/**",
     "packages/**",
+    // Local render and capture output is not application source.
+    "tmp/**",
+    "video/**",
   ]),
 ])
