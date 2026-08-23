@@ -53,12 +53,16 @@ function appUrlBeside(site: string | null): string | null {
   }
 }
 
+/** Canonical public origin used by every Launch App / Enter App CTA. */
+export const LIEND_APP_URL = "https://app.liend.app"
+
 /** App origin for CTAs. Env wins; otherwise derive from the landing origin. */
 export function resolveAppUrl(locationHref?: string): string | null {
   return (
     url(process.env.NEXT_PUBLIC_APP_URL) ??
     appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)) ??
-    appUrlBeside(locationHref ? url(locationHref) : null)
+    appUrlBeside(locationHref ? url(locationHref) : null) ??
+    LIEND_APP_URL
   )
 }
 
@@ -95,11 +99,11 @@ export const project = {
    */
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
-  /** LIEND App. Env first, then `app.` beside the landing origin, then production. */
+  /** LIEND App. Production uses the canonical public domain. */
   appUrl:
     url(process.env.NEXT_PUBLIC_APP_URL) ??
     appUrlBeside(url(process.env.NEXT_PUBLIC_SITE_URL)) ??
-    "https://app.liend.app",
+    LIEND_APP_URL,
 
   /** LIEND API. Used by the ACCESS GATE to resolve holder eligibility. */
   apiUrl: url(process.env.NEXT_PUBLIC_API_URL),

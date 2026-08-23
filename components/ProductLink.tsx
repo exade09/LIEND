@@ -2,7 +2,13 @@
 
 import { useState } from "react"
 import { Icon } from "@/components/Icon"
-import { extensionCtaLabel, extensionInstallHref, project, resolveAppUrl } from "@/config/project"
+import {
+  extensionCtaLabel,
+  extensionInstallHref,
+  LIEND_APP_URL,
+  project,
+  resolveAppUrl,
+} from "@/config/project"
 
 /**
  * External product link.
@@ -50,7 +56,7 @@ export function LaunchAppLink({
 }: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   children?: React.ReactNode
 }) {
-  const href = project.appUrl ?? resolveAppUrl() ?? "https://app.liend.app"
+  const href = project.appUrl ?? resolveAppUrl() ?? LIEND_APP_URL
   const content = children ?? (
     <>
       Launch App
