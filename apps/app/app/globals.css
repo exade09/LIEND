@@ -42,29 +42,25 @@
 * { box-sizing: border-box; }
 
 /*
- * Native 12x19 Windows arrow. .cur lets Windows size it like the
- * system pointer; PNG is the fallback. Hotspot is the tip.
+ * Native 12x19 pixel arrow. PNG only: a leading .cur was served as
+ * octet-stream and Chrome dropped the whole cursor stack. No
+ * pointer:fine gate — touch laptops report coarse and skipped it.
  */
-@media (pointer: fine) {
-  html,
-  body,
-  * {
-    cursor:
-      url("/assets/cursor/liend-arrow.cur") 0 0,
-      url("/assets/cursor/liend-arrow.png") 0 0,
-      auto !important;
-  }
+html,
+body,
+* {
+  cursor: url("/assets/cursor/liend-arrow.png") 0 0, auto !important;
+}
 
-  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
-  textarea,
-  [contenteditable="true"] {
-    cursor: text !important;
-  }
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+textarea,
+[contenteditable="true"] {
+  cursor: text !important;
+}
 
-  :disabled,
-  [aria-disabled="true"] {
-    cursor: not-allowed !important;
-  }
+:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed !important;
 }
 
 html {
