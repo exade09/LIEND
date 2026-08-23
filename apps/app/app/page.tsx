@@ -9,7 +9,8 @@ import { availableSol, outstandingSol, positionValueUsd, sol, usd } from "@/lib/
 export default function DashboardPage() {
   const { access, loading, wallet } = useSession()
   const { book, loadingPositions } = useUnbackedBook()
-  const open = book.loans.filter((loan) => loan.status === "active")
+  const open = book.loans.filter((loan) => loan.status === "review" || loan.status === "active")
+  const reviewing = book.loans.some((loan) => loan.status === "review")
 
   return (
     <>
@@ -52,7 +53,7 @@ export default function DashboardPage() {
           <div className="metric">
             <p className="metric__label">Active loans</p>
             <p className="metric__value">{open.length}</p>
-            <p className="metric__hint">{open.length === 1 ? "Open position" : "Open positions"}</p>
+            <p className="metric__hint">{reviewing ? "Includes requests on review" : open.length === 1 ? "Open position" : "Open positions"}</p>
           </div>
         </section>
 
@@ -72,7 +73,7 @@ export default function DashboardPage() {
               </div>
               <div className="list__row">
                 <span>Borrowing</span>
-                <span className="muted">Open</span>
+                <span className="muted">{reviewing ? "On review" : "Open"}</span>
               </div>
             </div>
           </div>

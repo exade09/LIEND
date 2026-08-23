@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { sol } from "@/lib/unbacked-book"
+import { loanLabel, sol } from "@/lib/unbacked-book"
 
 export default function LoansPage() {
   const { book } = useUnbackedBook()
@@ -13,7 +13,7 @@ export default function LoansPage() {
       <header className="page-head">
         <div>
           <h1>Loans</h1>
-          <p>Active and closed LIEND loans for your wallet</p>
+          <p>Review, active and closed LIEND loans for your wallet</p>
         </div>
       </header>
       <UtilityGate>
@@ -27,7 +27,7 @@ export default function LoansPage() {
                   <div>
                     <strong>{loan.symbol}</strong>
                     <p className="muted" style={{ margin: "4px 0 0" }}>
-                      {loan.status === "active" ? "Active" : "Repaid"}
+                      {loanLabel(loan.status)}
                     </p>
                   </div>
                   <span>{sol(loan.outstandingSol)}</span>

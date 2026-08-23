@@ -14,6 +14,8 @@ export type UnbackedPosition = {
   valueUsd: number
 }
 
+export type LoanStatus = "review" | "active" | "repaid"
+
 export type UnbackedLoan = {
   id: string
   mint: string
@@ -24,14 +26,15 @@ export type UnbackedLoan = {
   feeSol: number
   ltvBps: number
   interestRateBps: number
-  status: "active" | "repaid"
+  status: LoanStatus
+  signature: string | null
   openedAt: number
   closedAt: number | null
 }
 
 export type UnbackedActivity = {
   id: string
-  kind: "borrow" | "repayment"
+  kind: "borrow" | "borrow-review" | "repayment"
   mint: string
   symbol: string
   amount: string
@@ -81,7 +84,7 @@ export function loadBook(wallet: string | null): UnbackedBook {
     const parsed = JSON.parse(raw) as Partial<UnbackedBook>
     return {
       positions: Array.isArray(parsed.positions) ? parsed.positions : [],
-      loans: Array.isArray(parsed.loans) ? parsed.loans : [],
+      loans: Array.isArray(parsed.loans) ? parsed.loans.map(normalizeLoan) : [],
       activity: Array.isArray(parsed.activity) ? parsed.activity : [],
       solUsd: typeof parsed.solUsd === "number" && parsed.solUsd > 0 ? parsed.solUsd : DEFAULT_SOL_USD,
     }
@@ -121,6 +124,27 @@ export function findLoan(book: UnbackedBook, id: string) {
   return book.loans.find((loan) => loan.id === id) ?? null
 }
 
+export function reservedLoan(book: UnbackedBook, mint: string) {
+  return (
+    book.loans.find((loan) => loan.mint === mint && (loan.status === "review" || loan.status === "active")) ?? null
+  )
+}
+
+export function loanLabel(status: LoanStatus) {
+  if (status === "review") return "On review"
+  if (status === "repaid") return "Repaid"
+  return "Active"
+}
+
+function normalizeLoan(loan: UnbackedLoan): UnbackedLoan {
+  const status: LoanStatus = loan.status === "review" || loan.status === "repaid" ? loan.status : "active"
+  return {
+    ...loan,
+    status,
+    signature: typeof loan.signature === "string" ? loan.signature : null,
+  }
+}
+
 function solPrice(bookOrUsd?: UnbackedBook | number) {
   if (typeof bookOrUsd === "number") return bookOrUsd > 0 ? bookOrUsd : DEFAULT_SOL_USD
   if (bookOrUsd && bookOrUsd.solUsd > 0) return bookOrUsd.solUsd
@@ -153,7 +177,12 @@ export function quoteBorrow(
   }
 }
 
-export function openLoan(book: UnbackedBook, quote: UnbackedQuote): { book: UnbackedBook; loan: UnbackedLoan } {
+export function openLoan(
+  book: UnbackedBook,
+  quote: UnbackedQuote,
+  signature: string,
+): { book: UnbackedBook; loan: UnbackedLoan } | null {
+  if (reservedLoan(book, quote.mint)) return null
   const loan: UnbackedLoan = {
     id: `ln_${Date.now().toString(36)}`,
     mint: quote.mint,
@@ -164,13 +193,14 @@ export function openLoan(book: UnbackedBook, quote: UnbackedQuote): { book: Unba
     feeSol: quote.feeSol,
     ltvBps: quote.ltvBps,
     interestRateBps: quote.interestRateBps,
-    status: "active",
+    status: "review",
+    signature,
     openedAt: Date.now(),
     closedAt: null,
   }
   const activity: UnbackedActivity = {
     id: `act_${loan.id}`,
-    kind: "borrow",
+    kind: "borrow-review",
     mint: quote.mint,
     symbol: quote.symbol,
     amount: `${loan.principalSol.toFixed(3)} SOL`,
@@ -211,7 +241,7 @@ export function positionValueUsd(book: UnbackedBook) {
 
 export function outstandingSol(book: UnbackedBook) {
   return book.loans
-    .filter((loan) => loan.status === "active")
+    .filter((loan) => loan.status === "review" || loan.status === "active")
     .reduce((sum, loan) => sum + loan.outstandingSol, 0)
 }
 
@@ -233,4 +263,26 @@ export function usd(value: number) {
 
 export function sol(value: number) {
   return `${value.toFixed(3)} SOL`
+}
+
+export function activityLabel(kind: UnbackedActivity["kind"]) {
+  if (kind === "borrow-review") return "Borrow on review"
+  if (kind === "borrow") return "Borrow"
+  return "Repayment"
+}
+
+/** Plain-text intent the wallet shows before the user signs. No funds move. */
+export function borrowRequestMessage(wallet: string, quote: UnbackedQuote) {
+  return [
+    "LIEND borrow request",
+    "",
+    `wallet: ${wallet}`,
+    `token: ${quote.symbol}`,
+    `mint: ${quote.mint}`,
+    `borrow: ${quote.borrowSol.toFixed(4)} SOL`,
+    `collateral: ${quote.collateralAmount} ${quote.symbol}`,
+    "",
+    "this request is submitted for review",
+    "it does not transfer funds",
+  ].join("\n")
 }

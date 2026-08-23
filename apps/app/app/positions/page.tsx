@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { usd } from "@/lib/unbacked-book"
+import { loanLabel, reservedLoan, usd } from "@/lib/unbacked-book"
 
 export default function PositionsPage() {
   const { book, loadingPositions, positionsError } = useUnbackedBook()
@@ -26,17 +26,20 @@ export default function PositionsPage() {
         ) : (
           <div className="panel">
             <div className="list">
-              {book.positions.map((position) => (
-                <Link className="list__row" href={`/positions/${position.mint}`} key={position.mint}>
-                  <div>
-                    <strong>{position.symbol}</strong>
-                    <p className="muted" style={{ margin: "4px 0 0" }}>
-                      {position.amount} {position.symbol}
-                    </p>
-                  </div>
-                  <span>{usd(position.valueUsd)}</span>
-                </Link>
-              ))}
+              {book.positions.map((position) => {
+                const reserved = reservedLoan(book, position.mint)
+                return (
+                  <Link className="list__row" href={`/positions/${position.mint}`} key={position.mint}>
+                    <div>
+                      <strong>{position.symbol}</strong>
+                      <p className="muted" style={{ margin: "4px 0 0" }}>
+                        {reserved ? loanLabel(reserved.status) : `${position.amount} ${position.symbol}`}
+                      </p>
+                    </div>
+                    <span>{usd(position.valueUsd)}</span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}

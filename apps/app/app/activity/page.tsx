@@ -2,6 +2,7 @@
 
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
+import { activityLabel } from "@/lib/unbacked-book"
 
 export default function ActivityPage() {
   const { book } = useUnbackedBook()
@@ -23,7 +24,7 @@ export default function ActivityPage() {
               {book.activity.map((item) => (
                 <div className="list__row" key={item.id}>
                   <div>
-                    <strong>{item.kind === "borrow" ? "Borrow" : "Repayment"}</strong>
+                    <strong>{activityLabel(item.kind)}</strong>
                     <p className="muted" style={{ margin: "4px 0 0" }}>
                       {item.symbol} · {new Date(item.occurredAt).toLocaleString()}
                     </p>

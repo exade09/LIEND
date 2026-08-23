@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, maxBorrowSol, quoteBorrow, sol, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, quoteBorrow, reservedLoan, sol, usd } from "@/lib/unbacked-book"
 
 export default function BorrowPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -14,6 +14,7 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
   const router = useRouter()
   const { book, setQuote } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
+  const reserved = valid ? reservedLoan(book, valid) : null
   const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
   const [amount, setAmount] = useState("0")
   const quote = useMemo(
@@ -34,7 +35,17 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
         </div>
       </header>
       <UtilityGate>
-        {position && quote ? (
+        {reserved ? (
+          <div className="stack" style={{ maxWidth: 560 }}>
+            <div className="notice" data-tone="locked">
+              <strong>{loanLabel(reserved.status)}</strong>
+              <p>This token already has a borrow on review. A second request cannot be submitted.</p>
+            </div>
+            <Link className="button button--primary" href={`/loans/${reserved.id}`}>
+              View request
+            </Link>
+          </div>
+        ) : position && quote ? (
           <div className="stack" style={{ maxWidth: 560 }}>
             <label className="field">
               <span>Borrow amount</span>

@@ -93,3 +93,24 @@ export function discoverWallets(): DiscoveredWallet[] {
       },
     }))
 }
+
+/** Reconnect the session wallet and sign a readable message. */
+export async function signWithSessionWallet(address: string, message: string) {
+  const wallets = discoverWallets()
+  if (wallets.length === 0) {
+    throw new Error("No Solana wallet detected in this browser")
+  }
+
+  let lastError: Error | null = null
+  for (const wallet of wallets) {
+    try {
+      const connected = await wallet.connect()
+      if (connected.address !== address) continue
+      return wallet.signMessage(message)
+    } catch (caught) {
+      lastError = caught instanceof Error ? caught : new Error("Wallet rejected the signature")
+    }
+  }
+
+  throw lastError ?? new Error("Connect the same wallet you signed in with")
+}

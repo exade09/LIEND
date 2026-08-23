@@ -5,13 +5,14 @@ import { use } from "react"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, maxBorrowSol, sol, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, reservedLoan, sol, usd } from "@/lib/unbacked-book"
 
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
   const valid = parseMint(mint)
   const { book, loadingPositions } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
+  const reserved = valid ? reservedLoan(book, valid) : null
   const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
 
   if (!valid) {
@@ -62,21 +63,33 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                 </div>
                 <div className="list__row">
                   <span>Available to borrow</span>
-                  <span>{sol(maxBorrowSol(position, book.solUsd))}</span>
+                  <span>{reserved ? loanLabel(reserved.status) : sol(maxBorrowSol(position, book.solUsd))}</span>
                 </div>
               </div>
             </div>
+            {reserved ? (
+              <div className="notice" data-tone="locked">
+                <strong>{loanLabel(reserved.status)}</strong>
+                <p>This token is reserved. Another borrow cannot be opened against it.</p>
+              </div>
+            ) : null}
             <div className="row">
               <Link className="button button--ghost" href="/positions">
                 Back to positions
               </Link>
-              <Link
-                className="button button--primary"
-                href={`/positions/${valid}/borrow`}
-                aria-disabled={ceiling <= 0}
-              >
-                Borrow SOL
-              </Link>
+              {reserved ? (
+                <Link className="button button--primary" href={`/loans/${reserved.id}`}>
+                  View request
+                </Link>
+              ) : (
+                <Link
+                  className="button button--primary"
+                  href={`/positions/${valid}/borrow`}
+                  aria-disabled={ceiling <= 0}
+                >
+                  Borrow SOL
+                </Link>
+              )}
             </div>
           </div>
         ) : loadingPositions ? (

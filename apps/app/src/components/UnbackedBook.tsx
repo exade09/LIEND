@@ -26,7 +26,7 @@ type BookApi = {
   positionsError: string | null
   setQuote: (quote: UnbackedQuote) => void
   readQuote: () => UnbackedQuote | null
-  confirmBorrow: (quote: UnbackedQuote) => string | null
+  confirmBorrow: (quote: UnbackedQuote, signature: string) => string | null
   confirmRepay: (id: string) => void
 }
 
@@ -118,9 +118,10 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
   const readQuote = useCallback(() => loadQuote(wallet), [wallet])
 
   const confirmBorrow = useCallback(
-    (quote: UnbackedQuote) => {
-      if (!wallet) return null
-      const opened = openLoan(book, quote)
+    (quote: UnbackedQuote, signature: string) => {
+      if (!wallet || !signature) return null
+      const opened = openLoan(book, quote, signature)
+      if (!opened) return null
       persist(opened.book)
       clearQuote(wallet)
       return opened.loan.id

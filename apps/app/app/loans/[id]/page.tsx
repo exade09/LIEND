@@ -4,7 +4,7 @@ import Link from "next/link"
 import { use } from "react"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findLoan, sol } from "@/lib/unbacked-book"
+import { findLoan, loanLabel, sol } from "@/lib/unbacked-book"
 
 export default function LoanDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -27,7 +27,7 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
               <div className="list">
                 <div className="list__row">
                   <span>Status</span>
-                  <span>{loan.status === "active" ? "Active" : "Repaid"}</span>
+                  <span>{loanLabel(loan.status)}</span>
                 </div>
                 <div className="list__row">
                   <span>Collateral</span>
@@ -51,8 +51,25 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
                   <span>Interest</span>
                   <span>{(loan.interestRateBps / 100).toFixed(1)}% APR</span>
                 </div>
+                {loan.signature ? (
+                  <div className="list__row">
+                    <span>Signature</span>
+                    <span className="mono">
+                      {loan.signature.slice(0, 8)}…{loan.signature.slice(-6)}
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </div>
+            {loan.status === "review" ? (
+              <div className="notice" data-tone="locked">
+                <strong>On review</strong>
+                <p>
+                  This borrow is reserved and waiting to be processed. It cannot be submitted again
+                  for {loan.symbol}.
+                </p>
+              </div>
+            ) : null}
             <div className="row">
               <Link className="button button--ghost" href="/loans">
                 Back to loans

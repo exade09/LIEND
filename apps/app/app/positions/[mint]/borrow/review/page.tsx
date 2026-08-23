@@ -1,22 +1,44 @@
 "use client"
 
 import { use, useMemo, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
+import { useSession } from "@/components/SessionProvider"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { sol, usd } from "@/lib/unbacked-book"
+import { borrowRequestMessage, reservedLoan, sol, usd } from "@/lib/unbacked-book"
+import { signWithSessionWallet } from "@/lib/wallet"
 
 export default function BorrowReviewPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
   const valid = parseMint(mint)
   const router = useRouter()
-  const { readQuote, confirmBorrow } = useUnbackedBook()
+  const { wallet } = useSession()
+  const { book, readQuote, confirmBorrow } = useUnbackedBook()
   const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const reserved = valid ? reservedLoan(book, valid) : null
   const quote = useMemo(() => {
     const pending = readQuote()
     return pending && pending.mint === valid ? pending : null
   }, [readQuote, valid])
+
+  async function submit() {
+    if (!quote || !wallet) return
+    setBusy(true)
+    setError(null)
+    try {
+      const signature = await signWithSessionWallet(wallet, borrowRequestMessage(wallet, quote))
+      const id = confirmBorrow(quote, signature)
+      if (id) router.push(`/loans/${id}`)
+      else setError("This token already has a borrow on review")
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Wallet did not sign the request")
+    } finally {
+      setBusy(false)
+    }
+  }
 
   return (
     <>
@@ -27,8 +49,25 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
         </div>
       </header>
       <UtilityGate>
-        {quote ? (
+        {reserved ? (
           <div className="stack" style={{ maxWidth: 560 }}>
+            <div className="notice" data-tone="locked">
+              <strong>Borrow on review</strong>
+              <p>This token is already reserved. A second borrow cannot be opened against it.</p>
+            </div>
+            <Link className="button button--primary" href={`/loans/${reserved.id}`}>
+              View request
+            </Link>
+          </div>
+        ) : quote ? (
+          <div className="stack" style={{ maxWidth: 560 }}>
+            <div className="notice">
+              <strong>Wallet signature required</strong>
+              <p>
+                Phantom will show a borrow request. Sign it to reserve this token. The request goes
+                to review and does not transfer funds.
+              </p>
+            </div>
             <div className="panel">
               <h2>Terms</h2>
               <div className="list">
@@ -60,18 +99,14 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
                 </div>
               </div>
             </div>
-            <button
-              className="button button--primary"
-              type="button"
-              disabled={busy}
-              onClick={() => {
-                setBusy(true)
-                const id = confirmBorrow(quote)
-                if (id) router.push(`/loans/${id}`)
-                else setBusy(false)
-              }}
-            >
-              Confirm borrow
+            {error ? (
+              <div className="notice" data-tone="error">
+                <strong>Could not submit</strong>
+                <p>{error}</p>
+              </div>
+            ) : null}
+            <button className="button button--primary" type="button" disabled={busy} onClick={() => void submit()}>
+              {busy ? "Waiting for wallet…" : "Sign and submit"}
             </button>
           </div>
         ) : (
