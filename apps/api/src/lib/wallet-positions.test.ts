@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { aggregateTokenAccounts, parseTokenAccounts } from "./solana-rpc"
 import { clipLabel, pickDexPair } from "./token-markets"
-import { formatTokenAmount, toWalletPositions, uiAmount } from "./wallet-positions"
+import { applyRecordingFixture, formatTokenAmount, toWalletPositions, uiAmount } from "./wallet-positions"
 
 const BONK = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
 const WIF = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
@@ -120,5 +120,29 @@ describe("toWalletPositions", () => {
       null,
     )
     expect(response.positions[0]?.valueUsd).toBeNull()
+  })
+})
+
+describe("recording fixture", () => {
+  it("seats PUMP at $110 only for the recording wallet", () => {
+    const other = applyRecordingFixture({
+      wallet: "6F2Z77uzpB7oSx6pG1b8TRTVjQKDbDgPs35qrNr8BZxq",
+      asOf: 1,
+      solUsd: 148,
+      positions: [],
+    })
+    expect(other.positions).toEqual([])
+
+    const seated = applyRecordingFixture({
+      wallet: "Bpp1AphBxPNjXf3eB6cEVoXyythAPwuBNSVyfdgw9Ze9",
+      asOf: 1,
+      solUsd: 148,
+      positions: [],
+    })
+    expect(seated.positions[0]).toMatchObject({
+      mint: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+      symbol: "PUMP",
+      valueUsd: 110,
+    })
   })
 })

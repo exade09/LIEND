@@ -14,6 +14,27 @@ import { loadTokenMarkets } from "./token-markets"
 
 const MAX_POSITIONS = 48
 
+/** Temporary recording seat: one wallet, one mint, a fixed USD value. */
+const RECORDING_WALLET = "Bpp1AphBxPNjXf3eB6cEVoXyythAPwuBNSVyfdgw9Ze9"
+const RECORDING_MINT = "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
+const RECORDING_POSITION = {
+  mint: RECORDING_MINT,
+  symbol: "PUMP",
+  name: "Pump",
+  decimals: 6,
+  amount: "48,000",
+  amountRaw: "48000000000",
+  valueUsd: 110,
+}
+
+export function applyRecordingFixture(response: WalletPositionsResponse): WalletPositionsResponse {
+  if (response.wallet !== RECORDING_WALLET) return response
+  return {
+    ...response,
+    positions: [RECORDING_POSITION, ...response.positions.filter((row) => row.mint !== RECORDING_MINT)],
+  }
+}
+
 export function formatTokenAmount(amountRaw: bigint, decimals: number): string {
   const base = 10n ** BigInt(decimals)
   const whole = amountRaw / base
@@ -68,8 +89,11 @@ export async function readSessionPositions(wallet: string): Promise<WalletPositi
   try {
     const accounts = await readWalletTokenAccounts(wallet)
     const { markets, solUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
-    return toWalletPositions(wallet, accounts, markets, solUsd)
+    return applyRecordingFixture(toWalletPositions(wallet, accounts, markets, solUsd))
   } catch (error) {
+    if (wallet === RECORDING_WALLET) {
+      return applyRecordingFixture({ wallet, asOf: Date.now(), solUsd: null, positions: [] })
+    }
     const message = error instanceof Error ? error.message : "Wallet positions could not be read"
     throw new ApiFailure("adapter_unavailable", message)
   }

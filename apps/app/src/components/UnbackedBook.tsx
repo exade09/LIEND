@@ -17,6 +17,7 @@ import {
   type UnbackedPosition,
   type UnbackedQuote,
 } from "@/lib/unbacked-book"
+import { withRecordingPosition } from "@/lib/recording-fixture"
 import { useSession } from "./SessionProvider"
 
 type BookApi = {
@@ -53,7 +54,7 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
     if (loading) return
 
     const local = loadBook(wallet)
-    setBook(local)
+    setBook({ ...local, positions: withRecordingPosition(wallet, local.positions) })
     setPositionsError(null)
 
     if (!authenticated || !wallet) {
@@ -79,7 +80,7 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
         setBook((current) => {
           const next: UnbackedBook = {
             ...current,
-            positions: response.positions.map(toPosition),
+            positions: withRecordingPosition(wallet, response.positions.map(toPosition)),
             solUsd: response.solUsd ?? current.solUsd ?? DEFAULT_SOL_USD,
           }
           saveBook(wallet, next)
@@ -89,7 +90,14 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
       })
       .catch((caught: unknown) => {
         if (cancelled) return
-        setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
+        setBook((current) => {
+          const next = { ...current, positions: withRecordingPosition(wallet, current.positions) }
+          saveBook(wallet, next)
+          return next
+        })
+        if (!withRecordingPosition(wallet, []).length) {
+          setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
+        }
       })
       .finally(() => {
         if (!cancelled) setLoadingPositions(false)
