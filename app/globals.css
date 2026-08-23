@@ -77,6 +77,32 @@
 }
 
 /*
+ * Native 12x19 Windows arrow. .cur lets Windows size it like the
+ * system pointer; PNG is the fallback. Hotspot is the tip.
+ */
+@media (pointer: fine) {
+  html,
+  body,
+  * {
+    cursor:
+      url("/assets/cursor/liend-arrow.cur") 0 0,
+      url("/assets/cursor/liend-arrow.png") 0 0,
+      auto !important;
+  }
+
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+
+  :disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed !important;
+  }
+}
+
+/*
  * The webcore substrate: a 64px machine grid painted straight onto the canvas
  * at ~1.5% alpha. It is never bright enough to read as a visible graticule, but
  * it gives every translucent surface above it something to refract, which is
