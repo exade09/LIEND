@@ -8,6 +8,9 @@ import { type TapeEvent, type TapeKind } from "@/data/activityTape"
 import { getExplorerAddressUrl, getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
 import styles from "./ActivityTape.module.css"
 
+const MIN_REVEAL_DELAY_MS = 60_000
+const MAX_REVEAL_DELAY_MS = 240_000
+
 function kindIcon(kind: TapeKind) {
   if (kind === "borrow" || kind === "swap-out") return "borrow" as const
   return "transaction" as const
@@ -25,7 +28,9 @@ function timeAgo(occurredAt: number, now: number) {
 }
 
 function nextDelay() {
-  return 5_000 + Math.floor(Math.random() * 20_000)
+  return MIN_REVEAL_DELAY_MS + Math.floor(
+    Math.random() * (MAX_REVEAL_DELAY_MS - MIN_REVEAL_DELAY_MS + 1),
+  )
 }
 
 async function loadPool(): Promise<TapeEvent[]> {
