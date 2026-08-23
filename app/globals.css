@@ -681,12 +681,14 @@ button:disabled {
 
 .header-ca-slot {
   position: absolute;
+  z-index: 2;
   top: 50%;
-  left: clamp(18px, 4vw, 72px);
+  left: clamp(8px, 1vw, 20px);
   display: flex;
+  width: clamp(160px, 10vw, 220px);
   min-width: 0;
-  max-width: min(280px, 24vw);
   align-items: center;
+  overflow: hidden;
   transform: translateY(-50%);
 }
 
