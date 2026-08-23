@@ -11,8 +11,8 @@
  *  - Pump.fun currently points at the board (`https://pump.fun`). When the
  *    LIEND token exists, set NEXT_PUBLIC_PUMPFUN_URL to the coin page.
  *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
- *  - There is no Chrome Web Store listing, so the extension ships as a
- *    downloadable archive.
+ *  - The published Chrome Web Store listing is the primary extension
+ *    distribution channel.
  *
  * Unset destinations resolve to `null`. A null link means the surface must
  * hide or disable that affordance. X stays hidden until NEXT_PUBLIC_X_URL is set.
@@ -73,7 +73,14 @@ export function resolveAppUrl(locationHref?: string): string | null {
 export type ExtensionMode = "download" | "webstore"
 
 const extensionMode: ExtensionMode =
-  process.env.NEXT_PUBLIC_EXTENSION_MODE === "webstore" ? "webstore" : "download"
+  process.env.NEXT_PUBLIC_EXTENSION_MODE === "download" ? "download" : "webstore"
+
+const chromeWebStoreUrl =
+  "https://chromewebstore.google.com/detail/liend/gbpmekokakgbojjkmcgcippmlmpjakia?authuser=0&hl=en"
+
+const extensionUrl =
+  url(process.env.NEXT_PUBLIC_EXTENSION_URL) ??
+  (extensionMode === "webstore" ? chromeWebStoreUrl : null)
 
 export const project = {
   name: "LIEND",
@@ -98,7 +105,7 @@ export const project = {
   apiUrl: url(process.env.NEXT_PUBLIC_API_URL),
 
   /** Extension archive (download mode) or Web Store listing (webstore mode). */
-  extensionUrl: url(process.env.NEXT_PUBLIC_EXTENSION_URL),
+  extensionUrl,
   extensionMode,
 
   /** Packaged MV3 archive served from this site for developer-mode install. */

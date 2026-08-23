@@ -81,9 +81,8 @@ export function LaunchAppLink({
 /**
  * Extension CTA.
  *
- * `download` mode (today, since no Web Store listing exists) opens concise
- * install steps alongside the archive download. `webstore` mode links
- * straight out. Switching is configuration only — no markup change here.
+ * `webstore` mode links directly to the published listing. `download` mode
+ * remains available for development builds that ship an unpacked archive.
  */
 export function ExtensionCta({ className = "button button--ghost" }: { className?: string }) {
   const [open, setOpen] = useState(false)
@@ -121,8 +120,8 @@ function ChromeMark() {
 }
 
 /**
- * Header plaque: Chrome mark + "Add to Chrome". Downloads the packaged zip
- * so the extension can be loaded unpacked and used on pump.fun.
+ * Header plaque: Chrome mark + "Add to Chrome". Production opens the
+ * published Chrome Web Store listing in a new tab.
  */
 export function AddToChromeBadge({ className }: { className?: string }) {
   const href = extensionInstallHref()

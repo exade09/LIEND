@@ -73,7 +73,7 @@ the repo root, which is what makes the workspace linking work.
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Existing. Used for `metadataBase`. |
 | `NEXT_PUBLIC_APP_URL` | Launch App CTA target (Phase 4). |
-| `NEXT_PUBLIC_EXTENSION_URL` | Download Extension CTA (Phase 3B+). |
+| `NEXT_PUBLIC_EXTENSION_URL` | Chrome Web Store listing or archive URL override. |
 
 **App** (`liend-app`)
 
@@ -86,7 +86,7 @@ the repo root, which is what makes the workspace linking work.
 | `NEXT_PUBLIC_LIEND_MIN_HOLDER_BALANCE` | no | Base units, integer string. Unset ⇒ requirement not published. |
 | `NEXT_PUBLIC_SOLANA_CLUSTER` | no | Defaults to `mainnet-beta`. |
 | `NEXT_PUBLIC_PUMPFUN_URL` / `_X_URL` / `_DOCS_URL` | no | Leave unset until real destinations exist. |
-| `NEXT_PUBLIC_EXTENSION_MODE` | no | `download` (default) or `webstore`. |
+| `NEXT_PUBLIC_EXTENSION_MODE` | no | `webstore` (default) or `download` for archive builds. |
 
 **API** (`liend-api`)
 
