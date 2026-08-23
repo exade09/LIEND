@@ -38,12 +38,15 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
       <ActivityTape />
       <header className="site-header">
       <div className="nav-shell">
-        <Link className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
-          <span className="brand-compact__avatar">
-            <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
-          </span>
-          <span>Liend</span>
-        </Link>
+        <div className="nav-identity">
+          <CaPlaque variant="header" initialMint={initialMint} />
+          <Link className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
+            <span className="brand-compact__avatar">
+              <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
+            </span>
+            <span>Liend</span>
+          </Link>
+        </div>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navigation.map((item) => (
@@ -54,7 +57,6 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         </nav>
 
         <div className="nav-actions">
-          <CaPlaque variant="header" initialMint={initialMint} />
           <ProductLink className="header-chip header-chip--pump" href={project.pumpUrl} aria-label="LIEND on Pump.fun">
             <Icon name="pump-fun" size={18} />
             <span>Pump.fun</span>

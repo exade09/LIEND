@@ -111,16 +111,6 @@
   margin: 0 auto;
 }
 
-.caSlot {
-  position: absolute;
-  z-index: 6;
-  left: 50%;
-  bottom: clamp(22px, 5svh, 56px);
-  width: min(520px, 86vw);
-  transform: translateX(-50%);
-  pointer-events: auto;
-}
-
 .headline {
   margin: 0;
   color: #ffffff;
