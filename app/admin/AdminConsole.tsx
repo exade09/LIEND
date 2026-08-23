@@ -138,7 +138,7 @@ export function AdminConsole() {
       }
       const published = applyCa(body)
       announcePublishedCa(published)
-      setNote(published.mint ? "published to header, hero and footer" : "waiting state published")
+      setNote(published.mint ? "published to header and footer" : "waiting state published")
     } catch {
       setError("the contract address could not be published")
     } finally {
@@ -237,7 +237,7 @@ export function AdminConsole() {
       </div>
 
       <p className={styles.copy}>
-        Publish once and the same address is broadcast to the site header, hero and footer.
+        Publish any text or symbols once and the same CA label is broadcast to the site header and footer.
       </p>
 
       <dl className={styles.readout}>
@@ -251,7 +251,7 @@ export function AdminConsole() {
         </div>
         <div>
           <dt>SURFACES</dt>
-          <dd>03 / 03</dd>
+          <dd>02 / 02</dd>
         </div>
         <div>
           <dt>UPDATED</dt>
@@ -260,27 +260,23 @@ export function AdminConsole() {
       </dl>
 
       <form className={styles.field} onSubmit={publish}>
-        <div className={styles.labelRow}>
-          <label className={styles.label} htmlFor="admin-mint">contract address</label>
-          <span>{mint.trim().length}/44</span>
-        </div>
+        <label className={styles.label} htmlFor="admin-mint">CA text</label>
         <input
           id="admin-mint"
           className={styles.input}
           type="text"
-          maxLength={44}
           spellCheck={false}
           autoCapitalize="off"
           autoCorrect="off"
-          placeholder="paste the mint address"
+          placeholder="enter any text or symbols"
           value={mint}
           onChange={(event) => {
-            setMint(event.target.value.trimStart())
+            setMint(event.target.value)
             setError("")
             setNote("")
           }}
         />
-        <p className={styles.inputHint}>BASE58 SOLANA MINT / LEAVE EMPTY TO PUBLISH WAITING STATE</p>
+        <p className={styles.inputHint}>ANY TEXT OR SYMBOLS / LEAVE EMPTY TO PUBLISH WAITING STATE</p>
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         {note ? <p className={styles.status} role="status">{note}</p> : null}
         <div className={styles.actions}>
@@ -296,7 +292,7 @@ export function AdminConsole() {
       <div className={styles.preview}>
         <div className={styles.previewBar}>
           <span>LIVE PREVIEW</span>
-          <span>HEADER / HERO / FOOTER</span>
+          <span>HEADER / FOOTER</span>
         </div>
         <CaPlaque variant="footer" initialMint={mint.trim() || null} live={false} />
       </div>

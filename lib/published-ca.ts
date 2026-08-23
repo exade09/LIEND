@@ -4,7 +4,6 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { connection } from "next/server"
 
-import { isLikelySolanaAddress } from "@/lib/addresses"
 import { parsePublishedCa, type PublishedCa } from "@/lib/ca"
 
 const KV_KEY = "liend:published-ca"
@@ -25,8 +24,7 @@ function filePath(): string {
 }
 
 function envMint(): string | null {
-  const mint = process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT?.trim() || null
-  return mint && isLikelySolanaAddress(mint) ? mint : null
+  return process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT?.trim() || null
 }
 
 function envSeed(): PublishedCa {

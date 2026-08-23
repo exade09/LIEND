@@ -1,4 +1,3 @@
-import { isLikelySolanaAddress } from "@/lib/addresses"
 import { isAdminConfigured, isAdminRequest } from "@/lib/admin-session"
 import { getPublishedCa, setPublishedCa, storeKind } from "@/lib/published-ca"
 
@@ -33,13 +32,6 @@ export async function PUT(request: Request) {
     mint = typeof body.mint === "string" ? body.mint.trim() : ""
   } catch {
     mint = ""
-  }
-
-  if (mint && !isLikelySolanaAddress(mint)) {
-    return Response.json(
-      { error: "that does not look like a solana mint" },
-      { status: 400, headers: { "cache-control": "no-store" } },
-    )
   }
 
   try {

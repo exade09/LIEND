@@ -223,24 +223,11 @@
   gap: 9px;
 }
 
-.labelRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.label,
-.labelRow > span {
+.label {
   color: rgba(226, 235, 226, 0.7);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.035em;
-}
-
-.labelRow > span {
-  color: rgba(139, 164, 142, 0.48);
-  font-size: 9px;
 }
 
 .input {

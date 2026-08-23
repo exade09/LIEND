@@ -43,10 +43,10 @@ export default function Home() {
           <div className={styles.closeScenes}>
             <FAQ />
             <FinalCTA />
+            <Footer />
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

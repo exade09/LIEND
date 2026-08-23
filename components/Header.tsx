@@ -39,7 +39,9 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
       <header className="site-header">
       <div className="nav-shell">
         <div className="nav-identity">
-          <CaPlaque variant="header" initialMint={initialMint} />
+          <div className="header-ca-slot">
+            <CaPlaque variant="header" initialMint={initialMint} />
+          </div>
           <Link className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
             <span className="brand-compact__avatar">
               <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
