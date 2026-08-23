@@ -1,19 +1,6 @@
 .journeyGroup {
   position: relative;
   isolation: isolate;
-  background: #1238c8;
-}
-
-.journeyGroup::after {
-  position: absolute;
-  z-index: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: min(36vh, 280px);
-  background: linear-gradient(180deg, transparent 0%, rgba(18, 56, 200, 0.5) 48%, #1238c8 100%);
-  content: "";
-  pointer-events: none;
 }
 
 .journey {
@@ -22,96 +9,7 @@
   position: relative;
   height: 175vh;
   min-height: 1050px;
-  background: linear-gradient(180deg, #0b1c72 0%, #1540d4 46%, #1238c8 100%);
   isolation: isolate;
-}
-
-.scene {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.loop {
-  position: absolute;
-  inset: 0;
-  opacity: 0.34;
-  mix-blend-mode: screen;
-}
-
-.scene::before {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(84, 94, 190, 0.075), transparent 31%),
-    linear-gradient(90deg, rgba(105, 76, 226, 0.035), transparent 27%, transparent 73%, rgba(29, 177, 195, 0.028));
-  content: "";
-}
-
-.sceneGrid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(169, 187, 221, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(169, 187, 221, 0.028) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, transparent, black 15%, black 77%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 77%, transparent);
-  opacity: 0.48;
-}
-
-.surface {
-  position: absolute;
-  top: 12vh;
-  width: min(47vw, 760px);
-  height: min(78vh, 820px);
-  border: 1px solid rgba(190, 204, 239, 0.09);
-  border-radius: 48% 52% 42% 58% / 58% 44% 56% 42%;
-  mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 34%, rgba(0, 0, 0, 0.78) 58%, transparent 78%);
-  opacity: 0.66;
-}
-
-.surface::before,
-.surface::after {
-  position: absolute;
-  border: 1px solid currentColor;
-  border-radius: inherit;
-  content: "";
-}
-
-.surface::before {
-  inset: 9% 15% 13% 8%;
-  opacity: 0.18;
-  transform: rotate(8deg);
-}
-
-.surface::after {
-  inset: 22% 5% 7% 23%;
-  opacity: 0.12;
-  transform: rotate(-12deg);
-}
-
-.surfaceViolet {
-  left: -23vw;
-  color: #a28aff;
-  background: linear-gradient(128deg, transparent 18%, rgba(120, 84, 255, 0.04) 40%, rgba(177, 149, 255, 0.19) 51%, rgba(74, 42, 191, 0.045) 65%, transparent 80%);
-  box-shadow: inset -18px 6px 44px rgba(151, 124, 255, 0.11), 20px 0 70px rgba(74, 45, 191, 0.055);
-  transform: rotate(-13deg);
-}
-
-.surfaceCyan {
-  right: -23vw;
-  color: #56e2ed;
-  background: linear-gradient(232deg, transparent 17%, rgba(34, 196, 217, 0.035) 39%, rgba(96, 230, 235, 0.16) 51%, rgba(31, 103, 154, 0.04) 66%, transparent 81%);
-  box-shadow: inset 18px 6px 44px rgba(79, 219, 231, 0.09), -20px 0 70px rgba(26, 144, 171, 0.045);
-  transform: rotate(14deg);
-}
-
-.horizon {
-  display: none;
 }
 
 .stickyStage {
@@ -140,7 +38,7 @@
   min-height: 0;
   align-items: center;
   gap: clamp(25px, 3vw, 54px);
-  grid-template-columns: minmax(230px, 0.7fr) minmax(300px, 0.76fr) minmax(440px, 1.28fr);
+  grid-template-columns: minmax(230px, 0.72fr) minmax(310px, 0.82fr) minmax(400px, 1.08fr);
 }
 
 .intro {
@@ -202,12 +100,6 @@
   font-size: 8px;
   font-weight: 500;
   letter-spacing: 0.14em;
-}
-
-.context .demoBadge {
-  border-color: rgba(146, 116, 255, 0.28);
-  background: linear-gradient(180deg, rgba(123, 92, 255, 0.16), rgba(113, 79, 225, 0.04));
-  color: #ffffff;
 }
 
 .simpleRoute {
@@ -358,24 +250,100 @@
   letter-spacing: 0.12em;
 }
 
-/* The trace inspector is a glass window mounted beside the route. */
-.inspector {
+.clientPanel {
   min-width: 0;
   align-self: center;
-  padding: 9px;
+  padding: clamp(22px, 2.4vw, 34px);
   border: 1px solid var(--line);
   border-radius: var(--radius-window);
-  background: linear-gradient(180deg, var(--glass-strong), var(--glass) 42%, var(--glass-tint));
+  background: linear-gradient(180deg, rgba(236, 242, 255, 0.18), rgba(8, 38, 112, 0.3));
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--bevel), var(--shadow-window);
 }
 
-.trace {
-  max-height: min(67vh, 650px);
-  overflow: auto;
-  scrollbar-color: rgba(105, 88, 187, 0.4) transparent;
-  scrollbar-width: thin;
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+}
+
+.clientPanel h3 {
+  margin: 25px 0 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.clientPanel > p {
+  margin: 18px 0 0;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.routeFacts {
+  display: grid;
+  margin: 25px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  background: rgba(6, 33, 103, 0.24);
+}
+
+.routeFacts > div {
+  display: grid;
+  min-height: 58px;
+  align-items: center;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 8px;
+  grid-template-columns: minmax(90px, 0.48fr) 1fr;
+}
+
+.routeFacts > div:last-child {
+  border-bottom: 0;
+}
+
+.routeFacts dt,
+.routeFacts dd {
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.routeFacts dt {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.routeFacts dd {
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.walletFact dd {
+  color: var(--signal);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  text-shadow: 0 0 12px rgba(77, 255, 90, 0.32);
+}
+
+.clientPanel > .panelNote {
+  color: rgba(255, 255, 255, 0.74);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .stageFooter {
@@ -416,62 +384,11 @@
   }
 }
 
-@media (min-width: 1101px) and (max-width: 1239px) {
-  .trace :global(.transaction-trace__header) {
-    gap: 9px;
-    padding-inline: 11px;
-  }
-
-  .trace :global(.transaction-trace__icon),
-  .trace :global(.transaction-trace__controls > .demo-badge),
-  .trace :global(.trace-step__value) {
-    display: none;
-  }
-
-  .trace :global(.transaction-trace__controls) {
-    gap: 5px;
-  }
-
-  .trace :global(.trace-view-toggle button) {
-    min-width: 48px;
-  }
-
-  .trace :global(.trace-step__summary) {
-    padding-inline: 10px;
-    grid-template-columns: minmax(115px, 1fr) 78px 18px;
-    gap: 8px;
-  }
-}
-
 @media (max-width: 1100px) {
   .journey {
     height: auto;
     min-height: 0;
     padding: 105px 0;
-  }
-
-  .surface {
-    top: 7%;
-    width: 70vw;
-    height: 520px;
-    opacity: 0.45;
-    transform: none;
-  }
-
-  .surfaceViolet {
-    left: -40vw;
-    transform: rotate(-12deg);
-  }
-
-  .surfaceCyan {
-    top: auto;
-    right: -42vw;
-    bottom: 9%;
-    transform: rotate(14deg);
-  }
-
-  .horizon {
-    top: 43%;
   }
 
   .stickyStage {
@@ -515,13 +432,8 @@
     color: #78cbd8;
   }
 
-  .inspector {
+  .clientPanel {
     width: 100%;
-  }
-
-  .trace {
-    max-height: none;
-    overflow: visible;
   }
 
   .stageFooter {
@@ -571,8 +483,8 @@
     display: none;
   }
 
-  .inspector {
-    padding: 5px;
+  .clientPanel {
+    padding: 20px 16px;
   }
 
   .stageFooter {
@@ -581,10 +493,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .loop {
-    display: none;
-  }
-
   .journey {
     height: auto;
     min-height: 0;
@@ -603,7 +511,6 @@
     margin-block: 44px;
   }
 
-  .surface,
   .routeStep {
     transition: none;
   }
@@ -613,9 +520,5 @@
   .routeStep.isCurrent {
     opacity: 1;
     transform: none;
-  }
-
-  .trace {
-    max-height: none;
   }
 }

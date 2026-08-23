@@ -2,25 +2,41 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Icon, type IconName } from "@/components/Icon"
-import { SceneLoop } from "@/components/SceneLoop"
-import { TransactionTrace } from "@/components/TransactionTrace"
 import { project } from "@/config/project"
-import { demoTransactions } from "@/data/demoTransactions"
 import styles from "./OnchainJourney.module.css"
 
 const routeIcons: Record<string, IconName> = {
-  wallet: "wallet",
-  "token-account": "token",
+  position: "collateral",
   "market-check": "status",
-  collateral: "collateral",
-  "liend-program": "borrow",
-  route: "liquidity",
-  swap: "swap",
-  settlement: "transaction",
+  borrow: "borrow",
   "wallet-return": "sol",
 }
 
-const demonstration = demoTransactions[0]
+const currentWalletBalance = "112.041 SOL"
+
+const routeSteps = [
+  {
+    id: "position",
+    label: "POSITION",
+    instruction: "Select supported collateral",
+  },
+  {
+    id: "market-check",
+    label: "MARKET CHECK",
+    instruction: "Review eligibility and available liquidity",
+  },
+  {
+    id: "borrow",
+    label: "BORROW",
+    instruction: "Confirm the SOL amount",
+  },
+  {
+    id: "wallet-return",
+    label: "WALLET",
+    instruction: "Receive SOL in the destination wallet",
+    value: currentWalletBalance,
+  },
+] as const
 
 export function OnchainJourney() {
   const journeyRef = useRef<HTMLElement>(null)
@@ -41,7 +57,7 @@ export function OnchainJourney() {
       if (staticPresentation.matches) {
         journey.style.setProperty("--journey-progress", "1")
         journey.style.setProperty("--journey-line", "100%")
-        setActiveStep(demonstration.trace.length - 1)
+        setActiveStep(routeSteps.length - 1)
         return
       }
 
@@ -49,8 +65,8 @@ export function OnchainJourney() {
       const travel = Math.max(bounds.height - window.innerHeight, 1)
       const progress = Math.min(1, Math.max(0, -bounds.top / travel))
       const nextStep = Math.min(
-        demonstration.trace.length - 1,
-        Math.floor(progress * demonstration.trace.length),
+        routeSteps.length - 1,
+        Math.floor(progress * routeSteps.length),
       )
 
       journey.style.setProperty("--journey-progress", progress.toFixed(4))
@@ -85,13 +101,6 @@ export function OnchainJourney() {
         aria-labelledby="onchain-journey-title"
       >
         <div className={styles.stickyStage}>
-          <div className={styles.scene} aria-hidden="true">
-            <div className={styles.sceneGrid} />
-            <div className={`${styles.surface} ${styles.surfaceViolet}`} />
-            <div className={`${styles.surface} ${styles.surfaceCyan}`} />
-            <div className={styles.horizon} />
-            <SceneLoop src="/assets/loops/rain.gif" className={styles.loop} />
-          </div>
           <div className={styles.stageGrid}>
             <header className={styles.intro}>
               <p className={styles.eyebrow}>TRANSACTION CORRIDOR</p>
@@ -101,8 +110,8 @@ export function OnchainJourney() {
                 <span>all the way through</span>
               </h2>
               <p className={styles.lede}>
-                Read Position to Borrow to SOL at a glance, then inspect every
-                program interaction in the full transaction trace
+                See the client path from a supported position to borrowed SOL,
+                with only the checks and wallet information needed to understand the route.
               </p>
 
               <div className={styles.context} aria-label="Route context">
@@ -125,8 +134,8 @@ export function OnchainJourney() {
               <div className={styles.routeLine} aria-hidden="true">
                 <span />
               </div>
-              <ol className={styles.routeList} aria-label="Full transaction route">
-                {demonstration.trace.map((step, index) => {
+              <ol className={styles.routeList} aria-label="Client borrow route">
+                {routeSteps.map((step, index) => {
                   const isCurrent = index === activeStep
                   const isPassed = index <= activeStep
 
@@ -146,22 +155,43 @@ export function OnchainJourney() {
                         <strong>{step.label}</strong>
                         <small>{step.instruction}</small>
                       </span>
-                      <span className={styles.routeStatus}>{step.status === "DEMO" ? "" : step.status}</span>
+                      {"value" in step ? (
+                        <span className={styles.routeStatus}>{step.value}</span>
+                      ) : null}
                     </li>
                   )
                 })}
               </ol>
             </div>
 
-            <div className={styles.inspector}>
-              <TransactionTrace
-                className={styles.trace}
-                steps={demonstration.trace}
-                defaultView="full"
-                title="Transaction Trace"
-                compact
-              />
-            </div>
+            <aside className={styles.clientPanel} aria-labelledby="client-route-summary">
+              <div className={styles.panelHeader}>
+                <span>CLIENT ROUTE</span>
+                <Icon name="liquidity" size={17} />
+              </div>
+              <h3 id="client-route-summary">What this route means</h3>
+              <p>
+                Choose a supported position, review the available borrow route,
+                confirm the amount, and receive SOL in the destination wallet.
+              </p>
+              <dl className={styles.routeFacts}>
+                <div>
+                  <dt>FLOW</dt>
+                  <dd>POSITION / BORROW / SOL</dd>
+                </div>
+                <div>
+                  <dt>DESTINATION</dt>
+                  <dd>WALLET</dd>
+                </div>
+                <div className={styles.walletFact}>
+                  <dt>CURRENT WALLET</dt>
+                  <dd>{currentWalletBalance}</dd>
+                </div>
+              </dl>
+              <p className={styles.panelNote}>
+                Route guide only. No simulated signature, slot, or execution status.
+              </p>
+            </aside>
           </div>
 
           <footer className={styles.stageFooter}>

@@ -30,7 +30,6 @@ export default function Home() {
         </div>
         <ProductStage />
         <DataExperience />
-        <OnchainJourney />
         <div className={styles.closeBand}>
           <div className={styles.closeSky} aria-hidden="true">
             <SceneMedia
@@ -41,6 +40,7 @@ export default function Home() {
             />
           </div>
           <div className={styles.closeScenes}>
+            <OnchainJourney />
             <FAQ />
             <FinalCTA />
             <Footer />

@@ -4,14 +4,17 @@ import { useEffect, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { Icon } from "@/components/Icon"
 import { Modal } from "@/components/Modal"
-import { kindLabel, type TapeEvent, type TapeKind } from "@/data/activityTape"
+import { type TapeEvent, type TapeKind } from "@/data/activityTape"
 import { getExplorerAddressUrl, getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
 import styles from "./ActivityTape.module.css"
 
 function kindIcon(kind: TapeKind) {
-  if (kind === "borrow") return "borrow" as const
-  if (kind === "repay") return "transaction" as const
-  return "swap" as const
+  if (kind === "borrow" || kind === "swap-out") return "borrow" as const
+  return "transaction" as const
+}
+
+function liveKindLabel(kind: TapeKind) {
+  return kind === "borrow" || kind === "swap-out" ? "BORROW" : "REPAY"
 }
 
 function timeAgo(occurredAt: number, now: number) {
@@ -109,11 +112,11 @@ export function ActivityTape() {
                   className={`${styles.item} ${freshId === event.signature ? styles.fresh : ""}`}
                   type="button"
                   key={event.signature}
-                  aria-label={`${kindLabel[event.kind]} ${event.amount} · ${shortenAddress(event.wallet, 4, 4)} · open transaction`}
+                  aria-label={`${liveKindLabel(event.kind)} ${event.amount} · ${shortenAddress(event.wallet, 4, 4)} · open transaction`}
                   onClick={() => setSelected(event)}
                 >
                   <Icon name={kindIcon(event.kind)} size={13} />
-                  <b>{kindLabel[event.kind]}</b>
+                  <b>{liveKindLabel(event.kind)}</b>
                   <code>{shortenAddress(event.wallet, 4, 4)}</code>
                   <span>{event.route}</span>
                   <strong>{event.amount}</strong>
