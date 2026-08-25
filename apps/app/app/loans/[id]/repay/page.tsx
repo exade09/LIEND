@@ -17,7 +17,6 @@ export default function RepayPage({ params }: { params: Promise<{ id: string }> 
       <header className="page-head">
         <div>
           <h1>Repay loan</h1>
-          <p className="mono">{id}</p>
         </div>
       </header>
       <UtilityGate>

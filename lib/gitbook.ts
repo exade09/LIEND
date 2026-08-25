@@ -56,7 +56,7 @@ export const docsPages: DocsPage[] = [
         heading: "Token status",
         body: [
           "The LIEND token is not launched yet. There is no mint in product config and no published holder threshold.",
-          "The header Pump.fun button currently opens the public Pump.fun board. When the coin exists, that same button will point at the official token page through NEXT_PUBLIC_PUMPFUN_URL.",
+          "The Pump.fun buttons follow the published CA from the admin console. Empty CA opens the public board at https://pump.fun. Published text opens https://pump.fun/coin/ followed by that same text.",
         ],
       },
       {

@@ -1,5 +1,6 @@
 import { Icon } from "@/components/Icon"
 import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
+import { PumpFunLink } from "@/components/PumpFunLink"
 import { project } from "@/config/project"
 import styles from "./FinalCTA.module.css"
 
@@ -29,10 +30,10 @@ export function FinalCTA() {
         </div>
 
         <nav className={styles.links} aria-label="LIEND external links">
-          <ProductLink href={project.pumpUrl}>
+          <PumpFunLink>
             <Icon name="pump-fun" size={17} />
             Pump.fun
-          </ProductLink>
+          </PumpFunLink>
           <ProductLink href={project.xUrl}>
             <Icon name="x" size={16} />
             X

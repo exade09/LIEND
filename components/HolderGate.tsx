@@ -3,7 +3,8 @@
 import Image from "next/image"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Icon } from "@/components/Icon"
-import { ProductLink, LaunchAppLink } from "@/components/ProductLink"
+import { LaunchAppLink } from "@/components/ProductLink"
+import { PumpFunLink } from "@/components/PumpFunLink"
 import { project } from "@/config/project"
 import { shortenAddress } from "@/lib/addresses"
 import {
@@ -206,11 +207,11 @@ export function HolderGate() {
             ))}
           </div>
 
-          <ProductLink className="inline-link" href={project.pumpUrl}>
+          <PumpFunLink className="inline-link">
             <Icon name="pump-fun" size={18} />
             Open LIEND on Pump.fun
             <Icon name="external-link" size={14} />
-          </ProductLink>
+          </PumpFunLink>
         </div>
 
         <div className="holder-gate-card">
@@ -289,7 +290,7 @@ export function HolderGate() {
               Enter App <Icon name="arrow" size={17} />
             </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
-            <ProductLink className="button button--primary button--wide" href={project.pumpUrl}>Get LIEND <Icon name="external-link" size={15} /></ProductLink>
+            <PumpFunLink className="button button--primary button--wide">Get LIEND <Icon name="external-link" size={15} /></PumpFunLink>
           ) : state === "WRONG NETWORK" ? (
             <button
               className="button button--primary button--wide"

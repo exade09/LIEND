@@ -8,8 +8,8 @@
  * PRODUCT FACTS (approved, and encoded here rather than guessed):
  *  - The LIEND token is not launched: there is no mint and no published
  *    holder requirement.
- *  - Pump.fun currently points at the board (`https://pump.fun`). When the
- *    LIEND token exists, set NEXT_PUBLIC_PUMPFUN_URL to the coin page.
+ *  - Pump.fun currently points at the board (`https://pump.fun`) until a CA is
+ *    published from admin. Live CA text is appended as `https://pump.fun/coin/{text}`.
  *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
  *  - The published Chrome Web Store listing is the primary extension
  *    distribution channel.
@@ -116,8 +116,8 @@ export const project = {
   extensionArchive: "/liend-extension.zip",
 
   /**
-   * Pump.fun destination.
-   * Defaults to the public board until NEXT_PUBLIC_PUMPFUN_URL is the token page.
+   * Static Pump.fun destination. Landing chips ignore this once a CA is
+   * published and instead open https://pump.fun/coin/{CA text}.
    */
   pumpUrl: url(process.env.NEXT_PUBLIC_PUMPFUN_URL) ?? "https://pump.fun",
   xUrl: url(process.env.NEXT_PUBLIC_X_URL),

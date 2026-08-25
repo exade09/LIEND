@@ -16,7 +16,6 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
       <header className="page-head">
         <div>
           <h1>Loan</h1>
-          <p className="mono">{id}</p>
         </div>
       </header>
       <UtilityGate>

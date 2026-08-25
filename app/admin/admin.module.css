@@ -365,6 +365,33 @@
   max-width: none;
 }
 
+.pumpPreview {
+  margin-top: 12px;
+  padding: 12px 13px;
+  border: 1px solid rgba(112, 151, 118, 0.14);
+  border-radius: 4px;
+  background: #040805;
+}
+
+.pumpPreviewLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(174, 193, 176, 0.43);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.16em;
+}
+
+.pumpPreviewUrl {
+  display: block;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  color: #75ff89;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 @keyframes caret {
   50% {
     opacity: 0;
