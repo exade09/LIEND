@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { ActivityTape } from "@/components/ActivityTape"
 import { CaPlaque } from "@/components/CaPlaque"
 import { AddToChromeBadge, LaunchAppLink, ProductLink } from "@/components/ProductLink"
+import { PhoneShowcase } from "@/components/PhoneShowcase"
 import { PumpFunLink } from "@/components/PumpFunLink"
 import { project } from "@/config/project"
 
@@ -178,6 +179,9 @@ export function LandingExperience() {
         <section className={styles.productDemo}>
           <div className={styles.demoHeader} data-liend-reveal>
             <p className={styles.eyebrow}>One clear interface</p><h2>Know the route before you enter</h2>
+          </div>
+          <div data-liend-reveal>
+            <PhoneShowcase />
           </div>
           <div className={styles.demoStage} data-liend-reveal>
             <div className={styles.demoToolbar}>
