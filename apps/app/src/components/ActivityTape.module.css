@@ -273,3 +273,87 @@
   .item span { display: none; }
   .changes { grid-template-columns: 1fr; }
 }
+
+.tape {
+  border-bottom: 2px solid #11110f;
+  background: #bfaeff;
+  box-shadow: none;
+}
+
+.live {
+  border-right: 2px solid #11110f;
+  background: #11110f;
+  color: #ffffff;
+}
+
+.live i {
+  background: #c9ff5c;
+  box-shadow: 0 0 10px rgba(201,255,92,.72);
+}
+
+.idle {
+  color: #11110f;
+  opacity: .72;
+}
+
+.item {
+  border: 1px solid #11110f;
+  border-radius: 999px;
+  background: rgba(255,255,255,.4);
+  box-shadow: none;
+  color: #11110f;
+}
+
+.item:hover,
+.item:focus-visible {
+  border-color: #11110f;
+  background: #c9ff5c;
+}
+
+.item b { color: #3155f5; }
+.item code,
+.item span,
+.item em,
+.item strong { color: #11110f; }
+
+.backdrop {
+  background: rgba(22, 26, 73, .56);
+  backdrop-filter: blur(12px);
+}
+
+.panel {
+  border: 2px solid #11110f;
+  border-radius: 24px;
+  background: #fffefa;
+  box-shadow: 0 8px 0 #11110f;
+  color: #11110f;
+}
+
+.panel header {
+  border-bottom: 2px solid #11110f;
+  background: #3155f5;
+  color: #ffffff;
+}
+
+.panel header button {
+  border: 1px solid #11110f;
+  border-radius: 999px;
+  background: #c9ff5c;
+  color: #11110f;
+}
+
+.panel > p,
+.panel dd { color: rgba(17,17,15,.72); }
+
+.changes > div {
+  border: 1px solid #11110f;
+  border-radius: 14px;
+  background: #eef0ff;
+}
+
+.copy {
+  border: 1px solid #11110f;
+  border-radius: 999px;
+  background: #dffaff;
+  color: #11110f;
+}

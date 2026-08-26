@@ -32,7 +32,8 @@ export function AppHeader() {
           unoptimized
           priority
         />
-        Liend App
+        <span>LIEND</span>
+        <small>UTILITY</small>
       </Link>
 
       <nav className="nav-pill" aria-label="Liend App">

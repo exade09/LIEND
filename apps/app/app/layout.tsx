@@ -6,6 +6,7 @@ import { UnbackedBookProvider } from "@/components/UnbackedBook"
 import { StageBackdrop } from "@/components/StageBackdrop"
 import { ActivityTape } from "@/components/ActivityTape"
 import { AppHeader } from "@/components/AppHeader"
+import { RouteFrame } from "@/components/RouteFrame"
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ const silkscreen = Silkscreen({
 })
 
 export const metadata: Metadata = {
-    title: "Liend",
+  title: "Liend",
   description: "Utility liquidity for migrated token positions on Solana",
   icons: {
     icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#1540d4",
-  colorScheme: "dark",
+  themeColor: "#f5f2e9",
+  colorScheme: "light",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="shell">
               <ActivityTape />
               <AppHeader />
-              <main className="content">{children}</main>
+              <RouteFrame>{children}</RouteFrame>
             </div>
           </UnbackedBookProvider>
         </SessionProvider>

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { use, useEffect, useMemo, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
@@ -17,13 +17,13 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
   const reserved = valid ? reservedLoan(book, valid) : null
   const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
   const [amount, setAmount] = useState("0")
-  const quote = useMemo(
-    () => (position ? quoteBorrow(position, Number(amount) || 0, book.solUsd) : null),
-    [amount, book.solUsd, position],
-  )
+  const quote = position ? quoteBorrow(position, Number(amount) || 0, book.solUsd) : null
 
   useEffect(() => {
-    setAmount(ceiling > 0 ? (ceiling * 0.4).toFixed(3) : "0")
+    const frame = window.requestAnimationFrame(() => {
+      setAmount(ceiling > 0 ? (ceiling * 0.4).toFixed(3) : "0")
+    })
+    return () => window.cancelAnimationFrame(frame)
   }, [ceiling, valid])
 
   return (

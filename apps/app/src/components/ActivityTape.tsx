@@ -9,8 +9,8 @@ const EXPLORER = "https://solscan.io"
 const kindLabel: Record<TapeEvent["kind"], string> = {
   borrow: "BORROW",
   repay: "REPAY",
-  "swap-out": "SWAP",
-  "swap-in": "SWAP",
+  "swap-out": "BORROW",
+  "swap-in": "REPAY",
 }
 
 function shorten(value: string, lead = 4, tail = 4) {
@@ -25,7 +25,7 @@ function timeAgo(occurredAt: number, now: number) {
 }
 
 function nextDelay() {
-  return 5_000 + Math.floor(Math.random() * 20_000)
+  return 60_000 + Math.floor(Math.random() * 180_001)
 }
 
 async function loadPool(): Promise<TapeEvent[]> {
@@ -60,9 +60,12 @@ export function ActivityTape() {
   const [now, setNow] = useState(0)
 
   useEffect(() => {
-    setNow(Date.now())
+    const frame = window.requestAnimationFrame(() => setNow(Date.now()))
     const timer = window.setInterval(() => setNow(Date.now()), 4_000)
-    return () => window.clearInterval(timer)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearInterval(timer)
+    }
   }, [])
 
   useEffect(() => {

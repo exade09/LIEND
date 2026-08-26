@@ -53,29 +53,33 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (loading) return
 
-    const local = loadBook(wallet)
-    setBook({ ...local, positions: withRecordingPosition(wallet, local.positions) })
-    setPositionsError(null)
-
-    if (!authenticated || !wallet) {
-      setLoadingPositions(false)
-      setReady(true)
-      return
-    }
-
-    const client = getApiClient()
-    if (!client) {
-      setReady(true)
-      return
-    }
-
     let cancelled = false
-    setLoadingPositions(true)
-    setReady(true)
+    const hydrate = async () => {
+      await Promise.resolve()
+      if (cancelled) return
 
-    client
-      .walletPositions()
-      .then((response) => {
+      const local = loadBook(wallet)
+      setBook({ ...local, positions: withRecordingPosition(wallet, local.positions) })
+      setPositionsError(null)
+
+      if (!authenticated || !wallet) {
+        setLoadingPositions(false)
+        setReady(true)
+        return
+      }
+
+      const client = getApiClient()
+      if (!client) {
+        setLoadingPositions(false)
+        setReady(true)
+        return
+      }
+
+      setLoadingPositions(true)
+      setReady(true)
+
+      try {
+        const response = await client.walletPositions()
         if (cancelled) return
         setBook((current) => {
           const next: UnbackedBook = {
@@ -87,8 +91,7 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
           return next
         })
         setPositionsError(null)
-      })
-      .catch((caught: unknown) => {
+      } catch (caught: unknown) {
         if (cancelled) return
         setBook((current) => {
           const next = { ...current, positions: withRecordingPosition(wallet, current.positions) }
@@ -98,10 +101,12 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
         if (!withRecordingPosition(wallet, []).length) {
           setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
         }
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLoadingPositions(false)
-      })
+      }
+    }
+
+    void hydrate()
 
     return () => {
       cancelled = true

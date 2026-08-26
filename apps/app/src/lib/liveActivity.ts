@@ -26,6 +26,7 @@ const WSOL = "So11111111111111111111111111111111111111112"
 const GECKO = "https://api.geckoterminal.com/api/v2"
 const PUMP = "https://frontend-api-v3.pump.fun"
 const CACHE_MS = 18_000
+const MAX_EVENT_SOL = 8
 const HEADERS = {
   accept: "application/json",
   "user-agent": "LIEND-Activity/1.0",
@@ -144,7 +145,7 @@ function presentSwap(input: {
 }): TapeEvent | null {
   if (!isBase58(input.signature, 80, 90) || !isBase58(input.wallet, 32, 44)) return null
   if (!Number.isFinite(input.tokenAmount) || !Number.isFinite(input.solAmount)) return null
-  if (input.solAmount < 0.05 || input.tokenAmount <= 0) return null
+  if (input.solAmount <= 0 || input.solAmount > MAX_EVENT_SOL || input.tokenAmount <= 0) return null
 
   const symbol = clipSymbol(input.symbol)
   const tokens = compact(input.tokenAmount)

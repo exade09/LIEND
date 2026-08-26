@@ -4,56 +4,114 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #1238c8;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(89, 232, 255, .5), transparent 24%),
+    radial-gradient(circle at 12% 84%, rgba(139, 99, 255, .35), transparent 28%),
+    #eeefff;
 }
 
-.sky {
+.ribbon {
   position: absolute;
-  inset: -3%;
-  display: block;
-  width: 106%;
-  height: 106%;
-  object-fit: cover;
-  object-position: 50% 42%;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
+  top: -28vh;
+  left: 38vw;
+  width: 38vw;
+  height: 142vh;
+  border: 4vw solid rgba(49, 85, 245, .86);
+  border-top-color: rgba(89, 232, 255, .9);
+  border-bottom-color: rgba(139, 99, 255, .82);
+  border-radius: 48% 52% 46% 54%;
+  filter: blur(.2px) drop-shadow(0 30px 70px rgba(32, 44, 160, .2));
+  opacity: .16;
+  transform: rotate(31deg);
+  animation: drift 18s ease-in-out infinite alternate;
 }
+
+.ribbon::after {
+  position: absolute;
+  inset: -3.8vw;
+  border: 1px solid rgba(17, 17, 15, .18);
+  border-radius: inherit;
+  content: "";
+}
+
+.orbit {
+  position: absolute;
+  right: -12vw;
+  bottom: -28vw;
+  width: 60vw;
+  height: 60vw;
+  border: 1px solid rgba(49, 85, 245, .2);
+  border-radius: 50%;
+  animation: rotate 32s linear infinite;
+}
+
+.orbit::before,
+.orbit::after {
+  position: absolute;
+  border: 1px solid rgba(49, 85, 245, .15);
+  border-radius: 50%;
+  content: "";
+}
+
+.orbit::before { inset: 14%; }
+.orbit::after { inset: 31%; }
+
+.orbit i {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #11110f;
+  border-radius: 50%;
+  background: #c9ff5c;
+}
+
+.orbit i:nth-child(1) { top: -7px; left: 50%; }
+.orbit i:nth-child(2) { top: 30%; left: 4%; background: #59e8ff; }
+.orbit i:nth-child(3) { right: 12%; bottom: 18%; background: #8b63ff; }
 
 .grid {
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 8px);
-  mix-blend-mode: overlay;
-}
-
-.scan {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(4, 10, 40, 0.05) 0 1px,
-    transparent 1px 3px
-  );
+    linear-gradient(rgba(49, 85, 245, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(49, 85, 245, .045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(to bottom, #000, transparent 72%);
 }
 
 .wash {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(11, 28, 114, 0.06), transparent 28%, rgba(11, 28, 114, 0.16) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.18), transparent 42%, rgba(255,255,255,.54));
+}
+
+@keyframes drift {
+  to { transform: rotate(25deg) translate3d(5vw, 3vh, 0); }
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 720px) {
+  .ribbon {
+    top: -16vh;
+    left: 20vw;
+    width: 72vw;
+    height: 130vh;
+    border-width: 10vw;
+    opacity: .13;
+  }
+
+  .orbit {
+    right: -48vw;
+    bottom: -18vw;
+    width: 110vw;
+    height: 110vw;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sky {
-    display: none;
-  }
-
-  .stage {
-    background-image: url("/assets/stage/pixel-sky-poster.png?v=2");
-    background-size: 106%;
-    background-position: 50% 42%;
-    image-rendering: pixelated;
-  }
+  .ribbon,
+  .orbit { animation: none; }
 }

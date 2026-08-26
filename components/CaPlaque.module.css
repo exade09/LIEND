@@ -97,7 +97,7 @@
 
 @media (max-width: 860px) {
   .header {
-    display: none;
+    display: inline-flex;
   }
 }
 

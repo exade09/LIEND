@@ -262,3 +262,47 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Light LIEND ticker shared with the redesigned product surfaces */
+.tape {
+  border-bottom: 2px solid #11110f;
+  background: #bfaeff;
+  box-shadow: none;
+}
+
+.live {
+  border-right: 2px solid #11110f;
+  background: #11110f;
+  color: #ffffff;
+}
+
+.live i {
+  background: #c9ff5c;
+  box-shadow: 0 0 10px rgba(201,255,92,.72);
+}
+
+.idle {
+  color: #11110f;
+  opacity: .72;
+}
+
+.item {
+  border: 1px solid #11110f;
+  border-radius: 999px;
+  background: rgba(255,255,255,.4);
+  box-shadow: none;
+  color: #11110f;
+}
+
+.item:hover,
+.item:focus-visible {
+  border-color: #11110f;
+  background: #c9ff5c;
+}
+
+.item b { color: #3155f5; }
+.item code,
+.item span,
+.item em,
+.item strong,
+.item :global(svg) { color: #11110f; }
