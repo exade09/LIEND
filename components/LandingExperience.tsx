@@ -19,6 +19,14 @@ const navigation = [
   { label: "FAQ", href: "#faq" },
 ] as const
 
+const heroLetters = [
+  { letter: "L", src: "/assets/wordmark/pixel/liend-l.png", width: 71, height: 87 },
+  { letter: "I", src: "/assets/wordmark/pixel/liend-i.png", width: 30, height: 89 },
+  { letter: "E", src: "/assets/wordmark/pixel/liend-e.png", width: 67, height: 89 },
+  { letter: "N", src: "/assets/wordmark/pixel/liend-n.png", width: 79, height: 87 },
+  { letter: "D", src: "/assets/wordmark/pixel/liend-d.png", width: 70, height: 87 },
+] as const
+
 const routeSteps = [
   { number: "01", title: "Read the position", body: "LIEND reads supported migrated token balances from the connected Solana wallet", badge: "Wallet context" },
   { number: "02", title: "Review the route", body: "The interface shows available liquidity, collateral context and the terms before anything is submitted", badge: "Clear terms" },
@@ -89,6 +97,7 @@ export function LandingExperience() {
         </nav>
         <div className={styles.headerActions}>
           <div className={styles.headerCa}><CaPlaque variant="header" /></div>
+          <span className={styles.headerPlus} aria-hidden="true">+</span>
           <LaunchAppLink className={styles.headerLaunch}>Launch app</LaunchAppLink>
         </div>
         <div className={styles.mobileMenu} data-open={menuOpen ? "true" : "false"}>
@@ -114,10 +123,26 @@ export function LandingExperience() {
           <PixelSprite kind="coin" className={styles.heroCoin} />
           <PixelSprite kind="wallet" className={styles.heroWallet} />
           <div className={styles.heroCopy}>
+            <h1 className={styles.heroWordmark} id="hero-title" aria-label="LIEND">
+              <span className={styles.srOnly}>LIEND</span>
+              {heroLetters.map((item, index) => (
+                <Image
+                  aria-hidden="true"
+                  alt=""
+                  className={styles.heroLetter}
+                  data-letter={item.letter}
+                  height={item.height}
+                  key={item.letter}
+                  src={item.src}
+                  style={{ "--letter-index": index } as React.CSSProperties}
+                  unoptimized
+                  width={item.width}
+                />
+              ))}
+            </h1>
             <p className={styles.eyebrow}>Liquidity for migrated positions on Solana</p>
-            <h1 id="hero-title">LIEND</h1>
-            <p className={styles.heroLine}>Hold the position</p>
-            <p className={styles.heroLine}>Access the SOL</p>
+            <p className={styles.heroLine}>Your position. Unstuck.</p>
+            <p className={styles.heroSubline}>Borrow SOL without making a sale the first move</p>
             <div className={styles.heroButtons}>
               <LaunchAppLink className={styles.primaryButton}>Launch web app</LaunchAppLink>
               <AddToChromeBadge className={styles.secondaryButton} />
