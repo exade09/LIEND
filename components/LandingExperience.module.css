@@ -2137,7 +2137,7 @@
   overflow: hidden;
   background: #050505;
   pointer-events: all;
-  animation: transition-backdrop 1980ms linear both;
+  animation: transition-backdrop 1420ms linear both;
   isolation: isolate;
 }
 
@@ -2174,9 +2174,13 @@
   height: clamp(250px, 34vw, 520px);
   grid-template-columns: 1.08fr .92fr 1fr .94fr 1.06fr;
   transform: translate3d(-112%, -50%, 0) scaleY(.72);
-  animation: transition-track 1980ms cubic-bezier(.76, 0, .24, 1) both;
+  animation: transition-track 1420ms cubic-bezier(.76, 0, .24, 1) both;
   filter: drop-shadow(0 16px 38px rgba(0, 0, 0, .32));
   will-change: transform;
+}
+
+.pageTransition[data-direction="backward"] .transitionTrack {
+  animation-direction: reverse;
 }
 
 .transitionTrack i {
@@ -2213,72 +2217,77 @@
   z-index: 3;
   top: 50%;
   left: 50%;
-  display: flex;
-  width: min(440px, 34vw);
-  min-width: 260px;
-  aspect-ratio: 1.9;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
+  width: min(520px, 42vw);
+  min-width: 300px;
+  aspect-ratio: 1.78;
   overflow: hidden;
   border: 2px solid #070707;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(89, 232, 255, .78), transparent 28%),
-    linear-gradient(135deg, #eef2ff, #cad3ff 55%, #8a68ff);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, .32);
-  color: #11110f;
-  font-family: var(--font-silk), monospace;
-  font-size: 11px;
-  letter-spacing: .1em;
-  transform: translate(-50%, -50%) scale(1.65);
-  animation: transition-portal 1980ms cubic-bezier(.76, 0, .24, 1) both;
-}
-
-.transitionPortal::after {
-  position: absolute;
-  z-index: -1;
-  inset: -3px;
   background: #f7f6ef;
-  content: "";
-  transform: translateY(104%);
-  animation: transition-whiteout 1980ms cubic-bezier(.76, 0, .24, 1) both;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .32);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1.45);
+  animation: transition-portal 1420ms cubic-bezier(.76, 0, .24, 1) both;
+  will-change: transform;
 }
 
-.transitionPortal .mark {
-  width: 42px;
-  height: 42px;
+.transitionSnapshot {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #f7f6ef;
 }
 
-.transitionPortal span:last-child {
-  white-space: nowrap;
+.transitionSnapshotCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  min-height: 100%;
+  overflow: hidden;
+  transform-origin: 0 0;
+}
+
+.transitionSnapshotCanvas * {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+.transitionSnapshotCanvas [data-liend-reveal],
+.transitionSnapshotCanvas .revealWord > span {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.transitionSnapshotCanvas .routeSticky {
+  position: relative;
+  top: auto;
+}
+
+.transitionSnapshotCanvas .routeCards {
+  padding-top: 0;
 }
 
 @keyframes transition-backdrop {
-  0%, 10% { opacity: 0; }
-  18%, 89% { opacity: 1; }
+  0%, 6% { opacity: 0; }
+  13%, 89% { opacity: 1; }
   100% { opacity: 0; }
 }
 
 @keyframes transition-track {
-  0%, 10% { transform: translate3d(-112%, -50%, 0) scaleY(.72); }
-  31% { transform: translate3d(-3%, -50%, 0) scaleY(1); }
-  60% { transform: translate3d(3%, -50%, 0) scaleY(1); }
+  0%, 6% { transform: translate3d(-112%, -50%, 0) scaleY(.72); }
+  26% { transform: translate3d(-3%, -50%, 0) scaleY(1); }
+  58% { transform: translate3d(3%, -50%, 0) scaleY(1); }
   88%, 100% { transform: translate3d(112%, -50%, 0) scaleY(.74); }
 }
 
 @keyframes transition-portal {
-  0%, 9% { opacity: 0; transform: translate(-50%, -50%) scale(1.65); }
-  25% { opacity: 1; transform: translate(-50%, -50%) scale(.94); }
-  48% { opacity: 1; transform: translate(-50%, -50%) scale(.72); }
-  58% { opacity: 1; transform: translate(-50%, -50%) scale(.72); }
+  0%, 5% { opacity: 0; transform: translate(-50%, -50%) scale(1.45); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(.96); }
+  42% { opacity: 1; transform: translate(-50%, -50%) scale(.72); }
+  56% { opacity: 1; transform: translate(-50%, -50%) scale(.72); }
   86% { opacity: 1; transform: translate(-50%, -50%) scale(4.8); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(5.4); }
-}
-
-@keyframes transition-whiteout {
-  0%, 43% { transform: translateY(104%); }
-  58% { transform: translateY(0); }
-  100% { transform: translateY(0); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(5.2); }
 }
 
 .nav a,
@@ -2655,14 +2664,8 @@
   }
 
   .transitionPortal {
-    width: min(66vw, 320px);
+    width: min(76vw, 320px);
     min-width: 0;
-    font-size: 8px;
-  }
-
-  .transitionPortal .mark {
-    width: 32px;
-    height: 32px;
   }
 
   .navLabel,

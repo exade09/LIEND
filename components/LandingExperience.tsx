@@ -97,7 +97,14 @@ function RevealHeadline({ lines }: { lines: readonly string[] }) {
 export function LandingExperience() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [introReady, setIntroReady] = useState(false)
-  const [transition, setTransition] = useState<null | { href: string; tone: string }>(null)
+  const [transition, setTransition] = useState<null | {
+    href: string
+    tone: string
+    direction: "forward" | "backward"
+    snapshotHtml: string
+    snapshotWidth: number
+    snapshotScale: number
+  }>(null)
   const transitionTimers = useRef<number[]>([])
 
   useEffect(() => {
@@ -185,13 +192,37 @@ export function LandingExperience() {
     if (transition) return
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
     revealNodes.forEach((node) => node.removeAttribute("data-visible"))
-    setTransition({ href, tone })
+
+    const snapshot = target.cloneNode(true) as HTMLElement
+    snapshot.removeAttribute("id")
+    snapshot.querySelectorAll<HTMLElement>("[id]").forEach((node) => node.removeAttribute("id"))
+    snapshot
+      .querySelectorAll<HTMLElement>("[data-liend-reveal]")
+      .forEach((node) => node.setAttribute("data-visible", "true"))
+    snapshot
+      .querySelectorAll<HTMLElement>("a, button, input, select, textarea, summary, [tabindex]")
+      .forEach((node) => node.setAttribute("tabindex", "-1"))
+
+    const snapshotWidth = Math.max(target.offsetWidth, 1)
+    const compact = window.innerWidth <= 720
+    const portalWidth = compact
+      ? Math.min(320, window.innerWidth * 0.76)
+      : Math.min(520, window.innerWidth * 0.42)
+
+    setTransition({
+      href,
+      tone,
+      direction: target.getBoundingClientRect().top >= 0 ? "forward" : "backward",
+      snapshotHtml: snapshot.outerHTML,
+      snapshotWidth,
+      snapshotScale: portalWidth / snapshotWidth,
+    })
     transitionTimers.current = [
-      window.setTimeout(jump, 920),
+      window.setTimeout(jump, 760),
       window.setTimeout(() => {
         revealNodes.forEach((node) => node.setAttribute("data-visible", "true"))
-      }, 1720),
-      window.setTimeout(() => setTransition(null), 1980),
+      }, 1120),
+      window.setTimeout(() => setTransition(null), 1420),
     ]
   }
 
@@ -204,13 +235,26 @@ export function LandingExperience() {
       <ActivityTape />
 
       {transition && (
-        <div className={styles.pageTransition} data-tone={transition.tone} aria-hidden="true">
+        <div
+          className={styles.pageTransition}
+          data-tone={transition.tone}
+          data-direction={transition.direction}
+          aria-hidden="true"
+        >
           <div className={styles.transitionTrack}>
             <i /><i /><i /><i /><i />
           </div>
           <div className={styles.transitionPortal}>
-            <DropletMark />
-            <span>LIEND / ROUTING</span>
+            <div className={styles.transitionSnapshot}>
+              <div
+                className={styles.transitionSnapshotCanvas}
+                style={{
+                  width: transition.snapshotWidth,
+                  transform: `scale(${transition.snapshotScale})`,
+                }}
+                dangerouslySetInnerHTML={{ __html: transition.snapshotHtml }}
+              />
+            </div>
           </div>
         </div>
       )}
