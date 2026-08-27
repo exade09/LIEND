@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { ActivityTape } from "@/components/ActivityTape"
 import { CaPlaque } from "@/components/CaPlaque"
@@ -13,10 +13,10 @@ import { project } from "@/config/project"
 import styles from "./LandingExperience.module.css"
 
 const navigation = [
-  { label: "Product", href: "#product" },
-  { label: "Route", href: "#route" },
-  { label: "Surfaces", href: "#surfaces" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Product", href: "#product", tone: "yellow" },
+  { label: "Route", href: "#route", tone: "orange" },
+  { label: "Surfaces", href: "#surfaces", tone: "green" },
+  { label: "FAQ", href: "#faq", tone: "violet" },
 ] as const
 
 const heroLetters = [
@@ -53,8 +53,63 @@ function DropletMark({ className = "" }: { className?: string }) {
   )
 }
 
+function MotionLabel({ children, hover = children }: { children: string; hover?: string }) {
+  return (
+    <>
+      <span className={styles.motionLabel} aria-hidden="true">
+        <span>{children}</span>
+        <span>{hover}</span>
+      </span>
+      <span className={styles.srOnly}>{children}</span>
+    </>
+  )
+}
+
+function RevealHeadline({ lines }: { lines: readonly string[] }) {
+  const accessibleLabel = lines.join(" ")
+
+  return (
+    <h2 aria-label={accessibleLabel} data-liend-headline data-liend-reveal>
+      {lines.map((line, lineIndex) => {
+        const words = line.split(" ")
+        const middle = (words.length - 1) / 2
+
+        return (
+          <span className={styles.revealLine} aria-hidden="true" key={line}>
+            {words.map((word, wordIndex) => (
+              <span
+                className={styles.revealWord}
+                key={`${line}-${word}`}
+                style={{
+                  "--word-delay": `${90 + lineIndex * 85 + Math.abs(wordIndex - middle) * 90}ms`,
+                } as React.CSSProperties}
+              >
+                <span>{word}</span>
+              </span>
+            ))}
+          </span>
+        )
+      })}
+    </h2>
+  )
+}
+
 export function LandingExperience() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [introReady, setIntroReady] = useState(false)
+  const [transition, setTransition] = useState<null | { href: string; tone: string }>(null)
+  const transitionTimers = useRef<number[]>([])
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => setIntroReady(true))
+    })
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
+    }
+  }, [])
 
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-liend-reveal]"))
@@ -75,6 +130,11 @@ export function LandingExperience() {
     return () => document.body.classList.remove("menu-open")
   }, [menuOpen])
 
+  useEffect(() => {
+    document.body.classList.toggle("liend-transition-open", Boolean(transition))
+    return () => document.body.classList.remove("liend-transition-open")
+  }, [transition])
+
   const moveHero = (event: React.PointerEvent<HTMLElement>) => {
     const box = event.currentTarget.getBoundingClientRect()
     const x = (event.clientX - box.left) / box.width - 0.5
@@ -83,30 +143,110 @@ export function LandingExperience() {
     event.currentTarget.style.setProperty("--pointer-y", y.toFixed(3))
   }
 
+  const routeToSection = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    tone: string,
+  ) => {
+    if (
+      event.defaultPrevented
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey
+      || event.button !== 0
+    ) {
+      return
+    }
+
+    const target = document.querySelector<HTMLElement>(href)
+    if (!target) return
+    event.preventDefault()
+    setMenuOpen(false)
+    const revealNodes = [
+      ...(target.matches("[data-liend-reveal]") ? [target] : []),
+      ...Array.from(target.querySelectorAll<HTMLElement>("[data-liend-reveal]")),
+    ]
+
+    const jump = () => {
+      const root = document.documentElement
+      const previousBehavior = root.style.scrollBehavior
+      root.style.scrollBehavior = "auto"
+      target.scrollIntoView({ block: "start" })
+      root.style.scrollBehavior = previousBehavior
+      window.history.pushState(null, "", href)
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      jump()
+      return
+    }
+
+    if (transition) return
+    transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
+    revealNodes.forEach((node) => node.removeAttribute("data-visible"))
+    setTransition({ href, tone })
+    transitionTimers.current = [
+      window.setTimeout(jump, 920),
+      window.setTimeout(() => {
+        revealNodes.forEach((node) => node.setAttribute("data-visible", "true"))
+      }, 1720),
+      window.setTimeout(() => setTransition(null), 1980),
+    ]
+  }
+
   return (
-    <div className={styles.site}>
+    <div
+      className={styles.site}
+      data-intro-ready={introReady ? "true" : "false"}
+      data-transitioning={transition ? "true" : "false"}
+    >
       <ActivityTape />
 
+      {transition && (
+        <div className={styles.pageTransition} data-tone={transition.tone} aria-hidden="true">
+          <div className={styles.transitionTrack}>
+            <i /><i /><i /><i /><i />
+          </div>
+          <div className={styles.transitionPortal}>
+            <DropletMark />
+            <span>LIEND / ROUTING</span>
+          </div>
+        </div>
+      )}
+
       <header className={styles.header}>
-        <a className={styles.brand} href="#top" aria-label="LIEND home">
+        <a className={styles.brand} href="#top" aria-label="LIEND home" onClick={(event) => routeToSection(event, "#top", "blue")}>
           <DropletMark />
           <span>LIEND</span>
         </a>
         <nav className={styles.nav} aria-label="Primary navigation">
-          {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
+          {navigation.map((item) => (
+            <a
+              data-tone={item.tone}
+              href={item.href}
+              key={item.href}
+              onClick={(event) => routeToSection(event, item.href, item.tone)}
+            >
+              <span className={styles.navLabel} aria-hidden="true">
+                <span>{item.label}</span><span>{item.label}</span>
+              </span>
+              <span className={styles.srOnly}>{item.label}</span>
+            </a>
+          ))}
         </nav>
         <div className={styles.headerActions}>
           <div className={styles.headerCa}><CaPlaque variant="header" /></div>
           <span className={styles.headerPlus} aria-hidden="true">+</span>
-          <LaunchAppLink className={styles.headerLaunch}>Launch app</LaunchAppLink>
+          <LaunchAppLink className={styles.headerLaunch}><MotionLabel>Launch app</MotionLabel></LaunchAppLink>
         </div>
         <div className={styles.mobileMenu} data-open={menuOpen ? "true" : "false"}>
           {navigation.map((item, index) => (
-            <a href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>
+            <a href={item.href} key={item.href} onClick={(event) => routeToSection(event, item.href, item.tone)}>
               <span>0{index + 1}</span>{item.label}
             </a>
           ))}
-          <LaunchAppLink className={styles.mobileLaunch} onClick={() => setMenuOpen(false)}>Enter LIEND</LaunchAppLink>
+          <LaunchAppLink className={styles.mobileLaunch} onClick={() => setMenuOpen(false)}><MotionLabel>Enter LIEND</MotionLabel></LaunchAppLink>
         </div>
       </header>
       <button className={styles.menuButton} type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
@@ -123,28 +263,32 @@ export function LandingExperience() {
           <PixelSprite kind="coin" className={styles.heroCoin} />
           <PixelSprite kind="wallet" className={styles.heroWallet} />
           <div className={styles.heroCopy}>
-            <h1 className={styles.heroWordmark} id="hero-title" aria-label="LIEND">
+            <h1 className={styles.heroWordmark} id="hero-title" aria-label="LIEND" data-intro="wordmark">
               <span className={styles.srOnly}>LIEND</span>
               {heroLetters.map((item, index) => (
-                <Image
-                  aria-hidden="true"
-                  alt=""
-                  className={styles.heroLetter}
+                <span
+                  className={styles.heroLetterSlot}
                   data-letter={item.letter}
-                  height={item.height}
                   key={item.letter}
-                  src={item.src}
                   style={{ "--letter-index": index } as React.CSSProperties}
-                  unoptimized
-                  width={item.width}
-                />
+                >
+                  <Image
+                    aria-hidden="true"
+                    alt=""
+                    className={styles.heroLetter}
+                    height={item.height}
+                    src={item.src}
+                    unoptimized
+                    width={item.width}
+                  />
+                </span>
               ))}
             </h1>
-            <p className={styles.eyebrow}>Liquidity for migrated positions on Solana</p>
-            <p className={styles.heroLine}>Your position. Unstuck.</p>
-            <p className={styles.heroSubline}>Borrow SOL without making a sale the first move</p>
-            <div className={styles.heroButtons}>
-              <LaunchAppLink className={styles.primaryButton}>Launch web app</LaunchAppLink>
+            <p className={styles.eyebrow} data-intro="eyebrow">Liquidity for migrated positions on Solana</p>
+            <p className={styles.heroLine} data-intro="headline">Your position. Unstuck.</p>
+            <p className={styles.heroSubline} data-intro="subline">Borrow SOL without making a sale the first move</p>
+            <div className={styles.heroButtons} data-intro="actions">
+              <LaunchAppLink className={styles.primaryButton}><MotionLabel>Launch web app</MotionLabel></LaunchAppLink>
               <AddToChromeBadge className={styles.secondaryButton} />
             </div>
           </div>
@@ -163,7 +307,7 @@ export function LandingExperience() {
         <section className={styles.allIn} id="product">
           <div className={styles.sectionIntro} data-liend-reveal>
             <p className={styles.eyebrow}>A focused utility layer</p>
-            <h2>Your position<br />stays in view</h2>
+            <RevealHeadline lines={["Your position", "stays in view"]} />
             <p>Wallet context, borrow terms and transaction review live in one continuous LIEND route</p>
           </div>
           <div className={styles.orbitScene} data-liend-reveal>
@@ -185,7 +329,7 @@ export function LandingExperience() {
           <div className={styles.routeSticky}>
             <div className={styles.routeHeading} data-liend-reveal>
               <p className={styles.eyebrow}>The LIEND route</p>
-              <h2>Liquidity without making a sale the first move</h2>
+              <RevealHeadline lines={["Liquidity without", "making a sale", "the first move"]} />
               <p>A legible path from a supported wallet position to a reviewed SOL borrow</p>
             </div>
             <div className={styles.routeIllustration} aria-hidden="true"><PixelSprite kind="key" /><DropletMark /></div>
@@ -203,7 +347,7 @@ export function LandingExperience() {
 
         <section className={styles.productDemo}>
           <div className={styles.demoHeader} data-liend-reveal>
-            <p className={styles.eyebrow}>One clear interface</p><h2>Know the route before you enter</h2>
+            <p className={styles.eyebrow}>One clear interface</p><RevealHeadline lines={["Know the route", "before you enter"]} />
           </div>
           <div data-liend-reveal>
             <PhoneShowcase />
@@ -226,7 +370,7 @@ export function LandingExperience() {
                   <div><dt>Liquidity</dt><dd>Calculated in app</dd></div>
                   <div><dt>Approval</dt><dd>Wallet signature</dd></div>
                 </dl>
-                <LaunchAppLink className={styles.demoButton}>Review in app</LaunchAppLink>
+                <LaunchAppLink className={styles.demoButton}><MotionLabel>Review in app</MotionLabel></LaunchAppLink>
               </div>
             </div>
           </div>
@@ -234,7 +378,7 @@ export function LandingExperience() {
 
         <section className={styles.surfaces} id="surfaces">
           <div className={styles.surfacesTitle} data-liend-reveal>
-            <p className={styles.eyebrow}>LIEND where you need it</p><h2>One utility<br />Three surfaces</h2>
+            <p className={styles.eyebrow}>LIEND where you need it</p><RevealHeadline lines={["One utility", "Three surfaces"]} />
           </div>
           <div className={styles.surfaceGrid}>
             <article className={styles.surfaceCard} data-tone="blue" data-liend-reveal>
@@ -263,9 +407,9 @@ export function LandingExperience() {
 
         <section className={styles.controlSection}>
           <div className={styles.controlCopy} data-liend-reveal>
-            <p className={styles.eyebrow}>Designed for control</p><h2>Nothing moves until you approve it</h2>
+            <p className={styles.eyebrow}>Designed for control</p><RevealHeadline lines={["Nothing moves", "until you approve it"]} />
             <p>LIEND keeps route context, terms and wallet approval in the same visual flow</p>
-            <LaunchAppLink className={styles.lightButton}>Enter LIEND</LaunchAppLink>
+            <LaunchAppLink className={styles.lightButton}><MotionLabel>Enter LIEND</MotionLabel></LaunchAppLink>
           </div>
           <div className={styles.controlVisual} data-liend-reveal>
             <div className={styles.approvalCard}>
@@ -281,7 +425,7 @@ export function LandingExperience() {
 
         <section className={styles.faq} id="faq">
           <div className={styles.faqHeading} data-liend-reveal>
-            <p className={styles.eyebrow}>Product questions</p><h2>Know the route before you enter</h2>
+            <p className={styles.eyebrow}>Product questions</p><RevealHeadline lines={["Know the route", "before you enter"]} />
           </div>
           <div className={styles.faqList} data-liend-reveal>
             {faqs.map((item, index) => (
@@ -296,8 +440,8 @@ export function LandingExperience() {
           <div className={styles.finalFluid} aria-hidden="true"><Image src="/assets/liend-final-material-v2.png" alt="" fill sizes="100vw" /></div>
           <PixelSprite kind="coin" className={styles.finalCoin} />
           <p className={styles.eyebrow}>Your position has another route</p>
-          <h2>Put your liquidity<br />back in motion</h2>
-          <div><LaunchAppLink className={styles.primaryButton}>Launch web app</LaunchAppLink><AddToChromeBadge className={styles.secondaryButton} /></div>
+          <RevealHeadline lines={["Put your liquidity", "back in motion"]} />
+          <div><LaunchAppLink className={styles.primaryButton}><MotionLabel>Launch web app</MotionLabel></LaunchAppLink><AddToChromeBadge className={styles.secondaryButton} /></div>
         </section>
       </main>
 
