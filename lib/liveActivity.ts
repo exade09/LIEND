@@ -3,6 +3,9 @@ import type { TapeEvent, TapeKind } from "@/data/activityTape"
 const WSOL = "So11111111111111111111111111111111111111112"
 const GECKO = "https://api.geckoterminal.com/api/v2"
 const PUMP = "https://frontend-api-v3.pump.fun"
+const SOLANA_RPC = "https://api.mainnet-beta.solana.com"
+const PUMP_SWAP_PROGRAM = "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
+const LAMPORTS_PER_SOL = 1_000_000_000
 const CACHE_MS = 18_000
 const MAX_EVENT_SOL = 8
 const HEADERS = {
@@ -62,6 +65,39 @@ type PumpCoin = {
 
 type Cache = { at: number; events: TapeEvent[] }
 
+type RpcEnvelope<T> = { id?: number; result?: T; error?: unknown }
+
+type SolanaSignature = {
+  signature?: string
+  blockTime?: number | null
+  err?: unknown
+}
+
+type SolanaTokenBalance = {
+  accountIndex?: number
+  mint?: string
+  owner?: string
+  uiTokenAmount?: { uiAmount?: number | null; uiAmountString?: string }
+}
+
+type SolanaTransaction = {
+  blockTime?: number | null
+  transaction?: {
+    signatures?: string[]
+    message?: {
+      accountKeys?: Array<string | { pubkey?: string; signer?: boolean }>
+    }
+  }
+  meta?: {
+    err?: unknown
+    fee?: number
+    preBalances?: number[]
+    postBalances?: number[]
+    preTokenBalances?: SolanaTokenBalance[]
+    postTokenBalances?: SolanaTokenBalance[]
+  }
+}
+
 let cache: Cache | null = null
 let pending: Promise<TapeEvent[]> | null = null
 
@@ -100,6 +136,43 @@ async function readJson(url: string, timeoutMs = 8_000): Promise<unknown> {
   })
   if (!response.ok) throw new Error(`upstream ${response.status}`)
   return response.json()
+}
+
+async function rpcRequest<T>(method: string, params: unknown[]): Promise<T | null> {
+  const response = await fetch(SOLANA_RPC, {
+    method: "POST",
+    headers: { ...HEADERS, "content-type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    cache: "no-store",
+    signal: AbortSignal.timeout(8_000),
+  })
+  if (!response.ok) throw new Error(`solana rpc ${response.status}`)
+  const body = (await response.json()) as RpcEnvelope<T>
+  return body.result ?? null
+}
+
+async function rpcTransactions(signatures: string[]): Promise<Array<SolanaTransaction | null>> {
+  if (signatures.length === 0) return []
+  const response = await fetch(SOLANA_RPC, {
+    method: "POST",
+    headers: { ...HEADERS, "content-type": "application/json" },
+    body: JSON.stringify(signatures.map((signature, index) => ({
+      jsonrpc: "2.0",
+      id: index,
+      method: "getTransaction",
+      params: [signature, {
+        commitment: "finalized",
+        encoding: "jsonParsed",
+        maxSupportedTransactionVersion: 0,
+      }],
+    }))),
+    cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
+  })
+  if (!response.ok) throw new Error(`solana rpc batch ${response.status}`)
+  const rows = (await response.json()) as Array<RpcEnvelope<SolanaTransaction>>
+  const byId = new Map(rows.map((row) => [row.id, row.result ?? null]))
+  return signatures.map((_, index) => byId.get(index) ?? null)
 }
 
 function tokenFromInclude(included: GeckoToken[], id: string | undefined): TokenMeta | null {
@@ -212,6 +285,76 @@ function parseTrades(payload: unknown, pool: PoolRef): TapeEvent[] {
   return events
 }
 
+function tokenBalanceValue(balance: SolanaTokenBalance): number {
+  const direct = balance.uiTokenAmount?.uiAmount
+  if (typeof direct === "number" && Number.isFinite(direct)) return direct
+  const parsed = Number(balance.uiTokenAmount?.uiAmountString ?? "")
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+function parsePumpSwapTransaction(transaction: SolanaTransaction | null): TapeEvent | null {
+  const meta = transaction?.meta
+  const message = transaction?.transaction?.message
+  const signature = transaction?.transaction?.signatures?.[0] ?? ""
+  const payer = message?.accountKeys?.[0]
+  const wallet = typeof payer === "string" ? payer : payer?.pubkey ?? ""
+  if (!meta || meta.err || !signature || !wallet) return null
+
+  const preLamports = meta.preBalances?.[0]
+  const postLamports = meta.postBalances?.[0]
+  if (typeof preLamports !== "number" || typeof postLamports !== "number") return null
+  const solDelta = (postLamports - preLamports + (meta.fee ?? 0)) / LAMPORTS_PER_SOL
+  const solAmount = Math.abs(solDelta)
+  if (!Number.isFinite(solAmount) || solAmount <= 0 || solAmount > MAX_EVENT_SOL) return null
+
+  const tokenDeltas = new Map<string, { pre: number; post: number }>()
+  for (const balance of meta.preTokenBalances ?? []) {
+    if (balance.owner !== wallet || !balance.mint || balance.mint === WSOL) continue
+    tokenDeltas.set(balance.mint, { pre: tokenBalanceValue(balance), post: 0 })
+  }
+  for (const balance of meta.postTokenBalances ?? []) {
+    if (balance.owner !== wallet || !balance.mint || balance.mint === WSOL) continue
+    const current = tokenDeltas.get(balance.mint) ?? { pre: 0, post: 0 }
+    current.post = tokenBalanceValue(balance)
+    tokenDeltas.set(balance.mint, current)
+  }
+
+  const tokenAmount = [...tokenDeltas.values()].reduce((largest, balance) => {
+    const delta = Math.abs(balance.post - balance.pre)
+    return delta > largest ? delta : largest
+  }, 0)
+  if (!Number.isFinite(tokenAmount) || tokenAmount <= 0) return null
+
+  return presentSwap({
+    signature,
+    wallet,
+    symbol: "PUMP",
+    side: solDelta > 0 ? "sell" : "buy",
+    tokenAmount,
+    solAmount,
+    occurredAt: (transaction.blockTime ?? Math.floor(Date.now() / 1000)) * 1000,
+  })
+}
+
+async function loadPumpSwapActivity(): Promise<TapeEvent[]> {
+  try {
+    const signatures = await rpcRequest<SolanaSignature[]>("getSignaturesForAddress", [
+      PUMP_SWAP_PROGRAM,
+      { commitment: "finalized", limit: 14 },
+    ])
+    const confirmed = (signatures ?? [])
+      .filter((row) => !row.err && typeof row.signature === "string")
+      .map((row) => row.signature as string)
+    const transactions = await rpcTransactions(confirmed)
+    return transactions
+      .map(parsePumpSwapTransaction)
+      .filter((event): event is TapeEvent => Boolean(event))
+      .slice(0, 12)
+  } catch {
+    return []
+  }
+}
+
 async function loadTrendingPools(): Promise<PoolRef[]> {
   const body = (await readJson(`${GECKO}/networks/solana/trending_pools?include=base_token,quote_token&page=1`)) as {
     data?: GeckoPool[]
@@ -278,7 +421,7 @@ async function refreshLiveActivity(): Promise<TapeEvent[]> {
     loadPumpPools(),
   ])
   const pools = pickPools([...trending, ...pump], 4)
-  if (pools.length === 0) return []
+  if (pools.length === 0) return loadPumpSwapActivity()
 
   const batches = await Promise.all(
     pools.map(async (pool) => {
@@ -300,7 +443,8 @@ async function refreshLiveActivity(): Promise<TapeEvent[]> {
   }
 
   events.sort((left, right) => right.occurredAt - left.occurredAt)
-  return events.slice(0, 40)
+  if (events.length > 0) return events.slice(0, 40)
+  return loadPumpSwapActivity()
 }
 
 export async function loadLiveActivity(): Promise<TapeEvent[]> {

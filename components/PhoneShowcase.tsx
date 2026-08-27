@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { LaunchAppLink } from "@/components/ProductLink"
 
 import styles from "./PhoneShowcase.module.css"
@@ -25,21 +25,54 @@ const routeCopy = {
   },
 } satisfies Record<RouteMode, Record<string, string>>
 
+function PumpFunMark() {
+  return (
+    <svg className={styles.pumpMark} viewBox="0 0 64 64" aria-label="Pump.fun">
+      <g transform="rotate(-42 32 32)">
+        <rect x="14" y="5" width="36" height="54" rx="18" fill="#ffffff" stroke="#14382f" strokeWidth="5" />
+        <path d="M14 32h36v9c0 10-8 18-18 18s-18-8-18-18z" fill="#61cf8d" />
+        <path d="M14 32h36" fill="none" stroke="#14382f" strokeWidth="5" />
+        <path d="M22 41c0 5 2 8 5 10" fill="none" stroke="#ffffff" strokeLinecap="round" strokeWidth="4" />
+      </g>
+    </svg>
+  )
+}
+
 export function PhoneShowcase() {
   const [mode, setMode] = useState<RouteMode>("borrow")
+  const [visible, setVisible] = useState(false)
+  const showcaseRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setMode((current) => current === "borrow" ? "repay" : "borrow")
-    }, 4000)
+    const showcase = showcaseRef.current
+    if (!showcase) return
 
-    return () => window.clearInterval(timer)
+    const revealFromNavigation = (event: Event) => {
+      const detail = (event as CustomEvent<{ href?: string }>).detail
+      if (detail?.href === "#surfaces") setVisible(true)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return
+        setVisible(true)
+        observer.disconnect()
+      },
+      { rootMargin: "-5% 0px -8%", threshold: 0.06 },
+    )
+    observer.observe(showcase)
+    window.addEventListener("liend:scene-enter", revealFromNavigation)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("liend:scene-enter", revealFromNavigation)
+    }
   }, [])
 
   const copy = routeCopy[mode]
 
   return (
-    <div className={styles.showcase} data-mode={mode}>
+    <div ref={showcaseRef} className={styles.showcase} data-mode={mode} data-visible={visible ? "true" : "false"}>
       <div className={styles.stageTop}>
         <span><i /> LIEND MOBILE ROUTE</span>
         <span>LIVE PRODUCT PREVIEW</span>
@@ -82,7 +115,7 @@ export function PhoneShowcase() {
 
               <section className={styles.positionCard}>
                 <div className={styles.tokenRow}>
-                  <span className={styles.tokenMark}>P</span>
+                  <span className={styles.tokenMark}><PumpFunMark /></span>
                   <div><strong>Pump.fun token</strong><small>Supported position</small></div>
                   <b>$150.00</b>
                 </div>

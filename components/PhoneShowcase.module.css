@@ -629,6 +629,165 @@
   }
 }
 
+/* One deliberate reveal, then a stable interactive product preview. */
+.stage {
+  background: #3155f5;
+}
+
+.stage::before,
+.stage::after,
+.sideRail {
+  display: none;
+}
+
+.phoneScreen {
+  background: #1728d4;
+}
+
+.positionCard,
+.receiveCard,
+.reviewCard {
+  background: #3155f5;
+}
+
+.phoneLeft,
+.phoneRight {
+  opacity: 0;
+  animation: none;
+}
+
+.phoneLeft {
+  transform: translate(-230%, -46%) rotateX(10deg) rotateY(58deg) rotateZ(-2deg) scale(.8);
+}
+
+.phoneRight {
+  transform: translate(130%, -54%) rotateX(-10deg) rotateY(-58deg) rotateZ(2deg) scale(.8);
+}
+
+.showcase[data-visible="true"] .phoneLeft {
+  animation: phone-left-reveal 1120ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.showcase[data-visible="true"] .phoneRight {
+  animation: phone-right-reveal 1180ms 90ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.stage:hover .phoneWrap,
+.stage:focus-within .phoneWrap {
+  animation-play-state: running;
+}
+
+.routeTabs {
+  padding: 5px;
+  border: 2px solid #080b2b;
+  background: #0b135f;
+  box-shadow: 0 4px 0 #080b2b;
+}
+
+.routeTabs button {
+  border: 1px solid transparent;
+  color: #ffffff;
+  font-weight: 700;
+  transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease, color 260ms ease, transform 260ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.routeTabs button:hover,
+.routeTabs button:focus-visible {
+  border-color: rgba(255, 255, 255, .82);
+  background: rgba(255, 255, 255, .12);
+  box-shadow: 0 3px 0 #080b2b;
+  transform: translateY(-2px);
+}
+
+.routeTabs button[data-active="true"] {
+  border-color: #080b2b;
+  box-shadow: 0 3px 0 #080b2b;
+}
+
+.tokenMark {
+  overflow: visible;
+  border: 0;
+  background: #ffffff;
+}
+
+.pumpMark {
+  display: block;
+  width: 88%;
+  height: 88%;
+  overflow: visible;
+}
+
+.receiveCard strong {
+  color: #ffffff;
+  font-family: var(--font-plex), ui-monospace, monospace;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  text-shadow: 0 2px 0 rgba(5, 8, 48, .34);
+}
+
+.reviewButton {
+  border: 2px solid #080b2b;
+  box-shadow: 0 4px 0 #080b2b;
+  font-weight: 700;
+  transition: background 260ms ease, box-shadow 260ms ease, transform 260ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.reviewButton:hover,
+.reviewButton:focus-visible {
+  box-shadow: 0 7px 0 #080b2b;
+  transform: translateY(-3px);
+}
+
+@keyframes phone-left-reveal {
+  0% {
+    opacity: 0;
+    transform: translate(-230%, -46%) rotateX(10deg) rotateY(58deg) rotateZ(-2deg) scale(.8);
+  }
+  68% {
+    opacity: 1;
+    transform: translate(-100%, -52%) rotateX(-5deg) rotateY(14deg) rotateZ(-10deg) scale(1.025);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-104%, -50%) rotateX(-4deg) rotateY(18deg) rotateZ(-9deg) scale(1);
+  }
+}
+
+@keyframes phone-right-reveal {
+  0% {
+    opacity: 0;
+    transform: translate(130%, -54%) rotateX(-10deg) rotateY(-58deg) rotateZ(2deg) scale(.8);
+  }
+  68% {
+    opacity: 1;
+    transform: translate(0, -48%) rotateX(-5deg) rotateY(-14deg) rotateZ(10deg) scale(1.025);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(4%, -50%) rotateX(-4deg) rotateY(-18deg) rotateZ(9deg) scale(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .showcase[data-visible="true"] .phoneLeft {
+    animation-name: phone-left-reveal-mobile;
+  }
+
+  .showcase[data-visible="true"] .phoneRight {
+    animation-name: phone-right-reveal-mobile;
+  }
+}
+
+@keyframes phone-left-reveal-mobile {
+  0% { opacity: 0; transform: translate(-210%, -44%) rotateY(58deg) scale(.72); }
+  100% { opacity: 1; transform: translate(-99%, -50%) rotateX(-4deg) rotateY(16deg) rotateZ(-7deg) scale(.92); }
+}
+
+@keyframes phone-right-reveal-mobile {
+  0% { opacity: 0; transform: translate(110%, -56%) rotateY(-58deg) scale(.72); }
+  100% { opacity: 1; transform: translate(1%, -50%) rotateX(-4deg) rotateY(-16deg) rotateZ(7deg) scale(.92); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .phoneLeft,
   .phoneRight,

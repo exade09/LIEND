@@ -19,6 +19,14 @@ const navigation = [
   { label: "FAQ", href: "#faq", tone: "violet" },
 ] as const
 
+type TransitionScene = {
+  href: string
+  tone: string
+  snapshotHtml: string
+  snapshotWidth: number
+  snapshotScale: number
+}
+
 const heroLetters = [
   { letter: "L", src: "/assets/wordmark/pixel/liend-l.png", width: 71, height: 87 },
   { letter: "I", src: "/assets/wordmark/pixel/liend-i.png", width: 30, height: 89 },
@@ -101,9 +109,9 @@ export function LandingExperience() {
     href: string
     tone: string
     direction: "forward" | "backward"
-    snapshotHtml: string
-    snapshotWidth: number
-    snapshotScale: number
+    focusOffset: string
+    targetIndex: number
+    scenes: TransitionScene[]
   }>(null)
   const transitionTimers = useRef<number[]>([])
 
@@ -182,6 +190,7 @@ export function LandingExperience() {
       target.scrollIntoView({ block: "start" })
       root.style.scrollBehavior = previousBehavior
       window.history.pushState(null, "", href)
+      window.dispatchEvent(new CustomEvent("liend:scene-enter", { detail: { href } }))
     }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -193,36 +202,54 @@ export function LandingExperience() {
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer))
     revealNodes.forEach((node) => node.removeAttribute("data-visible"))
 
-    const snapshot = target.cloneNode(true) as HTMLElement
-    snapshot.removeAttribute("id")
-    snapshot.querySelectorAll<HTMLElement>("[id]").forEach((node) => node.removeAttribute("id"))
-    snapshot
-      .querySelectorAll<HTMLElement>("[data-liend-reveal]")
-      .forEach((node) => node.setAttribute("data-visible", "true"))
-    snapshot
-      .querySelectorAll<HTMLElement>("a, button, input, select, textarea, summary, [tabindex]")
-      .forEach((node) => node.setAttribute("tabindex", "-1"))
-
-    const snapshotWidth = Math.max(target.offsetWidth, 1)
     const compact = window.innerWidth <= 720
-    const portalWidth = compact
-      ? Math.min(320, window.innerWidth * 0.76)
-      : Math.min(520, window.innerWidth * 0.42)
+    const paneWidth = compact ? window.innerWidth * 0.65 : window.innerWidth * 0.33
+    const sceneOrder = href === "#top"
+      ? [{ label: "Home", href: "#top", tone: "blue" }, ...navigation.slice(0, 3)]
+      : [...navigation]
+    const targetIndex = Math.max(0, sceneOrder.findIndex((item) => item.href === href))
+    const scenes = sceneOrder.flatMap<TransitionScene>((item) => {
+      const sceneTarget = document.querySelector<HTMLElement>(item.href)
+      if (!sceneTarget) return []
+
+      const snapshot = sceneTarget.cloneNode(true) as HTMLElement
+      snapshot.removeAttribute("id")
+      if (snapshot.matches("[data-liend-reveal]")) snapshot.setAttribute("data-visible", "true")
+      snapshot.querySelectorAll<HTMLElement>("[id]").forEach((node) => node.removeAttribute("id"))
+      snapshot
+        .querySelectorAll<HTMLElement>("[data-liend-reveal]")
+        .forEach((node) => node.setAttribute("data-visible", "true"))
+      snapshot
+        .querySelectorAll<HTMLElement>("[data-visible=\"false\"]")
+        .forEach((node) => node.setAttribute("data-visible", "true"))
+      snapshot
+        .querySelectorAll<HTMLElement>("a, button, input, select, textarea, summary, [tabindex]")
+        .forEach((node) => node.setAttribute("tabindex", "-1"))
+
+      const snapshotWidth = Math.max(sceneTarget.offsetWidth, 1)
+      return [{
+        href: item.href,
+        tone: item.tone,
+        snapshotHtml: snapshot.outerHTML,
+        snapshotWidth,
+        snapshotScale: paneWidth / snapshotWidth,
+      }]
+    })
 
     setTransition({
       href,
       tone,
       direction: target.getBoundingClientRect().top >= 0 ? "forward" : "backward",
-      snapshotHtml: snapshot.outerHTML,
-      snapshotWidth,
-      snapshotScale: portalWidth / snapshotWidth,
+      focusOffset: `-${(targetIndex + 0.5) * 25}%`,
+      targetIndex,
+      scenes,
     })
     transitionTimers.current = [
-      window.setTimeout(jump, 760),
+      window.setTimeout(jump, 940),
       window.setTimeout(() => {
         revealNodes.forEach((node) => node.setAttribute("data-visible", "true"))
-      }, 1120),
-      window.setTimeout(() => setTransition(null), 1420),
+      }, 1320),
+      window.setTimeout(() => setTransition(null), 1680),
     ]
   }
 
@@ -241,20 +268,29 @@ export function LandingExperience() {
           data-direction={transition.direction}
           aria-hidden="true"
         >
-          <div className={styles.transitionTrack}>
-            <i /><i /><i /><i /><i />
-          </div>
-          <div className={styles.transitionPortal}>
-            <div className={styles.transitionSnapshot}>
+          <div
+            className={styles.transitionTrack}
+            style={{ "--focus-offset": transition.focusOffset } as React.CSSProperties}
+          >
+            {transition.scenes.map((scene, index) => (
               <div
-                className={styles.transitionSnapshotCanvas}
-                style={{
-                  width: transition.snapshotWidth,
-                  transform: `scale(${transition.snapshotScale})`,
-                }}
-                dangerouslySetInnerHTML={{ __html: transition.snapshotHtml }}
-              />
-            </div>
+                className={styles.transitionPane}
+                data-active={index === transition.targetIndex ? "true" : "false"}
+                data-tone={scene.tone}
+                key={`${scene.href}-${index}`}
+              >
+                <div className={styles.transitionSnapshot}>
+                  <div
+                    className={styles.transitionSnapshotCanvas}
+                    style={{
+                      width: scene.snapshotWidth,
+                      transform: `scale(${scene.snapshotScale})`,
+                    }}
+                    dangerouslySetInnerHTML={{ __html: scene.snapshotHtml }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -298,7 +334,7 @@ export function LandingExperience() {
       </button>
 
       <main id="main-content">
-        <section className={styles.hero} id="top" onPointerMove={moveHero} aria-labelledby="hero-title">
+        <section className={`${styles.hero} ${styles.sceneWindow}`} id="top" onPointerMove={moveHero} aria-labelledby="hero-title">
           <div className={styles.heroFluid} aria-hidden="true">
             <Image src="/assets/liend-hero-material-v2.png" alt="" fill sizes="100vw" priority />
           </div>
@@ -348,7 +384,7 @@ export function LandingExperience() {
           </div>
         </div>
 
-        <section className={styles.allIn} id="product">
+        <section className={`${styles.allIn} ${styles.sceneWindow}`} id="product">
           <div className={styles.sectionIntro} data-liend-reveal>
             <p className={styles.eyebrow}>A focused utility layer</p>
             <RevealHeadline lines={["Your position", "stays in view"]} />
@@ -369,7 +405,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.routeSection} id="route">
+        <section className={`${styles.routeSection} ${styles.sceneWindow}`} id="route">
           <div className={styles.routeSticky}>
             <div className={styles.routeHeading} data-liend-reveal>
               <p className={styles.eyebrow}>The LIEND route</p>
@@ -389,7 +425,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.productDemo}>
+        <section className={`${styles.productDemo} ${styles.sceneWindow}`} id="surfaces">
           <div className={styles.demoHeader} data-liend-reveal>
             <p className={styles.eyebrow}>One clear interface</p><RevealHeadline lines={["Know the route", "before you enter"]} />
           </div>
@@ -420,7 +456,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.surfaces} id="surfaces">
+        <section className={`${styles.surfaces} ${styles.sceneWindow}`} id="surfaces-grid">
           <div className={styles.surfacesTitle} data-liend-reveal>
             <p className={styles.eyebrow}>LIEND where you need it</p><RevealHeadline lines={["One utility", "Three surfaces"]} />
           </div>
@@ -449,7 +485,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.controlSection}>
+        <section className={`${styles.controlSection} ${styles.sceneWindow}`}>
           <div className={styles.controlCopy} data-liend-reveal>
             <p className={styles.eyebrow}>Designed for control</p><RevealHeadline lines={["Nothing moves", "until you approve it"]} />
             <p>LIEND keeps route context, terms and wallet approval in the same visual flow</p>
@@ -467,7 +503,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.faq} id="faq">
+        <section className={`${styles.faq} ${styles.sceneWindow}`} id="faq">
           <div className={styles.faqHeading} data-liend-reveal>
             <p className={styles.eyebrow}>Product questions</p><RevealHeadline lines={["Know the route", "before you enter"]} />
           </div>
@@ -480,7 +516,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <section className={styles.finalCta}>
+        <section className={`${styles.finalCta} ${styles.sceneWindow}`}>
           <div className={styles.finalFluid} aria-hidden="true"><Image src="/assets/liend-final-material-v2.png" alt="" fill sizes="100vw" /></div>
           <PixelSprite kind="coin" className={styles.finalCoin} />
           <p className={styles.eyebrow}>Your position has another route</p>
@@ -494,8 +530,18 @@ export function LandingExperience() {
           <DropletMark /><strong>LIEND</strong><p>Utility liquidity for supported migrated token positions on Solana</p>
         </div>
         <div className={styles.footerLinks}>
-          <div><span>Product</span><LaunchAppLink>Web app</LaunchAppLink><AddToChromeBadge /><ProductLink href={project.docsUrl}>Docs</ProductLink></div>
-          <div><span>Network</span><PumpFunLink>Pump.fun</PumpFunLink><ProductLink href={project.xUrl}>X / Twitter</ProductLink><a href="#faq">FAQ</a></div>
+          <div>
+            <span>Product</span>
+            <LaunchAppLink className={`${styles.footerCta} ${styles.footerCtaPrimary}`}>Web app <span aria-hidden="true">{"\u2197"}</span></LaunchAppLink>
+            <AddToChromeBadge className={`${styles.footerCta} ${styles.footerCtaChrome}`} />
+            <ProductLink className={styles.footerCta} href={project.docsUrl}>Docs <span aria-hidden="true">{"\u2197"}</span></ProductLink>
+          </div>
+          <div>
+            <span>Network</span>
+            <PumpFunLink className={styles.footerNavLink}>Pump.fun</PumpFunLink>
+            <ProductLink className={styles.footerNavLink} href={project.xUrl}>X / Twitter</ProductLink>
+            <a className={styles.footerNavLink} href="#faq">FAQ</a>
+          </div>
         </div>
         <div className={styles.footerBottom}><CaPlaque variant="footer" /><span>LIEND / SOLANA / 2026</span></div>
       </footer>

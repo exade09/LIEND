@@ -91,6 +91,10 @@ export function ActivityTape() {
     void (async () => {
       pool = await loadPool()
       if (cancelled) return
+      const initial = pool.slice(0, 5)
+      initial.forEach((event) => seen.add(event.signature))
+      setEvents(initial)
+      setFreshId(initial[0]?.signature ?? null)
       timer = window.setTimeout(() => void tick(), nextDelay())
     })()
 
@@ -115,6 +119,7 @@ export function ActivityTape() {
               events.map((event) => (
                 <button
                   className={`${styles.item} ${freshId === event.signature ? styles.fresh : ""}`}
+                  data-kind={liveKindLabel(event.kind).toLowerCase()}
                   type="button"
                   key={event.signature}
                   aria-label={`${liveKindLabel(event.kind)} ${event.amount} · ${shortenAddress(event.wallet, 4, 4)} · open transaction`}
@@ -139,6 +144,7 @@ export function ActivityTape() {
         eyebrow="PROTOCOL EVENT"
         title={selected?.title ?? "Route"}
         size="wide"
+        className="activity-modal"
       >
         {selected ? (
           <div className={styles.detail}>

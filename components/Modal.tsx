@@ -10,9 +10,10 @@ type ModalProps = {
   title: string
   children: ReactNode
   size?: "default" | "wide"
+  className?: string
 }
 
-export function Modal({ open, onClose, eyebrow, title, children, size = "default" }: ModalProps) {
+export function Modal({ open, onClose, eyebrow, title, children, size = "default", className }: ModalProps) {
   useEffect(() => {
     if (!open) return
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -31,7 +32,7 @@ export function Modal({ open, onClose, eyebrow, title, children, size = "default
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={onClose}>
       <section
-        className={`modal-panel ${size === "wide" ? "modal-panel--wide" : ""}`}
+        className={["modal-panel", size === "wide" ? "modal-panel--wide" : "", className].filter(Boolean).join(" ")}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
