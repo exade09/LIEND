@@ -1749,6 +1749,504 @@
     transform: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Hana-derived hero system: crisp text and vector/CSS dimensional artifacts
+   -------------------------------------------------------------------------- */
+
+.header {
+  width: min(1500px, calc(100% - 40px));
+  column-gap: 14px;
+}
+
+.headerCa {
+  width: clamp(320px, 31vw, 500px);
+  min-width: 320px;
+  overflow: visible;
+}
+
+.headerCa :global([aria-label="LIEND contract address"]),
+.headerCa :global([aria-label="LIEND contract address"] > span),
+.headerCa :global([aria-label="LIEND contract address"] > a) {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.hero,
+.hero.sceneWindow {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .98) 0 12%, rgba(240, 243, 255, .94) 42%, rgba(222, 229, 255, .98) 100%),
+    #e8edff;
+}
+
+.heroGrid {
+  opacity: .52;
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, transparent 8%, #000 27%, #000 78%, transparent 98%);
+}
+
+.heroArtifacts {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  perspective: 1000px;
+  pointer-events: none;
+  translate: calc(var(--pointer-x) * -8px) calc(var(--pointer-y) * -6px);
+  will-change: opacity, transform, translate;
+}
+
+.site[data-intro-ready="true"] .heroArtifacts {
+  animation: hero-artifacts-in 1120ms 260ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.liquidRibbon {
+  position: absolute;
+  z-index: 0;
+  width: clamp(340px, 31vw, 560px);
+  height: auto;
+  overflow: visible;
+  fill: none;
+  filter: drop-shadow(0 18px 24px rgba(37, 54, 154, .2));
+}
+
+.ribbonTop {
+  top: clamp(-92px, -5vw, -42px);
+  right: clamp(-118px, -5vw, -62px);
+  transform: rotate(23deg);
+}
+
+.ribbonBottom {
+  bottom: clamp(-112px, -6vw, -58px);
+  left: clamp(-132px, -6vw, -72px);
+  transform: rotate(202deg) scale(1.08);
+}
+
+.ribbonDepth,
+.ribbonBody,
+.ribbonHighlight {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.ribbonDepth {
+  stroke: #17246f;
+  stroke-width: 54px;
+  opacity: .55;
+}
+
+.ribbonBody {
+  stroke-width: 48px;
+}
+
+.ribbonHighlight {
+  stroke: rgba(255, 255, 255, .76);
+  stroke-width: 8px;
+  opacity: .72;
+}
+
+.heroArtifact {
+  position: absolute;
+  z-index: 3;
+  display: inline-grid;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.vectorKey {
+  top: 27%;
+  left: clamp(34px, 7vw, 118px);
+  width: clamp(120px, 11vw, 178px);
+  animation: vector-key-float 7.8s ease-in-out infinite;
+}
+
+.vectorKey svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 17px 20px rgba(29, 42, 135, .25));
+}
+
+.keyDepth {
+  fill: #192873;
+  stroke: #10184d;
+  stroke-width: 7px;
+  stroke-linejoin: round;
+  transform: translate(5px, 8px);
+}
+
+.keyFace {
+  stroke: #172260;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+
+.keyShine {
+  fill: none;
+  stroke: rgba(255, 255, 255, .86);
+  stroke-width: 7px;
+  stroke-linecap: round;
+}
+
+.vectorCoin {
+  top: 29%;
+  right: clamp(42px, 9vw, 145px);
+  width: clamp(104px, 9.5vw, 154px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 4px solid #182265;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 31% 24%, rgba(255, 255, 255, .96) 0 5%, transparent 19%),
+    radial-gradient(circle at 37% 31%, #92f8ff 0 8%, #4c8dff 35%, #7650ec 72%, #30238d 100%);
+  box-shadow:
+    8px 11px 0 #151f64,
+    0 24px 32px rgba(29, 42, 135, .25),
+    inset 0 0 0 8px rgba(255, 255, 255, .22),
+    inset -12px -14px 20px rgba(29, 29, 116, .32);
+  animation: vector-coin-float 7s ease-in-out -.9s infinite;
+}
+
+.coinRim {
+  position: absolute;
+  inset: 13%;
+  border: 3px solid rgba(231, 254, 255, .72);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px rgba(40, 51, 161, .38);
+}
+
+.vectorCoin b {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  font-family: var(--font-silk), monospace;
+  font-size: clamp(36px, 3.8vw, 60px);
+  line-height: 1;
+  text-shadow: 3px 4px 0 rgba(25, 32, 112, .62);
+}
+
+.coinGlint {
+  position: absolute;
+  top: 13%;
+  left: 20%;
+  width: 25%;
+  height: 12%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .86);
+  filter: blur(.3px);
+  transform: rotate(-29deg);
+}
+
+.vectorWallet {
+  right: clamp(34px, 7vw, 116px);
+  bottom: clamp(68px, 10vh, 118px);
+  width: clamp(168px, 15vw, 238px);
+  height: clamp(116px, 10.5vw, 166px);
+  animation: vector-wallet-float 8.4s ease-in-out -1.5s infinite;
+}
+
+.walletCardBack,
+.walletCardMid,
+.walletFace {
+  position: absolute;
+  border: 3px solid #172261;
+  border-radius: clamp(16px, 1.8vw, 28px);
+  box-shadow: 0 16px 24px rgba(27, 39, 129, .22);
+}
+
+.walletCardBack {
+  inset: 0 7% 22% 20%;
+  background: linear-gradient(135deg, #9df8ff, #8b62f4);
+  transform: translate3d(0, -18%, -26px) rotate(8deg);
+}
+
+.walletCardMid {
+  inset: 8% 13% 14% 11%;
+  background: linear-gradient(135deg, #54e8ff, #4c7dff 58%, #734ee8);
+  transform: translate3d(0, -6%, -14px) rotate(-4deg);
+}
+
+.walletFace {
+  inset: 20% 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0 12%;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, .62), transparent 28%),
+    linear-gradient(135deg, #5deaff, #397dff 56%, #6844d5);
+  box-shadow:
+    7px 9px 0 #172261,
+    0 22px 30px rgba(29, 42, 135, .25),
+    inset 0 7px 16px rgba(255, 255, 255, .42);
+}
+
+.walletFace > b {
+  color: #fff;
+  font-family: var(--font-silk), monospace;
+  font-size: clamp(8px, .8vw, 12px);
+  letter-spacing: .08em;
+  text-shadow: 2px 2px 0 rgba(22, 31, 103, .48);
+}
+
+.walletSignal {
+  width: 11px;
+  height: 11px;
+  margin-right: 8px;
+  border: 2px solid #173a39;
+  border-radius: 50%;
+  background: #c7ff5c;
+  box-shadow: 0 0 14px rgba(199, 255, 92, .72);
+}
+
+.walletClasp {
+  position: absolute;
+  right: -4%;
+  display: grid;
+  width: 34%;
+  height: 45%;
+  place-items: center;
+  border: 3px solid #172261;
+  border-radius: 15px 4px 4px 15px;
+  background: linear-gradient(135deg, #7bf1ff, #3a73ef);
+  box-shadow: 4px 5px 0 #172261;
+}
+
+.walletClasp > span {
+  width: 22%;
+  aspect-ratio: 1;
+  border: 2px solid #173a39;
+  border-radius: 50%;
+  background: #c7ff5c;
+  box-shadow: 0 0 12px rgba(199, 255, 92, .76);
+}
+
+.heroCopy {
+  width: min(1180px, 90vw);
+}
+
+.heroWordmark,
+.hero h1.heroWordmark {
+  width: auto;
+  min-width: min(1020px, 84vw);
+  height: auto;
+  min-height: clamp(150px, 19vw, 270px);
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+.heroWordmark .heroLetterSlot {
+  display: inline-flex;
+  width: auto;
+  flex: 0 0 auto;
+  align-items: center;
+  overflow: visible;
+  margin-inline: -.018em;
+  filter: none;
+  transform-origin: 50% 82%;
+}
+
+.heroWordmark .heroLetter {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: linear-gradient(145deg, #9b61f4 3%, #6857ed 28%, #3e78f8 57%, #42d8f0 84%, #a5fbff 100%);
+  background-clip: text;
+  background-size: 180% 180%;
+  font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-size: clamp(132px, 18vw, 282px);
+  font-weight: 900;
+  letter-spacing: -.115em;
+  line-height: .72;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: clamp(2px, .22vw, 4px) #3446ca;
+  text-shadow:
+    0 4px 0 #3242bc,
+    0 9px 0 #273591,
+    0 18px 24px rgba(54, 55, 163, .22);
+  animation: hero-wordmark-shimmer 7.5s ease-in-out infinite alternate;
+}
+
+.heroWordmark .heroLetter::after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: rgba(255, 255, 255, .23);
+  content: attr(data-letter);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .76);
+  clip-path: polygon(0 0, 100% 0, 100% 36%, 0 52%);
+  pointer-events: none;
+}
+
+.site[data-intro-ready="true"] .heroWordmark .heroLetterSlot {
+  animation: hero-wordmark-enter 1080ms cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: var(--intro-delay);
+}
+
+.heroCopy > .eyebrow {
+  margin-top: 12px;
+}
+
+.heroSubline {
+  margin-top: 11px;
+}
+
+.heroButtons {
+  margin-top: 24px;
+}
+
+@keyframes hero-artifacts-in {
+  0% { opacity: 0; transform: scale(.92); filter: blur(9px); }
+  62% { opacity: 1; filter: blur(1px); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+
+@keyframes hero-wordmark-enter {
+  0% { opacity: 0; filter: blur(12px); transform: translate3d(0, 82%, 0) rotateX(-54deg) scale(.68); }
+  56% { opacity: 1; filter: blur(1px); transform: translate3d(0, -5%, 0) rotateX(8deg) scale(1.045); }
+  100% { opacity: 1; filter: none; transform: translate3d(0, 0, 0) rotateX(0) scale(1); }
+}
+
+@keyframes hero-wordmark-shimmer {
+  0% { background-position: 0% 30%; }
+  100% { background-position: 100% 70%; }
+}
+
+@keyframes vector-key-float {
+  0%, 100% { transform: translate3d(0, 5px, 0) rotate(-13deg) rotateY(-9deg); }
+  50% { transform: translate3d(14px, -18px, 0) rotate(-4deg) rotateY(7deg); }
+}
+
+@keyframes vector-coin-float {
+  0%, 100% { transform: translate3d(0, -3px, 0) rotate(8deg) rotateY(-7deg); }
+  50% { transform: translate3d(-13px, 17px, 0) rotate(-7deg) rotateY(9deg); }
+}
+
+@keyframes vector-wallet-float {
+  0%, 100% { transform: translate3d(0, 8px, 0) rotate(-5deg) rotateY(-5deg); }
+  50% { transform: translate3d(-15px, -16px, 0) rotate(5deg) rotateY(7deg); }
+}
+
+@media (max-width: 1180px) {
+  .header {
+    width: calc(100% - 32px);
+    column-gap: 8px;
+  }
+
+  .nav a {
+    padding-inline: 11px;
+  }
+
+  .headerCa {
+    width: clamp(260px, 29vw, 340px);
+    min-width: 260px;
+    padding-inline: 11px;
+  }
+
+  .vectorKey { left: 3%; }
+  .vectorCoin { right: 4%; }
+  .vectorWallet { right: 3%; }
+}
+
+@media (max-width: 900px) {
+  .headerCa {
+    width: min(460px, 50vw);
+    min-width: 290px;
+  }
+
+  .heroWordmark,
+  .hero h1.heroWordmark {
+    min-width: 92vw;
+  }
+
+  .vectorWallet {
+    bottom: 9%;
+  }
+}
+
+@media (max-width: 720px) {
+  .headerCa {
+    right: 60px;
+    left: 60px;
+    width: auto;
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
+  .hero {
+    min-height: 790px;
+    padding-top: 164px;
+  }
+
+  .heroWordmark,
+  .hero h1.heroWordmark {
+    min-width: 94vw;
+    min-height: 96px;
+  }
+
+  .heroWordmark .heroLetter {
+    font-size: clamp(78px, 24vw, 112px);
+    -webkit-text-stroke-width: 2px;
+    text-shadow: 0 3px 0 #3242bc, 0 6px 0 #273591, 0 12px 18px rgba(54, 55, 163, .2);
+  }
+
+  .heroCopy > .eyebrow {
+    width: min(76vw, 300px);
+    margin-top: 20px;
+  }
+
+  .vectorKey {
+    top: 23%;
+    left: -5%;
+    width: 92px;
+  }
+
+  .vectorCoin {
+    top: 25%;
+    right: -4%;
+    width: 80px;
+  }
+
+  .vectorWallet {
+    right: -5%;
+    bottom: 15%;
+    width: 120px;
+    height: 84px;
+  }
+
+  .liquidRibbon {
+    width: 300px;
+    opacity: .72;
+  }
+
+  .ribbonTop {
+    top: -76px;
+    right: -146px;
+  }
+
+  .ribbonBottom {
+    bottom: -92px;
+    left: -148px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroArtifacts,
+  .heroArtifact,
+  .heroWordmark .heroLetterSlot,
+  .heroWordmark .heroLetter {
+    opacity: 1;
+    filter: none;
+    animation: none;
+    transform: none;
+  }
+}
 /* Slush-inspired hero pass: LIEND brand, utility and pixel language stay intact. */
 .srOnly {
   position: absolute;
@@ -2824,5 +3322,197 @@
     opacity: 1;
     filter: none;
     transform: none;
+  }
+}
+
+/* Final cascade guard for the Hana-derived hero and full contract address. */
+.header {
+  width: min(1500px, calc(100% - 40px));
+  column-gap: 14px;
+}
+
+.headerCa {
+  width: clamp(320px, 31vw, 500px);
+  min-width: 320px;
+  flex: 0 0 clamp(320px, 31vw, 500px);
+  overflow: visible;
+}
+
+.headerCa :global([aria-label="LIEND contract address"]),
+.headerCa :global([aria-label="LIEND contract address"] > span),
+.headerCa :global([aria-label="LIEND contract address"] > a) {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.headerCa :global([aria-label="LIEND contract address"] > a),
+.headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+  font-family: var(--font-plex), monospace;
+  font-size: clamp(7px, .66vw, 10px);
+  letter-spacing: -.035em;
+  text-shadow: none;
+}
+
+.hero,
+.hero.sceneWindow {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .98) 0 12%, rgba(240, 243, 255, .94) 42%, rgba(222, 229, 255, .98) 100%),
+    #e8edff;
+}
+
+.heroGrid {
+  opacity: .52;
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, transparent 8%, #000 27%, #000 78%, transparent 98%);
+}
+
+.heroCopy {
+  width: min(1180px, 90vw);
+}
+
+.heroWordmark,
+.hero h1.heroWordmark {
+  width: auto;
+  min-width: min(1020px, 84vw);
+  height: auto;
+  min-height: clamp(150px, 19vw, 270px);
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+.heroWordmark .heroLetterSlot,
+.heroLetterSlot[data-letter="L"],
+.heroLetterSlot[data-letter="I"],
+.heroLetterSlot[data-letter="E"],
+.heroLetterSlot[data-letter="N"],
+.heroLetterSlot[data-letter="D"] {
+  width: auto;
+}
+
+.heroWordmark .heroLetterSlot {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  overflow: visible;
+  margin-inline: -.018em;
+  filter: none;
+  transform-origin: 50% 82%;
+}
+
+.heroWordmark .heroLetterSlot .heroLetter {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: linear-gradient(145deg, #9b61f4 3%, #6857ed 28%, #3e78f8 57%, #42d8f0 84%, #a5fbff 100%);
+  background-clip: text;
+  background-size: 180% 180%;
+  object-fit: unset;
+  font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-size: clamp(132px, 18vw, 282px);
+  font-weight: 900;
+  letter-spacing: -.115em;
+  line-height: .72;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: clamp(2px, .22vw, 4px) #3446ca;
+  text-shadow:
+    0 4px 0 #3242bc,
+    0 9px 0 #273591,
+    0 18px 24px rgba(54, 55, 163, .22);
+  animation: hero-wordmark-shimmer 7.5s ease-in-out infinite alternate;
+}
+
+.heroCopy > .eyebrow {
+  margin-top: 12px;
+}
+
+.heroSubline {
+  margin-top: 11px;
+}
+
+.heroButtons {
+  margin-top: 24px;
+}
+
+@media (max-width: 1180px) {
+  .header {
+    width: calc(100% - 32px);
+    column-gap: 8px;
+  }
+
+  .nav a {
+    padding-inline: 11px;
+  }
+
+  .headerCa {
+    width: clamp(260px, 29vw, 340px);
+    min-width: 260px;
+    flex-basis: clamp(260px, 29vw, 340px);
+    padding-inline: 11px;
+  }
+}
+
+@media (max-width: 900px) {
+  .headerCa {
+    width: min(460px, 50vw);
+    min-width: 290px;
+    flex-basis: min(460px, 50vw);
+  }
+
+  .heroWordmark,
+  .hero h1.heroWordmark {
+    min-width: 92vw;
+  }
+}
+
+@media (max-width: 720px) {
+  .headerCa {
+    right: 60px;
+    left: 60px;
+    width: auto;
+    min-width: 0;
+    flex: none;
+    padding-inline: 8px;
+  }
+
+  .headerCa :global([aria-label="LIEND contract address"] > a),
+  .headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+    font-size: 7px;
+    letter-spacing: -.055em;
+  }
+
+  .heroWordmark,
+  .hero h1.heroWordmark {
+    min-width: 94vw;
+    min-height: 96px;
+  }
+
+  .heroWordmark .heroLetterSlot .heroLetter {
+    font-size: clamp(78px, 24vw, 112px);
+    -webkit-text-stroke-width: 2px;
+    text-shadow: 0 3px 0 #3242bc, 0 6px 0 #273591, 0 12px 18px rgba(54, 55, 163, .2);
+  }
+
+  .heroCopy > .eyebrow {
+    width: min(76vw, 300px);
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerCa :global([aria-label="LIEND contract address"]) {
+    align-items: center;
+  }
+
+  .headerCa :global([aria-label="LIEND contract address"] > a),
+  .headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+    overflow-wrap: anywhere;
+    font-size: 7px;
+    letter-spacing: -.04em;
+    line-height: 1.12;
+    white-space: normal;
   }
 }

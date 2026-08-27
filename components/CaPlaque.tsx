@@ -1,6 +1,6 @@
 "use client"
 
-import { getExplorerAddressUrl, isLikelySolanaAddress, shortenAddress } from "@/lib/addresses"
+import { getExplorerAddressUrl, isLikelySolanaAddress } from "@/lib/addresses"
 import { usePublishedCa } from "@/lib/usePublishedCa"
 
 import styles from "./CaPlaque.module.css"
@@ -15,11 +15,7 @@ export function CaPlaque({ variant, initialMint = null, live = true }: CaPlaqueP
   const published = usePublishedCa(initialMint)
   const mint = live ? published.mint : initialMint
   const isAddress = mint ? isLikelySolanaAddress(mint) : false
-  const display = mint
-    ? variant === "header" && isAddress
-      ? shortenAddress(mint, 4, 4)
-      : mint
-    : "waiting"
+  const display = mint ?? "waiting"
   const explorer = mint && isAddress ? getExplorerAddressUrl(mint) : null
 
   return (

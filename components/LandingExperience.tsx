@@ -27,13 +27,7 @@ type TransitionScene = {
   snapshotScale: number
 }
 
-const heroLetters = [
-  { letter: "L", src: "/assets/wordmark/pixel/liend-l.png", width: 71, height: 87 },
-  { letter: "I", src: "/assets/wordmark/pixel/liend-i.png", width: 30, height: 89 },
-  { letter: "E", src: "/assets/wordmark/pixel/liend-e.png", width: 67, height: 89 },
-  { letter: "N", src: "/assets/wordmark/pixel/liend-n.png", width: 79, height: 87 },
-  { letter: "D", src: "/assets/wordmark/pixel/liend-d.png", width: 70, height: 87 },
-] as const
+const heroLetters = ["L", "i", "e", "n", "d"] as const
 
 const routeSteps = [
   { number: "01", title: "Read the position", body: "LIEND reads supported migrated token balances from the connected Solana wallet", badge: "Wallet context" },
@@ -58,6 +52,81 @@ function DropletMark({ className = "" }: { className?: string }) {
     <span className={`${styles.mark} ${className}`} aria-hidden="true">
       <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={256} height={256} unoptimized />
     </span>
+  )
+}
+
+function LiquidRibbon({ className, gradientId }: { className: string; gradientId: string }) {
+  return (
+    <svg className={`${styles.liquidRibbon} ${className}`} viewBox="0 0 360 360" aria-hidden="true">
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#6ef6ff" />
+          <stop offset="0.42" stopColor="#3387ff" />
+          <stop offset="1" stopColor="#7651f5" />
+        </linearGradient>
+      </defs>
+      <path
+        className={styles.ribbonDepth}
+        d="M-28 236C40 99 160 70 245 118c85 48 91 141 166 185"
+      />
+      <path
+        className={styles.ribbonBody}
+        d="M-28 218C40 81 160 52 245 100c85 48 91 141 166 185"
+        stroke={`url(#${gradientId})`}
+      />
+      <path
+        className={styles.ribbonHighlight}
+        d="M-17 193C52 83 157 66 232 108c70 39 85 112 139 155"
+      />
+    </svg>
+  )
+}
+
+function HeroArtifacts() {
+  return (
+    <div className={styles.heroArtifacts} aria-hidden="true">
+      <LiquidRibbon className={styles.ribbonTop} gradientId="liend-ribbon-top" />
+      <LiquidRibbon className={styles.ribbonBottom} gradientId="liend-ribbon-bottom" />
+
+      <span className={`${styles.heroArtifact} ${styles.vectorKey}`}>
+        <svg viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="liend-key-face" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#ffffff" />
+              <stop offset="0.38" stopColor="#63f2ff" />
+              <stop offset="0.72" stopColor="#3f7cff" />
+              <stop offset="1" stopColor="#7950ef" />
+            </linearGradient>
+          </defs>
+          <path
+            className={styles.keyDepth}
+            d="M94 18c-25 0-45 20-45 45 0 8 2 16 6 23l-40 40 17 17 12-12 11 11 17-17-11-11 13-13c6 4 13 6 20 6 25 0 45-20 45-45S119 18 94 18Zm0 27a18 18 0 1 1 0 36 18 18 0 0 1 0-36Z"
+          />
+          <path
+            className={styles.keyFace}
+            d="M94 12c-25 0-45 20-45 45 0 8 2 16 6 23l-40 40 17 17 12-12 11 11 17-17-11-11 13-13c6 4 13 6 20 6 25 0 45-20 45-45S119 12 94 12Zm0 27a18 18 0 1 1 0 36 18 18 0 0 1 0-36Z"
+            fill="url(#liend-key-face)"
+          />
+          <path className={styles.keyShine} d="M78 25c23-14 49 1 52 23" />
+        </svg>
+      </span>
+
+      <span className={`${styles.heroArtifact} ${styles.vectorCoin}`}>
+        <i className={styles.coinRim} />
+        <b>L</b>
+        <i className={styles.coinGlint} />
+      </span>
+
+      <span className={`${styles.heroArtifact} ${styles.vectorWallet}`}>
+        <i className={styles.walletCardBack} />
+        <i className={styles.walletCardMid} />
+        <span className={styles.walletFace}>
+          <i className={styles.walletSignal} />
+          <b>LIEND</b>
+          <i className={styles.walletClasp}><span /></i>
+        </span>
+      </span>
+    </div>
   )
 }
 
@@ -335,37 +404,23 @@ export function LandingExperience() {
 
       <main id="main-content">
         <section className={`${styles.hero} ${styles.sceneWindow}`} id="top" onPointerMove={moveHero} aria-labelledby="hero-title">
-          <div className={styles.heroFluid} aria-hidden="true">
-            <Image src="/assets/liend-hero-material-v2.png" alt="" fill sizes="100vw" priority />
-          </div>
           <div className={styles.heroGrid} aria-hidden="true" />
-          <PixelSprite kind="key" className={styles.heroKey} />
-          <PixelSprite kind="coin" className={styles.heroCoin} />
-          <PixelSprite kind="wallet" className={styles.heroWallet} />
+          <HeroArtifacts />
           <div className={styles.heroCopy}>
             <h1 className={styles.heroWordmark} id="hero-title" aria-label="LIEND" data-intro="wordmark">
               <span className={styles.srOnly}>LIEND</span>
-              {heroLetters.map((item, index) => (
+              {heroLetters.map((letter, index) => (
                 <span
                   className={styles.heroLetterSlot}
-                  data-letter={item.letter}
-                  key={item.letter}
+                  data-letter={letter.toUpperCase()}
+                  key={`${letter}-${index}`}
                   style={{ "--letter-index": index } as React.CSSProperties}
                 >
-                  <Image
-                    aria-hidden="true"
-                    alt=""
-                    className={styles.heroLetter}
-                    height={item.height}
-                    src={item.src}
-                    unoptimized
-                    width={item.width}
-                  />
+                  <span aria-hidden="true" className={styles.heroLetter} data-letter={letter}>{letter}</span>
                 </span>
               ))}
             </h1>
             <p className={styles.eyebrow} data-intro="eyebrow">Liquidity for migrated positions on Solana</p>
-            <p className={styles.heroLine} data-intro="headline">Your position. Unstuck.</p>
             <p className={styles.heroSubline} data-intro="subline">Borrow SOL without making a sale the first move</p>
             <div className={styles.heroButtons} data-intro="actions">
               <LaunchAppLink className={styles.primaryButton}><MotionLabel>Launch web app</MotionLabel></LaunchAppLink>

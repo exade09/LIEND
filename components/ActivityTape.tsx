@@ -8,8 +8,11 @@ import { type TapeEvent, type TapeKind } from "@/data/activityTape"
 import { getExplorerAddressUrl, getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
 import styles from "./ActivityTape.module.css"
 
-const MIN_REVEAL_DELAY_MS = 60_000
-const MAX_REVEAL_DELAY_MS = 240_000
+const FIRST_REVEAL_MIN_DELAY_MS = 30_000
+const FIRST_REVEAL_MAX_DELAY_MS = 50_000
+const REGULAR_REVEAL_MIN_DELAY_MS = 120_000
+const REGULAR_REVEAL_MAX_DELAY_MS = 180_000
+const FAST_REVEAL_COUNT = 2
 
 function kindIcon(kind: TapeKind) {
   if (kind === "borrow" || kind === "swap-out") return "borrow" as const
@@ -27,10 +30,16 @@ function timeAgo(occurredAt: number, now: number) {
   return `${Math.floor(delta / 3600)}h`
 }
 
-function nextDelay() {
-  return MIN_REVEAL_DELAY_MS + Math.floor(
-    Math.random() * (MAX_REVEAL_DELAY_MS - MIN_REVEAL_DELAY_MS + 1),
+function randomDelay(minimum: number, maximum: number) {
+  return minimum + Math.floor(
+    Math.random() * (maximum - minimum + 1),
   )
+}
+
+function nextDelay(revealCount: number) {
+  return revealCount < FAST_REVEAL_COUNT
+    ? randomDelay(FIRST_REVEAL_MIN_DELAY_MS, FIRST_REVEAL_MAX_DELAY_MS)
+    : randomDelay(REGULAR_REVEAL_MIN_DELAY_MS, REGULAR_REVEAL_MAX_DELAY_MS)
 }
 
 async function loadPool(): Promise<TapeEvent[]> {
@@ -59,6 +68,8 @@ export function ActivityTape() {
     let cancelled = false
     let timer = 0
     let pool: TapeEvent[] = []
+    let revealCount = 0
+    let openingQueue: TapeEvent[] = []
     const seen = new Set<string>()
 
     const reveal = (event: TapeEvent) => {
@@ -74,9 +85,13 @@ export function ActivityTape() {
       }
       const unused = pool.filter((item) => !seen.has(item.signature))
       const source = unused.length > 0 ? unused : pool
-      if (source.length > 0) {
-        const next = source[Math.floor(Math.random() * source.length)]
-        if (next) reveal(next)
+      const queued = revealCount < FAST_REVEAL_COUNT ? openingQueue.shift() : undefined
+      if (queued || source.length > 0) {
+        const next = queued ?? source[Math.floor(Math.random() * source.length)]
+        if (next) {
+          reveal(next)
+          revealCount += 1
+        }
       } else {
         pool = await loadPool()
       }
@@ -85,17 +100,22 @@ export function ActivityTape() {
           if (!cancelled && fresh.length > 0) pool = fresh
         })
       }
-      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay())
+      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
     }
 
     void (async () => {
       pool = await loadPool()
       if (cancelled) return
-      const initial = pool.slice(0, 5)
+      openingQueue = pool.slice(0, FAST_REVEAL_COUNT)
+      // Keep a real activity backlog visible while reserving the two newest
+      // events for the quicker 30-50 second opening cadence.
+      const initial = pool.length > FAST_REVEAL_COUNT
+        ? pool.slice(FAST_REVEAL_COUNT, FAST_REVEAL_COUNT + 5)
+        : pool
       initial.forEach((event) => seen.add(event.signature))
       setEvents(initial)
-      setFreshId(initial[0]?.signature ?? null)
-      timer = window.setTimeout(() => void tick(), nextDelay())
+      setFreshId(null)
+      timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
     })()
 
     return () => {
