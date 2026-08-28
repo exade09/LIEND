@@ -1235,18 +1235,6 @@
   transform: translateY(3px);
 }
 
-.controlKey {
-  position: absolute;
-  z-index: 3;
-  right: -6%;
-  bottom: -4%;
-  width: 220px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 24px 25px rgba(5,8,50,.38));
-  animation: floatB 7s ease-in-out infinite;
-}
-
 .faq {
   display: grid;
   padding: clamp(90px, 10vw, 150px) clamp(24px, 7vw, 110px);
@@ -1748,7 +1736,6 @@
   .controlVisual { min-height: 520px; }
   .controlVisual::before { width: 520px; height: 520px; }
   .controlVisual::after { width: 340px; height: 340px; }
-  .controlKey { right: -12%; width: 150px; }
 
   .faqList summary { min-height: 82px; font-size: 12px; }
   .faqList details p { margin-left: 36px; font-size: 13px; }

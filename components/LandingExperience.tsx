@@ -561,7 +561,6 @@ export function LandingExperience() {
                 <MotionLabel>Approve in wallet</MotionLabel>
               </LaunchAppLink>
             </div>
-            <Image src="/assets/hero-key.png" alt="" width={1536} height={1024} className={styles.controlKey} />
           </div>
         </section>
 
