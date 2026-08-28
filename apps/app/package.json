@@ -11,14 +11,15 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@liend/api-client": "*",
+    "@liend/brand": "*",
+    "@liend/config": "*",
+    "@liend/domain": "*",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "zod": "^4.4.3",
-    "@liend/domain": "*",
-    "@liend/config": "*",
-    "@liend/api-client": "*",
-    "@liend/brand": "*"
+    "viem": "^2.56.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "latest",

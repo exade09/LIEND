@@ -23,20 +23,19 @@ export function AppHeader() {
 
   return (
     <header className="app-bar">
-      <Link className="wordmark" href="/" aria-label="STAYFI App home">
+      <Link className="wordmark" href="/" aria-label="LONS App home">
         <Image
-          src="/assets/logo/pixel/liend-mark.png"
+          src="/assets/lons-mark.png"
           alt=""
           width={64}
           height={64}
-          unoptimized
           priority
         />
-        <span>STAYFI</span>
+        <span>LONS</span>
         <small>UTILITY</small>
       </Link>
 
-      <nav className="nav-pill" aria-label="STAYFI App">
+      <nav className="nav-pill" aria-label="LONS App">
         {NAV.map((item) => (
           <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
             {item.label}

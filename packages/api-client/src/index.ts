@@ -93,7 +93,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     try {
       response = await doFetch(`${root}${path}`, { ...init, headers, credentials })
     } catch {
-      throw new LiendApiError("internal", "Could not reach the STAYFI API", 0)
+      throw new LiendApiError("internal", "Could not reach the LONS API", 0)
     }
 
     const text = await response.text()
@@ -102,7 +102,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
       try {
         body = JSON.parse(text)
       } catch {
-        throw new LiendApiError("internal", "Malformed response from the STAYFI API", response.status)
+        throw new LiendApiError("internal", "Malformed response from the LONS API", response.status)
       }
     }
 
@@ -122,7 +122,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     const parsed = schema.safeParse(body)
     if (!parsed.success) {
       // Contract drift is an error, not something to render partially.
-      throw new LiendApiError("internal", "Unexpected response shape from the STAYFI API", response.status)
+      throw new LiendApiError("internal", "Unexpected response shape from the LONS API", response.status)
     }
     return parsed.data
   }
@@ -135,10 +135,10 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
 
     session: () => request("/api/auth/session", SessionSchema),
 
-    authChallenge: (address: string, cluster: string) =>
+    authChallenge: (address: string, chainId: number) =>
       request("/api/auth/challenge", AuthChallengeSchema, {
         method: "POST",
-        body: JSON.stringify({ address, cluster }),
+        body: JSON.stringify({ address, chainId }),
       }),
 
     authVerify: (address: string, nonce: string, signature: string) =>
@@ -160,7 +160,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     holderCheck: (wallet: string) =>
       request(`/api/holder-check?wallet=${encodeURIComponent(wallet)}`, UtilityAccessSchema),
 
-    /** On-chain SPL token accounts for the authenticated session wallet. */
+    /** On-chain ERC-20 balances for the authenticated session wallet. */
     walletPositions: () => request("/api/positions", WalletPositionsResponseSchema),
 
     createPairingRequest: () =>

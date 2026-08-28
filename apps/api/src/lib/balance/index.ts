@@ -7,7 +7,7 @@
  */
 
 import { readServerEnv } from "../env"
-import { readTokenBalance } from "../solana-rpc"
+import { readTokenBalance } from "../evm-rpc"
 
 export type BalanceLookup =
   | { status: "ok"; balance: bigint }

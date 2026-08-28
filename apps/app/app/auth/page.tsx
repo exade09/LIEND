@@ -52,15 +52,15 @@ function AuthPageInner() {
   async function connect(wallet: DiscoveredWallet) {
     const client = getApiClient()
     if (!client) {
-      setError("The STAYFI API is not configured for this deployment")
+      setError("The LONS API is not configured for this deployment")
       return
     }
     setBusy(wallet.name)
     setError(null)
     try {
       const { address } = await wallet.connect()
-      const challenge = await client.authChallenge(address, "mainnet-beta")
-      const signature = await wallet.signMessage(challenge.message)
+      const challenge = await client.authChallenge(address, 4663)
+      const signature = await wallet.signMessage(challenge.message, address)
       await client.authVerify(address, challenge.nonce, signature)
       await refresh()
       router.replace(returnTo)
@@ -76,13 +76,13 @@ function AuthPageInner() {
       <header className="page-head">
         <div>
           <h1>Connect wallet</h1>
-          <p>Verify control of a Solana wallet to access your STAYFI account</p>
+          <p>Verify your MetaMask account on Robinhood Chain to access LONS</p>
         </div>
       </header>
 
       {!apiConfigured && (
         <div className="notice">
-          <strong>STAYFI API not configured</strong>
+          <strong>LONS API not configured</strong>
           <p>
             Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment.
           </p>
@@ -90,10 +90,10 @@ function AuthPageInner() {
       )}
 
       <div className="notice">
-        <strong>STAYFI is non-custodial</strong>
+        <strong>LONS is non-custodial</strong>
         <p>
           You will be asked to sign a plain-text message to prove you control the wallet. This
-          creates no transaction and costs no fees. STAYFI never asks for a seed phrase or private
+          creates no transaction and costs no fees. LONS never asks for a seed phrase or private
           key.
         </p>
       </div>
@@ -107,8 +107,7 @@ function AuthPageInner() {
 
       {wallets.length === 0 ? (
         <div className="empty">
-          No Solana wallet detected in this browser. Install a wallet that supports the Wallet
-          Standard, then reload this page.
+          MetaMask was not detected in this browser. Install MetaMask, then reload this page.
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 380 }}>

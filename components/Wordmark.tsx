@@ -5,10 +5,10 @@ export function Wordmark() {
     <div
       className={styles.wordmark}
       role="img"
-      aria-label="STAYFI"
+      aria-label="LONS"
       style={{ aspectRatio: "3 / 1" }}
     >
-      <span className={styles.text} aria-hidden="true">STAYFI</span>
+      <span className={styles.text} aria-hidden="true">LONS</span>
     </div>
   )
 }

@@ -25,7 +25,7 @@ export function Hero() {
         <div className={styles.atmosphere} aria-hidden="true">
           <img
             className={styles.heroBanner}
-            src="/assets/hero/pixel-ascent.png"
+            src="/assets/hero/lons-atmosphere.png"
             alt=""
             draggable={false}
             decoding="async"

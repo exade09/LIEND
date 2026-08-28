@@ -13,7 +13,7 @@ export default function LoansPage() {
       <header className="page-head">
         <div>
           <h1>Loans</h1>
-          <p>Review, active and closed STAYFI loans for your wallet</p>
+          <p>Review, active and closed LONS loans for your wallet</p>
         </div>
       </header>
       <UtilityGate>

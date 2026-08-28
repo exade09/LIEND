@@ -1,45 +1,18 @@
-/**
- * Wallet token positions from chain.
- *
- * The session wallet is the only owner that may be queried. Clients cannot
- * pass an address; the API re-reads token accounts from Solana and attaches
- * public market metadata before returning them.
- */
+/** ERC-20 positions for the authenticated Robinhood Chain account. */
 
 import { parseMint } from "@liend/config"
 import type { WalletPositionsResponse } from "@liend/domain"
 import { ApiFailure } from "./http"
-import { readWalletTokenAccounts, type ParsedTokenAccount } from "./solana-rpc"
+import { readWalletTokenAccounts, type ParsedTokenAccount } from "./evm-rpc"
 import { loadTokenMarkets } from "./token-markets"
 
 const MAX_POSITIONS = 48
-
-/** Temporary recording seat: one wallet, one mint, a fixed USD value. */
-const RECORDING_WALLET = "Bpp1AphBxPNjXf3eB6cEVoXyythAPwuBNSVyfdgw9Ze9"
-const RECORDING_MINT = "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
-const RECORDING_POSITION = {
-  mint: RECORDING_MINT,
-  symbol: "PUMP",
-  name: "Pump",
-  decimals: 6,
-  amount: "48,000",
-  amountRaw: "48000000000",
-  valueUsd: 110,
-}
-
-export function applyRecordingFixture(response: WalletPositionsResponse): WalletPositionsResponse {
-  if (response.wallet !== RECORDING_WALLET) return response
-  return {
-    ...response,
-    positions: [RECORDING_POSITION, ...response.positions.filter((row) => row.mint !== RECORDING_MINT)],
-  }
-}
 
 export function formatTokenAmount(amountRaw: bigint, decimals: number): string {
   const base = 10n ** BigInt(decimals)
   const whole = amountRaw / base
   const fraction = amountRaw % base
-  const grouped = whole.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  const grouped = whole.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",")
   if (fraction === 0n) return grouped
   const frac = fraction.toString().padStart(decimals, "0").replace(/0+$/, "").slice(0, 6)
   return frac ? `${grouped}.${frac}` : grouped
@@ -54,26 +27,25 @@ export function toWalletPositions(
   wallet: string,
   accounts: ParsedTokenAccount[],
   markets: Map<string, { symbol: string; name: string; priceUsd: number | null }>,
-  solUsd: number | null,
+  ethUsd: number | null,
   asOf = Date.now(),
 ): WalletPositionsResponse {
-  const ranked = accounts
+  const positions = accounts
     .map((account) => {
-      const mint = parseMint(account.mint)
-      if (!mint) return null
-      const market = markets.get(mint)
+      const contract = parseMint(account.mint)
+      if (!contract) return null
+      const market = markets.get(contract)
       const quantity = uiAmount(account.amountRaw, account.decimals)
       const priceUsd = market?.priceUsd ?? null
-      const rawValue = priceUsd === null ? null : quantity * priceUsd
-      const valueUsd = rawValue === null || !Number.isFinite(rawValue) ? null : Math.max(0, rawValue)
+      const valueUsd = priceUsd === null ? null : Math.max(0, quantity * priceUsd)
       return {
-        mint,
-        symbol: market?.symbol ?? `${mint.slice(0, 4)}…${mint.slice(-4)}`,
-        name: market?.name ?? mint,
+        mint: contract,
+        symbol: account.symbol ?? market?.symbol ?? `${contract.slice(0, 6)}…${contract.slice(-4)}`,
+        name: account.name ?? market?.name ?? contract,
         decimals: account.decimals,
         amount: formatTokenAmount(account.amountRaw, account.decimals),
         amountRaw: account.amountRaw.toString(),
-        valueUsd,
+        valueUsd: valueUsd !== null && Number.isFinite(valueUsd) ? valueUsd : null,
         rank: valueUsd ?? quantity,
       }
     })
@@ -82,19 +54,16 @@ export function toWalletPositions(
     .slice(0, MAX_POSITIONS)
     .map(({ rank: _rank, ...position }) => position)
 
-  return { wallet, asOf, solUsd, positions: ranked }
+  return { wallet, asOf, ethUsd, positions }
 }
 
 export async function readSessionPositions(wallet: string): Promise<WalletPositionsResponse> {
   try {
     const accounts = await readWalletTokenAccounts(wallet)
-    const { markets, solUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
-    return applyRecordingFixture(toWalletPositions(wallet, accounts, markets, solUsd))
-  } catch (error) {
-    if (wallet === RECORDING_WALLET) {
-      return applyRecordingFixture({ wallet, asOf: Date.now(), solUsd: null, positions: [] })
-    }
-    const message = error instanceof Error ? error.message : "Wallet positions could not be read"
+    const { markets, ethUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
+    return toWalletPositions(wallet, accounts, markets, ethUsd)
+  } catch (caught) {
+    const message = caught instanceof Error ? caught.message : "Robinhood Chain positions could not be read"
     throw new ApiFailure("adapter_unavailable", message)
   }
 }

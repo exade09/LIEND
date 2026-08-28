@@ -1,15 +1,15 @@
 /**
- * LIEND product configuration for the landing.
+ * LONS product configuration for the landing.
  *
  * Every cross-surface destination resolves from the environment. Nothing here
  * is hardcoded to a domain, so moving from Vercel-generated URLs to a custom
  * domain is an env change plus a redeploy — never a code change.
  *
  * PRODUCT FACTS (approved, and encoded here rather than guessed):
- *  - The LIEND token is not launched: there is no mint and no published
+ *  - The LONS token is not launched: there is no ERC-20 contract and no published
  *    holder requirement.
- *  - Pump.fun currently points at the board (`https://pump.fun`) until a CA is
- *    published from admin. Live CA text is appended as `https://pump.fun/coin/{text}`.
+ *  - pons is the launch surface on Robinhood Chain. A published CA remains
+ *    visible as the verified contract; the launchpad root is always safe.
  *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
  *  - The published Chrome Web Store listing is the primary extension
  *    distribution channel.
@@ -87,10 +87,11 @@ const extensionUrl =
   (extensionMode === "webstore" ? chromeWebStoreUrl : null)
 
 export const project = {
-  name: "STAYFI",
-  ticker: "STAYFI",
-  network: "Solana",
-  cluster: "mainnet-beta",
+  name: "LONS",
+  ticker: "LONS",
+  network: "Robinhood Chain",
+  chainId: 4663,
+  nativeCurrency: "ETH",
 
   /**
    * Own origin, for metadata. Next requires an absolute URL for
@@ -116,10 +117,10 @@ export const project = {
   extensionArchive: "/liend-extension.zip",
 
   /**
-   * Static Pump.fun destination. Landing chips ignore this once a CA is
-   * published and instead open https://pump.fun/coin/{CA text}.
+   * Static pons destination. Landing chips ignore this once a CA is
+   * published and instead open https://www.ponsfamily.com/launchpad/{CA text}.
    */
-  pumpUrl: url(process.env.NEXT_PUBLIC_PUMPFUN_URL) ?? "https://pump.fun",
+  ponsUrl: url(process.env.NEXT_PUBLIC_PONS_URL) ?? "https://www.ponsfamily.com",
   xUrl: url(process.env.NEXT_PUBLIC_X_URL),
   /**
    * Docs. Relative `/docs` is the in-product GitBook. Override with an absolute
@@ -128,18 +129,19 @@ export const project = {
   docsUrl: url(process.env.NEXT_PUBLIC_DOCS_URL) ?? "/docs",
 
   /** Public block explorer — a real third-party service, not a LIEND claim. */
-  explorerUrl: "https://solscan.io",
+  explorerUrl: "https://robinhoodchain.blockscout.com",
+  rpcUrl: "https://rpc.mainnet.chain.robinhood.com",
 
   token: {
-    /** No mint exists yet. Set NEXT_PUBLIC_LIEND_TOKEN_MINT at launch. */
-    mint: process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT?.trim() || null,
+    /** No contract exists yet. Set NEXT_PUBLIC_LONS_TOKEN_CONTRACT at launch. */
+    mint: process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT?.trim() || null,
     get launched(): boolean {
-      return Boolean(process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT?.trim())
+      return Boolean(process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT?.trim())
     },
   },
 
   access: {
-    requiresLiend: true,
+    requiresLons: true,
     /** Not published yet. Never defaulted to a number. */
     minimumBalance: null,
   },

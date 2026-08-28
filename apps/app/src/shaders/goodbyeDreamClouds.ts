@@ -5,7 +5,7 @@
  * License: https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
  * The rendering model and alpha values are preserved. Only the RGB palette
- * and the noise lookup texture coordinates are adapted for STAYFI/WebGL2.
+ * and the noise lookup texture coordinates are adapted for LONS/WebGL2.
  */
 
 export const FULLSCREEN_VERTEX_SHADER = `#version 300 es
@@ -81,7 +81,7 @@ out vec4 fragColor;
 #define _DetailCombine    -0.25
 #define _DensityCutoff     0.47
 
-// STAYFI palette. Original alpha values are intentionally unchanged.
+// LONS palette. Original alpha values are intentionally unchanged.
 #define _LowDensityColor   vec4(0.725490, 0.647059, 1.000000, 0.043)
 #define _HighDensityColor  vec4(0.192157, 0.333333, 0.960784, 0.270)
 #define _SunColor          vec4(0.349020, 0.909804, 1.000000, 0.620)

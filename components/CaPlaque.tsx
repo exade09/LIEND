@@ -1,6 +1,6 @@
 "use client"
 
-import { getExplorerAddressUrl, isLikelySolanaAddress } from "@/lib/addresses"
+import { getExplorerAddressUrl, isLikelyEvmAddress } from "@/lib/addresses"
 import { usePublishedCa } from "@/lib/usePublishedCa"
 
 import styles from "./CaPlaque.module.css"
@@ -14,7 +14,7 @@ type CaPlaqueProps = {
 export function CaPlaque({ variant, initialMint = null, live = true }: CaPlaqueProps) {
   const published = usePublishedCa(initialMint)
   const mint = live ? published.mint : initialMint
-  const isAddress = mint ? isLikelySolanaAddress(mint) : false
+  const isAddress = mint ? isLikelyEvmAddress(mint) : false
   const display = mint ?? "waiting"
   const explorer = mint && isAddress ? getExplorerAddressUrl(mint) : null
 
@@ -22,7 +22,7 @@ export function CaPlaque({ variant, initialMint = null, live = true }: CaPlaqueP
     <article
       className={`${styles.plaque} ${styles[variant]}`}
       data-state={mint ? "live" : "waiting"}
-      aria-label="STAYFI contract address"
+      aria-label="LONS contract address"
       title={mint ?? undefined}
     >
       <span className={styles.kicker}>CA:</span>

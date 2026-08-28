@@ -1,6 +1,6 @@
 import { project } from "../config/project";
 
-const BASE58_PATTERN = /^[1-9A-HJ-NP-Za-km-z]+$/;
+const EVM_ADDRESS_PATTERN = /^0x[a-fA-F0-9]{40}$/;
 
 export function shortenAddress(
   address: string,
@@ -16,16 +16,12 @@ export function shortenAddress(
 
 export const formatAddress = shortenAddress;
 
-export function isLikelySolanaAddress(address: string): boolean {
-  return (
-    address.length >= 32 &&
-    address.length <= 44 &&
-    BASE58_PATTERN.test(address)
-  );
+export function isLikelyEvmAddress(address: string): boolean {
+  return EVM_ADDRESS_PATTERN.test(address);
 }
 
 export function getExplorerAddressUrl(address: string): string {
-  return `${project.explorerUrl}/account/${encodeURIComponent(address)}`;
+  return `${project.explorerUrl}/address/${encodeURIComponent(address)}`;
 }
 
 export function getExplorerTransactionUrl(signature: string): string {

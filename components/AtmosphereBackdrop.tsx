@@ -12,7 +12,7 @@ void main() {
  * Adapted from "Bromine Clouds" by @Kaso:
  * https://fragcoord.xyz/s/b6749csy
  * SPDX-License-Identifier: CC-BY-SA-4.0
- * Palette, pacing and composition adapted for STAYFI.
+ * Palette, pacing and composition adapted for LONS.
  */
 const FRAGMENT_SOURCE = `#version 300 es
 precision highp float;
@@ -49,7 +49,7 @@ float fbm(vec2 p) {
   return value;
 }
 
-vec3 stayfiPalette(float t, float tone) {
+vec3 lonsPalette(float t, float tone) {
   vec3 cobalt = vec3(0.055, 0.18, 0.76);
   vec3 cyan = vec3(0.18, 0.91, 1.0);
   vec3 violet = vec3(0.47, 0.24, 0.94);
@@ -75,7 +75,7 @@ void main() {
   float radial = exp(-2.5 * length(q)) * (0.72 + 0.28 * sin(time * 2.0 + broad * 5.0));
   float intensity = clouds * 0.62 + radial;
   float field = fbm(q * 1.9 + intensity + time);
-  vec3 color = stayfiPalette(field + intensity * 0.44, u_tone);
+  vec3 color = lonsPalette(field + intensity * 0.44, u_tone);
   color += mix(vec3(0.08, 0.42, 1.0), vec3(0.44, 0.18, 1.0), u_tone) * radial * 0.55;
   color *= 0.40 + intensity * 1.42;
   color = 1.0 - exp(-color);
@@ -171,7 +171,7 @@ export function AtmosphereBackdrop({ tone = 0, className = "" }: { tone?: number
         gl.deleteProgram(program)
       }
     } catch (error) {
-      console.error("STAYFI atmosphere could not start", error)
+      console.error("LONS atmosphere could not start", error)
     }
   }, [tone])
 

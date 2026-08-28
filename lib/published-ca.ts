@@ -24,7 +24,7 @@ function filePath(): string {
 }
 
 function envMint(): string | null {
-  return process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT?.trim() || null
+  return process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT?.trim() || null
 }
 
 function envSeed(): PublishedCa {

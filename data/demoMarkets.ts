@@ -4,8 +4,8 @@ import type { Market } from "../types";
 export const demoMarkets: Market[] = [
   {
     id: "demo-liend",
-    name: "STAYFI",
-    ticker: "STAYFI",
+    name: "LONS",
+    ticker: "LONS",
     mintAddress: "8fTzQ7nXW3mK5vR9cY2pH6sD4aJ8uE7gB3qN5wC2kM9x",
     iconLabel: "LI",
     accent: "#8B5CF6",

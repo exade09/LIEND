@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Icon } from "@/components/Icon"
 import { LaunchAppLink } from "@/components/ProductLink"
-import { PumpFunLink } from "@/components/PumpFunLink"
+import { PonsLink } from "@/components/PonsLink"
 import { project } from "@/config/project"
 import { shortenAddress } from "@/lib/addresses"
 import {
@@ -33,11 +33,11 @@ function stateFromAccess(access: HolderAccessDto): GateState {
 }
 
 const idleCopy: Record<GateState, string> = {
-  "NOT CONNECTED": "Connect a Solana wallet to begin the eligibility check",
-  CHECKING: "Checking STAYFI balance and active access parameters",
-  ELIGIBLE: "STAYFI utility is available for this wallet",
-  "NOT ELIGIBLE": "This wallet does not meet the STAYFI holding requirement",
-  "WRONG NETWORK": "Switch the wallet provider to the configured Solana network",
+  "NOT CONNECTED": "Connect MetaMask to begin the eligibility check",
+  CHECKING: "Checking LONS balance and active access parameters",
+  ELIGIBLE: "LONS utility is available for this wallet",
+  "NOT ELIGIBLE": "This wallet does not meet the LONS holding requirement",
+  "WRONG NETWORK": "Switch MetaMask to Robinhood Chain",
 }
 
 export function HolderGate() {
@@ -84,7 +84,7 @@ export function HolderGate() {
     setWalletAddress(null)
   }, [])
 
-  const resolveAccess = useCallback(async (address: string, cluster?: string) => {
+  const resolveAccess = useCallback(async (address: string, chainId?: number) => {
     const requestId = ++requestRef.current
     setBusy("check")
     setFailed(false)
@@ -94,10 +94,10 @@ export function HolderGate() {
     setWalletAddress(address)
     setWalletLabel(shortenAddress(address))
 
-    if (cluster && cluster !== project.cluster) {
+    if (chainId && chainId !== project.chainId) {
       if (requestId !== requestRef.current) return
       setState("WRONG NETWORK")
-      setMessage(`Switch to Solana ${project.cluster}`)
+      setMessage("Switch MetaMask to Robinhood Chain")
       setBusy(null)
       return
     }
@@ -109,7 +109,7 @@ export function HolderGate() {
       setState("CHECKING")
       setMessage(
         access.state === "holder-check-pending"
-          ? "STAYFI holdings could not be verified yet"
+          ? "LONS holdings could not be verified yet"
           : access.reason,
       )
       setFailed(true)
@@ -125,7 +125,7 @@ export function HolderGate() {
   }, [])
 
   const attachWallet = useCallback(
-    (wallet: DiscoveredWallet, address: string, cluster?: string) => {
+    (wallet: DiscoveredWallet, address: string, chainId?: number) => {
       unsubscribeRef.current?.()
       unsubscribeRef.current = wallet.onAccountChange
         ? wallet.onAccountChange((next) => {
@@ -136,7 +136,7 @@ export function HolderGate() {
             void resolveAccess(next)
           })
         : null
-      void resolveAccess(address, cluster)
+      void resolveAccess(address, chainId)
     },
     [resetGate, resolveAccess],
   )
@@ -149,7 +149,7 @@ export function HolderGate() {
       setMessage("")
       try {
         const result = await wallet.connect()
-        attachWallet(wallet, result.address, result.cluster)
+        attachWallet(wallet, result.address, result.chainId)
       } catch (error) {
         setBusy(null)
         setState("NOT CONNECTED")
@@ -164,7 +164,7 @@ export function HolderGate() {
   const startConnect = useCallback(() => {
     const found = refreshWallets()
     if (found.length === 0) {
-      setMessage("No Solana wallet detected in this browser")
+      setMessage("MetaMask was not detected in this browser")
       return
     }
     if (found.length === 1 && found[0]) {
@@ -190,14 +190,14 @@ export function HolderGate() {
         <div className="holder-copy">
           <div className="section-kicker">HOLDER ACCESS</div>
           <h2>Enter the <span className="accent-text">utility layer</span></h2>
-          <p>STAYFI utility is available after a connected wallet is verified</p>
+          <p>LONS utility is available after a connected wallet is verified</p>
 
           <div className="access-flow" aria-label="Access sequence">
             {[
-              ["01", "Obtain STAYFI after migration", "Open the official Pump.fun destination"],
-              ["02", "Connect a Solana wallet", "Use a standard wallet provider"],
-              ["03", "Verify the position", "Read balance through the configured adapter"],
-              ["04", "Use STAYFI utility", "Available after wallet verification"],
+              ["01", "Obtain LONS after migration", "Open the official pons destination"],
+              ["02", "Connect MetaMask", "Switch to Robinhood Chain in one approval"],
+              ["03", "Verify the position", "Read ERC-20 balances from Robinhood Chain"],
+              ["04", "Use LONS utility", "Available after wallet verification"],
             ].map(([index, title, copy]) => (
               <div key={index}>
                 <span>{index}</span>
@@ -207,11 +207,11 @@ export function HolderGate() {
             ))}
           </div>
 
-          <PumpFunLink className="inline-link">
-            <Icon name="pump-fun" size={18} />
-            Open STAYFI on Pump.fun
+          <PonsLink className="inline-link">
+            <Icon name="token" size={18} />
+            Open LONS on pons
             <Icon name="external-link" size={14} />
-          </PumpFunLink>
+          </PonsLink>
         </div>
 
         <div className="holder-gate-card">
@@ -220,8 +220,8 @@ export function HolderGate() {
           </div>
 
           <div className="gate-identity">
-            <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized />
-            <div><span>REQUIRED POSITION</span><strong>STAYFI</strong></div>
+            <Image src="/assets/lons-mark.png" alt="" width={128} height={128} />
+            <div><span>REQUIRED POSITION</span><strong>LONS</strong></div>
             <span className="network-chip">{project.network}</span>
           </div>
 
@@ -231,13 +231,13 @@ export function HolderGate() {
             <small>
               {state === "NOT CONNECTED"
                 ? "Resolved from the connected wallet"
-                : "Resolved from this wallet and its STAYFI holdings"}
+                : "Resolved from this wallet and its LONS holdings"}
             </small>
           </div>
 
           <dl className={`gate-readout ${state === "CHECKING" && !failed ? "is-checking" : ""}`}>
             <div>
-              <dt><Icon name="liquidity" size={15} /> STAYFI Balance</dt>
+              <dt><Icon name="liquidity" size={15} /> LONS Balance</dt>
               <dd>{state === "CHECKING" && !failed ? <span className="skeleton-line" /> : balanceLabel}</dd>
             </div>
             <div>
@@ -290,7 +290,7 @@ export function HolderGate() {
               Enter App <Icon name="arrow" size={17} />
             </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
-            <PumpFunLink className="button button--primary button--wide">Get STAYFI <Icon name="external-link" size={15} /></PumpFunLink>
+            <PonsLink className="button button--primary button--wide">Get LONS <Icon name="external-link" size={15} /></PonsLink>
           ) : state === "WRONG NETWORK" ? (
             <button
               className="button button--primary button--wide"
@@ -301,12 +301,12 @@ export function HolderGate() {
               {busy === "connect" ? (
                 <><span className="button-spinner" /> Connecting</>
               ) : (
-                <>Switch to Solana</>
+                <>Switch to Robinhood Chain</>
               )}
             </button>
           ) : state === "CHECKING" && busy === "check" && !failed ? (
             <button className="button button--primary button--wide" type="button" disabled>
-              <span className="button-spinner" /> Checking STAYFI Balance
+              <span className="button-spinner" /> Checking LONS Balance
             </button>
           ) : failed ? (
             <button className="button button--primary button--wide" type="button" onClick={retryCheck} disabled={busy !== null}>
@@ -318,7 +318,7 @@ export function HolderGate() {
             </button>
           )}
 
-          <p className="security-copy">STAYFI never requests seed phrases, private keys or wallet passwords</p>
+          <p className="security-copy">LONS never requests seed phrases, private keys or wallet passwords</p>
         </div>
       </div>
     </section>

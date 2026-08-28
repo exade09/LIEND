@@ -8,7 +8,7 @@ const architecture = [
     icon: "wallet" as IconName,
   },
   {
-    label: "STAYFI INTERFACE",
+    label: "LONS INTERFACE",
     description: "Route configuration",
     icon: "transaction" as IconName,
   },
@@ -18,7 +18,7 @@ const architecture = [
     icon: "status" as IconName,
   },
   {
-    label: "STAYFI PROGRAM",
+    label: "LONS PROGRAM",
     description: "Borrow instruction",
     icon: "borrow" as IconName,
   },

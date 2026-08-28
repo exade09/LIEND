@@ -66,7 +66,7 @@ export function ProductConcept() {
             <p className={`${styles.eyebrow} eyebrow`}>Another route to liquidity</p>
             <h2 id="product-concept-title">
               <span>Selling is one route</span>
-              <span>STAYFI adds another</span>
+              <span>LONS adds another</span>
             </h2>
             <p>
               Use supported migrated token positions inside a borrowing flow instead of making a market sale
@@ -82,7 +82,7 @@ export function ProductConcept() {
               <i />
             </div>
 
-            <Route label="STAYFI" steps={liendRoute} variant="liend" />
+            <Route label="LONS" steps={liendRoute} variant="liend" />
           </div>
 
           <div className={styles.footnote}>

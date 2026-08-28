@@ -21,7 +21,7 @@ export type ServerEnv = {
   allowedOrigins: string[]
   /** HMAC key for session cookies. Required in production. */
   sessionSecret: string | null
-  /** Solana RPC endpoint. Required before any balance lookup can work. */
+  /** Robinhood Chain JSON-RPC endpoint. Public mainnet is used when unset. */
   rpcUrl: string | null
   token: TokenLaunchState
   /** Postgres DSN (DATABASE_URL). Absent means no durable store is configured. */
@@ -34,21 +34,23 @@ let cached: ServerEnv | null = null
 export function readServerEnv(): ServerEnv {
   if (cached) return cached
 
-  const environment = resolveEnvironment(process.env.VERCEL_ENV ?? process.env.LIEND_DEPLOY_ENV)
+  const environment = resolveEnvironment(process.env.VERCEL_ENV ?? process.env.LONS_DEPLOY_ENV ?? process.env.LIEND_DEPLOY_ENV)
 
   cached = {
     environment,
     isProduction: environment === "production",
-    allowedOrigins: resolveAllowedOrigins(process.env.LIEND_ALLOWED_ORIGINS),
-    sessionSecret: process.env.LIEND_SESSION_SECRET?.trim() || null,
-    rpcUrl: process.env.LIEND_SOLANA_RPC_URL?.trim() || null,
+    allowedOrigins: resolveAllowedOrigins(process.env.LONS_ALLOWED_ORIGINS ?? process.env.LIEND_ALLOWED_ORIGINS),
+    sessionSecret: process.env.LONS_SESSION_SECRET?.trim() || process.env.LIEND_SESSION_SECRET?.trim() || null,
+    rpcUrl:
+      process.env.LONS_ROBINHOOD_RPC_URL?.trim() ||
+      "https://rpc.mainnet.chain.robinhood.com",
     token: resolveTokenLaunchState(
-      process.env.LIEND_TOKEN_MINT,
-      process.env.LIEND_MIN_HOLDER_BALANCE,
+      process.env.LONS_TOKEN_CONTRACT ?? process.env.LIEND_TOKEN_MINT,
+      process.env.LONS_MIN_HOLDER_BALANCE ?? process.env.LIEND_MIN_HOLDER_BALANCE,
     ),
     databaseUrl:
       process.env.DATABASE_URL?.trim() || process.env.LIEND_DATABASE_URL?.trim() || null,
-    version: process.env.LIEND_API_VERSION?.trim() || "0.1.0",
+    version: process.env.LONS_API_VERSION?.trim() || process.env.LIEND_API_VERSION?.trim() || "0.1.0",
   }
 
   return cached

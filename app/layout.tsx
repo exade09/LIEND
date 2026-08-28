@@ -20,23 +20,23 @@ const silkscreen = Silkscreen({
 })
 
 export const metadata: Metadata = {
-  title: "STAYFI | Utility liquidity for migrated tokens",
+  title: "LONS | Utility liquidity for migrated tokens",
   description:
     "Borrow against supported migrated token positions on Solana without making a market sale your first move",
   metadataBase: new URL(project.siteUrl),
   openGraph: {
-    title: "STAYFI | Hold the position, access the liquidity",
+    title: "LONS | Hold the position, access the liquidity",
     description:
       "A utility lending interface for supported migrated token positions on Solana",
   },
   twitter: {
     card: "summary_large_image",
-    title: "STAYFI",
+    title: "LONS",
     description: "Utility liquidity for migrated tokens on Solana",
   },
   icons: {
-    icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
-    apple: "/assets/logo/pixel/liend-mark.png",
+    icon: [{ url: "/assets/lons-mark.png", type: "image/png" }],
+    apple: "/assets/lons-mark.png",
   },
 }
 

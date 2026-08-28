@@ -76,10 +76,10 @@ export async function requireUtilityAccess(wallet: string): Promise<void> {
     case "token-not-launched":
       return
     case "holder-check-pending":
-      throw new ApiFailure("adapter_unavailable", "STAYFI holdings could not be verified")
+      throw new ApiFailure("adapter_unavailable", "LONS holdings could not be verified")
     case "not-eligible":
-      throw new ApiFailure("utility_locked", "This wallet does not meet the STAYFI holding requirement")
+      throw new ApiFailure("utility_locked", "This wallet does not meet the LONS holding requirement")
     default:
-      throw new ApiFailure("forbidden", "STAYFI utility is not available for this wallet")
+      throw new ApiFailure("forbidden", "LONS utility is not available for this wallet")
   }
 }

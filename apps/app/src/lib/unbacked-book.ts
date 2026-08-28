@@ -274,7 +274,7 @@ export function activityLabel(kind: UnbackedActivity["kind"]) {
 /** Plain-text intent the wallet shows before the user signs. No funds move. */
 export function borrowRequestMessage(wallet: string, quote: UnbackedQuote) {
   return [
-    "STAYFI borrow request",
+    "LONS borrow request",
     "",
     `wallet: ${wallet}`,
     `token: ${quote.symbol}`,

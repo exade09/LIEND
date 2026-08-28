@@ -229,7 +229,6 @@
 .mobileBrand img {
   width: clamp(21px, 2.1vw, 32px);
   height: auto;
-  image-rendering: pixelated;
 }
 
 .mobileBrand strong {

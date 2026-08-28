@@ -16,16 +16,16 @@ export const docsPages: DocsPage[] = [
   {
     slug: "",
     href: "/docs",
-    title: "STAYFI Docs",
+    title: "LONS Docs",
     kicker: "GitBook",
-    summary: "Product documentation for the STAYFI utility layer on Solana.",
+    summary: "Product documentation for the LONS utility layer on Solana.",
     sections: [
       {
-        heading: "What STAYFI is",
+        heading: "What LONS is",
         body: [
-          "STAYFI is a utility layer for borrowing against supported migrated token positions on Solana.",
+          "LONS is a utility layer for borrowing against supported migrated token positions on Solana.",
           "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as SOL.",
-          "The landing, the STAYFI App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
+          "The landing, the LONS App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
         ],
       },
       {
@@ -39,8 +39,8 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Who it is for",
         body: [
-          "STAYFI is for holders of supported migrated tokens who want a second route besides selling.",
-          "A verified wallet can use STAYFI utility. When a mint and minimum balance are published, the App and API apply that holder check.",
+          "LONS is for holders of supported migrated tokens who want a second route besides selling.",
+          "A verified wallet can use LONS utility. When a mint and minimum balance are published, the App and API apply that holder check.",
         ],
       },
     ],
@@ -48,29 +48,29 @@ export const docsPages: DocsPage[] = [
   {
     slug: "token",
     href: "/docs/token",
-    title: "STAYFI token",
+    title: "LONS token",
     kicker: "Access",
-    summary: "How the token, Pump.fun and holder access fit together.",
+    summary: "How the token, pons and holder access fit together.",
     sections: [
       {
         heading: "Token status",
         body: [
-          "The STAYFI token is not launched yet. There is no mint in product config and no published holder threshold.",
-          "The Pump.fun buttons follow the published CA from the admin console. Empty CA opens the public board at https://pump.fun. Published text opens https://pump.fun/coin/ followed by that same text.",
+          "The LONS token is not launched yet. There is no mint in product config and no published holder threshold.",
+          "The pons buttons follow the published CA from the admin console. Empty CA opens the public board at https://www.ponsfamily.com. Published text opens https://www.ponsfamily.com/launchpad/ followed by that same text.",
         ],
       },
       {
         heading: "Holder access",
         body: [
-          "STAYFI utility is available after a connected wallet is verified.",
+          "LONS utility is available after a connected wallet is verified.",
           "When a mint and minimum balance are published, the App and API check wallet holdings against those values.",
         ],
       },
       {
-        heading: "Where to get STAYFI",
+        heading: "Where to get LONS",
         body: [
-          "The official acquisition path is Pump.fun. Use the Pump.fun control in the header. Do not follow unofficial ticker pages.",
-          "STAYFI never asks for a seed phrase, a private key or a wallet password.",
+          "The official acquisition path is pons. Use the pons control in the header. Do not follow unofficial ticker pages.",
+          "LONS never asks for a seed phrase, a private key or a wallet password.",
         ],
       },
     ],
@@ -85,14 +85,14 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Connect",
         body: [
-          "A user connects a Solana wallet through a standard wallet provider. STAYFI asks for a plain-text signature to prove control of the address.",
+          "A user connects a Solana wallet through a standard wallet provider. LONS asks for a plain-text signature to prove control of the address.",
           "That signature creates no transaction and costs no fees.",
         ],
       },
       {
         heading: "Verify",
         body: [
-          "STAYFI reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet.",
+          "LONS reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet.",
         ],
       },
       {
@@ -118,14 +118,14 @@ export const docsPages: DocsPage[] = [
   {
     slug: "app",
     href: "/docs/app",
-    title: "STAYFI App",
+    title: "LONS App",
     kicker: "Product",
     summary: "The wallet-connected surface for positions, pairing and settings.",
     sections: [
       {
         heading: "Launch App",
         body: [
-          "Launch App in the header opens the STAYFI App origin. The App talks to the STAYFI API for auth, sessions and extension pairing.",
+          "Launch App in the header opens the LONS App origin. The App talks to the LONS API for auth, sessions and extension pairing.",
         ],
       },
       {
@@ -138,7 +138,7 @@ export const docsPages: DocsPage[] = [
         heading: "Pairing the extension",
         body: [
           "A signed-in user can approve a pairing request from the Chrome extension. Approval binds the device to that wallet.",
-          "The device credential is shown once. STAYFI stores only a hash. Revoking a device in settings invalidates sessions derived from it.",
+          "The device credential is shown once. LONS stores only a hash. Revoking a device in settings invalidates sessions derived from it.",
         ],
       },
       {
@@ -155,25 +155,25 @@ export const docsPages: DocsPage[] = [
     href: "/docs/extension",
     title: "Chrome extension",
     kicker: "Context",
-    summary: "Side panel context on Pump.fun without taking custody of the wallet.",
+    summary: "Side panel context on pons without taking custody of the wallet.",
     sections: [
       {
         heading: "Install",
         body: [
-          "STAYFI is not on the Chrome Web Store yet. Add to Chrome downloads a packed archive. Load it unpacked from chrome://extensions with Developer mode enabled.",
+          "LONS is not on the Chrome Web Store yet. Add to Chrome downloads a packed archive. Load it unpacked from chrome://extensions with Developer mode enabled.",
         ],
       },
       {
         heading: "What it reads",
         body: [
-          "On supported Pump.fun token pages the extension identifies the mint from the URL and opens liquidity context in the side panel.",
+          "On supported pons token pages the extension identifies the mint from the URL and opens liquidity context in the side panel.",
           "It does not request seed phrases. It does not inject transactions into the page.",
         ],
       },
       {
         heading: "Pairing",
         body: [
-          "The extension pairs through the STAYFI App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key.",
+          "The extension pairs through the LONS App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key.",
         ],
       },
     ],
@@ -188,7 +188,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Non-custodial",
         body: [
-          "STAYFI never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet.",
+          "LONS never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet.",
         ],
       },
       {
@@ -206,7 +206,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Truthful empty states",
         body: [
-          "If the API, the App origin or the database is missing, the UI says so. STAYFI does not invent a mint, a holder threshold or a Pump.fun coin page.",
+          "If the API, the App origin or the database is missing, the UI says so. LONS does not invent a mint, a holder threshold or a pons coin page.",
         ],
       },
     ],

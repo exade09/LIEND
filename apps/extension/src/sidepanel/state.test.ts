@@ -36,7 +36,7 @@ describe("deriveView", () => {
 
   it("surfaces a configuration problem distinctly from a runtime error", () => {
     expect(
-      deriveView(snap({ connection: "disconnected", error: "STAYFI is not configured in this build" })),
+      deriveView(snap({ connection: "disconnected", error: "LONS is not configured in this build" })),
     ).toBe("not-configured")
     expect(deriveView(snap({ connection: "disconnected", error: "Network down" }))).toBe("error")
   })

@@ -14,9 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const page = docsPageBySlug(slug)
-  if (!page) return { title: "STAYFI Docs" }
+  if (!page) return { title: "LONS Docs" }
   return {
-    title: `${page.title} | STAYFI Docs`,
+    title: `${page.title} | LONS Docs`,
     description: page.summary,
   }
 }

@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Icon"
 import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
-import { PumpFunLink } from "@/components/PumpFunLink"
+import { PonsLink } from "@/components/PonsLink"
 import { project } from "@/config/project"
 import styles from "./FinalCTA.module.css"
 
@@ -29,11 +29,11 @@ export function FinalCTA() {
           <ExtensionCta className="button button--secondary" />
         </div>
 
-        <nav className={styles.links} aria-label="STAYFI external links">
-          <PumpFunLink>
+        <nav className={styles.links} aria-label="LONS external links">
+          <PonsLink>
             <Icon name="pump-fun" size={17} />
-            Pump.fun
-          </PumpFunLink>
+            pons
+          </PonsLink>
           <ProductLink href={project.xUrl}>
             <Icon name="x" size={16} />
             X

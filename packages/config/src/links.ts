@@ -21,7 +21,7 @@ import { parseOrigin } from "./origins"
 export type ExtensionDistributionMode = "download" | "webstore"
 
 export type ProjectLinks = {
-  pumpFun: string | null
+  pons: string | null
   x: string | null
   docs: string | null
   /** Archive download or Web Store listing, depending on `extensionMode`. */
@@ -34,14 +34,14 @@ export function resolveExtensionMode(raw: string | undefined | null): ExtensionD
 }
 
 export function resolveProjectLinks(env: {
-  pumpFun?: string | null
+  pons?: string | null
   x?: string | null
   docs?: string | null
   extension?: string | null
   extensionMode?: string | null
 }): ProjectLinks {
   return {
-    pumpFun: parseOrigin(env.pumpFun),
+    pons: parseOrigin(env.pons) ?? "https://www.ponsfamily.com",
     x: parseOrigin(env.x),
     docs: parseOrigin(env.docs),
     extension: parseOrigin(env.extension),

@@ -21,11 +21,11 @@ const silkscreen = Silkscreen({
 })
 
 export const metadata: Metadata = {
-  title: "STAYFI",
+  title: "LONS",
   description: "Utility liquidity for migrated token positions on Solana",
   icons: {
-    icon: [{ url: "/assets/logo/pixel/liend-mark.png", type: "image/png" }],
-    apple: "/assets/logo/pixel/liend-mark.png",
+    icon: [{ url: "/assets/lons-mark.png", type: "image/png" }],
+    apple: "/assets/lons-mark.png",
   },
 }
 

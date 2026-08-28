@@ -84,12 +84,12 @@ export function mountTrigger(onOpen: () => void): () => void {
   const button = document.createElement("button")
   button.type = "button"
   button.className = "liend-trigger"
-  button.setAttribute("aria-label", "Open STAYFI liquidity panel")
+  button.setAttribute("aria-label", "Open LONS liquidity panel")
 
   const dot = document.createElement("span")
   dot.className = "dot"
   const label = document.createElement("span")
-  label.textContent = "STAYFI · Check liquidity"
+  label.textContent = "LONS · Check liquidity"
 
   button.append(dot, label)
   button.addEventListener("click", (event) => {

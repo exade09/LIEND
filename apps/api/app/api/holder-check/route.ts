@@ -1,7 +1,7 @@
 import { Base58Address } from "@liend/domain"
 import { ApiFailure, handle, json, preflight } from "@/lib/http"
 import { readServerEnv } from "@/lib/env"
-import { readWalletTokenAccounts } from "@/lib/solana-rpc"
+import { readWalletTokenAccounts } from "@/lib/evm-rpc"
 import { resolveUtilityAccess, toDto } from "@/lib/utility-access"
 import { formatTokenAmount } from "@/lib/wallet-positions"
 
@@ -23,7 +23,7 @@ export function GET(request: Request) {
     const raw = new URL(request.url).searchParams.get("wallet")
     const parsed = Base58Address.safeParse(raw)
     if (!parsed.success) {
-      throw new ApiFailure("bad_request", "A valid Solana wallet address is required")
+      throw new ApiFailure("bad_request", "A valid EVM wallet address is required")
     }
 
     const wallet = parsed.data

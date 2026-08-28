@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { project } from "@/config/project"
 import { Icon } from "@/components/Icon"
 import { LaunchAppLink, ProductLink, AddToChromeBadge } from "@/components/ProductLink"
-import { PumpFunLink } from "@/components/PumpFunLink"
+import { PonsLink } from "@/components/PonsLink"
 
 const navigation = [
   { label: "Product", href: "/#product" },
@@ -43,11 +43,11 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
       </div>
       <div className="nav-shell">
         <div className="nav-identity">
-          <Link className="brand-compact" href="/" aria-label="STAYFI home" onClick={() => setOpen(false)}>
+          <Link className="brand-compact" href="/" aria-label="LONS home" onClick={() => setOpen(false)}>
             <span className="brand-compact__avatar">
-              <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
+              <Image src="/assets/lons-mark.png" alt="" width={128} height={128} priority />
             </span>
-            <span>STAYFI</span>
+            <span>LONS</span>
           </Link>
         </div>
 
@@ -60,16 +60,16 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         </nav>
 
         <div className="nav-actions">
-          <PumpFunLink className="header-chip header-chip--pump" aria-label="STAYFI on Pump.fun">
+          <PonsLink className="header-chip header-chip--pump" aria-label="LONS on pons">
             <Icon name="pump-fun" size={18} />
-            <span>Pump.fun</span>
-          </PumpFunLink>
-          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="STAYFI Docs">
+            <span>pons</span>
+          </PonsLink>
+          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="LONS Docs">
             <Icon name="docs" size={18} />
             <span>Docs</span>
           </ProductLink>
           <div className="nav-utility" aria-label="Social links">
-            <ProductLink href={project.xUrl} aria-label="STAYFI on X">
+            <ProductLink href={project.xUrl} aria-label="LONS on X">
               <Icon name="x" size={15} />
               <span className="sr-only">X</span>
             </ProductLink>
@@ -107,9 +107,9 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         <div className="mobile-menu__utility">
           <CaPlaque variant="menu" initialMint={initialMint} />
           <AddToChromeBadge />
-          <PumpFunLink className="header-chip header-chip--pump">
-            <Icon name="pump-fun" /> Pump.fun
-          </PumpFunLink>
+          <PonsLink className="header-chip header-chip--pump">
+            <Icon name="pump-fun" /> pons
+          </PonsLink>
           <ProductLink className="header-chip header-chip--docs" href={project.docsUrl}>
             <Icon name="docs" /> Docs
           </ProductLink>

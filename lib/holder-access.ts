@@ -51,14 +51,14 @@ export async function fetchHolderAccess(wallet: string): Promise<HolderAccessDto
       cache: "no-store",
     })
   } catch {
-    return { state: "error", wallet, reason: "STAYFI access could not be verified" }
+    return { state: "error", wallet, reason: "LONS access could not be verified" }
   }
 
   let body: unknown = null
   try {
     body = await response.json()
   } catch {
-    return { state: "error", wallet, reason: "STAYFI access could not be verified" }
+    return { state: "error", wallet, reason: "LONS access could not be verified" }
   }
 
   const access = asAccess(body)
@@ -71,7 +71,7 @@ export async function fetchHolderAccess(wallet: string): Promise<HolderAccessDto
   return {
     state: "error",
     wallet,
-    reason: message || "STAYFI access could not be verified",
+    reason: message || "LONS access could not be verified",
   }
 }
 
@@ -80,15 +80,15 @@ export function accessCopy(access: HolderAccessDto): string {
     case "disconnected":
       return "Connect a Solana wallet to begin the eligibility check"
     case "token-not-launched":
-      return "STAYFI utility is available for this wallet"
+      return "LONS utility is available for this wallet"
     case "holder-check-pending":
-      return "Checking STAYFI balance and active access parameters"
+      return "Checking LONS balance and active access parameters"
     case "not-eligible":
       return access.required === null
-        ? "The STAYFI holding requirement has not been published yet"
-        : "This wallet does not meet the STAYFI holding requirement"
+        ? "The LONS holding requirement has not been published yet"
+        : "This wallet does not meet the LONS holding requirement"
     case "eligible":
-      return "This wallet meets the STAYFI holding requirement"
+      return "This wallet meets the LONS holding requirement"
     case "error":
       return access.reason
   }

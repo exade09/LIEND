@@ -4,7 +4,7 @@ import { AdminConsole } from "./AdminConsole"
 import styles from "./admin.module.css"
 
 export const metadata: Metadata = {
-  title: "Admin | STAYFI",
+  title: "Admin | LONS",
   robots: { index: false, follow: false },
 }
 

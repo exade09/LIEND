@@ -98,7 +98,7 @@ export default function DataExperience() {
               <h2 id="protocol-data-title">Read activity as infrastructure</h2>
             </div>
             <div className={styles.dataContext}>
-              <p>Public Solana routes on this desk. STAYFI program records replace this when the book is onchain</p>
+              <p>Public Solana routes on this desk. LONS program records replace this when the book is onchain</p>
               <span><i /> SOLANA &bull; LIVE ROUTES</span>
             </div>
           </header>

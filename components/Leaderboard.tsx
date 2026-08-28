@@ -121,7 +121,7 @@ export function Leaderboard() {
     >
       <header className="leaderboard__intro section-header">
         <p className="eyebrow section-eyebrow">PROTOCOL ANALYTICS</p>
-        <h2 className="section-title" id="leaderboard-title">STAYFI activity</h2>
+        <h2 className="section-title" id="leaderboard-title">LONS activity</h2>
         <p className="section-description">
           Compare public wallet activity across the selected analytics window
         </p>

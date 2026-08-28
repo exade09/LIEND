@@ -89,7 +89,7 @@ export function ActivityFeed() {
         <p className="eyebrow section-eyebrow">PROTOCOL ACTIVITY</p>
         <h2 className="section-title" id="activity-feed-title">Protocol event stream</h2>
         <p className="section-description">
-          Public Solana routes on this desk. STAYFI program records replace this when the book is onchain
+          Public Solana routes on this desk. LONS program records replace this when the book is onchain
         </p>
       </header>
 

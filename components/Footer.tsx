@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CaPlaque } from "@/components/CaPlaque";
 import { Icon } from "@/components/Icon";
 import { ProductLink } from "@/components/ProductLink";
-import { PumpFunLink } from "@/components/PumpFunLink";
+import { PonsLink } from "@/components/PonsLink";
 import { project } from "@/config/project";
 
 const footerLinks = [
@@ -20,9 +20,9 @@ export function Footer({ initialMint = null }: { initialMint?: string | null }) 
     <footer className="site-footer">
       <div className="site-footer__shell">
         <div className="site-footer__main">
-          <Link className="site-footer__brand" href="/" aria-label="STAYFI home">
-            <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={64} height={64} unoptimized />
-            <span>STAYFI</span>
+          <Link className="site-footer__brand" href="/" aria-label="LONS home">
+            <Image src="/assets/lons-mark.png" alt="" width={64} height={64} />
+            <span>LONS</span>
           </Link>
 
           <nav className="site-footer__nav" aria-label="Footer navigation">
@@ -33,15 +33,15 @@ export function Footer({ initialMint = null }: { initialMint?: string | null }) 
             ))}
           </nav>
 
-          <nav className="site-footer__social" aria-label="STAYFI social links">
-            <ProductLink href={project.xUrl} aria-label="STAYFI on X">
+          <nav className="site-footer__social" aria-label="LONS social links">
+            <ProductLink href={project.xUrl} aria-label="LONS on X">
               <Icon name="x" size={17} />
               <span>X</span>
             </ProductLink>
-            <PumpFunLink aria-label="STAYFI on Pump.fun">
+            <PonsLink aria-label="LONS on pons">
               <Icon name="pump-fun" size={18} />
-              <span>Pump.fun</span>
-            </PumpFunLink>
+              <span>pons</span>
+            </PonsLink>
           </nav>
         </div>
 

@@ -69,7 +69,7 @@ function requiredUniform(
   return location
 }
 
-/** Full-screen STAYFI-colored volumetric cloud shader. Decorative only. */
+/** Full-screen LONS-colored volumetric cloud shader. Decorative only. */
 export function StageBackdrop() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -209,7 +209,7 @@ export function StageBackdrop() {
       animationFrame = window.requestAnimationFrame(render)
     } catch (error) {
       canvas.dataset.state = "fallback"
-      console.error("STAYFI cloud background could not start", error)
+      console.error("LONS cloud background could not start", error)
     }
 
     return () => {

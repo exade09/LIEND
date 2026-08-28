@@ -67,7 +67,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
     <div className="swap-panel">
       <div className="panel-heading">
         <div>
-          <span className="overline">STAYFI-NATIVE ROUTING</span>
+          <span className="overline">LONS-NATIVE ROUTING</span>
           <h3>Swap route</h3>
         </div>
         <div className="panel-heading__meta"><span className="network-chip">Solana</span></div>

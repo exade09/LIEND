@@ -30,7 +30,7 @@ export function POST(request: Request) {
     const consumed = await store.consumeChallenge(body.nonce, Date.now())
     if (!consumed) throw new ApiFailure("unauthorized", "Challenge expired or already used")
 
-    const valid = verifyWalletSignature(body.address, challenge.message, body.signature)
+    const valid = await verifyWalletSignature(body.address, challenge.message, body.signature)
     if (!valid) throw new ApiFailure("unauthorized", "Signature verification failed")
 
     const { cookie } = await createSession(body.address)

@@ -8,34 +8,37 @@
 
 import { z } from "zod"
 
-/** Solana mint/pubkey shape: base58, 32-44 characters. */
-export const Base58Address = z
+/** Checksummed or lowercase EVM account/contract address. */
+export const EvmAddress = z
   .string()
   .trim()
-  .regex(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/, "Not a valid Solana address")
+  .regex(/^0x[a-fA-F0-9]{40}$/, "Not a valid EVM address")
+
+/** Compatibility export for existing DTO field names during the chain migration. */
+export const Base58Address = EvmAddress
 
 /** Token amounts travel as integer strings in base units — never floats. */
 export const BaseUnitAmount = z
   .string()
   .regex(/^\d+$/, "Amount must be an integer string in base units")
 
-export const DeepLinkSourceSchema = z.enum(["pumpfun", "axiom", "landing", "extension"])
+export const DeepLinkSourceSchema = z.enum(["pons", "landing", "extension"])
 
-export const SolanaClusterSchema = z.enum(["mainnet-beta", "devnet", "testnet"])
+export const RobinhoodChainIdSchema = z.literal(4663)
 
 // ---------------------------------------------------------------------------
 // Identity
 // ---------------------------------------------------------------------------
 
 export const WalletIdentitySchema = z.object({
-  address: Base58Address,
-  cluster: SolanaClusterSchema,
-  /** Wallet app name as reported by Wallet Standard. Display only. */
+  address: EvmAddress,
+  chainId: RobinhoodChainIdSchema,
+  /** Wallet app name as reported by the EIP-1193 provider. Display only. */
   label: z.string().min(1).max(64).nullable(),
 })
 
 export const TokenIdentitySchema = z.object({
-  mint: Base58Address,
+  mint: EvmAddress,
   symbol: z.string().min(1).max(32).nullable(),
   name: z.string().min(1).max(128).nullable(),
   decimals: z.number().int().min(0).max(18).nullable(),
@@ -51,8 +54,8 @@ export const TokenIdentitySchema = z.object({
  */
 export const TokenContextSchema = z.object({
   source: DeepLinkSourceSchema,
-  chain: z.literal("solana"),
-  mint: Base58Address,
+  chain: z.literal("robinhood"),
+  mint: EvmAddress,
   pageUrl: z.string().url(),
   detectedAt: z.number().int().positive(),
 })
@@ -62,8 +65,8 @@ export const TokenContextSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export const HolderEligibilitySchema = z.object({
-  wallet: Base58Address,
-  mint: Base58Address,
+  wallet: EvmAddress,
+  mint: EvmAddress,
   balance: BaseUnitAmount,
   required: BaseUnitAmount.nullable(),
   eligible: z.boolean(),
@@ -71,7 +74,7 @@ export const HolderEligibilitySchema = z.object({
 })
 
 export const WalletPositionSchema = z.object({
-  mint: Base58Address,
+  mint: EvmAddress,
   symbol: z.string().min(1).max(32),
   name: z.string().min(1).max(128),
   decimals: z.number().int().min(0).max(18),
@@ -83,37 +86,37 @@ export const WalletPositionSchema = z.object({
 })
 
 export const WalletPositionsResponseSchema = z.object({
-  wallet: Base58Address,
+  wallet: EvmAddress,
   asOf: z.number().int().positive(),
-  solUsd: z.number().positive().nullable(),
+  ethUsd: z.number().positive().nullable(),
   positions: z.array(WalletPositionSchema),
 })
 
 export const UtilityAccessSchema = z.discriminatedUnion("state", [
   z.object({ state: z.literal("disconnected") }),
-  z.object({ state: z.literal("token-not-launched"), wallet: Base58Address }),
+  z.object({ state: z.literal("token-not-launched"), wallet: EvmAddress }),
   z.object({
     state: z.literal("holder-check-pending"),
-    wallet: Base58Address,
-    mint: Base58Address,
+    wallet: EvmAddress,
+    mint: EvmAddress,
   }),
   z.object({
     state: z.literal("not-eligible"),
-    wallet: Base58Address,
-    mint: Base58Address,
+    wallet: EvmAddress,
+    mint: EvmAddress,
     balance: BaseUnitAmount,
     required: BaseUnitAmount.nullable(),
   }),
   z.object({
     state: z.literal("eligible"),
-    wallet: Base58Address,
-    mint: Base58Address,
+    wallet: EvmAddress,
+    mint: EvmAddress,
     balance: BaseUnitAmount,
     required: BaseUnitAmount.nullable(),
   }),
   z.object({
     state: z.literal("error"),
-    wallet: Base58Address.nullable(),
+    wallet: EvmAddress.nullable(),
     reason: z.string(),
   }),
 ])
@@ -123,8 +126,8 @@ export const UtilityAccessSchema = z.discriminatedUnion("state", [
 // ---------------------------------------------------------------------------
 
 export const AuthChallengeRequestSchema = z.object({
-  address: Base58Address,
-  cluster: SolanaClusterSchema,
+  address: EvmAddress,
+  chainId: RobinhoodChainIdSchema,
 })
 
 export const AuthChallengeSchema = z.object({
@@ -135,10 +138,10 @@ export const AuthChallengeSchema = z.object({
 })
 
 export const AuthVerifyRequestSchema = z.object({
-  address: Base58Address,
+  address: EvmAddress,
   nonce: z.string().min(32),
-  /** base64 detached signature produced by the wallet. */
-  signature: z.string().min(1),
+  /** EIP-191 signature produced by MetaMask. */
+  signature: z.string().regex(/^0x[a-fA-F0-9]{130}$/, "Not a valid EVM signature"),
 })
 
 // ---------------------------------------------------------------------------

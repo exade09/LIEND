@@ -98,18 +98,18 @@ export function deriveUtilityAccess(input: {
 export function describeUtilityAccess(access: UtilityAccess): string {
   switch (access.state) {
     case "disconnected":
-      return "Connect a wallet to check STAYFI utility access"
+      return "Connect a wallet to check LONS utility access"
     case "token-not-launched":
-      return "STAYFI utility is available for this wallet"
+      return "LONS utility is available for this wallet"
     case "holder-check-pending":
-      return "Checking your STAYFI balance"
+      return "Checking your LONS balance"
     case "not-eligible":
       return access.required === null
-        ? "The STAYFI holding requirement has not been published yet"
-        : "This wallet does not meet the STAYFI holding requirement"
+        ? "The LONS holding requirement has not been published yet"
+        : "This wallet does not meet the LONS holding requirement"
     case "eligible":
-      return "STAYFI utility is available for this wallet"
+      return "LONS utility is available for this wallet"
     case "error":
-      return "STAYFI access could not be verified"
+      return "LONS access could not be verified"
   }
 }

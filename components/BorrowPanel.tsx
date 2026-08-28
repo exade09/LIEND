@@ -15,7 +15,7 @@ type BorrowPanelProps = {
 const ESTIMATED_SOL_PRICE = 150
 
 export function BorrowPanel({ market }: BorrowPanelProps) {
-  const [collateralAmount, setCollateralAmount] = useState(market.ticker === "STAYFI" ? 100000 : 25000)
+  const [collateralAmount, setCollateralAmount] = useState(market.ticker === "LONS" ? 100000 : 25000)
   const [borrowAmount, setBorrowAmount] = useState(1)
   const [quote, setQuote] = useState<BorrowQuote | null>(null)
   const [reviewOpen, setReviewOpen] = useState(false)
@@ -30,7 +30,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
   const canReview = market.eligible && collateralAmount > 0 && borrowAmount > 0 && ltv <= 65
 
   const route = useMemo(
-    () => ["Position check", "Market verify", "Collateral", "STAYFI program", "SOL settlement"],
+    () => ["Position check", "Market verify", "Collateral", "LONS program", "SOL settlement"],
     [],
   )
 

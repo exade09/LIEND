@@ -1,0 +1,13 @@
+{
+  "plugins": {
+    "superdesign": {
+      "enabled": true
+    },
+    "buildkite": {
+      "enabled": true
+    },
+    "figma": {
+      "enabled": true
+    }
+  }
+}

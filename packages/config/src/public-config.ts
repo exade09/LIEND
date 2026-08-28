@@ -22,13 +22,7 @@ export type PublicConfig = {
   apiUrl: string | null
   links: ProjectLinks
   token: TokenLaunchState
-  solanaCluster: "mainnet-beta" | "devnet" | "testnet"
-}
-
-function resolveCluster(raw: string | undefined): PublicConfig["solanaCluster"] {
-  if (raw === "devnet") return "devnet"
-  if (raw === "testnet") return "testnet"
-  return "mainnet-beta"
+  chainId: 4663
 }
 
 /**
@@ -46,16 +40,16 @@ export function readPublicConfig(): PublicConfig {
     appUrl: parseOrigin(process.env.NEXT_PUBLIC_APP_URL),
     apiUrl: parseOrigin(process.env.NEXT_PUBLIC_API_URL),
     links: resolveProjectLinks({
-      pumpFun: process.env.NEXT_PUBLIC_PUMPFUN_URL,
+      pons: process.env.NEXT_PUBLIC_PONS_URL,
       x: process.env.NEXT_PUBLIC_X_URL,
       docs: process.env.NEXT_PUBLIC_DOCS_URL,
       extension: process.env.NEXT_PUBLIC_EXTENSION_URL,
       extensionMode: process.env.NEXT_PUBLIC_EXTENSION_MODE,
     }),
     token: resolveTokenLaunchState(
-      process.env.NEXT_PUBLIC_LIEND_TOKEN_MINT,
-      process.env.NEXT_PUBLIC_LIEND_MIN_HOLDER_BALANCE,
+      process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT,
+      process.env.NEXT_PUBLIC_LONS_MIN_HOLDER_BALANCE,
     ),
-    solanaCluster: resolveCluster(process.env.NEXT_PUBLIC_SOLANA_CLUSTER),
+    chainId: 4663,
   }
 }

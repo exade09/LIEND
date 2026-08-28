@@ -64,7 +64,7 @@ export function LoanCalculator() {
               <div><dt>Example LTV</dt><dd>{formatPercent(result.exampleLtvPercent)}</dd></div>
               <div><dt>Health State</dt><dd><span className={`health-state health-state--${result.healthState.toLowerCase().replace(" ", "-")}`}>{result.healthState}</span></dd></div>
             </dl>
-            <p>Actual availability, valuation, rates and liquidation parameters depend on live market conditions and active STAYFI configuration</p>
+            <p>Actual availability, valuation, rates and liquidation parameters depend on live market conditions and active LONS configuration</p>
           </div>
         </div>
       </div>

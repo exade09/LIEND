@@ -41,20 +41,26 @@
   --text-soft: #ffffff;
   --text-muted: #ffffff;
 
-  --violet: #7b5cff;
-  --violet-soft: #c4b6ff;
-  --blue: #4d8aff;
-  --cyan: #5ef0ff;
-  --teal: #2ad3c2;
+  /*
+   * Lons palette: the cobalt/violet/cyan "webcore" accents replaced with the
+   * green-glass family from the Robinhood-era mark (packages/brand tokens.css
+   * mirrors these). --violet/--blue/--cyan/--teal keep their names so every
+   * consumer that references them repaints for free; only the values moved.
+   */
+  --violet: #6c8760;
+  --violet-soft: #a9bc9c;
+  --blue: #46603a;
+  --cyan: #8fbf7a;
+  --teal: #5f7850;
   --signal: #4dff5a;
   --signal-ink: #04160a;
   --danger: #ff5a73;
   --warning: #ffcf85;
   --success: #4dff5a;
 
-  --titlebar: linear-gradient(180deg, #2c5ae8 0%, #1639b4 100%);
-  --shadow-window: 4px 6px 0 rgba(4, 10, 40, 0.45), 0 28px 70px rgba(4, 10, 40, 0.35);
-  --shadow-raised: 3px 3px 0 rgba(4, 10, 40, 0.35);
+  --titlebar: linear-gradient(180deg, #6c8760 0%, #46603a 100%);
+  --shadow-window: 4px 6px 0 rgba(20, 28, 12, 0.45), 0 28px 70px rgba(20, 28, 12, 0.35);
+  --shadow-raised: 3px 3px 0 rgba(20, 28, 12, 0.35);
   --glow-violet: 0 0 0 transparent;
   --glow-cyan: 0 0 18px rgba(77, 255, 90, 0.28);
 
@@ -717,7 +723,6 @@ button:disabled {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  image-rendering: pixelated;
 }
 
 .desktop-nav {
@@ -1625,7 +1630,6 @@ button:disabled {
   width: 52px;
   height: 52px;
   object-fit: contain;
-  image-rendering: pixelated;
 }
 
 .gate-identity div {
@@ -2296,7 +2300,6 @@ button:disabled {
   background: none;
   box-shadow: none;
   object-fit: contain;
-  image-rendering: pixelated;
 }
 
 .sol-avatar {
@@ -3272,7 +3275,6 @@ button:disabled {
   width: 28px;
   height: 28px;
   object-fit: contain;
-  image-rendering: pixelated;
 }
 .site-footer__nav,
 .site-footer__social { display: flex; align-items: center; }

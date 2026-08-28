@@ -54,13 +54,13 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-direct-route",
       label: "Direct route",
-      programs: ["STAYFI Swap Adapter", "SPL Token Program"],
+      programs: ["LONS Swap Adapter", "SPL Token Program"],
       estimatedOutput,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT,
       estimatedNetworkFeeSol: DEMO_NETWORK_FEE_SOL,
       steps: [
         {
-          program: "STAYFI Swap Adapter",
+          program: "LONS Swap Adapter",
           instruction: "Request quote",
           description: "Use the demonstration direct route",
         },
@@ -75,13 +75,13 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-split-route",
       label: "Split route",
-      programs: ["STAYFI Swap Adapter", "Demo Liquidity Route", "SPL Token Program"],
+      programs: ["LONS Swap Adapter", "Demo Liquidity Route", "SPL Token Program"],
       estimatedOutput: estimatedOutput * 0.998,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT + 0.08,
       estimatedNetworkFeeSol: DEMO_NETWORK_FEE_SOL * 1.6,
       steps: [
         {
-          program: "STAYFI Swap Adapter",
+          program: "LONS Swap Adapter",
           instruction: "Split route",
           description: "Preview a two-source liquidity path",
         },

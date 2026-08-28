@@ -27,7 +27,7 @@ const routeCopy = {
 
 function PumpFunMark() {
   return (
-    <svg className={styles.pumpMark} viewBox="0 0 64 64" aria-label="Pump.fun">
+    <svg className={styles.pumpMark} viewBox="0 0 64 64" aria-label="pons">
       <g transform="rotate(-42 32 32)">
         <rect x="14" y="5" width="36" height="54" rx="18" fill="#ffffff" stroke="#14382f" strokeWidth="5" />
         <path d="M14 32h36v9c0 10-8 18-18 18s-18-8-18-18z" fill="#61cf8d" />
@@ -74,7 +74,7 @@ export function PhoneShowcase() {
   return (
     <div ref={showcaseRef} className={styles.showcase} data-mode={mode} data-visible={visible ? "true" : "false"}>
       <div className={styles.stageTop}>
-        <span><i /> STAYFI MOBILE ROUTE</span>
+        <span><i /> LONS MOBILE ROUTE</span>
         <span>LIVE PRODUCT PREVIEW</span>
       </div>
 
@@ -88,15 +88,15 @@ export function PhoneShowcase() {
             <div className={styles.phoneScreen}>
               <div className={styles.phoneStatus}><span>9:41</span><span>5G&nbsp;&nbsp;100%</span></div>
               <div className={styles.mobileBrand}>
-                <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={42} height={42} unoptimized />
-                <strong>STAYFI</strong>
+                <Image src="/assets/lons-mark.png" alt="" width={42} height={42} />
+                <strong>LONS</strong>
                 <i />
               </div>
 
               <section className={styles.balance}>
                 <span>Portfolio value</span>
                 <strong>$150.00</strong>
-                <small>PUMP.FUN POSITION</small>
+                <small>PONS POSITION</small>
               </section>
 
               <div className={styles.routeTabs} role="group" aria-label="Preview route">
@@ -116,7 +116,7 @@ export function PhoneShowcase() {
               <section className={styles.positionCard}>
                 <div className={styles.tokenRow}>
                   <span className={styles.tokenMark}><PumpFunMark /></span>
-                  <div><strong>Pump.fun token</strong><small>Supported position</small></div>
+                  <div><strong>pons token</strong><small>Supported position</small></div>
                   <b>$150.00</b>
                 </div>
                 <div className={styles.positionMeta}>
@@ -147,11 +147,11 @@ export function PhoneShowcase() {
               <section className={styles.receiveCard} aria-live="polite">
                 <span>{copy.metricLabel}</span>
                 <strong>{copy.metric}</strong>
-                <small>Based on the $150 pump.fun position</small>
+                <small>Based on the $150 pons position</small>
               </section>
 
               <section className={styles.reviewCard}>
-                <div><span>Position</span><strong>Pump.fun token</strong></div>
+                <div><span>Position</span><strong>pons token</strong></div>
                 <div><span>Position value</span><strong>$150.00</strong></div>
                 <div><span>Network</span><strong>Solana</strong></div>
                 <div><span>Approval</span><strong>Your wallet</strong></div>
@@ -162,13 +162,13 @@ export function PhoneShowcase() {
                 <span aria-hidden="true">-&gt;</span>
               </LaunchAppLink>
 
-              <p className={styles.disclaimer}>Preview only / final terms appear in the STAYFI app</p>
+              <p className={styles.disclaimer}>Preview only / final terms appear in the LONS app</p>
             </div>
           </div>
         </div>
 
         <div className={styles.stageSignal} aria-hidden="true">
-          <span>01</span><i /><i /><i /><span>STAYFI / MOBILE</span>
+          <span>01</span><i /><i /><i /><span>LONS / MOBILE</span>
         </div>
       </div>
     </div>
