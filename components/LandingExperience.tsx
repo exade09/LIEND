@@ -128,8 +128,8 @@ function HeroArtifacts() {
       <Image
         src="/assets/hero-key.png"
         alt=""
-        width={912}
-        height={820}
+        width={1536}
+        height={1024}
         priority
         className={`${styles.heroArtifact} ${styles.vectorKey}`}
       />
@@ -137,16 +137,16 @@ function HeroArtifacts() {
       <Image
         src="/assets/hero-coin.png"
         alt=""
-        width={812}
-        height={904}
+        width={1254}
+        height={1254}
         className={`${styles.heroArtifact} ${styles.vectorCoin}`}
       />
 
       <Image
         src="/assets/hero-wallet.png"
         alt=""
-        width={1032}
-        height={930}
+        width={1536}
+        height={1024}
         className={`${styles.heroArtifact} ${styles.vectorWallet}`}
       />
     </div>
