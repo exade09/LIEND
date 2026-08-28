@@ -60,11 +60,6 @@ function renderHeader(snapshot: PanelSnapshot): HTMLElement {
     connected ? "Connected" : pairing ? "Pairing" : "Not connected",
   )
   head.append(pill)
-
-  const controls = el("span", "window-controls")
-  controls.setAttribute("aria-hidden", "true")
-  controls.append(el("i"), el("i"), el("i"))
-  head.append(controls)
   return head
 }
 

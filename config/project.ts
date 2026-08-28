@@ -11,8 +11,9 @@
  *  - pons is the launch surface on Robinhood Chain. A published CA remains
  *    visible as the verified contract; the launchpad root is always safe.
  *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
- *  - The published Chrome Web Store listing is the primary extension
- *    distribution channel.
+ *  - The packaged zip archive is the primary extension distribution channel
+ *    (manual "Load unpacked" install) until a Chrome Web Store listing is
+ *    republished under the LONS name.
  *
  * Unset destinations resolve to `null`. A null link means the surface must
  * hide or disable that affordance. X stays hidden until NEXT_PUBLIC_X_URL is set.
@@ -77,14 +78,9 @@ export function resolveAppUrl(locationHref?: string): string | null {
 export type ExtensionMode = "download" | "webstore"
 
 const extensionMode: ExtensionMode =
-  process.env.NEXT_PUBLIC_EXTENSION_MODE === "download" ? "download" : "webstore"
+  process.env.NEXT_PUBLIC_EXTENSION_MODE === "webstore" ? "webstore" : "download"
 
-const chromeWebStoreUrl =
-  "https://chromewebstore.google.com/detail/liend/gbpmekokakgbojjkmcgcippmlmpjakia?authuser=0&hl=en"
-
-const extensionUrl =
-  url(process.env.NEXT_PUBLIC_EXTENSION_URL) ??
-  (extensionMode === "webstore" ? chromeWebStoreUrl : null)
+const extensionUrl = url(process.env.NEXT_PUBLIC_EXTENSION_URL)
 
 export const project = {
   name: "LONS",
