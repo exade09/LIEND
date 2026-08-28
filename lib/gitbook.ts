@@ -18,29 +18,29 @@ export const docsPages: DocsPage[] = [
     href: "/docs",
     title: "LONS Docs",
     kicker: "GitBook",
-    summary: "Product documentation for the LONS utility layer on Robinhood Chain.",
+    summary: "Product documentation for the LONS utility layer on Robinhood Chain",
     sections: [
       {
         heading: "What LONS is",
         body: [
-          "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain.",
-          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as ETH.",
-          "The landing, the LONS App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
+          "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain",
+          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as ETH",
+          "The landing, the LONS App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains",
         ],
       },
       {
         heading: "What is live today",
         body: [
-          "The marketing site, the App, the API and the extension install path are deployed.",
-          "MetaMask authentication, sessions, extension pairing and Robinhood Chain ERC-20 position reads are in place.",
-          "Borrow and repay flows prepare reviewable requests in the App. They do not claim onchain settlement until a lending contract is deployed.",
+          "The marketing site, the App, the API and the extension install path are deployed",
+          "MetaMask authentication, sessions, extension pairing and Robinhood Chain ERC-20 position reads are in place",
+          "Borrow and repay flows prepare reviewable requests in the App. They do not claim onchain settlement until a lending contract is deployed",
         ],
       },
       {
         heading: "Who it is for",
         body: [
-          "LONS is for holders of supported migrated tokens who want a second route besides selling.",
-          "A verified wallet can use LONS utility. When a token contract and minimum balance are published, the App and API apply that holder check.",
+          "LONS is for holders of supported migrated tokens who want a second route besides selling",
+          "A verified wallet can use LONS utility. When a token contract and minimum balance are published, the App and API apply that holder check",
         ],
       },
     ],
@@ -50,27 +50,27 @@ export const docsPages: DocsPage[] = [
     href: "/docs/token",
     title: "LONS token",
     kicker: "Access",
-    summary: "How the token, pons and holder access fit together.",
+    summary: "How the token, pons and holder access fit together",
     sections: [
       {
         heading: "Token status",
         body: [
-          "The LONS token is not launched yet. There is no ERC-20 contract in product config and no published holder threshold.",
-          "The pons buttons follow the published CA from the admin console. A valid EVM contract opens its pons launchpad page; an empty or pre-launch label opens the launchpad root.",
+          "The LONS token is not launched yet. There is no ERC-20 contract in product config and no published holder threshold",
+          "The pons buttons follow the published CA from the admin console. A valid EVM contract opens its pons launchpad page; an empty or pre-launch label opens the launchpad root",
         ],
       },
       {
         heading: "Holder access",
         body: [
-          "LONS utility is available after a connected wallet is verified.",
-          "When a token contract and minimum balance are published, the App and API check wallet holdings against those values.",
+          "LONS utility is available after a connected wallet is verified",
+          "When a token contract and minimum balance are published, the App and API check wallet holdings against those values",
         ],
       },
       {
         heading: "Where to get LONS",
         body: [
-          "The official acquisition path is pons. Use the pons control in the header. Do not follow unofficial ticker pages.",
-          "LONS never asks for a seed phrase, a private key or a wallet password.",
+          "The official acquisition path is pons. Use the pons control in the header. Do not follow unofficial ticker pages",
+          "LONS never asks for a seed phrase, a private key or a wallet password",
         ],
       },
     ],
@@ -80,37 +80,37 @@ export const docsPages: DocsPage[] = [
     href: "/docs/how-it-works",
     title: "How it works",
     kicker: "Flow",
-    summary: "The six-step path from a connected wallet to ETH liquidity.",
+    summary: "The six-step path from a connected wallet to ETH liquidity",
     sections: [
       {
         heading: "Connect",
         body: [
-          "A user connects MetaMask on Robinhood Chain. LONS asks for an EIP-191 plain-text signature to prove control of the address.",
-          "That signature creates no transaction and costs no fees.",
+          "A user connects MetaMask on Robinhood Chain. LONS asks for an EIP-191 plain-text signature to prove control of the address",
+          "That signature creates no transaction and costs no fees",
         ],
       },
       {
         heading: "Verify",
         body: [
-          "LONS reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet.",
+          "LONS reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet",
         ],
       },
       {
         heading: "Select",
         body: [
-          "The user chooses a migrated token position. A migrated token has left its bonding curve and entered open market liquidity.",
+          "The user chooses a migrated token position. A migrated token has left its bonding curve and entered open market liquidity",
         ],
       },
       {
         heading: "Configure",
         body: [
-          "Collateral size and requested liquidity are chosen in the App. Health, LTV and liquidation behavior follow active protocol parameters when those parameters exist.",
+          "Collateral size and requested liquidity are chosen in the App. Health, LTV and liquidation behavior follow active protocol parameters when those parameters exist",
         ],
       },
       {
         heading: "Execute and receive",
         body: [
-          "The user reviews the full route before confirming. After a successful execution, ETH is received in the destination wallet.",
+          "The user reviews the full route before confirming. After a successful execution, ETH is received in the destination wallet",
         ],
       },
     ],
@@ -120,32 +120,32 @@ export const docsPages: DocsPage[] = [
     href: "/docs/app",
     title: "LONS App",
     kicker: "Product",
-    summary: "The wallet-connected surface for positions, pairing and settings.",
+    summary: "The wallet-connected surface for positions, pairing and settings",
     sections: [
       {
         heading: "Launch App",
         body: [
-          "Launch App in the header opens the LONS App origin. The App talks to the LONS API for auth, sessions and extension pairing.",
+          "Launch App in the header opens the LONS App origin. The App talks to the LONS API for auth, sessions and extension pairing",
         ],
       },
       {
         heading: "Wallet session",
         body: [
-          "After a successful challenge and verify, the API stores a session bound to the wallet address. The cookie carries an opaque id plus an HMAC tag. The client cannot edit its own identity.",
+          "After a successful challenge and verify, the API stores a session bound to the wallet address. The cookie carries an opaque id plus an HMAC tag. The client cannot edit its own identity",
         ],
       },
       {
         heading: "Pairing the extension",
         body: [
-          "A signed-in user can approve a pairing request from the Chrome extension. Approval binds the device to that wallet.",
-          "The device credential is shown once. LONS stores only a hash. Revoking a device in settings invalidates sessions derived from it.",
+          "A signed-in user can approve a pairing request from the Chrome extension. Approval binds the device to that wallet",
+          "The device credential is shown once. LONS stores only a hash. Revoking a device in settings invalidates sessions derived from it",
         ],
       },
       {
         heading: "Positions and loans",
         body: [
-          "The App lists ERC-20 positions indexed for the connected Robinhood Chain account and prepares ETH borrow or repay requests for review.",
-          "Draft requests remain clearly separated from public Blockscout activity until settlement contracts are live.",
+          "The App lists ERC-20 positions indexed for the connected Robinhood Chain account and prepares ETH borrow or repay requests for review",
+          "Draft requests remain clearly separated from public Blockscout activity until settlement contracts are live",
         ],
       },
     ],
@@ -155,25 +155,25 @@ export const docsPages: DocsPage[] = [
     href: "/docs/extension",
     title: "Chrome extension",
     kicker: "Context",
-    summary: "Side panel context on pons without taking custody of the wallet.",
+    summary: "Side panel context on pons without taking custody of the wallet",
     sections: [
       {
         heading: "Install",
         body: [
-          "Add to Chrome opens the published LONS listing in the Chrome Web Store. A packaged developer build can still be loaded from chrome://extensions when needed.",
+          "Add to Chrome opens the published LONS listing in the Chrome Web Store. A packaged developer build can still be loaded from chrome://extensions when needed",
         ],
       },
       {
         heading: "What it reads",
         body: [
-          "On supported pons token pages the extension identifies the ERC-20 contract from the URL and opens liquidity context in the side panel.",
-          "It does not request seed phrases. It does not inject transactions into the page.",
+          "On supported pons token pages the extension identifies the ERC-20 contract from the URL and opens liquidity context in the side panel",
+          "It does not request seed phrases. It does not inject transactions into the page",
         ],
       },
       {
         heading: "Pairing",
         body: [
-          "The extension pairs through the LONS App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key.",
+          "The extension pairs through the LONS App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key",
         ],
       },
     ],
@@ -183,30 +183,30 @@ export const docsPages: DocsPage[] = [
     href: "/docs/security",
     title: "Security",
     kicker: "Trust",
-    summary: "Non-custodial design, explicit origins and no invented balances.",
+    summary: "Non-custodial design, explicit origins and no invented balances",
     sections: [
       {
         heading: "Non-custodial",
         body: [
-          "LONS never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet.",
+          "LONS never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet",
         ],
       },
       {
         heading: "Origins and cookies",
         body: [
-          "The API allowlists exact App and extension origins. It does not trust every vercel.app host. Session secrets stay server-side.",
+          "The API allowlists exact App and extension origins. It does not trust every vercel.app host. Session secrets stay server-side",
         ],
       },
       {
         heading: "Storage",
         body: [
-          "Production persistence is Postgres. Device credentials and extension sessions are stored as hashes. Pairing identifiers are not themselves credentials.",
+          "Production persistence is Postgres. Device credentials and extension sessions are stored as hashes. Pairing identifiers are not themselves credentials",
         ],
       },
       {
         heading: "Truthful empty states",
         body: [
-          "If the API, the App origin or the database is missing, the UI says so. LONS does not invent a mint, a holder threshold or a pons coin page.",
+          "If the API, the App origin or the database is missing, the UI says so. LONS does not invent a mint, a holder threshold or a pons coin page",
         ],
       },
     ],

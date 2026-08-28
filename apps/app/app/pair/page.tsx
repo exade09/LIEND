@@ -74,7 +74,7 @@ function PairPageInner() {
         <header className="page-head">
           <div><h1>Connect browser</h1></div>
         </header>
-        <div className="empty">This link is missing a pairing request.</div>
+        <div className="empty">This link is missing a pairing request</div>
       </>
     )
   }
@@ -91,13 +91,13 @@ function PairPageInner() {
       </header>
 
       {!apiConfigured ? (
-        <div className="empty">The LONS API is not configured for this deployment.</div>
+        <div className="empty">The LONS API is not configured for this deployment</div>
       ) : loading ? (
         <div className="empty">Loading…</div>
       ) : !authenticated ? (
         <div className="notice">
           <strong>Authentication required</strong>
-          <p>Connect and verify your wallet before approving a browser connection.</p>
+          <p>Connect and verify your wallet before approving a browser connection</p>
           <p style={{ marginTop: 12 }}>
             <Link
               className="button button--primary"
@@ -116,8 +116,8 @@ function PairPageInner() {
           <strong>{result === "approved" ? "Browser connected" : "Request rejected"}</strong>
           <p>
             {result === "approved"
-              ? "You can return to the LONS extension."
-              : "This pairing request was rejected and cannot be reused."}
+              ? "You can return to the LONS extension"
+              : "This pairing request was rejected and cannot be reused"}
           </p>
         </div>
       ) : error ? (
@@ -127,7 +127,7 @@ function PairPageInner() {
         </div>
       ) : request && request.status !== "pending" ? (
         <div className="empty">
-          This pairing request is {request.status} and can no longer be approved.
+          This pairing request is {request.status} and can no longer be approved
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 520 }}>
@@ -135,7 +135,7 @@ function PairPageInner() {
             <strong>Check the code matches</strong>
             <p>
               Approve only if this code is identical to the one shown in your LONS extension. If
-              it differs, reject this request.
+              it differs, reject this request
             </p>
           </div>
           <div className="panel">

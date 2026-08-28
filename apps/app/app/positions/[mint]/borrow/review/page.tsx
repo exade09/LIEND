@@ -53,7 +53,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
           <div className="stack" style={{ maxWidth: 560 }}>
             <div className="notice" data-tone="locked">
               <strong>Borrow on review</strong>
-              <p>This token is already reserved. A second borrow cannot be opened against it.</p>
+              <p>This token is already reserved. A second borrow cannot be opened against it</p>
             </div>
             <Link className="button button--primary" href={`/loans/${reserved.id}`}>
               View request
@@ -65,7 +65,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
               <strong>Wallet signature required</strong>
               <p>
                 MetaMask will show a borrow request. Sign it to reserve this token. The request goes
-                to review and does not transfer funds.
+                to review and does not transfer funds
               </p>
             </div>
             <div className="panel">
@@ -110,7 +110,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
             </button>
           </div>
         ) : (
-          <div className="empty">No quote to review. Start from a position.</div>
+          <div className="empty">No quote to review. Start from a position</div>
         )}
       </UtilityGate>
     </>

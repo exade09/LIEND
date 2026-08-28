@@ -113,8 +113,8 @@ function present(row: BlockscoutTransfer, nativePrice: number | null): TapeEvent
     route: isBorrow ? `${symbol} → ETH` : `ETH → ${symbol}`,
     amount: native,
     description: isBorrow
-      ? `A Robinhood Chain wallet moved ${symbol} into a contract route. LONS marks it as borrow-side activity for review.`
-      : `A Robinhood Chain wallet received ${symbol} from a contract route. LONS marks it as repay-side activity for review.`,
+      ? `A Robinhood Chain wallet moved ${symbol} into a contract route. LONS marks it as borrow-side activity for review`
+      : `A Robinhood Chain wallet received ${symbol} from a contract route. LONS marks it as repay-side activity for review`,
     tokenDelta: isBorrow ? `− ${tokens} ${symbol}` : `+ ${tokens} ${symbol}`,
     nativeDelta: estimatedEth === null ? "value pending" : `${isBorrow ? "+" : "−"} ${compact(estimatedEth)} ETH`,
     occurredAt: Number.isFinite(occurredAt) ? occurredAt : Date.now(),

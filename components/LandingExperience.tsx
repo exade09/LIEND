@@ -56,6 +56,29 @@ function DropletMark({ className = "" }: { className?: string }) {
   )
 }
 
+function BrandKey({ className = "" }: { className?: string }) {
+  return (
+    <span className={`${styles.brandKey} ${className}`} aria-hidden="true">
+      <span className={styles.brandKeyHead}>
+        <Image src="/assets/lons-mark.png" alt="" width={1024} height={1024} />
+      </span>
+      <svg className={styles.brandKeyStem} viewBox="0 0 160 160">
+        <defs>
+          <linearGradient id="lons-key-stem" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stopColor="#356f47" />
+            <stop offset="0.42" stopColor="#eef8ec" />
+            <stop offset="0.72" stopColor="#bcd8bd" />
+            <stop offset="1" stopColor="#ffffff" />
+          </linearGradient>
+        </defs>
+        <path className={styles.keyDepth} d="M96 64 17 132l19 20 15-14 12 12 18-17-12-12 42-38Z" />
+        <path className={styles.keyFace} d="M91 57 12 125l19 20 15-14 12 12 18-17-12-12 42-38Z" fill="url(#lons-key-stem)" />
+        <path className={styles.keyShine} d="m29 126 61-53" />
+      </svg>
+    </span>
+  )
+}
+
 function MarqueeGroup() {
   return (
     <div className={styles.marqueeGroup} aria-hidden="true">
@@ -102,28 +125,7 @@ function HeroArtifacts() {
       <LiquidRibbon className={styles.ribbonTop} gradientId="liend-ribbon-top" />
       <LiquidRibbon className={styles.ribbonBottom} gradientId="liend-ribbon-bottom" />
 
-      <span className={`${styles.heroArtifact} ${styles.vectorKey}`}>
-        <svg viewBox="0 0 160 160">
-          <defs>
-            <linearGradient id="liend-key-face" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#ffffff" />
-              <stop offset="0.38" stopColor="#63f2ff" />
-              <stop offset="0.72" stopColor="#3f7cff" />
-              <stop offset="1" stopColor="#7950ef" />
-            </linearGradient>
-          </defs>
-          <path
-            className={styles.keyDepth}
-            d="M94 18c-25 0-45 20-45 45 0 8 2 16 6 23l-40 40 17 17 12-12 11 11 17-17-11-11 13-13c6 4 13 6 20 6 25 0 45-20 45-45S119 18 94 18Zm0 27a18 18 0 1 1 0 36 18 18 0 0 1 0-36Z"
-          />
-          <path
-            className={styles.keyFace}
-            d="M94 12c-25 0-45 20-45 45 0 8 2 16 6 23l-40 40 17 17 12-12 11 11 17-17-11-11 13-13c6 4 13 6 20 6 25 0 45-20 45-45S119 12 94 12Zm0 27a18 18 0 1 1 0 36 18 18 0 0 1 0-36Z"
-            fill="url(#liend-key-face)"
-          />
-          <path className={styles.keyShine} d="M78 25c23-14 49 1 52 23" />
-        </svg>
-      </span>
+      <BrandKey className={`${styles.heroArtifact} ${styles.vectorKey}`} />
 
       <span className={`${styles.heroArtifact} ${styles.vectorCoin}`}>
         <i className={styles.coinRim} />
@@ -482,7 +484,7 @@ export function LandingExperience() {
               <RevealHeadline lines={["Liquidity without", "making a sale", "the first move"]} />
               <p>A legible path from a supported wallet position to a reviewed ETH borrow</p>
             </div>
-            <div className={styles.routeIllustration} aria-hidden="true"><PixelSprite kind="key" /><DropletMark /></div>
+            <div className={styles.routeIllustration} aria-hidden="true"><BrandKey /><DropletMark /></div>
           </div>
           <div className={styles.routeCards}>
             {routeSteps.map((step, index) => (
@@ -572,7 +574,7 @@ export function LandingExperience() {
                 <MotionLabel>Approve in wallet</MotionLabel>
               </LaunchAppLink>
             </div>
-            <PixelSprite kind="key" className={styles.controlKey} />
+            <BrandKey className={styles.controlKey} />
           </div>
         </section>
 

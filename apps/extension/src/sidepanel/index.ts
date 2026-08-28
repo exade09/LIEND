@@ -125,7 +125,7 @@ function render(snapshot: PanelSnapshot): void {
     el(
       "p",
       "muted",
-      "LONS reads only the token address on supported pages. It never accesses wallet keys or your browsing history.",
+      "LONS reads only the token address on supported pages. It never accesses wallet keys or your browsing history",
     ),
   )
   if (snapshot.connection === "connected") {

@@ -84,7 +84,7 @@ function AuthPageInner() {
         <div className="notice">
           <strong>LONS API not configured</strong>
           <p>
-            Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment.
+            Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment
           </p>
         </div>
       )}
@@ -94,7 +94,7 @@ function AuthPageInner() {
         <p>
           You will be asked to sign a plain-text message to prove you control the wallet. This
           creates no transaction and costs no fees. LONS never asks for a seed phrase or private
-          key.
+          key
         </p>
       </div>
 
@@ -107,7 +107,7 @@ function AuthPageInner() {
 
       {wallets.length === 0 ? (
         <div className="empty">
-          MetaMask was not detected in this browser. Install MetaMask, then reload this page.
+          MetaMask was not detected in this browser. Install MetaMask, then reload this page
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 380 }}>

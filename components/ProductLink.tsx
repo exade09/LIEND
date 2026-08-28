@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Icon } from "@/components/Icon"
 import {
   extensionCtaLabel,
@@ -115,13 +116,7 @@ export function ExtensionCta({ className = "button button--ghost" }: { className
 
 function ChromeMark() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <path fill="#EA4335" d="M12 2a10 10 0 0 1 8.66 5H12z" />
-      <path fill="#FBBC05" d="M20.66 7A10 10 0 0 1 12 22l-4.33-7.5H12z" />
-      <path fill="#34A853" d="M12 22A10 10 0 0 1 3.34 7h8.66L7.67 14.5z" />
-      <circle cx="12" cy="12" r="4.35" fill="#fff" />
-      <circle cx="12" cy="12" r="2.7" fill="#4285F4" />
-    </svg>
+    <Image src="/assets/chrome-mark.png" alt="" width={256} height={256} aria-hidden="true" />
   )
 }
 
@@ -193,7 +188,7 @@ function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) 
         </a>
 
         <p className="install-note">
-          LONS is not yet on the Chrome Web Store, so this installs in developer mode.
+          LONS is not yet on the Chrome Web Store, so this installs in developer mode
         </p>
       </div>
     </div>

@@ -37,7 +37,7 @@ export function Hero() {
         <div className={`${styles.frame} page-shell`}>
           <div className={styles.content}>
             <h1 className="sr-only" id="hero-title">
-              Keep the position. Access the liquidity.
+              Keep the position. Access the liquidity
             </h1>
             <div className={styles.wordmarkSlot}>
               <Wordmark />

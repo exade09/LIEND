@@ -23,7 +23,7 @@ export default function TransactionPage({ params }: { params: Promise<{ id: stri
       </header>
       <div className="empty">
         No transaction execution adapter is configured for this deployment, so no transaction
-        status can be reported.
+        status can be reported
       </div>
     </>
   )

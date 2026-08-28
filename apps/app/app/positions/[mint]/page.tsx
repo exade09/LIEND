@@ -70,7 +70,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
             {reserved ? (
               <div className="notice" data-tone="locked">
                 <strong>{loanLabel(reserved.status)}</strong>
-                <p>This token is reserved. Another borrow cannot be opened against it.</p>
+                <p>This token is reserved. Another borrow cannot be opened against it</p>
               </div>
             ) : null}
             <div className="row">

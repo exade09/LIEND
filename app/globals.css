@@ -864,9 +864,13 @@ button:disabled {
   white-space: nowrap;
 }
 
-.chrome-badge svg {
+.chrome-badge svg,
+.chrome-badge img {
   display: block;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  object-fit: contain;
 }
 
 .chrome-badge:hover {

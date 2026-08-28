@@ -39,7 +39,7 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
           <div className="stack" style={{ maxWidth: 560 }}>
             <div className="notice" data-tone="locked">
               <strong>{loanLabel(reserved.status)}</strong>
-              <p>This token already has a borrow on review. A second request cannot be submitted.</p>
+              <p>This token already has a borrow on review. A second request cannot be submitted</p>
             </div>
             <Link className="button button--primary" href={`/loans/${reserved.id}`}>
               View request

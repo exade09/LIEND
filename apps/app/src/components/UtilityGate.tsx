@@ -47,7 +47,7 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
         <strong>LONS API not configured</strong>
         <p>
           Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment to enable
-          account and utility features.
+          account and utility features
         </p>
       </div>
     )
@@ -59,7 +59,7 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     return (
       <div className="notice">
         <strong>Connect a wallet</strong>
-        <p>Connect and verify a Robinhood Chain wallet to see your LONS utility access.</p>
+        <p>Connect and verify a Robinhood Chain wallet to see your LONS utility access</p>
         <p style={{ marginTop: 12 }}>
           <Link className="button button--primary" href="/auth">
             Connect wallet
@@ -75,15 +75,15 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     <div className="notice">
       <strong>{describeUtilityAccess(access)}</strong>
       {access.state === "holder-check-pending" ? (
-        <p>Your LONS balance could not be verified yet. This does not mean you are ineligible.</p>
+        <p>Your LONS balance could not be verified yet. This does not mean you are ineligible</p>
       ) : access.state === "not-eligible" ? (
         <p>
           {access.required === null
-            ? "The required LONS balance has not been published yet."
-            : "Acquire the required LONS balance to unlock utility for this wallet."}
+            ? "The required LONS balance has not been published yet"
+            : "Acquire the required LONS balance to unlock utility for this wallet"}
         </p>
       ) : (
-        <p>LONS access could not be verified. Try again shortly.</p>
+        <p>LONS access could not be verified. Try again shortly</p>
       )}
     </div>
   )

@@ -65,7 +65,7 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
                 <strong>On review</strong>
                 <p>
                   This borrow is reserved and waiting to be processed. It cannot be submitted again
-                  for {loan.symbol}.
+                  for {loan.symbol}
                 </p>
               </div>
             ) : null}

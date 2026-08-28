@@ -25,8 +25,8 @@ export function POST(request: Request) {
     const message = [
       "LONS authentication",
       "",
-      "Sign this message to prove you control this wallet.",
-      "This request will not create a transaction and costs no fees.",
+      "Sign this message to prove you control this wallet",
+      "This request will not create a transaction and costs no fees",
       "",
       `Wallet: ${body.address}`,
       "Network: Robinhood Chain (4663)",

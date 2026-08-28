@@ -187,7 +187,7 @@ export function AdminConsole() {
         <p className={styles.eyebrow}>TERMINAL OFFLINE</p>
         <h1 className={styles.title}>ADMIN NOT CONFIGURED</h1>
         <p className={styles.copy}>
-          Set the admin password environment variable on this host, then reload the console.
+          Set the admin password environment variable on this host, then reload the console
         </p>
       </ConsoleChrome>
     )
@@ -203,7 +203,7 @@ export function AdminConsole() {
             <h1 className={styles.title}>SIGN IN</h1>
           </div>
         </div>
-        <p className={styles.copy}>Enter the site-control password to open the CA broadcast console.</p>
+        <p className={styles.copy}>Enter the site-control password to open the CA broadcast console</p>
         <form className={styles.field} onSubmit={signIn}>
           <label className={styles.label} htmlFor="admin-password">password</label>
           <input
@@ -238,7 +238,7 @@ export function AdminConsole() {
       </div>
 
       <p className={styles.copy}>
-        Publish any text once. The same value is shown after CA: and appended after https://www.ponsfamily.com/launchpad/ on every pons link on the site.
+        Publish any text once. The same value is shown after CA: and appended after https://www.ponsfamily.com/launchpad/ on every pons link on the site
       </p>
 
       <dl className={styles.readout}>

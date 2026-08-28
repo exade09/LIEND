@@ -111,7 +111,7 @@ export function OnchainJourney() {
               </h2>
               <p className={styles.lede}>
                 See the client path from a supported position to borrowed ETH,
-                with only the checks and wallet information needed to understand the route.
+                with only the checks and wallet information needed to understand the route
               </p>
 
               <div className={styles.context} aria-label="Route context">
@@ -172,7 +172,7 @@ export function OnchainJourney() {
               <h3 id="client-route-summary">What this route means</h3>
               <p>
                 Choose a supported position, review the available borrow route,
-                confirm the amount, and receive ETH in the destination wallet.
+                confirm the amount, and receive ETH in the destination wallet
               </p>
               <dl className={styles.routeFacts}>
                 <div>
@@ -189,7 +189,7 @@ export function OnchainJourney() {
                 </div>
               </dl>
               <p className={styles.panelNote}>
-                Route guide only. No simulated signature, slot, or execution status.
+                Route guide only. No simulated signature, slot, or execution status
               </p>
             </aside>
           </div>

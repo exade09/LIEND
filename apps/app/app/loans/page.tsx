@@ -18,7 +18,7 @@ export default function LoansPage() {
       </header>
       <UtilityGate>
         {book.loans.length === 0 ? (
-          <div className="empty">No loans yet. Borrow against a position to open one.</div>
+          <div className="empty">No loans yet. Borrow against a position to open one</div>
         ) : (
           <div className="panel">
             <div className="list">

@@ -77,15 +77,15 @@ export default function DevicesPage() {
       )}
 
       {!apiConfigured ? (
-        <div className="empty">The LONS API is not configured for this deployment.</div>
+        <div className="empty">The LONS API is not configured for this deployment</div>
       ) : !authenticated ? (
-        <div className="empty">Connect a wallet to see paired browsers.</div>
+        <div className="empty">Connect a wallet to see paired browsers</div>
       ) : devices === null ? (
         <div className="empty">Loading…</div>
       ) : devices.length === 0 ? (
         <div className="empty">
           No browsers are paired with this wallet. Pairing becomes available with the LONS
-          extension.
+          extension
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 620 }}>

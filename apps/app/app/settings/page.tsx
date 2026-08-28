@@ -48,7 +48,7 @@ export default function SettingsPage() {
         <div className="panel">
           <h2>Browser connections</h2>
           <p className="muted" style={{ marginTop: 6 }}>
-            Manage browsers paired with the LONS extension.
+            Manage browsers paired with the LONS extension
           </p>
           <p style={{ marginTop: 12 }}>
             <Link className="button button--ghost" href="/settings/devices">Manage devices</Link>
@@ -59,7 +59,7 @@ export default function SettingsPage() {
           <h2>Security</h2>
           <p className="muted" style={{ marginTop: 6 }}>
             LONS is non-custodial. It never requests a seed phrase or private key, and never signs
-            a transaction without your explicit wallet approval.
+            a transaction without your explicit wallet approval
           </p>
         </div>
       </div>

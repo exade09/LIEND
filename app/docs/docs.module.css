@@ -653,7 +653,8 @@
 
 .footerPrimary { background: var(--lime); }
 .footerChrome { height: auto; background: var(--cyan); }
-.footerChrome :global(svg) { display: block; }
+.footerChrome :global(svg),
+.footerChrome :global(img) { display: block; }
 .footerChrome :global(span) { display: inline; }
 
 .footerBottom {
