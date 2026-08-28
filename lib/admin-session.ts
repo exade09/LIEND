@@ -4,14 +4,14 @@ export const ADMIN_COOKIE = "liend_admin"
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7
 
 function configuredPassword(): string | null {
-  const password = process.env.LIEND_ADMIN_PASSWORD?.trim()
+  const password = process.env.LONS_ADMIN_PASSWORD?.trim() || process.env.LIEND_ADMIN_PASSWORD?.trim()
   return password || null
 }
 
 function secret(): string | null {
   const password = configuredPassword()
   if (!password) return null
-  return process.env.LIEND_ADMIN_SECRET?.trim() || password
+  return process.env.LONS_ADMIN_SECRET?.trim() || process.env.LIEND_ADMIN_SECRET?.trim() || password
 }
 
 export function isAdminConfigured(): boolean {

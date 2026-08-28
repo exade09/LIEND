@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { Icon } from "@/components/Icon"
 import { Modal } from "@/components/Modal"
-import { formatCurrency, formatNumber, formatPercent, formatSol } from "@/lib/formatting"
+import { formatCurrency, formatNumber, formatPercent, formatEth } from "@/lib/formatting"
 import { calculateLtv, getHealthState } from "@/lib/calculations"
 import { getBorrowQuote } from "@/services/borrowing"
 import type { BorrowQuote, Market } from "@/types"
@@ -30,7 +30,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
   const canReview = market.eligible && collateralAmount > 0 && borrowAmount > 0 && ltv <= 65
 
   const route = useMemo(
-    () => ["Position check", "Market verify", "Collateral", "LONS program", "SOL settlement"],
+    () => ["Position check", "Market verify", "Collateral", "LONS program", "ETH settlement"],
     [],
   )
 
@@ -41,7 +41,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
       const nextQuote = await getBorrowQuote({
         marketId: market.id,
         collateralAmount,
-        borrowAmountSol: borrowAmount,
+        borrowAmountEth: borrowAmount,
       })
       setQuote(nextQuote)
       setReviewOpen(true)
@@ -57,10 +57,10 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
       <div className="panel-heading">
         <div>
           <span className="overline">BORROWING ROUTE</span>
-          <h3>Configure a SOL borrow</h3>
+          <h3>Configure a ETH borrow</h3>
         </div>
         <div className="panel-heading__meta">
-          <span className="network-chip">Solana</span>
+          <span className="network-chip">Robinhood Chain</span>
         </div>
       </div>
 
@@ -110,8 +110,8 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
           </header>
 
           <div className="selected-asset">
-            <span className="sol-avatar"><Icon name="sol" size={20} /></span>
-            <div><strong>Solana</strong><small>SOL</small></div>
+            <span className="eth-avatar"><Icon name="eth" size={20} /></span>
+            <div><strong>Robinhood Chain</strong><small>ETH</small></div>
             <span className="selected-asset__tag">BORROW ASSET</span>
           </div>
 
@@ -124,9 +124,9 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
                 step="0.1"
                 value={borrowAmount}
                 onChange={(event) => setBorrowAmount(Number(event.target.value))}
-                aria-label="Borrow amount in SOL"
+                aria-label="Borrow amount in ETH"
               />
-              <strong>SOL</strong>
+              <strong>ETH</strong>
             </div>
             <small>Estimated value {formatCurrency(borrowValue)}</small>
           </label>
@@ -154,10 +154,10 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
       <div className="borrow-summary">
         <dl>
           <div><dt>Collateral</dt><dd>{formatNumber(collateralAmount)} {market.ticker}</dd></div>
-          <div><dt>Borrowed</dt><dd>{formatSol(borrowAmount)}</dd></div>
+          <div><dt>Borrowed</dt><dd>{formatEth(borrowAmount)}</dd></div>
           <div><dt>Remaining Position</dt><dd className="muted">-- <small>WALLET REQUIRED</small></dd></div>
-          <div><dt>Protocol Fee</dt><dd>{formatSol(fee, 5)} <small>EST</small></dd></div>
-          <div><dt>Network Cost</dt><dd>0.00002 SOL <small>EST</small></dd></div>
+          <div><dt>Protocol Fee</dt><dd>{formatEth(fee, 5)} <small>EST</small></dd></div>
+          <div><dt>Network Cost</dt><dd>0.00002 ETH <small>EST</small></dd></div>
         </dl>
         <div className="borrow-summary__action">
           {ltv > 65 ? <span className="field-error">Reduce borrow amount to review this route</span> : null}
@@ -185,7 +185,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
             </div>
             <dl className="preview-summary">
               <div><dt>Collateral</dt><dd>{formatNumber(quote.collateralAmount)} {quote.collateralTicker}</dd></div>
-              <div><dt>Borrow</dt><dd>{formatSol(quote.borrowAmountSol)}</dd></div>
+              <div><dt>Borrow</dt><dd>{formatEth(quote.borrowAmountEth)}</dd></div>
               <div><dt>Estimated LTV</dt><dd>{formatPercent(quote.estimatedLtvPercent)}</dd></div>
               <div><dt>Wallet approval</dt><dd>Required for live execution</dd></div>
             </dl>

@@ -47,13 +47,13 @@ export function calculateLoanEstimate(input: CalculatorInput): CalculatorResult 
   const borrowValueUsd =
     collateralValueUsd * (clamp(input.borrowPercent, 0, 100) / 100);
   const exampleLtvPercent = calculateLtv(borrowValueUsd, collateralValueUsd);
-  const estimatedSol =
-    input.solPriceUsd > 0 ? borrowValueUsd / input.solPriceUsd : 0;
+  const estimatedEth =
+    input.ethPriceUsd > 0 ? borrowValueUsd / input.ethPriceUsd : 0;
 
   return {
     positionValueUsd,
     collateralValueUsd,
-    estimatedSol,
+    estimatedEth,
     remainingExposureUsd: Math.max(positionValueUsd - collateralValueUsd, 0),
     exampleLtvPercent,
     healthState: getHealthState(exampleLtvPercent),

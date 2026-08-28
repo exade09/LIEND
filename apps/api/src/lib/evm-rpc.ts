@@ -73,7 +73,7 @@ export function parseBlockscoutBalances(value: unknown): ParsedTokenAccount[] {
     const decimals = Number(row.token?.decimals)
     const raw = row.value
     if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) return []
-    if (!raw || !/^\\d+$/.test(raw) || !Number.isInteger(decimals) || decimals < 0 || decimals > 36) return []
+    if (!raw || !/^\d+$/.test(raw) || !Number.isInteger(decimals) || decimals < 0 || decimals > 36) return []
     const amountRaw = BigInt(raw)
     if (amountRaw === 0n) return []
     return [{

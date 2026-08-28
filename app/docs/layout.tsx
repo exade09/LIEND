@@ -46,7 +46,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         <div className={styles.footerBrand}>
           <Image src="/assets/lons-mark.png" alt="" width={128} height={128} />
           <strong>LONS</strong>
-          <p>Utility liquidity for supported migrated token positions on Solana</p>
+          <p>Utility liquidity for supported migrated token positions on Robinhood Chain</p>
         </div>
 
         <div className={styles.footerLinks}>
@@ -68,7 +68,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 
         <div className={styles.footerBottom}>
           <span>LONS / DOCS</span>
-          <span>SOLANA / 2026</span>
+          <span>ROBINHOOD CHAIN / 2026</span>
         </div>
       </footer>
     </div>

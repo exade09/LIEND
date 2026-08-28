@@ -4,7 +4,7 @@ import styles from "./privacy.module.css"
 export const metadata: Metadata = {
   title: "Privacy Policy | LONS",
   description:
-    "How the LONS Chrome extension and related LONS surfaces handle data on supported Solana token pages.",
+    "How the LONS Chrome extension and related LONS surfaces handle data on supported Robinhood Chain token pages.",
 }
 
 export default function PrivacyPage() {
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
         <section className={styles.section}>
           <h2>What LONS is</h2>
           <p>
-            LONS is a utility layer for supported migrated token positions on Solana.
+            LONS is a utility layer for supported migrated token positions on Robinhood Chain.
             The Chrome extension adds liquidity context on supported token pages. It
             currently runs on pons coin pages. It is not a wallet, not a trading
             bot, and not a sniper. It does not sign transactions. Signing stays in the

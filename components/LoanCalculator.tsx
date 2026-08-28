@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { SectionHeading } from "@/components/SectionHeading"
 import { calculateLoanEstimate } from "@/lib/calculations"
-import { formatCurrency, formatPercent, formatSol } from "@/lib/formatting"
+import { formatCurrency, formatPercent, formatEth } from "@/lib/formatting"
 
 export function LoanCalculator() {
   const [tokenValue, setTokenValue] = useState(5000)
@@ -11,7 +11,7 @@ export function LoanCalculator() {
   const [borrow, setBorrow] = useState(35)
 
   const result = useMemo(
-    () => calculateLoanEstimate({ tokenValueUsd: tokenValue, collateralPercent: collateral, borrowPercent: borrow, solPriceUsd: 150 }),
+    () => calculateLoanEstimate({ tokenValueUsd: tokenValue, collateralPercent: collateral, borrowPercent: borrow, ethPriceUsd: 150 }),
     [borrow, collateral, tokenValue],
   )
 
@@ -47,15 +47,15 @@ export function LoanCalculator() {
           </div>
 
           <div className="calculator-route" aria-hidden="true">
-            <span>POSITION</span><i /><span>COLLATERAL</span><i /><span>SOL</span>
+            <span>POSITION</span><i /><span>COLLATERAL</span><i /><span>ETH</span>
           </div>
 
           <div className="calculator-output">
             <header><span>ESTIMATED OUTPUT</span></header>
             <div className="calculator-output__primary">
-              <span>Estimated SOL</span>
-              <strong>{formatSol(result.estimatedSol, 4)}</strong>
-              <small>Using an illustrative SOL price of $150</small>
+              <span>Estimated ETH</span>
+              <strong>{formatEth(result.estimatedEth, 4)}</strong>
+              <small>Using an illustrative ETH price of $150</small>
             </div>
             <dl>
               <div><dt>Position Value</dt><dd>{formatCurrency(result.positionValueUsd)}</dd></div>

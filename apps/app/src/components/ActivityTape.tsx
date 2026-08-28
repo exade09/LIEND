@@ -4,13 +4,11 @@ import { useEffect, useState } from "react"
 import type { TapeEvent } from "@/lib/liveActivity"
 import styles from "./ActivityTape.module.css"
 
-const EXPLORER = "https://solscan.io"
+const EXPLORER = "https://robinhoodchain.blockscout.com"
 
 const kindLabel: Record<TapeEvent["kind"], string> = {
   borrow: "BORROW",
   repay: "REPAY",
-  "swap-out": "BORROW",
-  "swap-in": "REPAY",
 }
 
 function shorten(value: string, lead = 4, tail = 4) {
@@ -24,8 +22,10 @@ function timeAgo(occurredAt: number, now: number) {
   return `${Math.floor(delta / 3600)}h`
 }
 
-function nextDelay() {
-  return 60_000 + Math.floor(Math.random() * 180_001)
+function nextDelay(revealCount: number) {
+  return revealCount < 2
+    ? 30_000 + Math.floor(Math.random() * 20_001)
+    : 120_000 + Math.floor(Math.random() * 60_001)
 }
 
 async function loadPool(): Promise<TapeEvent[]> {
@@ -72,9 +72,11 @@ export function ActivityTape() {
     let cancelled = false
     let timer = 0
     let pool: TapeEvent[] = []
+    let revealCount = 0
     const seen = new Set<string>()
 
     const reveal = (event: TapeEvent) => {
+      revealCount += 1
       seen.add(event.signature)
       setFreshId(event.signature)
       setEvents((current) => [event, ...current.filter((item) => item.signature !== event.signature)].slice(0, 8))
@@ -96,13 +98,13 @@ export function ActivityTape() {
           if (!cancelled && fresh.length > 0) pool = fresh
         })
       }
-      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay())
+      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
     }
 
     void (async () => {
       pool = await loadPool()
       if (cancelled) return
-      timer = window.setTimeout(() => void tick(), nextDelay())
+      timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
     })()
 
     return () => {
@@ -183,8 +185,8 @@ export function ActivityTape() {
                 <strong>{selected.tokenDelta}</strong>
               </div>
               <div>
-                <span>SOL</span>
-                <strong>{selected.solDelta}</strong>
+                <span>ETH</span>
+                <strong>{selected.nativeDelta}</strong>
               </div>
               <div>
                 <span>Route</span>
@@ -214,15 +216,15 @@ export function ActivityTape() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Open Solscan
+                Open Blockscout
               </a>
               <a
                 className="button button--ghost"
-                href={`${EXPLORER}/account/${encodeURIComponent(selected.wallet)}`}
+                href={`${EXPLORER}/address/${encodeURIComponent(selected.wallet)}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                Wallet on Solscan
+                Wallet on Blockscout
               </a>
             </div>
           </section>

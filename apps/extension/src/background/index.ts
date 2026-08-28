@@ -23,15 +23,15 @@ import {
 import { parseFromContent, parseFromPanel, type PanelSnapshot } from "@/shared/messages"
 
 const STATE_PREFIX = "liend.tab."
-const ALLOWED_HOSTS = new Set(["pump.fun", "www.pump.fun"])
+const ALLOWED_HOSTS = new Set(["ponsfamily.com", "www.ponsfamily.com"])
 
 /**
- * Mirrors the pump.fun adapter's identity function.
+ * Mirrors the ponsfamily.com adapter's identity function.
  *
  * The worker needs it to reconcile stored state against the tab's live URL
  * without loading adapter code (which pulls in DOM-only helpers).
  */
-const MINT_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
+const MINT_RE = /^0x[a-fA-F0-9]{40}$/
 
 function identifyUrl(raw: string | null | undefined): string | null {
   if (!raw) return null
@@ -44,12 +44,12 @@ function identifyUrl(raw: string | null | undefined): string | null {
   if (!ALLOWED_HOSTS.has(url.hostname)) return null
 
   const parts = url.pathname.split("/").filter(Boolean)
-  if (parts.length >= 2 && parts[0] === "coin" && MINT_RE.test(parts[1])) {
-    return `pumpfun:${parts[1]}`
+  if (parts.length >= 2 && parts[0] === "launchpad" && MINT_RE.test(parts[1])) {
+    return `pons:${parts[1]}`
   }
   let path = url.pathname
   while (path.length > 0 && path.endsWith("/")) path = path.slice(0, -1)
-  return `pumpfun:route:${path || "/"}`
+  return `pons:route:${path || "/"}`
 }
 
 // --- per-tab state -----------------------------------------------------------
@@ -176,7 +176,7 @@ async function openInLiend(): Promise<void> {
 
   // Carries navigation context only — mint and source. No balance, no
   // eligibility, no quote. The App re-fetches all of that itself.
-  const url = context ? positionUrl(APP_URL, context.mint, "pumpfun") : dashboardUrl(APP_URL)
+  const url = context ? positionUrl(APP_URL, context.mint, "pons") : dashboardUrl(APP_URL)
   if (url) await chrome.tabs.create({ url })
 }
 

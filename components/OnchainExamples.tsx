@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading"
 import { TransactionTrace } from "@/components/TransactionTrace"
 import { demoTransactions } from "@/data/demoTransactions"
 import { getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
-import { formatCurrency, formatNumber, formatSol, formatTimestamp } from "@/lib/formatting"
+import { formatCurrency, formatNumber, formatEth, formatTimestamp } from "@/lib/formatting"
 import type { DemoTransaction } from "@/types"
 
 function isFixtureWalletOwner(owner: string, transaction: DemoTransaction) {
@@ -68,13 +68,13 @@ function TransactionChanges({ transaction }: { transaction: DemoTransaction }) {
         </ul>
       </section>
 
-      <section className="onchain-changes__group" aria-labelledby="sol-changes-title">
+      <section className="onchain-changes__group" aria-labelledby="eth-changes-title">
         <header>
-          <Icon name="sol" size={17} />
-          <h3 id="sol-changes-title">SOL changes</h3>
+          <Icon name="eth" size={17} />
+          <h3 id="eth-changes-title">ETH changes</h3>
         </header>
         <ul>
-          {transaction.solChanges.map((change, index) => {
+          {transaction.ethChanges.map((change, index) => {
             const walletOwner = isFixtureWalletOwner(change.owner, transaction)
             return (
               <li key={`${change.owner}-${index}`}>
@@ -84,8 +84,8 @@ function TransactionChanges({ transaction }: { transaction: DemoTransaction }) {
                     <CopyButton value={transaction.wallet} label="Copy wallet" />
                   ) : null}
                 </div>
-                <strong className={change.amountSol >= 0 ? "is-positive" : "is-negative"}>
-                  {change.amountSol >= 0 ? "+" : ""}{formatSol(change.amountSol)}
+                <strong className={change.amountEth >= 0 ? "is-positive" : "is-negative"}>
+                  {change.amountEth >= 0 ? "+" : ""}{formatEth(change.amountEth)}
                 </strong>
               </li>
             )
@@ -111,7 +111,7 @@ export function OnchainExamples() {
         title={<span id="onchain-examples-title">See it onchain</span>}
         copy={
           <p>
-            Inspect the complete route from wallet approval to SOL settlement
+            Inspect the complete route from wallet approval to ETH settlement
           </p>
         }
       />
@@ -155,8 +155,8 @@ export function OnchainExamples() {
                 <dd>{formatCurrency(transaction.borrowValueUsd)}</dd>
               </div>
               <div>
-                <dt>SOL Received</dt>
-                <dd>{formatSol(transaction.solReceived)}</dd>
+                <dt>ETH Received</dt>
+                <dd>{formatEth(transaction.ethReceived)}</dd>
               </div>
               <div>
                 <dt>Instructions</dt>
@@ -214,8 +214,8 @@ export function OnchainExamples() {
                 <dd>{formatCurrency(selectedTransaction.collateralValueUsd)}</dd>
               </div>
               <div>
-                <dt>SOL received</dt>
-                <dd>{formatSol(selectedTransaction.solReceived)}</dd>
+                <dt>ETH received</dt>
+                <dd>{formatEth(selectedTransaction.ethReceived)}</dd>
               </div>
             </dl>
 
@@ -251,7 +251,7 @@ export function OnchainExamples() {
                 rel="noreferrer"
               >
                 <Icon name="explorer" size={17} />
-                View on Solscan
+                View on Blockscout
                 <Icon name="external-link" size={14} />
               </a>
             </div>

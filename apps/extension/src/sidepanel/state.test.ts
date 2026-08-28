@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 import type { PanelSnapshot } from "@/shared/messages"
 import { copyFor, deriveView, toneFor } from "./state"
 
-const MINT = "So11111111111111111111111111111111111111112"
+const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 
 function snap(overrides: Partial<PanelSnapshot> = {}): PanelSnapshot {
   return {
@@ -10,10 +10,10 @@ function snap(overrides: Partial<PanelSnapshot> = {}): PanelSnapshot {
     pairing: null,
     page: "token",
     context: {
-      source: "pumpfun",
-      chain: "solana",
+      source: "pons",
+      chain: "robinhood",
       mint: MINT,
-      pageUrl: `https://pump.fun/coin/${MINT}`,
+      pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
       detectedAt: Date.now(),
     },
     utility: { state: "eligible" },
@@ -113,7 +113,7 @@ describe("copyFor", () => {
       const text = `${copy.title} ${copy.body}`
       // No currency figures, percentages or token amounts anywhere.
       expect(text).not.toMatch(/\$\s?\d/)
-      expect(text).not.toMatch(/\d+(\.\d+)?\s?(SOL|USD|%)/i)
+      expect(text).not.toMatch(/\d+(\.\d+)?\s?(ETH|USD|%)/i)
     }
   })
 

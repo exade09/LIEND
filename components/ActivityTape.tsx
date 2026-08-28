@@ -15,12 +15,12 @@ const REGULAR_REVEAL_MAX_DELAY_MS = 180_000
 const FAST_REVEAL_COUNT = 2
 
 function kindIcon(kind: TapeKind) {
-  if (kind === "borrow" || kind === "swap-out") return "borrow" as const
+  if (kind === "borrow") return "borrow" as const
   return "transaction" as const
 }
 
 function liveKindLabel(kind: TapeKind) {
-  return kind === "borrow" || kind === "swap-out" ? "BORROW" : "REPAY"
+  return kind === "borrow" ? "BORROW" : "REPAY"
 }
 
 function timeAgo(occurredAt: number, now: number) {
@@ -175,8 +175,8 @@ export function ActivityTape() {
                 <strong>{selected.tokenDelta}</strong>
               </div>
               <div>
-                <span>SOL</span>
-                <strong>{selected.solDelta}</strong>
+                <span>ETH</span>
+                <strong>{selected.nativeDelta}</strong>
               </div>
               <div>
                 <span>Route</span>
@@ -207,7 +207,7 @@ export function ActivityTape() {
                 rel="noreferrer"
               >
                 <Icon name="explorer" size={16} />
-                Open Solscan
+                Open Blockscout
                 <Icon name="external-link" size={13} />
               </a>
               <a
@@ -217,7 +217,7 @@ export function ActivityTape() {
                 rel="noreferrer"
               >
                 <Icon name="wallet" size={16} />
-                Wallet on Solscan
+                Wallet on Blockscout
               </a>
             </div>
           </div>

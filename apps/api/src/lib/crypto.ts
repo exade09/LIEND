@@ -3,7 +3,7 @@
  *
  * No primitive is invented here. Signature verification uses Node's built-in
  * ed25519 support (`crypto.verify`), which is the same audited implementation
- * used elsewhere in the platform. This file only does encoding work: base58
+ * used elsewhere in the platform. This file only verifies EIP-191 messages;
  * decoding and wrapping a raw 32-byte key in the DER envelope Node expects.
  */
 

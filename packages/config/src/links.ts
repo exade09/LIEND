@@ -1,10 +1,10 @@
 /**
  * External LIEND destinations.
  *
- * PRODUCT FACT (approved): the real Pump.fun, X and docs destinations do not
+ * PRODUCT FACT: pons is the verified Robinhood Chain launch surface. X and
  * exist yet. Every entry is nullable and unset by default. A null link means
  * the surface must hide or disable that affordance — never render a guessed
- * URL and never fall back to a service root such as `https://pump.fun/`.
+ * docs remain configured destinations rather than guessed URLs.
  */
 
 import { parseOrigin } from "./origins"

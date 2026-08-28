@@ -1,21 +1,21 @@
 /**
- * pump.fun adapter.
+ * pons launchpad adapter.
  *
  * Detection uses the route pattern verified in Phase 1 research against the
- * live site: token pages are `/coin/<mint>`, and the mint is echoed into both
- * `<link rel="canonical">` and `<meta property="og:url">`.
+ * live site: token pages are `/launchpad/<contract>`. Canonical and Open Graph
+ * URLs are used only as optional corroboration.
  *
  * Deliberately NOT used: CSS class names, DOM structure, or any displayed
  * price/liquidity figure. Those change with every redesign, and scraped
  * numbers must never become LIEND financial truth. This detector survives a
- * full visual redesign of pump.fun because it only reads URLs.
+ * full visual redesign of ponsfamily.com because it only reads URLs.
  */
 
 import type { DetectionResult, SiteAdapter } from "./types"
 import { isValidMint } from "./types"
 import { mountTrigger } from "@/content/trigger"
 
-const HOSTS = new Set(["pump.fun", "www.pump.fun"])
+const HOSTS = new Set(["ponsfamily.com", "www.ponsfamily.com"])
 
 function stripTrailingSlash(pathname: string): string {
   let end = pathname.length
@@ -23,14 +23,14 @@ function stripTrailingSlash(pathname: string): string {
   return pathname.slice(0, end)
 }
 
-/** Extracts a mint from a `/coin/<mint>` path. Null for any other route. */
+/** Extracts a contract from a `/launchpad/<address>` path. */
 export function mintFromPath(pathname: string): string | null {
   const parts = pathname.split("/").filter(Boolean)
-  if (parts.length < 2 || parts[0] !== "coin") return null
+  if (parts.length < 2 || parts[0] !== "launchpad") return null
   return isValidMint(parts[1]) ? parts[1] : null
 }
 
-/** Extracts a mint from an absolute pump.fun URL, if it is a coin route. */
+/** Extracts a mint from an absolute ponsfamily.com URL, if it is a launchpad route. */
 export function mintFromUrl(raw: string | null | undefined): string | null {
   if (!raw) return null
   try {
@@ -55,7 +55,7 @@ export function readOgUrlMint(doc: Document): string | null {
 /**
  * Evidence policy.
  *
- * The URL is the PRIMARY authority: `/coin/<valid mint>` is what pump.fun
+ * The URL is the PRIMARY authority: `/launchpad/<valid contract>` is what pons
  * routed to and what the user sees in the address bar. canonical and og:url
  * are corroboration, not permission.
  *
@@ -69,7 +69,7 @@ export function readOgUrlMint(doc: Document): string | null {
  *    the token we just left.
  *
  *  - Grace expired (`allowUrlOnly`) -> accept the URL mint as `url-only`.
- *    Some pump.fun routes never refresh canonical/og after a SPA navigation,
+ *    Some ponsfamily.com routes never refresh canonical/og after a SPA navigation,
  *    and waiting for corroboration that will never arrive is what pinned the
  *    panel on "Detecting token…" indefinitely. We still never invent a mint:
  *    the accepted value always comes from the current URL.
@@ -83,8 +83,8 @@ export function evaluateEvidence(
   if (!fromPath) return { status: "none" }
 
   const context = {
-    source: "pumpfun" as const,
-    chain: "solana" as const,
+    source: "pons" as const,
+    chain: "robinhood" as const,
     mint: fromPath,
     pageUrl: `${url.origin}${url.pathname}`,
     detectedAt: Date.now(),
@@ -101,8 +101,8 @@ export function evaluateEvidence(
   return { status: "pending" }
 }
 
-export const pumpfunAdapter: SiteAdapter = {
-  id: "pumpfun",
+export const ponsAdapter: SiteAdapter = {
+  id: "pons",
 
   matches(url) {
     return HOSTS.has(url.hostname)
@@ -112,8 +112,8 @@ export const pumpfunAdapter: SiteAdapter = {
     const mint = mintFromPath(url.pathname)
     // Token pages are identified by the mint alone, so ?tab=, #hash and
     // analytics parameters cannot masquerade as navigation.
-    if (mint) return `pumpfun:${mint}`
-    return `pumpfun:route:${stripTrailingSlash(url.pathname) || "/"}`
+    if (mint) return `pons:${mint}`
+    return `pons:route:${stripTrailingSlash(url.pathname) || "/"}`
   },
 
   detect(url, doc, allowUrlOnly) {
@@ -131,7 +131,7 @@ export const pumpfunAdapter: SiteAdapter = {
      */
     const notify = () => onChange()
 
-    // pump.fun is a client-routed app, so no load event fires between tokens.
+    // pons is a client-routed app, so no load event fires between tokens.
     // We observe History API calls without altering their behaviour — the
     // original is always invoked and its return value passed through.
     const originalPush = history.pushState

@@ -8,9 +8,9 @@ import type {
   RouteInstruction,
 } from "../types";
 
-const DEMO_SOL_PRICE_USD = 150;
+const DEMO_ETH_PRICE_USD = 150;
 const DEMO_PROTOCOL_FEE_RATE = 0.003;
-const DEMO_NETWORK_COST_SOL = 0.00002;
+const DEMO_NETWORK_COST_ETH = 0.00002;
 
 export interface BorrowingProvider {
   getBorrowQuote: (request: BorrowQuoteRequest) => Promise<BorrowQuote>;
@@ -21,8 +21,8 @@ export interface BorrowingProvider {
 
 const demoRoute = (ticker: string): RouteInstruction[] => [
   {
-    program: "SPL Token Program",
-    instruction: "Verify token account",
+    program: "ERC-20 Contract",
+    instruction: "Verify token balance",
     description: `Read the ${ticker} position`,
   },
   {
@@ -38,12 +38,12 @@ const demoRoute = (ticker: string): RouteInstruction[] => [
   {
     program: "LONS Program",
     instruction: "Request borrow",
-    description: "Evaluate the SOL borrow request",
+    description: "Evaluate the ETH borrow request",
   },
   {
-    program: "System Program",
+    program: "Robinhood Chain",
     instruction: "Prepare settlement",
-    description: "Prepare the SOL destination instruction",
+    description: "Prepare the ETH destination instruction",
   },
 ];
 
@@ -56,9 +56,9 @@ export const demoBorrowingAdapter: BorrowingProvider = {
     }
 
     const collateralAmount = Math.max(request.collateralAmount, 0);
-    const borrowAmountSol = Math.max(request.borrowAmountSol, 0);
+    const borrowAmountEth = Math.max(request.borrowAmountEth, 0);
     const collateralValueUsd = collateralAmount * market.priceUsd;
-    const borrowValueUsd = borrowAmountSol * DEMO_SOL_PRICE_USD;
+    const borrowValueUsd = borrowAmountEth * DEMO_ETH_PRICE_USD;
     const estimatedLtvPercent =
       collateralValueUsd > 0
         ? (borrowValueUsd / collateralValueUsd) * 100
@@ -67,7 +67,7 @@ export const demoBorrowingAdapter: BorrowingProvider = {
       market.eligible &&
       market.liquid &&
       collateralAmount > 0 &&
-      borrowAmountSol > 0;
+      borrowAmountEth > 0;
 
     return {
       quoteId: `demo-borrow-${market.id}`,
@@ -75,16 +75,16 @@ export const demoBorrowingAdapter: BorrowingProvider = {
       collateralTicker: market.ticker,
       collateralAmount,
       collateralValueUsd,
-      borrowAsset: "SOL",
-      borrowAmountSol,
+      borrowAsset: "ETH",
+      borrowAmountEth,
       borrowValueUsd,
       remainingPositionUsd: null,
       estimatedLtvPercent,
       estimatedHealth: hasRoute
         ? getHealthState(estimatedLtvPercent)
         : "Unavailable",
-      protocolFeeSol: borrowAmountSol * DEMO_PROTOCOL_FEE_RATE,
-      estimatedNetworkCostSol: DEMO_NETWORK_COST_SOL,
+      protocolFeeEth: borrowAmountEth * DEMO_PROTOCOL_FEE_RATE,
+      estimatedNetworkCostEth: DEMO_NETWORK_COST_ETH,
       route: hasRoute ? demoRoute(market.ticker) : [],
       expiresAt: null,
       executable: false,

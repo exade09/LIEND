@@ -15,14 +15,14 @@ import type {
   WalletTokenPosition,
 } from "../types";
 
-export interface SolanaDataProvider {
+export interface RobinhoodChainDataProvider {
   getWalletBalances: (
     walletAddress: string,
   ) => Promise<DataEnvelope<WalletBalance[]>>;
   getWalletTokenPositions: (
     walletAddress: string,
   ) => Promise<DataEnvelope<WalletTokenPosition[]>>;
-  checkLiendEligibility: (
+  checkLonsEligibility: (
     walletAddress: string | null,
   ) => Promise<EligibilityResult>;
   getTransactionTrace: (
@@ -32,8 +32,8 @@ export interface SolanaDataProvider {
 }
 
 // This default adapter never invents balances or approvals. A production provider
-// must be passed to read wallet-owned data from Solana.
-export const demoSolanaAdapter: SolanaDataProvider = {
+// must be passed to read wallet-owned data from Robinhood Chain.
+export const demoRobinhoodChainAdapter: RobinhoodChainDataProvider = {
   async getWalletBalances() {
     return {
       data: [],
@@ -41,7 +41,7 @@ export const demoSolanaAdapter: SolanaDataProvider = {
       isDemo: true,
       dataLabel: "Demo data",
       updatedAt: null,
-      notice: "Wallet balances are unavailable until a Solana data provider is connected",
+      notice: "Wallet balances are unavailable until a Robinhood Chain data provider is connected",
     };
   },
 
@@ -52,19 +52,19 @@ export const demoSolanaAdapter: SolanaDataProvider = {
       isDemo: true,
       dataLabel: "Demo data",
       updatedAt: null,
-      notice: "Wallet positions are unavailable until a Solana data provider is connected",
+      notice: "Wallet positions are unavailable until a Robinhood Chain data provider is connected",
     };
   },
 
-  async checkLiendEligibility(walletAddress) {
+  async checkLonsEligibility(walletAddress) {
     if (!walletAddress) {
       return {
         state: "NOT CONNECTED",
         eligible: null,
-        liendBalance: null,
+        lonsBalance: null,
         minimumBalance: project.access.minimumBalance,
         walletAddress,
-        reason: "Connect a Solana wallet to begin the eligibility check",
+        reason: "Connect a Robinhood Chain wallet to begin the eligibility check",
         source: "live",
         isDemo: false,
         dataLabel: "Live data",
@@ -79,7 +79,7 @@ export const demoSolanaAdapter: SolanaDataProvider = {
         : access.state === "not-eligible"
           ? false
           : null;
-    const liendBalance =
+    const lonsBalance =
       access.state === "eligible" || access.state === "not-eligible"
         ? Number(access.balance)
         : null;
@@ -94,7 +94,7 @@ export const demoSolanaAdapter: SolanaDataProvider = {
               ? "ELIGIBLE"
               : "CHECKING",
       eligible,
-      liendBalance: Number.isFinite(liendBalance) ? liendBalance : null,
+      lonsBalance: Number.isFinite(lonsBalance) ? lonsBalance : null,
       minimumBalance: project.access.minimumBalance,
       walletAddress,
       reason: accessCopy(access),
@@ -145,35 +145,32 @@ export async function connectWallet(
       status: "Disconnected",
       address: null,
       providerName: null,
-      cluster: project.cluster,
+      chainId: project.chainId,
       error: "No wallet provider selected",
     };
   }
 
   try {
     const connection = await provider.connect();
-    const address =
-      typeof connection.publicKey === "string"
-        ? connection.publicKey
-        : connection.publicKey.toString();
+    const address = connection.address;
 
     if (!address) {
       return {
         status: "Disconnected",
         address: null,
         providerName: provider.name,
-        cluster: project.cluster,
+        chainId: project.chainId,
         error: "The wallet provider returned no public key",
       };
     }
 
-    if (connection.cluster && connection.cluster !== project.cluster) {
+    if (connection.chainId && connection.chainId !== project.chainId) {
       return {
         status: "Wrong Network",
         address,
         providerName: provider.name,
-        cluster: connection.cluster,
-        error: `Switch to Solana ${project.cluster}`,
+        chainId: connection.chainId,
+        error: `Switch to Robinhood Chain (${project.chainId})`,
       };
     }
 
@@ -181,14 +178,14 @@ export async function connectWallet(
       status: "Connected",
       address,
       providerName: provider.name,
-      cluster: connection.cluster ?? project.cluster,
+      chainId: connection.chainId ?? project.chainId,
     };
   } catch (error) {
     return {
       status: "Disconnected",
       address: null,
       providerName: provider.name,
-      cluster: project.cluster,
+      chainId: project.chainId,
       error: error instanceof Error ? error.message : "Wallet connection failed",
     };
   }
@@ -196,34 +193,34 @@ export async function connectWallet(
 
 export function getWalletBalances(
   walletAddress: string,
-  provider: SolanaDataProvider = demoSolanaAdapter,
+  provider: RobinhoodChainDataProvider = demoRobinhoodChainAdapter,
 ): Promise<DataEnvelope<WalletBalance[]>> {
   return provider.getWalletBalances(walletAddress);
 }
 
 export function getWalletTokenPositions(
   walletAddress: string,
-  provider: SolanaDataProvider = demoSolanaAdapter,
+  provider: RobinhoodChainDataProvider = demoRobinhoodChainAdapter,
 ): Promise<DataEnvelope<WalletTokenPosition[]>> {
   return provider.getWalletTokenPositions(walletAddress);
 }
 
-export function checkLiendEligibility(
+export function checkLonsEligibility(
   walletAddress: string | null,
-  provider: SolanaDataProvider = demoSolanaAdapter,
+  provider: RobinhoodChainDataProvider = demoRobinhoodChainAdapter,
 ): Promise<EligibilityResult> {
-  return provider.checkLiendEligibility(walletAddress);
+  return provider.checkLonsEligibility(walletAddress);
 }
 
 export function getTransactionTrace(
   identifier: string,
-  provider: SolanaDataProvider = demoSolanaAdapter,
+  provider: RobinhoodChainDataProvider = demoRobinhoodChainAdapter,
 ): Promise<DataEnvelope<TransactionTraceStep[]>> {
   return provider.getTransactionTrace(identifier);
 }
 
 export function getProtocolActivity(
-  provider: SolanaDataProvider = demoSolanaAdapter,
+  provider: RobinhoodChainDataProvider = demoRobinhoodChainAdapter,
 ): Promise<DataEnvelope<ProtocolActivity[]>> {
   return provider.getProtocolActivity();
 }

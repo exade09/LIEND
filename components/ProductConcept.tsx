@@ -5,8 +5,8 @@ import { useScenePresence } from "@/lib/useScenePresence"
 
 import styles from "./ProductConcept.module.css"
 
-const sellRoute = ["Token", "Market Sale", "SOL", "Position Reduced"] as const
-const liendRoute = ["Token", "Position", "Borrow", "SOL", "Exposure Maintained"] as const
+const sellRoute = ["Token", "Market Sale", "ETH", "Position Reduced"] as const
+const liendRoute = ["Token", "Position", "Borrow", "ETH", "Exposure Maintained"] as const
 
 function Route({
   label,

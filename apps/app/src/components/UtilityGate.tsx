@@ -59,7 +59,7 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     return (
       <div className="notice">
         <strong>Connect a wallet</strong>
-        <p>Connect and verify a Solana wallet to see your LONS utility access.</p>
+        <p>Connect and verify a Robinhood Chain wallet to see your LONS utility access.</p>
         <p style={{ marginTop: 12 }}>
           <Link className="button button--primary" href="/auth">
             Connect wallet

@@ -6,7 +6,7 @@ const questions = [
   {
     question: "What is LONS",
     answer:
-      "LONS is a utility layer for borrowing against supported migrated token positions on Solana",
+      "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain",
   },
   {
     question: "Why would I borrow instead of sell",
@@ -34,7 +34,7 @@ const questions = [
   },
   {
     question: "What can I borrow",
-    answer: "The initial interface should be designed around borrowing SOL",
+    answer: "The initial interface should be designed around borrowing ETH",
   },
   {
     question: "Can my position be liquidated",
@@ -49,7 +49,7 @@ const questions = [
   {
     question: "Are transactions visible onchain",
     answer:
-      "Yes, Solana transaction activity can be inspected through supported explorers",
+      "Yes, Robinhood Chain transaction activity can be inspected through supported explorers",
   },
   {
     question: "Can I inspect the complete route",

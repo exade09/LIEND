@@ -77,7 +77,7 @@ function renderContext(snapshot: PanelSnapshot): HTMLElement | null {
   const mint = el("div", "context__mint", shortMint(snapshot.context.mint))
   mint.title = snapshot.context.mint
   left.append(mint)
-  row.append(left, el("span", "context__source", "pump.fun"))
+  row.append(left, el("span", "context__source", "ponsfamily.com"))
   return row
 }
 

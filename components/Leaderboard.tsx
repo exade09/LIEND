@@ -7,7 +7,7 @@ import { Modal } from "@/components/Modal"
 import { shortenAddress } from "@/lib/addresses"
 import { formatCompactCurrency, formatTimestamp } from "@/lib/formatting"
 import { getLeaderboard } from "@/services/leaderboard"
-import { getProtocolActivity } from "@/services/solana"
+import { getProtocolActivity } from "@/services/robinhood"
 import type {
   DataEnvelope,
   LeaderboardMetric,
@@ -318,7 +318,7 @@ export function Leaderboard() {
 
               {walletActivity && !walletActivityLoading ? (
                 <p className="wallet-activity-panel__notice">
-                  {walletActivity.notice ?? "Activity supplied by the configured Solana provider"}
+                  {walletActivity.notice ?? "Activity supplied by the configured Robinhood Chain provider"}
                 </p>
               ) : null}
             </div>

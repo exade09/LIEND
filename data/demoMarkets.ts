@@ -1,13 +1,13 @@
 import type { Market } from "../types";
 
-// Static interface fixtures only. None of these values are fetched from Solana.
+// Static interface fixtures only. None of these values are fetched from Robinhood Chain.
 export const demoMarkets: Market[] = [
   {
-    id: "demo-liend",
+    id: "demo-lons",
     name: "LONS",
     ticker: "LONS",
-    mintAddress: "8fTzQ7nXW3mK5vR9cY2pH6sD4aJ8uE7gB3qN5wC2kM9x",
-    iconLabel: "LI",
+    mintAddress: "0x39dBED3a2bd333467115dE45665cC57F813C4571",
+    iconLabel: "LO",
     accent: "#8B5CF6",
     migrationStatus: "Migrated",
     priceUsd: 0.00482,
@@ -29,7 +29,7 @@ export const demoMarkets: Market[] = [
     id: "demo-kite",
     name: "Kite Relay",
     ticker: "KITE",
-    mintAddress: "5uRmE9qC2yH7sF4kW8aP3xN6vB9dG2jT7mQ5cR8zY4eS",
+    mintAddress: "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
     iconLabel: "KT",
     accent: "#2DD4BF",
     migrationStatus: "Migrated",
@@ -52,7 +52,7 @@ export const demoMarkets: Market[] = [
     id: "demo-vanta",
     name: "Vanta Signal",
     ticker: "VNTA",
-    mintAddress: "9pDxC4mN7wK2sR8yF5aH3vT6qE9jB4uG7zM2cW8xS5nQ",
+    mintAddress: "0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB",
     iconLabel: "VA",
     accent: "#6D7CFF",
     migrationStatus: "Migrated",
@@ -75,7 +75,7 @@ export const demoMarkets: Market[] = [
     id: "demo-folio",
     name: "Folio Mesh",
     ticker: "FOLI",
-    mintAddress: "3cYwR8mK5qT2vH7sN4aE9xP6dG3jB8uF5zQ2kW7nM4rV",
+    mintAddress: "0x1111111111111111111111111111111111111111",
     iconLabel: "FO",
     accent: "#22D3EE",
     migrationStatus: "Migrated",
@@ -98,7 +98,7 @@ export const demoMarkets: Market[] = [
     id: "demo-arc",
     name: "Arc Index",
     ticker: "ARC",
-    mintAddress: "6mQzT3wN8cK5yR2sV7aH4xP9dE6jF3uG8bW5kM2nC7qS",
+    mintAddress: "0x2222222222222222222222222222222222222222",
     iconLabel: "AR",
     accent: "#A78BFA",
     migrationStatus: "Verifying",

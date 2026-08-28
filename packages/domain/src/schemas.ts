@@ -15,7 +15,6 @@ export const EvmAddress = z
   .regex(/^0x[a-fA-F0-9]{40}$/, "Not a valid EVM address")
 
 /** Compatibility export for existing DTO field names during the chain migration. */
-export const Base58Address = EvmAddress
 
 /** Token amounts travel as integer strings in base units — never floats. */
 export const BaseUnitAmount = z

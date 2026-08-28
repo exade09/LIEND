@@ -21,7 +21,7 @@ type TransactionTraceProps = {
 const simpleRoute = [
   { label: "POSITION", icon: "collateral" as const },
   { label: "BORROW", icon: "borrow" as const },
-  { label: "SOL", icon: "sol" as const },
+  { label: "ETH", icon: "eth" as const },
 ] as const
 
 export function TransactionTrace({
@@ -40,7 +40,7 @@ export function TransactionTrace({
     if (loading) return "Loading transaction route"
     if (!steps.length) return "No transaction trace available"
     return view === "simple"
-      ? "Simple route from token position to borrowed SOL"
+      ? "Simple route from token position to borrowed ETH"
       : `${steps.length} inspectable transaction stages`
   }, [loading, steps.length, view])
 

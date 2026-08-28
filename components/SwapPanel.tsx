@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Icon } from "@/components/Icon"
 import { Modal } from "@/components/Modal"
-import { formatNumber, formatPercent, formatSol } from "@/lib/formatting"
+import { formatNumber, formatPercent, formatEth } from "@/lib/formatting"
 import { getSwapQuote } from "@/services/swaps"
 import type { Market, SwapQuote } from "@/types"
 
@@ -42,9 +42,9 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
       try {
         const next = await getSwapQuote({
           inputMint: market.mintAddress,
-          outputMint: "SOL",
+          outputMint: "ETH",
           inputSymbol: market.ticker,
-          outputSymbol: "SOL",
+          outputSymbol: "ETH",
           amount,
           slippageBps: 50,
         })
@@ -70,7 +70,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
           <span className="overline">LONS-NATIVE ROUTING</span>
           <h3>Swap route</h3>
         </div>
-        <div className="panel-heading__meta"><span className="network-chip">Solana</span></div>
+        <div className="panel-heading__meta"><span className="network-chip">Robinhood Chain</span></div>
       </div>
 
       <div className="swap-shell">
@@ -111,7 +111,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
           <header><span>You Receive</span><small>Estimated Output</small></header>
           <div className="swap-field__input">
             <output aria-live="polite">{loading ? "..." : formatNumber(activeRoute?.estimatedOutput ?? 0, 5)}</output>
-            <span className="token-select token-select--static"><span className="sol-avatar"><Icon name="sol" size={18} /></span>SOL</span>
+            <span className="token-select token-select--static"><span className="eth-avatar"><Icon name="eth" size={18} /></span>ETH</span>
           </div>
           <small className="input-caption">Estimated output</small>
         </section>
@@ -125,7 +125,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
               <label key={route.id} className={routeId === route.id ? "is-selected" : ""}>
                 <input type="radio" name="route" value={route.id} checked={routeId === route.id} onChange={() => setRouteId(route.id)} />
                 <span><strong>{route.label}</strong><small>{route.programs.join(" → ")}</small></span>
-                <b>{formatNumber(route.estimatedOutput, 5)} SOL</b>
+                <b>{formatNumber(route.estimatedOutput, 5)} ETH</b>
               </label>
             ))}
           </div>
@@ -133,10 +133,10 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
       </div>
 
       <dl className="swap-summary">
-        <div><dt>Estimated Output</dt><dd>{formatNumber(activeRoute?.estimatedOutput ?? 0, 5)} SOL</dd></div>
+        <div><dt>Estimated Output</dt><dd>{formatNumber(activeRoute?.estimatedOutput ?? 0, 5)} ETH</dd></div>
         <div><dt>Route</dt><dd>{activeRoute?.label ?? "Unavailable"}</dd></div>
         <div><dt>Price Impact</dt><dd>{formatPercent(activeRoute?.priceImpactPercent ?? 0, 2)} <small>EST</small></dd></div>
-        <div><dt>Network Fee</dt><dd>{formatSol(activeRoute?.estimatedNetworkFeeSol ?? 0, 5)} <small>EST</small></dd></div>
+        <div><dt>Network Fee</dt><dd>{formatEth(activeRoute?.estimatedNetworkFeeEth ?? 0, 5)} <small>EST</small></dd></div>
       </dl>
 
       <div className="swap-panel__action">
@@ -152,7 +152,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
           <div className="swap-review-pair">
             <div><small>YOU PAY</small><strong>{formatNumber(amount)} {market.ticker}</strong></div>
             <Icon name="arrow" size={20} />
-            <div><small>YOU RECEIVE</small><strong>{formatNumber(activeRoute?.estimatedOutput ?? 0, 5)} SOL</strong></div>
+            <div><small>YOU RECEIVE</small><strong>{formatNumber(activeRoute?.estimatedOutput ?? 0, 5)} ETH</strong></div>
           </div>
           <div className="preview-route preview-route--compact">
             {activeRoute?.steps.map((step, index) => (

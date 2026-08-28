@@ -22,7 +22,7 @@ export default function PositionsPage() {
         ) : positionsError && book.positions.length === 0 ? (
           <div className="empty">{positionsError}</div>
         ) : book.positions.length === 0 ? (
-          <div className="empty">No SPL token balances in this wallet</div>
+          <div className="empty">No ERC-20 token balances in this wallet</div>
         ) : (
           <div className="panel">
             <div className="list">

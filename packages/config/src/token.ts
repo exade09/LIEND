@@ -24,7 +24,7 @@ export function parseMint(value: string | undefined | null): string | null {
 export function parseMinimumBalance(value: string | undefined | null): bigint | null {
   if (value === undefined || value === null) return null
   const trimmed = value.trim()
-  if (!trimmed || !/^\\d+$/.test(trimmed)) return null
+  if (!trimmed || !/^\d+$/.test(trimmed)) return null
   try {
     return BigInt(trimmed)
   } catch {

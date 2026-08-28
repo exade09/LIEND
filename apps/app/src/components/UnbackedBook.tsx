@@ -5,7 +5,7 @@ import type { WalletPosition } from "@liend/domain"
 import { getApiClient } from "@/lib/api"
 import {
   clearQuote,
-  DEFAULT_SOL_USD,
+  DEFAULT_ETH_USD,
   emptyBook,
   loadBook,
   loadQuote,
@@ -17,7 +17,6 @@ import {
   type UnbackedPosition,
   type UnbackedQuote,
 } from "@/lib/unbacked-book"
-import { withRecordingPosition } from "@/lib/recording-fixture"
 import { useSession } from "./SessionProvider"
 
 type BookApi = {
@@ -59,7 +58,7 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
       if (cancelled) return
 
       const local = loadBook(wallet)
-      setBook({ ...local, positions: withRecordingPosition(wallet, local.positions) })
+      setBook(local)
       setPositionsError(null)
 
       if (!authenticated || !wallet) {
@@ -84,8 +83,8 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
         setBook((current) => {
           const next: UnbackedBook = {
             ...current,
-            positions: withRecordingPosition(wallet, response.positions.map(toPosition)),
-            solUsd: response.solUsd ?? current.solUsd ?? DEFAULT_SOL_USD,
+            positions: response.positions.map(toPosition),
+            ethUsd: response.ethUsd ?? current.ethUsd ?? DEFAULT_ETH_USD,
           }
           saveBook(wallet, next)
           return next
@@ -94,13 +93,11 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
       } catch (caught: unknown) {
         if (cancelled) return
         setBook((current) => {
-          const next = { ...current, positions: withRecordingPosition(wallet, current.positions) }
+          const next = { ...current }
           saveBook(wallet, next)
           return next
         })
-        if (!withRecordingPosition(wallet, []).length) {
-          setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
-        }
+        setPositionsError(caught instanceof Error ? caught.message : "Wallet positions could not be read")
       } finally {
         if (!cancelled) setLoadingPositions(false)
       }

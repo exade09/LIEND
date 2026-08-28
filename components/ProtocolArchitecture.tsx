@@ -28,9 +28,9 @@ const architecture = [
     icon: "liquidity" as IconName,
   },
   {
-    label: "SOL SETTLEMENT",
+    label: "ETH SETTLEMENT",
     description: "Liquidity returned to wallet",
-    icon: "sol" as IconName,
+    icon: "eth" as IconName,
   },
 ] as const;
 
@@ -44,7 +44,7 @@ export function ProtocolArchitecture() {
       <header className="protocol-architecture__intro section-header">
         <p className="eyebrow section-eyebrow">ONCHAIN ARCHITECTURE</p>
         <h2 className="section-title" id="protocol-architecture-title">
-          A visible path through Solana
+          A visible path through Robinhood Chain
         </h2>
         <p className="section-description">
           Each stage is designed to remain inspectable from position checks to
@@ -53,7 +53,7 @@ export function ProtocolArchitecture() {
       </header>
 
       <div className="protocol-architecture__network" aria-label="Network">
-        <Icon name="sol" size={18} aria-hidden="true" />
+        <Icon name="eth" size={18} aria-hidden="true" />
         <span>{project.network}</span>
       </div>
 

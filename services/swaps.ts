@@ -7,9 +7,9 @@ import type {
   SwapRoute,
 } from "../types";
 
-const DEMO_SOL_PRICE_USD = 150;
+const DEMO_ETH_PRICE_USD = 150;
 const DEMO_PRICE_IMPACT_PERCENT = 0.18;
-const DEMO_NETWORK_FEE_SOL = 0.00002;
+const DEMO_NETWORK_FEE_ETH = 0.00002;
 
 export interface SwapProvider {
   getSwapQuote: (request: SwapQuoteRequest) => Promise<SwapQuote>;
@@ -20,8 +20,8 @@ export interface SwapProvider {
 }
 
 const demoTokenPrice = (mint: string, symbol: string): number | null => {
-  if (symbol.toUpperCase() === "SOL" || mint.toUpperCase() === "SOL") {
-    return DEMO_SOL_PRICE_USD;
+  if (symbol.toUpperCase() === "ETH" || mint.toUpperCase() === "ETH") {
+    return DEMO_ETH_PRICE_USD;
   }
 
   return (
@@ -54,10 +54,10 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-direct-route",
       label: "Direct route",
-      programs: ["LONS Swap Adapter", "SPL Token Program"],
+      programs: ["LONS Swap Adapter", "ERC-20 Contract"],
       estimatedOutput,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT,
-      estimatedNetworkFeeSol: DEMO_NETWORK_FEE_SOL,
+      estimatedNetworkFeeEth: DEMO_NETWORK_FEE_ETH,
       steps: [
         {
           program: "LONS Swap Adapter",
@@ -65,7 +65,7 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
           description: "Use the demonstration direct route",
         },
         {
-          program: "SPL Token Program",
+          program: "ERC-20 Contract",
           instruction: "Prepare token changes",
           description: "Preview input and output account changes",
         },
@@ -75,10 +75,10 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-split-route",
       label: "Split route",
-      programs: ["LONS Swap Adapter", "Demo Liquidity Route", "SPL Token Program"],
+      programs: ["LONS Swap Adapter", "Demo Liquidity Route", "ERC-20 Contract"],
       estimatedOutput: estimatedOutput * 0.998,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT + 0.08,
-      estimatedNetworkFeeSol: DEMO_NETWORK_FEE_SOL * 1.6,
+      estimatedNetworkFeeEth: DEMO_NETWORK_FEE_ETH * 1.6,
       steps: [
         {
           program: "LONS Swap Adapter",
@@ -113,8 +113,8 @@ export const demoSwapAdapter: SwapProvider = {
       estimatedOutput,
       minimumOutput: estimatedOutput * (1 - slippageBps / 10_000),
       priceImpactPercent: bestRoute?.priceImpactPercent ?? 0,
-      estimatedNetworkFeeSol:
-        bestRoute?.estimatedNetworkFeeSol ?? DEMO_NETWORK_FEE_SOL,
+      estimatedNetworkFeeEth:
+        bestRoute?.estimatedNetworkFeeEth ?? DEMO_NETWORK_FEE_ETH,
       routes,
       expiresAt: null,
       executable: false,

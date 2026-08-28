@@ -1,68 +1,38 @@
 import { describe, expect, it } from "vitest"
-import { aggregateTokenAccounts, parseTokenAccounts } from "./solana-rpc"
+import { parseBlockscoutBalances } from "./evm-rpc"
 import { clipLabel, pickDexPair } from "./token-markets"
-import { applyRecordingFixture, formatTokenAmount, toWalletPositions, uiAmount } from "./wallet-positions"
+import { formatTokenAmount, toWalletPositions, uiAmount } from "./wallet-positions"
 
-const BONK = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
-const WIF = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm"
+const PONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
+const WALLET = "0x1111111111111111111111111111111111111111"
 
-describe("parseTokenAccounts", () => {
-  it("keeps parsed SPL accounts and drops empty or nft rows after aggregate", () => {
-    const parsed = parseTokenAccounts({
-      value: [
-        {
-          account: {
-            data: {
-              parsed: {
-                info: {
-                  mint: BONK,
-                  tokenAmount: { amount: "1000000", decimals: 5, uiAmount: 10 },
-                },
-              },
-            },
-          },
-        },
-        {
-          account: {
-            data: {
-              parsed: {
-                info: {
-                  mint: BONK,
-                  tokenAmount: { amount: "500000", decimals: 5, uiAmount: 5 },
-                },
-              },
-            },
-          },
-        },
-        {
-          account: {
-            data: {
-              parsed: {
-                info: {
-                  mint: WIF,
-                  tokenAmount: { amount: "0", decimals: 6, uiAmount: 0 },
-                },
-              },
-            },
-          },
-        },
-        {
-          account: {
-            data: {
-              parsed: {
-                info: {
-                  mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
-                  tokenAmount: { amount: "1", decimals: 0, uiAmount: 1 },
-                },
-              },
-            },
-          },
-        },
-      ],
-    })
+describe("parseBlockscoutBalances", () => {
+  it("keeps positive ERC-20 balances and drops malformed rows", () => {
+    const parsed = parseBlockscoutBalances([
+      {
+        value: "1500000000000000000",
+        token: { address_hash: PONS, decimals: "18", symbol: "PONS", name: "Pons" },
+      },
+      { value: "0", token: { address_hash: WETH, decimals: "18" } },
+      { value: "10", token: { address_hash: "not-an-address", decimals: "18" } },
+    ])
 
-    const aggregated = aggregateTokenAccounts(parsed)
-    expect(aggregated).toEqual([{ mint: BONK, amountRaw: 1_500_000n, decimals: 5 }])
+    expect(parsed).toEqual([
+      {
+        mint: PONS,
+        amountRaw: 1_500_000_000_000_000_000n,
+        decimals: 18,
+        symbol: "PONS",
+        name: "Pons",
+      },
+    ])
+  })
+
+  it("accepts the wrapped Blockscout items shape", () => {
+    expect(parseBlockscoutBalances({
+      items: [{ value: "1", token: { address: WETH, decimals: 18 } }],
+    })).toHaveLength(1)
   })
 })
 
@@ -75,74 +45,50 @@ describe("token amount formatting", () => {
 })
 
 describe("market pair selection", () => {
-  it("prefers the deepest pair where the mint is the base token", () => {
+  it("prefers the deepest pair where the contract is the base token", () => {
     const chosen = pickDexPair(
       [
-        { baseToken: { address: BONK, symbol: "BONK" }, liquidity: { usd: 100 }, priceUsd: "1" },
-        { baseToken: { address: BONK, symbol: "BONK" }, liquidity: { usd: 9_000 }, priceUsd: "0.00002" },
-        { baseToken: { address: WIF, symbol: "WIF" }, liquidity: { usd: 50_000 }, priceUsd: "2" },
+        { baseToken: { address: PONS, symbol: "PONS" }, liquidity: { usd: 100 }, priceUsd: "1" },
+        { baseToken: { address: PONS, symbol: "PONS" }, liquidity: { usd: 9_000 }, priceUsd: "0.02" },
+        { baseToken: { address: WETH, symbol: "WETH" }, liquidity: { usd: 50_000 }, priceUsd: "4000" },
       ],
-      BONK,
+      PONS,
     )
-    expect(chosen?.priceUsd).toBe("0.00002")
-    expect(clipLabel("  dogwifhat  ", 8)).toBe("dogwifha")
+    expect(chosen?.priceUsd).toBe("0.02")
+    expect(clipLabel("  pons family  ", 8)).toBe("pons fam")
   })
 })
 
 describe("toWalletPositions", () => {
-  it("values a position from ui amount times price and skips unknown mints", () => {
+  it("values indexed ERC-20 positions and skips invalid contracts", () => {
     const response = toWalletPositions(
-      "6F2Z77uzpB7oSx6pG1b8TRTVjQKDbDgPs35qrNr8BZxq",
+      WALLET,
       [
-        { mint: BONK, amountRaw: 1_000_000n, decimals: 5 },
-        { mint: "not-a-mint", amountRaw: 1n, decimals: 6 },
+        { mint: PONS, amountRaw: 1_000_000n, decimals: 5, symbol: "PONS", name: "Pons" },
+        { mint: "not-a-contract", amountRaw: 1n, decimals: 6 },
       ],
-      new Map([[BONK, { symbol: "BONK", name: "Bonk", priceUsd: 0.00002 }]]),
-      148,
+      new Map([[PONS, { symbol: "PONS", name: "Pons", priceUsd: 0.02 }]]),
+      4_000,
       1,
     )
 
     expect(response.positions).toHaveLength(1)
     expect(response.positions[0]).toMatchObject({
-      mint: BONK,
-      symbol: "BONK",
+      mint: PONS,
+      symbol: "PONS",
       amount: "10",
-      valueUsd: 0.0002,
+      valueUsd: 0.2,
     })
-    expect(response.solUsd).toBe(148)
+    expect(response.ethUsd).toBe(4_000)
   })
 
-  it("keeps a null valuation when no price exists", () => {
+  it("keeps a null valuation when no market price exists", () => {
     const response = toWalletPositions(
-      "6F2Z77uzpB7oSx6pG1b8TRTVjQKDbDgPs35qrNr8BZxq",
-      [{ mint: WIF, amountRaw: 1_000_000n, decimals: 6 }],
-      new Map([[WIF, { symbol: "WIF", name: "dogwifhat", priceUsd: null }]]),
+      WALLET,
+      [{ mint: WETH, amountRaw: 1_000_000_000_000_000_000n, decimals: 18 }],
+      new Map([[WETH, { symbol: "WETH", name: "Wrapped Ether", priceUsd: null }]]),
       null,
     )
     expect(response.positions[0]?.valueUsd).toBeNull()
-  })
-})
-
-describe("recording fixture", () => {
-  it("seats PUMP at $110 only for the recording wallet", () => {
-    const other = applyRecordingFixture({
-      wallet: "6F2Z77uzpB7oSx6pG1b8TRTVjQKDbDgPs35qrNr8BZxq",
-      asOf: 1,
-      solUsd: 148,
-      positions: [],
-    })
-    expect(other.positions).toEqual([])
-
-    const seated = applyRecordingFixture({
-      wallet: "Bpp1AphBxPNjXf3eB6cEVoXyythAPwuBNSVyfdgw9Ze9",
-      asOf: 1,
-      solUsd: 148,
-      positions: [],
-    })
-    expect(seated.positions[0]).toMatchObject({
-      mint: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
-      symbol: "PUMP",
-      valueUsd: 110,
-    })
   })
 })

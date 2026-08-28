@@ -277,7 +277,7 @@ export function AdminConsole() {
             setNote("")
           }}
         />
-        <p className={styles.inputHint}>SAME VALUE FOR CA: AND PONS/COIN/ · LEAVE EMPTY FOR WAITING AND THE PONS BOARD</p>
+        <p className={styles.inputHint}>SAME VALUE FOR CA: AND PONS/LAUNCHPAD/ · LEAVE EMPTY FOR WAITING AND THE PONS BOARD</p>
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         {note ? <p className={styles.status} role="status">{note}</p> : null}
         <div className={styles.actions}>

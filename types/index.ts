@@ -12,7 +12,7 @@ export interface DataEnvelope<T> extends DataProvenance {
   notice?: string;
 }
 
-export type SolanaCluster = "mainnet-beta" | "devnet" | "testnet";
+export type RobinhoodChainId = 4663;
 
 export type WalletStatus =
   | "Disconnected"
@@ -25,15 +25,15 @@ export interface WalletConnection {
   status: WalletStatus;
   address: string | null;
   providerName: string | null;
-  cluster: SolanaCluster;
+  chainId: RobinhoodChainId;
   error?: string;
 }
 
 export interface WalletProvider {
   name: string;
   connect: () => Promise<{
-    publicKey: string | { toString: () => string };
-    cluster?: SolanaCluster;
+    address: string;
+    chainId?: RobinhoodChainId;
   }>;
   disconnect?: () => Promise<void>;
 }
@@ -62,7 +62,7 @@ export type EligibilityState =
 export interface EligibilityResult extends DataProvenance {
   state: EligibilityState;
   eligible: boolean | null;
-  liendBalance: number | null;
+  lonsBalance: number | null;
   minimumBalance: number | null;
   walletAddress: string | null;
   reason: string;
@@ -113,13 +113,13 @@ export interface CalculatorInput {
   tokenValueUsd: number;
   collateralPercent: number;
   borrowPercent: number;
-  solPriceUsd: number;
+  ethPriceUsd: number;
 }
 
 export interface CalculatorResult {
   positionValueUsd: number;
   collateralValueUsd: number;
-  estimatedSol: number;
+  estimatedEth: number;
   remainingExposureUsd: number;
   exampleLtvPercent: number;
   healthState: HealthState;
@@ -135,7 +135,7 @@ export interface BorrowQuoteRequest {
   marketId: string;
   walletAddress?: string;
   collateralAmount: number;
-  borrowAmountSol: number;
+  borrowAmountEth: number;
 }
 
 export interface BorrowQuote extends DataProvenance {
@@ -144,14 +144,14 @@ export interface BorrowQuote extends DataProvenance {
   collateralTicker: string;
   collateralAmount: number;
   collateralValueUsd: number;
-  borrowAsset: "SOL";
-  borrowAmountSol: number;
+  borrowAsset: "ETH";
+  borrowAmountEth: number;
   borrowValueUsd: number;
   remainingPositionUsd: number | null;
   estimatedLtvPercent: number;
   estimatedHealth: HealthState;
-  protocolFeeSol: number;
-  estimatedNetworkCostSol: number;
+  protocolFeeEth: number;
+  estimatedNetworkCostEth: number;
   route: RouteInstruction[];
   expiresAt: string | null;
   executable: boolean;
@@ -187,7 +187,7 @@ export interface SwapRoute extends DataProvenance {
   programs: string[];
   estimatedOutput: number;
   priceImpactPercent: number;
-  estimatedNetworkFeeSol: number;
+  estimatedNetworkFeeEth: number;
   steps: RouteInstruction[];
 }
 
@@ -197,7 +197,7 @@ export interface SwapQuote extends DataProvenance {
   estimatedOutput: number;
   minimumOutput: number;
   priceImpactPercent: number;
-  estimatedNetworkFeeSol: number;
+  estimatedNetworkFeeEth: number;
   routes: SwapRoute[];
   expiresAt: string | null;
   executable: boolean;
@@ -230,9 +230,9 @@ export interface TokenChange {
   amount: number;
 }
 
-export interface SolChange {
+export interface EthChange {
   owner: string;
-  amountSol: number;
+  amountEth: number;
 }
 
 export interface DemoTransaction extends DataProvenance {
@@ -241,7 +241,7 @@ export interface DemoTransaction extends DataProvenance {
   asset: string;
   collateralValueUsd: number;
   borrowValueUsd: number;
-  solReceived: number;
+  ethReceived: number;
   instructionCount: number;
   status: "DEMO";
   signature: string;
@@ -250,12 +250,12 @@ export interface DemoTransaction extends DataProvenance {
   programs: string[];
   trace: TransactionTraceStep[];
   tokenChanges: TokenChange[];
-  solChanges: SolChange[];
+  ethChanges: EthChange[];
 }
 
 export type ProtocolAction =
   | "Borrow opened"
-  | "SOL received"
+  | "ETH received"
   | "Position repaid"
   | "Collateral unlocked"
   | "Market added"

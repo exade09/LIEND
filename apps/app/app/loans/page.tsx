@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { loanLabel, sol } from "@/lib/unbacked-book"
+import { loanLabel, eth } from "@/lib/unbacked-book"
 
 export default function LoansPage() {
   const { book } = useUnbackedBook()
@@ -30,7 +30,7 @@ export default function LoansPage() {
                       {loanLabel(loan.status)}
                     </p>
                   </div>
-                  <span>{sol(loan.outstandingSol)}</span>
+                  <span>{eth(loan.outstandingEth)}</span>
                 </Link>
               ))}
             </div>

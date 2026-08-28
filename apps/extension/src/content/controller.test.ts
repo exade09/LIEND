@@ -16,13 +16,13 @@ import {
   type ControllerEvents,
 } from "./controller"
 import type { SiteAdapter } from "@/adapters/types"
-import { evaluateEvidence, pumpfunAdapter } from "@/adapters/pumpfun"
+import { evaluateEvidence, ponsAdapter } from "@/adapters/pons"
 
-const A = "So11111111111111111111111111111111111111112"
-const B = "6F2Z77uzpB7oSx6pG1b8TRTVjQKDbDgPs35qrNr8BZxq"
-const C = "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+const A = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const B = "0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB"
+const C = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
 
-const coin = (mint: string) => `https://pump.fun/coin/${mint}`
+const coin = (mint: string) => `https://ponsfamily.com/launchpad/${mint}`
 
 function makePage(url: string, canonicalMint: string | null, ogMint = canonicalMint) {
   return {
@@ -56,9 +56,9 @@ function harness(page: ReturnType<typeof makePage>) {
   }
 
   const adapter: SiteAdapter = {
-    id: "pumpfun",
+    id: "pons",
     matches: () => true,
-    identify: (u) => pumpfunAdapter.identify(u),
+    identify: (u) => ponsAdapter.identify(u),
     detect: (u, d, allow) => evaluateEvidence(u, d, allow),
     observeNavigation: () => () => {},
     mountTrigger: () => () => {},
@@ -254,17 +254,17 @@ describe("case 6 — unsupported route", () => {
     const { controller, events } = harness(page)
     controller.start()
 
-    page.url = "https://pump.fun/board"
+    page.url = "https://ponsfamily.com/board"
     page.canonicalMint = null
     page.ogMint = null
     controller.onNavigation()
 
     expect(events.none).toHaveLength(1)
-    expect(events.none[0]).toBe("pumpfun:route:/board")
+    expect(events.none[0]).toBe("pons:route:/board")
   })
 
   it("route -> token starts a new generation", () => {
-    const page = makePage("https://pump.fun/board", null)
+    const page = makePage("https://ponsfamily.com/board", null)
     const { controller, events } = harness(page)
     controller.start()
 
@@ -285,9 +285,9 @@ describe("case 7 — stale generation results", () => {
 
     const events = { tokens: [] as string[], none: 0 }
     const adapter: SiteAdapter = {
-      id: "pumpfun",
+      id: "pons",
       matches: () => true,
-      identify: (u) => pumpfunAdapter.identify(u),
+      identify: (u) => ponsAdapter.identify(u),
       detect: (u, d, allow) => evaluateEvidence(u, d, allow),
       observeNavigation: () => () => {},
       mountTrigger: () => () => {},

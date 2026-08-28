@@ -18,13 +18,13 @@ export const docsPages: DocsPage[] = [
     href: "/docs",
     title: "LONS Docs",
     kicker: "GitBook",
-    summary: "Product documentation for the LONS utility layer on Solana.",
+    summary: "Product documentation for the LONS utility layer on Robinhood Chain.",
     sections: [
       {
         heading: "What LONS is",
         body: [
-          "LONS is a utility layer for borrowing against supported migrated token positions on Solana.",
-          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as SOL.",
+          "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain.",
+          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as ETH.",
           "The landing, the LONS App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
         ],
       },
@@ -32,15 +32,15 @@ export const docsPages: DocsPage[] = [
         heading: "What is live today",
         body: [
           "The marketing site, the App, the API and the extension install path are deployed.",
-          "Wallet connect, sessions, extension pairing and the utility interface are in place.",
-          "After a wallet is connected and verified, positions, quotes, borrowing and repayment are available in the App.",
+          "MetaMask authentication, sessions, extension pairing and Robinhood Chain ERC-20 position reads are in place.",
+          "Borrow and repay flows prepare reviewable requests in the App. They do not claim onchain settlement until a lending contract is deployed.",
         ],
       },
       {
         heading: "Who it is for",
         body: [
           "LONS is for holders of supported migrated tokens who want a second route besides selling.",
-          "A verified wallet can use LONS utility. When a mint and minimum balance are published, the App and API apply that holder check.",
+          "A verified wallet can use LONS utility. When a token contract and minimum balance are published, the App and API apply that holder check.",
         ],
       },
     ],
@@ -55,15 +55,15 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Token status",
         body: [
-          "The LONS token is not launched yet. There is no mint in product config and no published holder threshold.",
-          "The pons buttons follow the published CA from the admin console. Empty CA opens the public board at https://www.ponsfamily.com. Published text opens https://www.ponsfamily.com/launchpad/ followed by that same text.",
+          "The LONS token is not launched yet. There is no ERC-20 contract in product config and no published holder threshold.",
+          "The pons buttons follow the published CA from the admin console. A valid EVM contract opens its pons launchpad page; an empty or pre-launch label opens the launchpad root.",
         ],
       },
       {
         heading: "Holder access",
         body: [
           "LONS utility is available after a connected wallet is verified.",
-          "When a mint and minimum balance are published, the App and API check wallet holdings against those values.",
+          "When a token contract and minimum balance are published, the App and API check wallet holdings against those values.",
         ],
       },
       {
@@ -80,12 +80,12 @@ export const docsPages: DocsPage[] = [
     href: "/docs/how-it-works",
     title: "How it works",
     kicker: "Flow",
-    summary: "The six-step path from a connected wallet to SOL liquidity.",
+    summary: "The six-step path from a connected wallet to ETH liquidity.",
     sections: [
       {
         heading: "Connect",
         body: [
-          "A user connects a Solana wallet through a standard wallet provider. LONS asks for a plain-text signature to prove control of the address.",
+          "A user connects MetaMask on Robinhood Chain. LONS asks for an EIP-191 plain-text signature to prove control of the address.",
           "That signature creates no transaction and costs no fees.",
         ],
       },
@@ -110,7 +110,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Execute and receive",
         body: [
-          "The user reviews the full route before confirming. After a successful execution, SOL is received in the destination wallet.",
+          "The user reviews the full route before confirming. After a successful execution, ETH is received in the destination wallet.",
         ],
       },
     ],
@@ -144,8 +144,8 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Positions and loans",
         body: [
-          "The App lists supported positions, quotes available SOL, opens loans and records repayments against the connected wallet.",
-          "Activity shows borrow and repayment events for that wallet.",
+          "The App lists ERC-20 positions indexed for the connected Robinhood Chain account and prepares ETH borrow or repay requests for review.",
+          "Draft requests remain clearly separated from public Blockscout activity until settlement contracts are live.",
         ],
       },
     ],
@@ -160,13 +160,13 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Install",
         body: [
-          "LONS is not on the Chrome Web Store yet. Add to Chrome downloads a packed archive. Load it unpacked from chrome://extensions with Developer mode enabled.",
+          "Add to Chrome opens the published LONS listing in the Chrome Web Store. A packaged developer build can still be loaded from chrome://extensions when needed.",
         ],
       },
       {
         heading: "What it reads",
         body: [
-          "On supported pons token pages the extension identifies the mint from the URL and opens liquidity context in the side panel.",
+          "On supported pons token pages the extension identifies the ERC-20 contract from the URL and opens liquidity context in the side panel.",
           "It does not request seed phrases. It does not inject transactions into the page.",
         ],
       },

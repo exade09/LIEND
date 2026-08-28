@@ -2,7 +2,7 @@
  * The LIEND trigger.
  *
  * Constraints this implementation holds to:
- *  - One element, clearly labelled LIEND. It does not imitate pump.fun's own
+ *  - One element, clearly labelled LIEND. It does not imitate ponsfamily.com's own
  *    controls, and does not present itself as part of the host product.
  *  - Fixed to the lower-left, away from the buy/sell controls that live in the
  *    right-hand trade panel. It never reparents, restyles or removes host

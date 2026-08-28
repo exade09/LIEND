@@ -1,4 +1,4 @@
-export type TapeKind = "borrow" | "repay" | "swap-out" | "swap-in"
+export type TapeKind = "borrow" | "repay"
 
 export type TapeEvent = {
   id: string
@@ -11,13 +11,11 @@ export type TapeEvent = {
   amount: string
   description: string
   tokenDelta: string
-  solDelta: string
+  nativeDelta: string
   occurredAt: number
 }
 
 export const kindLabel: Record<TapeKind, string> = {
   borrow: "BORROW",
   repay: "REPAY",
-  "swap-out": "SWAP",
-  "swap-in": "SWAP",
 }

@@ -3,7 +3,7 @@
  *
  * Positions come from on-chain token accounts. Quotes, loans and activity
  * stay in the browser until a lending program exists — nothing here is
- * settled on Solana.
+ * settled on Robinhood Chain.
  */
 
 export type UnbackedPosition = {
@@ -21,9 +21,9 @@ export type UnbackedLoan = {
   mint: string
   symbol: string
   collateralAmount: string
-  principalSol: number
-  outstandingSol: number
-  feeSol: number
+  principalEth: number
+  outstandingEth: number
+  feeEth: number
   ltvBps: number
   interestRateBps: number
   status: LoanStatus
@@ -46,8 +46,8 @@ export type UnbackedQuote = {
   symbol: string
   collateralAmount: string
   collateralUsd: number
-  borrowSol: number
-  feeSol: number
+  borrowEth: number
+  feeEth: number
   ltvBps: number
   interestRateBps: number
 }
@@ -56,24 +56,24 @@ export type UnbackedBook = {
   positions: UnbackedPosition[]
   loans: UnbackedLoan[]
   activity: UnbackedActivity[]
-  solUsd: number
+  ethUsd: number
 }
 
-export const DEFAULT_SOL_USD = 148.2
+export const DEFAULT_ETH_USD = 0
 export const MAX_LTV_BPS = 5000
 export const FEE_BPS = 30
 export const INTEREST_RATE_BPS = 850
 
 function storageKey(wallet: string) {
-  return `liend.book.v2.${wallet}`
+  return `lons.book.v3.${wallet.toLowerCase()}`
 }
 
 function quoteKey(wallet: string) {
-  return `liend.book.quote.${wallet}`
+  return `lons.book.quote.v3.${wallet.toLowerCase()}`
 }
 
 export function emptyBook(): UnbackedBook {
-  return { positions: [], loans: [], activity: [], solUsd: DEFAULT_SOL_USD }
+  return { positions: [], loans: [], activity: [], ethUsd: DEFAULT_ETH_USD }
 }
 
 export function loadBook(wallet: string | null): UnbackedBook {
@@ -86,7 +86,7 @@ export function loadBook(wallet: string | null): UnbackedBook {
       positions: Array.isArray(parsed.positions) ? parsed.positions : [],
       loans: Array.isArray(parsed.loans) ? parsed.loans.map(normalizeLoan) : [],
       activity: Array.isArray(parsed.activity) ? parsed.activity : [],
-      solUsd: typeof parsed.solUsd === "number" && parsed.solUsd > 0 ? parsed.solUsd : DEFAULT_SOL_USD,
+      ethUsd: typeof parsed.ethUsd === "number" && parsed.ethUsd > 0 ? parsed.ethUsd : DEFAULT_ETH_USD,
     }
   } catch {
     return emptyBook()
@@ -145,24 +145,23 @@ function normalizeLoan(loan: UnbackedLoan): UnbackedLoan {
   }
 }
 
-function solPrice(bookOrUsd?: UnbackedBook | number) {
-  if (typeof bookOrUsd === "number") return bookOrUsd > 0 ? bookOrUsd : DEFAULT_SOL_USD
-  if (bookOrUsd && bookOrUsd.solUsd > 0) return bookOrUsd.solUsd
-  return DEFAULT_SOL_USD
+function ethPrice(bookOrUsd?: UnbackedBook | number) {
+  if (typeof bookOrUsd === "number") return Math.max(0, bookOrUsd)
+  return Math.max(0, bookOrUsd?.ethUsd ?? DEFAULT_ETH_USD)
 }
 
-export function maxBorrowSol(position: UnbackedPosition, solUsd = DEFAULT_SOL_USD) {
-  if (position.valueUsd <= 0) return 0
-  return (position.valueUsd * (MAX_LTV_BPS / 10_000)) / solPrice(solUsd)
+export function maxBorrowEth(position: UnbackedPosition, ethUsd = DEFAULT_ETH_USD) {
+  if (position.valueUsd <= 0 || ethUsd <= 0) return 0
+  return (position.valueUsd * (MAX_LTV_BPS / 10_000)) / ethPrice(ethUsd)
 }
 
 export function quoteBorrow(
   position: UnbackedPosition,
-  borrowSol: number,
-  solUsd = DEFAULT_SOL_USD,
+  borrowEth: number,
+  ethUsd = DEFAULT_ETH_USD,
 ): UnbackedQuote {
-  const price = solPrice(solUsd)
-  const capped = Math.min(Math.max(borrowSol, 0), maxBorrowSol(position, price))
+  const price = ethPrice(ethUsd)
+  const capped = Math.min(Math.max(borrowEth, 0), maxBorrowEth(position, price))
   const ltvBps =
     position.valueUsd > 0 ? Math.round(((capped * price) / position.valueUsd) * 10_000) : 0
   return {
@@ -170,8 +169,8 @@ export function quoteBorrow(
     symbol: position.symbol,
     collateralAmount: position.amount,
     collateralUsd: position.valueUsd,
-    borrowSol: Number(capped.toFixed(4)),
-    feeSol: Number(((capped * FEE_BPS) / 10_000).toFixed(4)),
+    borrowEth: Number(capped.toFixed(4)),
+    feeEth: Number(((capped * FEE_BPS) / 10_000).toFixed(4)),
     ltvBps,
     interestRateBps: INTEREST_RATE_BPS,
   }
@@ -188,9 +187,9 @@ export function openLoan(
     mint: quote.mint,
     symbol: quote.symbol,
     collateralAmount: quote.collateralAmount,
-    principalSol: quote.borrowSol,
-    outstandingSol: Number((quote.borrowSol + quote.feeSol).toFixed(4)),
-    feeSol: quote.feeSol,
+    principalEth: quote.borrowEth,
+    outstandingEth: Number((quote.borrowEth + quote.feeEth).toFixed(4)),
+    feeEth: quote.feeEth,
     ltvBps: quote.ltvBps,
     interestRateBps: quote.interestRateBps,
     status: "review",
@@ -203,7 +202,7 @@ export function openLoan(
     kind: "borrow-review",
     mint: quote.mint,
     symbol: quote.symbol,
-    amount: `${loan.principalSol.toFixed(3)} SOL`,
+    amount: `${loan.principalEth.toFixed(3)} ETH`,
     occurredAt: loan.openedAt,
   }
   return {
@@ -219,13 +218,13 @@ export function openLoan(
 export function repayLoan(book: UnbackedBook, id: string): UnbackedBook {
   const loan = findLoan(book, id)
   if (!loan || loan.status !== "active") return book
-  const closed: UnbackedLoan = { ...loan, status: "repaid", outstandingSol: 0, closedAt: Date.now() }
+  const closed: UnbackedLoan = { ...loan, status: "repaid", outstandingEth: 0, closedAt: Date.now() }
   const activity: UnbackedActivity = {
     id: `act_rp_${id}`,
     kind: "repayment",
     mint: loan.mint,
     symbol: loan.symbol,
-    amount: `${loan.outstandingSol.toFixed(3)} SOL`,
+    amount: `${loan.outstandingEth.toFixed(3)} ETH`,
     occurredAt: closed.closedAt ?? Date.now(),
   }
   return {
@@ -239,15 +238,15 @@ export function positionValueUsd(book: UnbackedBook) {
   return book.positions.reduce((sum, position) => sum + position.valueUsd, 0)
 }
 
-export function outstandingSol(book: UnbackedBook) {
+export function outstandingEth(book: UnbackedBook) {
   return book.loans
     .filter((loan) => loan.status === "review" || loan.status === "active")
-    .reduce((sum, loan) => sum + loan.outstandingSol, 0)
+    .reduce((sum, loan) => sum + loan.outstandingEth, 0)
 }
 
-export function availableSol(book: UnbackedBook) {
-  const capacity = (positionValueUsd(book) * (MAX_LTV_BPS / 10_000)) / solPrice(book)
-  return Math.max(0, capacity - outstandingSol(book))
+export function availableEth(book: UnbackedBook) {
+  const capacity = (positionValueUsd(book) * (MAX_LTV_BPS / 10_000)) / ethPrice(book)
+  return Math.max(0, capacity - outstandingEth(book))
 }
 
 export function usd(value: number) {
@@ -261,8 +260,8 @@ export function usd(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
 
-export function sol(value: number) {
-  return `${value.toFixed(3)} SOL`
+export function eth(value: number) {
+  return `${value.toFixed(3)} ETH`
 }
 
 export function activityLabel(kind: UnbackedActivity["kind"]) {
@@ -278,8 +277,8 @@ export function borrowRequestMessage(wallet: string, quote: UnbackedQuote) {
     "",
     `wallet: ${wallet}`,
     `token: ${quote.symbol}`,
-    `mint: ${quote.mint}`,
-    `borrow: ${quote.borrowSol.toFixed(4)} SOL`,
+    `contract: ${quote.mint}`,
+    `borrow: ${quote.borrowEth.toFixed(4)} ETH`,
     `collateral: ${quote.collateralAmount} ${quote.symbol}`,
     "",
     "this request is submitted for review",

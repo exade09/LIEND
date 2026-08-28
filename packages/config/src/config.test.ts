@@ -4,17 +4,16 @@ import { parseMinimumBalance, parseMint, resolveTokenLaunchState } from "./token
 import { positionUrl, sanitizeReturnTo, pairUrl, authUrl } from "./deep-links"
 import { resolveExtensionMode } from "./links"
 
-const MINT = "So11111111111111111111111111111111111111112"
+const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 const APP = "https://app.example.test"
 
 describe("parseMint", () => {
-  it("accepts a valid base58 mint", () => {
+  it("accepts a valid EVM token contract", () => {
     expect(parseMint(MINT)).toBe(MINT)
   })
 
   it("rejects malformed input", () => {
-    // 0, O, I and l are not in the base58 alphabet.
-    expect(parseMint("0OIl11111111111111111111111111111111111111")).toBeNull()
+    expect(parseMint("0xnot-a-contract")).toBeNull()
     expect(parseMint("tooshort")).toBeNull()
     expect(parseMint("")).toBeNull()
     expect(parseMint(null)).toBeNull()
@@ -86,7 +85,7 @@ describe("sanitizeReturnTo", () => {
 
 describe("deep links", () => {
   it("builds a position link from config, never a literal origin", () => {
-    expect(positionUrl(APP, MINT, "pumpfun")).toBe(`${APP}/positions/${MINT}?src=pumpfun`)
+    expect(positionUrl(APP, MINT, "pons")).toBe(`${APP}/positions/${MINT}?src=pons`)
   })
 
   it("refuses to build a link for an invalid mint", () => {
@@ -94,7 +93,7 @@ describe("deep links", () => {
   })
 
   it("carries no financial values", () => {
-    const url = new URL(positionUrl(APP, MINT, "pumpfun")!)
+    const url = new URL(positionUrl(APP, MINT, "pons")!)
     expect([...url.searchParams.keys()]).toEqual(["src"])
   })
 

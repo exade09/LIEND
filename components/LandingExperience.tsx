@@ -28,19 +28,19 @@ type TransitionScene = {
   snapshotScale: number
 }
 
-const heroLetters = ["S", "T", "A", "Y", "F", "I"] as const
+const heroLetters = ["L", "O", "N", "S"] as const
 
 const routeSteps = [
-  { number: "01", title: "Read the position", body: "LONS reads supported migrated token balances from the connected Solana wallet", badge: "Wallet context" },
+  { number: "01", title: "Read the position", body: "LONS reads supported migrated token balances from the connected Robinhood Chain wallet", badge: "Wallet context" },
   { number: "02", title: "Review the route", body: "The interface shows available liquidity, collateral context and the terms before anything is submitted", badge: "Clear terms" },
-  { number: "03", title: "Borrow SOL", body: "Approve the prepared transaction and keep the underlying position while accessing SOL liquidity", badge: "Direct execution" },
+  { number: "03", title: "Borrow ETH", body: "Approve the prepared transaction and keep the underlying position while accessing ETH liquidity", badge: "Direct execution" },
 ] as const
 
 const faqs = [
-  { question: "What is LONS", answer: "LONS is a utility interface for borrowing against supported migrated token positions on Solana" },
+  { question: "What is LONS", answer: "LONS is a utility interface for borrowing against supported migrated token positions on Robinhood Chain" },
   { question: "Why borrow instead of sell", answer: "Borrowing can provide liquidity while maintaining exposure to the underlying position, subject to collateral and liquidation risk" },
   { question: "What does the Chrome extension do", answer: "The extension adds a compact LONS surface to the browser and pairs with the web app for supported account actions" },
-  { question: "Where can I review a transaction", answer: "LONS presents the route and terms before wallet approval, and published transactions can be inspected on Solscan" },
+  { question: "Where can I review a transaction", answer: "LONS presents the route and terms before wallet approval, and published transactions can be inspected on Robinhood Chain Blockscout" },
 ] as const
 
 function PixelSprite({ kind, className = "" }: { kind: "key" | "coin" | "wallet"; className?: string }) {
@@ -127,7 +127,7 @@ function HeroArtifacts() {
 
       <span className={`${styles.heroArtifact} ${styles.vectorCoin}`}>
         <i className={styles.coinRim} />
-        <b>S</b>
+        <b>L</b>
         <i className={styles.coinGlint} />
       </span>
 
@@ -434,8 +434,8 @@ export function LandingExperience() {
                 </span>
               ))}
             </h1>
-            <p className={styles.eyebrow} data-intro="eyebrow">Liquidity for migrated positions on Solana</p>
-            <p className={styles.heroSubline} data-intro="subline">Borrow SOL without making a sale the first move</p>
+            <p className={styles.eyebrow} data-intro="eyebrow">Liquidity for migrated positions on Robinhood Chain</p>
+            <p className={styles.heroSubline} data-intro="subline">Borrow ETH without making a sale the first move</p>
             <div className={styles.heroButtons} data-intro="actions">
               <LaunchAppLink className={styles.primaryButton}><MotionLabel>Launch web app</MotionLabel></LaunchAppLink>
               <AddToChromeBadge className={styles.secondaryButton} />
@@ -469,7 +469,7 @@ export function LandingExperience() {
                 <small>Available liquidity</small><strong>Ready when connected</strong><span>Calculated from supported wallet positions</span>
               </div>
               <div className={styles.routeRail}>
-                <span data-active="true">Position</span><i /><span>Review</span><i /><span>SOL</span>
+                <span data-active="true">Position</span><i /><span>Review</span><i /><span>ETH</span>
               </div>
             </div>
           </div>
@@ -480,7 +480,7 @@ export function LandingExperience() {
             <div className={styles.routeHeading} data-liend-reveal>
               <p className={styles.eyebrow}>The LONS route</p>
               <RevealHeadline lines={["Liquidity without", "making a sale", "the first move"]} />
-              <p>A legible path from a supported wallet position to a reviewed SOL borrow</p>
+              <p>A legible path from a supported wallet position to a reviewed ETH borrow</p>
             </div>
             <div className={styles.routeIllustration} aria-hidden="true"><PixelSprite kind="key" /><DropletMark /></div>
           </div>
@@ -514,7 +514,7 @@ export function LandingExperience() {
                 <div className={styles.tokenGlyph}><DropletMark /></div>
               </aside>
               <div className={styles.demoQuote}>
-                <p>Borrow route</p><h3>Position → SOL</h3>
+                <p>Borrow route</p><h3>Position → ETH</h3>
                 <dl>
                   <div><dt>Collateral</dt><dd>Read from wallet</dd></div>
                   <div><dt>Liquidity</dt><dd>Calculated in app</dd></div>
@@ -565,8 +565,8 @@ export function LandingExperience() {
           <div className={styles.controlVisual} data-liend-reveal>
             <div className={styles.approvalCard}>
               <header><span>TRANSACTION REVIEW</span><i>READY</i></header>
-              <div><small>Route</small><strong>Position → SOL</strong></div>
-              <div><small>Network</small><strong>Solana</strong></div>
+              <div><small>Route</small><strong>Position → ETH</strong></div>
+              <div><small>Network</small><strong>Robinhood Chain</strong></div>
               <div><small>Status</small><strong>Waiting for wallet</strong></div>
               <LaunchAppLink className={styles.approvalButton}>
                 <MotionLabel>Approve in wallet</MotionLabel>
@@ -601,7 +601,7 @@ export function LandingExperience() {
 
       <footer className={styles.footer}>
         <div className={styles.footerBrand}>
-          <DropletMark /><strong>LONS</strong><p>Utility liquidity for supported migrated token positions on Solana</p>
+          <DropletMark /><strong>LONS</strong><p>Utility liquidity for supported migrated token positions on Robinhood Chain</p>
         </div>
         <div className={styles.footerLinks}>
           <div>
@@ -617,7 +617,7 @@ export function LandingExperience() {
             <a className={styles.footerNavLink} href="#faq">FAQ</a>
           </div>
         </div>
-        <div className={styles.footerBottom}><CaPlaque variant="footer" /><span>LONS / SOLANA / 2026</span></div>
+        <div className={styles.footerBottom}><CaPlaque variant="footer" /><span>LONS / ROBINHOOD CHAIN / 2026</span></div>
       </footer>
     </div>
   )

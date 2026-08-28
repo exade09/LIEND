@@ -1,12 +1,12 @@
-# LIEND Extension
+# LONS Extension
 
-Chrome Manifest V3 extension providing liquidity context on supported Solana
+Chrome Manifest V3 extension providing liquidity context on supported Robinhood Chain
 token pages.
 
-## Installing (unpacked)
+## Installing
 
-There is **no Chrome Web Store listing yet**. This is a manual developer-mode
-install, not a Web Store installation.
+The production extension is published in the [Chrome Web Store](https://chromewebstore.google.com/detail/liend/gbpmekokakgbojjkmcgcippmlmpjakia?authuser=0&hl=en).
+Use the unpacked workflow below only for local development.
 
 1. Download `liend-extension.zip`.
 2. Extract the archive. You should get a folder containing `manifest.json`
@@ -15,11 +15,11 @@ install, not a Web Store installation.
 4. Turn on **Developer mode** (top right).
 5. Click **Load unpacked**.
 6. Select the extracted folder (the one containing `manifest.json`).
-7. Optionally pin LIEND via the puzzle-piece icon so it stays in the toolbar.
-8. Open a token page on pump.fun, e.g. `https://pump.fun/coin/<mint>`.
-9. Click the **LIEND · Check liquidity** button at the lower left, or the
+7. Optionally pin LONS via the puzzle-piece icon so it stays in the toolbar.
+8. Open a token page on pons, e.g. `https://www.ponsfamily.com/launchpad/<contract>`.
+9. Click the **LONS · Check liquidity** button at the lower left, or the
    toolbar icon, to open the side panel.
-10. Choose **Connect LIEND** and approve this browser in the LIEND app.
+10. Choose **Connect LONS** and approve this browser in the LONS app.
 
 Chrome will show "Loaded unpacked extension" — that is expected for this
 distribution method. Unpacked extensions are removed when Chrome is fully
@@ -29,8 +29,8 @@ restarted in some managed environments; reload via **Load unpacked** if so.
 
 ```bash
 # From the repository root
-LIEND_APP_URL=https://<app-origin> \
-LIEND_API_URL=https://<api-origin> \
+LONS_APP_URL=https://<app-origin> \
+LONS_API_URL=https://<api-origin> \
 npm run package -w @liend/extension
 ```
 
@@ -57,8 +57,8 @@ generated manifest always matches the build's configuration.
 | `sidePanel` | Required by the Side Panel API — the primary UI surface. |
 | `storage` | Device credential (`storage.local`, must survive restart) and short-lived session + per-tab context (`storage.session`). |
 | `tabs` | Read the active tab's URL to decide whether the page is supported, and clear per-tab context on close. |
-| `https://pump.fun/*`, `https://www.pump.fun/*` | The only verified supported platform. |
-| `<API origin>/*` | Lets the service worker call the LIEND API. |
+| `https://ponsfamily.com/*`, `https://www.ponsfamily.com/*` | The only verified supported platform. |
+| `<API origin>/*` | Lets the service worker call the LONS API. |
 
 **Deliberately not requested:** `<all_urls>`, `webRequest`, `cookies`,
 `history`, `bookmarks`, `scripting` (the content script is declared statically),
@@ -81,18 +81,18 @@ its host permission, only once real page evidence exists.
 
 The extension observes:
 
-- that the active tab is on pump.fun,
-- the token mint parsed from that page's URL,
+- that the active tab is on ponsfamily.com,
+- the ERC-20 contract parsed from that page's URL,
 - its own version and a device identifier.
 
 It does **not** observe browsing history, page content beyond the URL-derived
-mint, wallet balances or addresses, keystrokes, form input, cookies, or any
+contract, wallet balances or addresses, keystrokes, form input, cookies, or any
 activity on non-supported sites. The content script is declared only for
-pump.fun, so it is never injected anywhere else — enforced by the manifest, not
+ponsfamily.com, so it is never injected anywhere else — enforced by the manifest, not
 by convention.
 
 It never requests or stores a seed phrase or private key, and never signs a
-transaction. Signing stays in the LIEND app with the user's own wallet.
+transaction. Signing stays in the LONS app with the user's own MetaMask account.
 
 ## Security model
 
@@ -101,11 +101,11 @@ transaction. Signing stays in the LIEND app with the user's own wallet.
 | Host page → content script | Untrusted | Only URL-derived identifiers are read. |
 | Content script → service worker | Untrusted | Every message is schema-validated and the sender's host verified. |
 | Side panel → service worker | Semi | Extension origin, still schema-validated. |
-| Service worker → LIEND API | Trusted | The only source of financial truth. |
+| Service worker → LONS API | Trusted | The only source of financial truth. |
 
 The content script holds no credentials, makes no network requests, and cannot
 reach the API. There is no generic `fetchUrl`/`openUrl` message — a compromised
-content script can at worst assert a wrong mint, which the app re-verifies
+content script can at worst assert a wrong contract, which the app re-verifies
 independently.
 
 Two secrets, neither stored in plaintext server-side:
@@ -135,7 +135,7 @@ repeated navigation signals cannot extend it. Duplicate signals for the
 identity already in flight are ignored outright. Every generation ends in
 exactly one of TOKEN_CONTEXT, NO_TOKEN or DETECTION_FAILED.
 
-Set `LIEND_DEBUG=1` at build time to log generation, identity, attempt,
+Set `LONS_DEBUG=1` at build time to log generation, identity, attempt,
 elapsed-from-T0, decision and reason to the page console. Compiled out
 otherwise; never logs tokens or auth data.
 
@@ -143,8 +143,8 @@ otherwise; never logs tokens or auth data.
 
 After any rebuild:
 
-1. `chrome://extensions` -> **Reload** on LIEND
-2. **Hard-refresh** the pump.fun tab (Ctrl+Shift+R)
+1. `chrome://extensions` -> **Reload** on LONS
+2. **Hard-refresh** the ponsfamily.com tab (Ctrl+Shift+R)
 
 The hard refresh matters: the previously injected content script keeps
 running in already-open tabs until they reload, so without it you are still
@@ -157,22 +157,22 @@ available in the build environment). Use this checklist after loading unpacked:
 
 - [ ] Extension loads with no errors on `chrome://extensions`
 - [ ] Service worker shows as active; console has no errors
-- [ ] On `https://pump.fun/` (no token) the panel shows "No token detected"
-- [ ] On a token page the LIEND trigger appears lower-left and does not overlap
+- [ ] On `https://ponsfamily.com/` (no token) the panel shows "No token detected"
+- [ ] On a token page the LONS trigger appears lower-left and does not overlap
       the buy/sell controls
 - [ ] Clicking the trigger opens the side panel
-- [ ] The panel shows the correct shortened mint for the token
-- [ ] Navigating to a different token updates the mint without a reload, and
+- [ ] The panel shows the correct shortened contract for the token
+- [ ] Navigating to a different token updates the contract without a reload, and
       only one trigger is ever present
-- [ ] Navigating away from a coin route clears the token state
-- [ ] **Connect LIEND** opens the app `/pair` page with a `request` parameter
+- [ ] Navigating away from a launchpad route clears the token state
+- [ ] **Connect LONS** opens the app `/pair` page with a `request` parameter
 - [ ] The code in the panel matches the code in the app
 - [ ] Approving in the app flips the panel to Connected
 - [ ] Rejecting, or letting it expire, returns the panel to disconnected
 - [ ] After a full Chrome restart the panel is still Connected (no re-pairing)
 - [ ] Revoking the browser in the app returns the panel to disconnected
-- [ ] **Open in LIEND** opens `/positions/<mint>?src=pumpfun`
+- [ ] **Open in LONS** opens `/positions/<contract>?src=pons`
 - [ ] With the app logged out, that link routes through auth and returns to the
-      same position — no need to paste the mint again
+      same position — no need to paste the contract again
 - [ ] The panel never displays a balance, price or liquidity figure
 - [ ] On a non-supported site the panel shows "No supported page"

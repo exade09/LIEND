@@ -9,7 +9,7 @@ export function OPTIONS(request: Request) {
   return preflight(request)
 }
 
-/** On-chain SPL balances for the authenticated wallet. */
+/** On-chain ERC-20 balances for the authenticated Robinhood Chain wallet. */
 export function GET(request: Request) {
   return handle(request, async () => {
     const session = await requireSession(request)

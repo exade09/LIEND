@@ -78,7 +78,7 @@ export async function fetchHolderAccess(wallet: string): Promise<HolderAccessDto
 export function accessCopy(access: HolderAccessDto): string {
   switch (access.state) {
     case "disconnected":
-      return "Connect a Solana wallet to begin the eligibility check"
+      return "Connect a Robinhood Chain wallet to begin the eligibility check"
     case "token-not-launched":
       return "LONS utility is available for this wallet"
     case "holder-check-pending":

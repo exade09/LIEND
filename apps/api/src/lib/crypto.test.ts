@@ -9,7 +9,7 @@ function makeWallet() {
 describe("verifyWalletSignature", () => {
   it("accepts a genuine MetaMask-compatible signature", async () => {
     const account = makeWallet()
-    const message = "LONS authentication\\nNetwork: Robinhood Chain (4663)"
+    const message = "LONS authentication\nNetwork: Robinhood Chain (4663)"
     const signature = await account.signMessage({ message })
     await expect(verifyWalletSignature(account.address, message, signature)).resolves.toBe(true)
   })

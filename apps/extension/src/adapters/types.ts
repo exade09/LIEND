@@ -71,8 +71,8 @@ export interface SiteAdapter {
   mountTrigger(onOpen: () => void): () => void
 }
 
-/** Base58, 32-44 chars — the Solana mint shape. */
-const MINT_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
+/** Robinhood Chain contracts use the canonical 20-byte EVM address shape. */
+const MINT_RE = /^0x[a-fA-F0-9]{40}$/
 
 export function isValidMint(value: string | null | undefined): value is string {
   return typeof value === "string" && MINT_RE.test(value)

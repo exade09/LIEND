@@ -29,8 +29,8 @@ export function formatNumber(
   }).format(Number.isFinite(value) ? value : 0);
 }
 
-export function formatSol(value: number, maximumFractionDigits = 4): string {
-  return `${formatNumber(value, maximumFractionDigits)} SOL`;
+export function formatEth(value: number, maximumFractionDigits = 4): string {
+  return `${formatNumber(value, maximumFractionDigits)} ETH`;
 }
 
 export function formatPercent(value: number, maximumFractionDigits = 1): string {

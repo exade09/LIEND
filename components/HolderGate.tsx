@@ -250,7 +250,7 @@ export function HolderGate() {
               </dd>
             </div>
             <div>
-              <dt><Icon name="sol" size={15} /> Network</dt>
+              <dt><Icon name="eth" size={15} /> Network</dt>
               <dd>{state === "WRONG NETWORK" ? "Unsupported network" : project.network}</dd>
             </div>
             <div>

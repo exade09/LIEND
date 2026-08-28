@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest"
 import { parseFromContent, parseFromPanel } from "./messages"
 
-const MINT = "So11111111111111111111111111111111111111112"
+const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 
 function context(overrides: Record<string, unknown> = {}) {
   return {
-    source: "pumpfun",
-    chain: "solana",
+    source: "pons",
+    chain: "robinhood",
     mint: MINT,
-    pageUrl: `https://pump.fun/coin/${MINT}`,
+    pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
     detectedAt: Date.now(),
     ...overrides,
   }
@@ -16,7 +16,7 @@ function context(overrides: Record<string, unknown> = {}) {
 
 describe("content-script message validation", () => {
   it("accepts a well-formed token context", () => {
-    const parsed = parseFromContent({ type: "TOKEN_CONTEXT", context: context(), identity: "pumpfun:x", generation: 1 })
+    const parsed = parseFromContent({ type: "TOKEN_CONTEXT", context: context(), identity: "pons:x", generation: 1 })
     expect(parsed?.type).toBe("TOKEN_CONTEXT")
   })
 
@@ -26,27 +26,27 @@ describe("content-script message validation", () => {
   })
 
   it("rejects a malformed mint", () => {
-    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ mint: "not-a-mint" }), identity: "pumpfun:x", generation: 1 })).toBeNull()
-    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ mint: "0OIl" }), identity: "pumpfun:x", generation: 1 })).toBeNull()
+    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ mint: "not-a-mint" }), identity: "pons:x", generation: 1 })).toBeNull()
+    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ mint: "0OIl" }), identity: "pons:x", generation: 1 })).toBeNull()
   })
 
   it("rejects an unsupported source (Axiom is not enabled)", () => {
-    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ source: "axiom" }), identity: "pumpfun:x", generation: 1 })).toBeNull()
+    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ source: "axiom" }), identity: "pons:x", generation: 1 })).toBeNull()
   })
 
-  it("rejects a non-solana chain", () => {
-    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ chain: "ethereum" }), identity: "pumpfun:x", generation: 1 })).toBeNull()
+  it("rejects a non-robinhood chain", () => {
+    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ chain: "ethereum" }), identity: "pons:x", generation: 1 })).toBeNull()
   })
 
   it("rejects a malformed page URL", () => {
-    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ pageUrl: "not a url" }), identity: "pumpfun:x", generation: 1 })).toBeNull()
+    expect(parseFromContent({ type: "TOKEN_CONTEXT", context: context({ pageUrl: "not a url" }), identity: "pons:x", generation: 1 })).toBeNull()
   })
 
   it("strips unexpected extra fields rather than trusting them", () => {
     const parsed = parseFromContent({
       type: "TOKEN_CONTEXT",
       context: context({ balance: "999999", eligible: true, priceUsd: "1.23" }),
-      identity: "pumpfun:x",
+      identity: "pons:x",
       generation: 1,
     })
     expect(parsed).not.toBeNull()
@@ -102,7 +102,7 @@ describe("navigation scope validation", () => {
   })
 
   it("rejects a negative or non-integer generation", () => {
-    const base = { type: "TOKEN_CONTEXT", context: context(), identity: "pumpfun:x" }
+    const base = { type: "TOKEN_CONTEXT", context: context(), identity: "pons:x" }
     expect(parseFromContent({ ...base, generation: -1 })).toBeNull()
     expect(parseFromContent({ ...base, generation: 1.5 })).toBeNull()
     expect(parseFromContent({ ...base, generation: "1" })).toBeNull()
@@ -110,7 +110,7 @@ describe("navigation scope validation", () => {
 
   it("rejects an empty identity", () => {
     expect(
-      parseFromContent({ type: "CONTEXT_CLEARED", source: "pumpfun", identity: "", generation: 1 }),
+      parseFromContent({ type: "CONTEXT_CLEARED", source: "pons", identity: "", generation: 1 }),
     ).toBeNull()
   })
 
@@ -118,8 +118,8 @@ describe("navigation scope validation", () => {
     expect(
       parseFromContent({
         type: "DETECTION_FAILED",
-        source: "pumpfun",
-        identity: "pumpfun:x",
+        source: "pons",
+        identity: "pons:x",
         generation: 2,
       })?.type,
     ).toBe("DETECTION_FAILED")

@@ -22,7 +22,7 @@ const silkscreen = Silkscreen({
 
 export const metadata: Metadata = {
   title: "LONS",
-  description: "Utility liquidity for migrated token positions on Solana",
+  description: "Utility liquidity for migrated token positions on Robinhood Chain",
   icons: {
     icon: [{ url: "/assets/lons-mark.png", type: "image/png" }],
     apple: "/assets/lons-mark.png",

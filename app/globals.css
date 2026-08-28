@@ -373,7 +373,7 @@ button:disabled {
   background:
     linear-gradient(#e8edf6, #9aa6b8);
   box-shadow: var(--bevel);
-  content: "×";
+  content: "Г—";
   color: #1c2433;
   font-family: var(--font-pixel);
   font-size: 10px;
@@ -2268,7 +2268,7 @@ button:disabled {
 }
 
 .token-avatar,
-.sol-avatar {
+.eth-avatar {
   --token-accent: #7b5cff;
   display: inline-grid;
   width: 33px;
@@ -2302,7 +2302,7 @@ button:disabled {
   object-fit: contain;
 }
 
-.sol-avatar {
+.eth-avatar {
   --token-accent: #25cedc;
   color: #ffffff;
 }

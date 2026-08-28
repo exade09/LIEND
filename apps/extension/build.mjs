@@ -29,8 +29,8 @@ const VERSION = pkg.version
 // Configuration comes from the environment. Empty values are allowed so a
 // build always succeeds; the panel then renders an explicit "not configured"
 // state rather than pointing at a guessed origin.
-const APP_URL = (process.env.LIEND_APP_URL ?? "").trim()
-const API_URL = (process.env.LIEND_API_URL ?? "").trim()
+const APP_URL = (process.env.LONS_APP_URL ?? process.env.LIEND_APP_URL ?? "").trim()
+const API_URL = (process.env.LONS_API_URL ?? process.env.LIEND_API_URL ?? "").trim()
 
 if (!APP_URL || !API_URL) {
   console.warn(
@@ -51,7 +51,7 @@ const manifest = {
   manifest_version: 3,
   name: "LONS",
   version: VERSION,
-  description: "Liquidity context for supported Solana token pages.",
+  description: "Liquidity context for supported Robinhood Chain token pages.",
   minimum_chrome_version: "116",
   icons: { 16: "icons/icon16.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   action: {
@@ -62,13 +62,13 @@ const manifest = {
   side_panel: { default_path: "sidepanel.html" },
   permissions: ["sidePanel", "storage", "tabs"],
   host_permissions: [
-    "https://pump.fun/*",
-    "https://www.pump.fun/*",
+    "https://ponsfamily.com/*",
+    "https://www.ponsfamily.com/*",
     ...(API_URL ? [`${API_URL.replace(/\/$/, "")}/*`] : []),
   ],
   content_scripts: [
     {
-      matches: ["https://pump.fun/*", "https://www.pump.fun/*"],
+      matches: ["https://ponsfamily.com/*", "https://www.ponsfamily.com/*"],
       js: ["content.js"],
       run_at: "document_idle",
       all_frames: false,
@@ -101,7 +101,7 @@ async function bundle() {
       __LIEND_APP_URL__: JSON.stringify(APP_URL),
       __LIEND_API_URL__: JSON.stringify(API_URL),
       __LIEND_VERSION__: JSON.stringify(VERSION),
-      __LIEND_DEBUG__: JSON.stringify(process.env.LIEND_DEBUG === "1"),
+      __LIEND_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
     alias: { "@": path.join(root, "src") },
@@ -120,7 +120,7 @@ async function bundle() {
       __LIEND_APP_URL__: JSON.stringify(APP_URL),
       __LIEND_API_URL__: JSON.stringify(API_URL),
       __LIEND_VERSION__: JSON.stringify(VERSION),
-      __LIEND_DEBUG__: JSON.stringify(process.env.LIEND_DEBUG === "1"),
+      __LIEND_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
     alias: { "@": path.join(root, "src") },

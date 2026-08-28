@@ -75,7 +75,7 @@ export default function DataExperience() {
           <header className={`${styles.sceneIntro} ${styles.labIntro}`} data-reveal>
             <p className={styles.eyebrow}>LIQUIDITY LAB</p>
             <h2 id="liquidity-lab-title">Model the position before the wallet</h2>
-            <p className={styles.introCopy}>Explore collateral, estimated SOL and remaining exposure through a transparent public model</p>
+            <p className={styles.introCopy}>Explore collateral, estimated ETH and remaining exposure through a transparent public model</p>
           </header>
 
           <div className={`${styles.componentMount} ${styles.calculatorMount}`} data-reveal>
@@ -98,8 +98,8 @@ export default function DataExperience() {
               <h2 id="protocol-data-title">Read activity as infrastructure</h2>
             </div>
             <div className={styles.dataContext}>
-              <p>Public Solana routes on this desk. LONS program records replace this when the book is onchain</p>
-              <span><i /> SOLANA &bull; LIVE ROUTES</span>
+              <p>Public Robinhood Chain routes on this desk. LONS program records replace this when the book is onchain</p>
+              <span><i /> ROBINHOOD CHAIN &bull; LIVE ROUTES</span>
             </div>
           </header>
 

@@ -13,10 +13,10 @@
  * its host permission are added only once real page evidence exists.
  */
 
-import { pumpfunAdapter } from "./pumpfun"
+import { ponsAdapter } from "./pons"
 import type { SiteAdapter } from "./types"
 
-const ADAPTERS: readonly SiteAdapter[] = [pumpfunAdapter]
+const ADAPTERS: readonly SiteAdapter[] = [ponsAdapter]
 
 /** At most one adapter handles a page. Returns null on unsupported sites. */
 export function selectAdapter(url: URL): SiteAdapter | null {
@@ -24,5 +24,5 @@ export function selectAdapter(url: URL): SiteAdapter | null {
 }
 
 export function supportedHostnames(): string[] {
-  return ["pump.fun"]
+  return ["ponsfamily.com"]
 }

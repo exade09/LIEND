@@ -12,7 +12,7 @@ export function formatTokenAmount(amountRaw: bigint, decimals: number): string {
   const base = 10n ** BigInt(decimals)
   const whole = amountRaw / base
   const fraction = amountRaw % base
-  const grouped = whole.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",")
+  const grouped = whole.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   if (fraction === 0n) return grouped
   const frac = fraction.toString().padStart(decimals, "0").replace(/0+$/, "").slice(0, 6)
   return frac ? `${grouped}.${frac}` : grouped

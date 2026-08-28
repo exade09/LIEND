@@ -6,7 +6,7 @@
  * `./controller`, which is unit-tested.
  *
  * It deliberately holds NO credentials, makes NO network requests, never
- * reads `window.solana` or any injected wallet, never reads host storage or
+ * reads `window.robinhood` or any injected wallet, never reads host storage or
  * cookies, and never scrapes prices or balances. Everything it can say to the
  * worker is a mint plus a URL, both of which the worker re-validates.
  */

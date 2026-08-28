@@ -1,4 +1,4 @@
-# LIEND deployment
+# LONS deployment
 
 Three independently deployable surfaces, all on Vercel, all configuration-driven.
 No domain, Vercel URL, token mint or holder threshold is hardcoded anywhere in
@@ -36,7 +36,7 @@ npm run dev -w @liend/api            # API      → http://localhost:3002
 For local App↔API work, create `apps/api/.env.local` (see `apps/api/.env.example`):
 
 ```
-LIEND_ALLOWED_ORIGINS=http://localhost:3001
+LONS_ALLOWED_ORIGINS=http://localhost:3001
 DATABASE_URL=postgresql://...        # optional locally; omitted = dev in-memory store
 ```
 
@@ -82,10 +82,9 @@ the repo root, which is what makes the workspace linking work.
 | `NEXT_PUBLIC_API_URL` | yes | API origin. Without it the App renders an explicit "API not configured" state. |
 | `NEXT_PUBLIC_APP_URL` | yes | Own origin, for building absolute deep links. |
 | `NEXT_PUBLIC_LANDING_URL` | no | Back-to-landing links. |
-| `NEXT_PUBLIC_LIEND_TOKEN_MINT` | no | **Leave unset until launch.** Unset ⇒ `token-not-launched`. |
-| `NEXT_PUBLIC_LIEND_MIN_HOLDER_BALANCE` | no | Base units, integer string. Unset ⇒ requirement not published. |
-| `NEXT_PUBLIC_SOLANA_CLUSTER` | no | Defaults to `mainnet-beta`. |
-| `NEXT_PUBLIC_PUMPFUN_URL` / `_X_URL` / `_DOCS_URL` | no | Leave unset until real destinations exist. |
+| `NEXT_PUBLIC_LONS_TOKEN_CONTRACT` | no | **Leave unset until launch.** Unset ⇒ `token-not-launched`. |
+| `NEXT_PUBLIC_LONS_MIN_HOLDER_BALANCE` | no | Base units, integer string. Unset ⇒ requirement not published. |
+| `NEXT_PUBLIC_PONS_URL` / `_X_URL` / `_DOCS_URL` | no | pons defaults to its verified launchpad root; other destinations remain configurable. |
 | `NEXT_PUBLIC_EXTENSION_MODE` | no | `webstore` (default) or `download` for archive builds. |
 
 **API** (`liend-api`)
@@ -93,14 +92,14 @@ the repo root, which is what makes the workspace linking work.
 | Variable | Required | Purpose |
 |---|---|---|
 | `DATABASE_URL` | **yes in production** | Postgres connection string. See *Persistence*. |
-| `LIEND_ALLOWED_ORIGINS` | **yes** | Comma-separated exact origins. Deny-by-default: empty blocks all cross-origin browser access. |
-| `LIEND_SESSION_SECRET` | **yes in production** | HMAC key for session cookies. Generate with `openssl rand -base64 32`. |
-| `LIEND_SOLANA_RPC_URL` | no | Solana JSON-RPC. Unset falls back to public mainnet endpoints for wallet token reads. |
-| `LIEND_TOKEN_MINT` | no | Server-side copy. Unset ⇒ utility is `token-not-launched`. |
-| `LIEND_MIN_HOLDER_BALANCE` | no | Base units, integer string. |
-| `LIEND_API_VERSION` | no | Reported by `/api/health`. |
+| `LONS_ALLOWED_ORIGINS` | **yes** | Comma-separated exact origins. Deny-by-default: empty blocks all cross-origin browser access. |
+| `LONS_SESSION_SECRET` | **yes in production** | HMAC key for session cookies. Generate with `openssl rand -base64 32`. |
+| `LONS_ROBINHOOD_RPC_URL` | no | Robinhood Chain JSON-RPC. Defaults to the official public mainnet endpoint. |
+| `LONS_TOKEN_CONTRACT` | no | Server-side ERC-20 contract. Unset ⇒ utility is `token-not-launched`. |
+| `LONS_MIN_HOLDER_BALANCE` | no | Base units, integer string. |
+| `LONS_API_VERSION` | no | Reported by `/api/health`. |
 
-`LIEND_ALLOWED_ORIGINS` must list the App origins explicitly, e.g.
+`LONS_ALLOWED_ORIGINS` must list the App origins explicitly, e.g.
 `https://liend-app.vercel.app,https://liend-app-git-main-acme.vercel.app`.
 Preview deployments get fresh URLs per branch, so add the ones you actually
 need — the API deliberately does **not** trust `*.vercel.app` by suffix.
@@ -138,7 +137,7 @@ no-op, so it is safe to run on every deploy.
 `extension_sessions`.
 
 There are deliberately **no** tables for loans, positions, liquidity or
-activity. The LIEND on-chain program does not exist, and empty tables would
+activity. The LONS lending contract does not exist, and empty tables would
 imply infrastructure that is not there.
 
 ### Production guard
@@ -162,10 +161,10 @@ in `/settings/devices` cascades to every extension session derived from it.
 
 ## What is deliberately not deployable yet
 
-- **Borrow / repay settlement** — there is no LIEND on-chain program. Quotes
+- **Borrow / repay settlement** — there is no LONS lending contract. Quotes
   and loans stay in the App until execution exists.
 - **Holder gating** — architecture is complete and enforced server-side, but
-  inert until `LIEND_TOKEN_MINT` is published.
+  inert until `LONS_TOKEN_CONTRACT` is published.
 - **Distributed rate limiting** — the in-process limiter is per-instance only.
   See `apps/api/src/lib/rate-limit.ts`; a shared store (Redis/Upstash) has not
   been selected.

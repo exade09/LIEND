@@ -5,7 +5,7 @@ import { use } from "react"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, loanLabel, maxBorrowSol, reservedLoan, sol, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowEth, reservedLoan, eth, usd } from "@/lib/unbacked-book"
 
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -13,7 +13,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
   const { book, loadingPositions } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
   const reserved = valid ? reservedLoan(book, valid) : null
-  const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
+  const ceiling = position ? maxBorrowEth(position, book.ethUsd) : 0
 
   if (!valid) {
     return (
@@ -21,7 +21,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
         <header className="page-head">
           <div>
             <h1>Invalid token</h1>
-            <p>That address is not a valid Solana mint</p>
+            <p>That address is not a valid Robinhood Chain mint</p>
           </div>
         </header>
         <div className="empty">
@@ -63,7 +63,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                 </div>
                 <div className="list__row">
                   <span>Available to borrow</span>
-                  <span>{reserved ? loanLabel(reserved.status) : sol(maxBorrowSol(position, book.solUsd))}</span>
+                  <span>{reserved ? loanLabel(reserved.status) : eth(maxBorrowEth(position, book.ethUsd))}</span>
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                   href={`/positions/${valid}/borrow`}
                   aria-disabled={ceiling <= 0}
                 >
-                  Borrow SOL
+                  Borrow ETH
                 </Link>
               )}
             </div>

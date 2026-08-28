@@ -14,7 +14,7 @@ const steps: Array<{
   {
     number: "01",
     title: "CONNECT",
-    description: "Connect a Solana wallet",
+    description: "Connect a Robinhood Chain wallet",
     icon: "wallet",
   },
   {
@@ -44,8 +44,8 @@ const steps: Array<{
   {
     number: "06",
     title: "RECEIVE",
-    description: "Receive SOL after successful execution",
-    icon: "sol",
+    description: "Receive ETH after successful execution",
+    icon: "eth",
   },
 ]
 
@@ -69,7 +69,7 @@ export function HowItWorks() {
           <header className={styles.intro}>
             <p className={`${styles.eyebrow} eyebrow`}>How it works</p>
             <h2 id="how-it-works-title">From position to liquidity</h2>
-            <p>A reviewable six-step flow from wallet connection to SOL settlement</p>
+            <p>A reviewable six-step flow from wallet connection to ETH settlement</p>
           </header>
 
           <div className={styles.routeFrame}>
@@ -94,7 +94,7 @@ export function HowItWorks() {
           </div>
 
           <p className={styles.technicalNote}>
-            Each approval remains inspectable before the route is submitted to Solana
+            Each approval remains inspectable before the route is submitted to Robinhood Chain
           </p>
         </div>
       </div>

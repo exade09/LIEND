@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { Icon, type IconName } from "@/components/Icon"
 import { kindLabel, type TapeEvent, type TapeKind } from "@/data/activityTape"
-import { getExplorerTransactionUrl, isLikelySolanaAddress, shortenAddress } from "@/lib/addresses"
+import { getExplorerTransactionUrl, isLikelyEvmAddress, shortenAddress } from "@/lib/addresses"
 
 function kindIcon(kind: TapeKind): IconName {
   if (kind === "borrow") return "borrow"
@@ -89,7 +89,7 @@ export function ActivityFeed() {
         <p className="eyebrow section-eyebrow">PROTOCOL ACTIVITY</p>
         <h2 className="section-title" id="activity-feed-title">Protocol event stream</h2>
         <p className="section-description">
-          Public Solana routes on this desk. LONS program records replace this when the book is onchain
+          Public Robinhood Chain routes on this desk. LONS program records replace this when the book is onchain
         </p>
       </header>
 
@@ -99,7 +99,7 @@ export function ActivityFeed() {
             <span className="activity-feed__pulse" aria-hidden="true" />
             <span>{live ? "LIVE ROUTES" : "EVENT STREAM"}</span>
           </div>
-          <span className="activity-feed__network">{live ? "SOLANA • LIVE" : "SOLANA"}</span>
+          <span className="activity-feed__network">{live ? "ROBINHOOD CHAIN • LIVE" : "ROBINHOOD CHAIN"}</span>
         </div>
 
         {live ? (
@@ -132,7 +132,7 @@ export function ActivityFeed() {
           ) : events.length > 0 ? (
             <ol className="activity-list" aria-label="Protocol events">
               {events.map((item) => {
-                const copyableWallet = isLikelySolanaAddress(item.wallet)
+                const copyableWallet = isLikelyEvmAddress(item.wallet)
                 const explorer = getExplorerTransactionUrl(item.signature)
 
                 return (
@@ -158,7 +158,7 @@ export function ActivityFeed() {
                       ) : null}
                       {explorer ? (
                         <a href={explorer} target="_blank" rel="noreferrer">
-                          Solscan
+                          Blockscout
                         </a>
                       ) : null}
                     </div>

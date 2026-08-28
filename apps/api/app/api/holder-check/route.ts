@@ -1,4 +1,4 @@
-import { Base58Address } from "@liend/domain"
+import { EvmAddress } from "@liend/domain"
 import { ApiFailure, handle, json, preflight } from "@/lib/http"
 import { readServerEnv } from "@/lib/env"
 import { readWalletTokenAccounts } from "@/lib/evm-rpc"
@@ -21,7 +21,7 @@ export function OPTIONS(request: Request) {
 export function GET(request: Request) {
   return handle(request, async () => {
     const raw = new URL(request.url).searchParams.get("wallet")
-    const parsed = Base58Address.safeParse(raw)
+    const parsed = EvmAddress.safeParse(raw)
     if (!parsed.success) {
       throw new ApiFailure("bad_request", "A valid EVM wallet address is required")
     }
@@ -40,7 +40,7 @@ export function GET(request: Request) {
           const mint = env.token.mint
           try {
             const accounts = await readWalletTokenAccounts(wallet)
-            const match = accounts.find((account) => account.mint === mint)
+            const match = accounts.find((account) => account.mint.toLowerCase() === mint.toLowerCase())
             amount = match ? formatTokenAmount(match.amountRaw, match.decimals) : "held"
           } catch {
             amount = "held"

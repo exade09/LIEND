@@ -12,8 +12,8 @@ const quote: UnbackedQuote = {
   symbol: "TEST",
   collateralAmount: "1000",
   collateralUsd: 80,
-  borrowSol: 0.2,
-  feeSol: 0.0006,
+  borrowEth: 0.2,
+  feeEth: 0.0006,
   ltvBps: 3700,
   interestRateBps: 850,
 }

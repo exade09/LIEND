@@ -4,7 +4,7 @@ import Link from "next/link"
 import { use } from "react"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findLoan, loanLabel, sol } from "@/lib/unbacked-book"
+import { findLoan, loanLabel, eth } from "@/lib/unbacked-book"
 
 export default function LoanDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -36,11 +36,11 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
                 </div>
                 <div className="list__row">
                   <span>Principal</span>
-                  <span>{sol(loan.principalSol)}</span>
+                  <span>{eth(loan.principalEth)}</span>
                 </div>
                 <div className="list__row">
                   <span>Outstanding</span>
-                  <span>{sol(loan.outstandingSol)}</span>
+                  <span>{eth(loan.outstandingEth)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>

@@ -21,7 +21,7 @@ export function FinalCTA() {
           <span className={styles.titleLine}>ACCESS THE LIQUIDITY</span>
         </h2>
         <p className={styles.copy}>
-          A second route for supported migrated token positions on Solana
+          A second route for supported migrated token positions on Robinhood Chain
         </p>
 
         <div className={styles.actions}>
