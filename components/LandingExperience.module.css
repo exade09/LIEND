@@ -2243,9 +2243,7 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, .9);
   box-shadow: 0 3px 0 var(--ink);
-  font-family: Arial, sans-serif;
-  font-size: 28px;
-  line-height: 1;
+  color: var(--ink);
   transition: transform 220ms ease;
 }
 
