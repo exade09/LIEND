@@ -97,9 +97,9 @@ function LiquidRibbon({ className, gradientId }: { className: string; gradientId
     <svg className={`${styles.liquidRibbon} ${className}`} viewBox="0 0 360 360" aria-hidden="true">
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#6ef6ff" />
-          <stop offset="0.42" stopColor="#3387ff" />
-          <stop offset="1" stopColor="#7651f5" />
+          <stop offset="0" stopColor="#8fbf7a" />
+          <stop offset="0.42" stopColor="#46603a" />
+          <stop offset="1" stopColor="#6c8760" />
         </linearGradient>
       </defs>
       <path

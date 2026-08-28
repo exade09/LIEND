@@ -1842,7 +1842,7 @@
   height: auto;
   overflow: visible;
   fill: none;
-  filter: drop-shadow(0 18px 24px rgba(37, 54, 154, .2));
+  filter: drop-shadow(0 18px 24px rgba(35, 69, 45, .2));
 }
 
 .ribbonTop {
@@ -1865,7 +1865,7 @@
 }
 
 .ribbonDepth {
-  stroke: #17246f;
+  stroke: #1c3323;
   stroke-width: 54px;
   opacity: .55;
 }
@@ -2126,7 +2126,7 @@
   width: auto;
   height: auto;
   color: transparent;
-  background: linear-gradient(145deg, #9b61f4 3%, #6857ed 28%, #3e78f8 57%, #42d8f0 84%, #a5fbff 100%);
+  background: linear-gradient(145deg, #4f8a5c 3%, #2f5b3d 28%, #6fa172 57%, #a8cd9f 84%, #eef8ec 100%);
   background-clip: text;
   background-size: 180% 180%;
   font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
@@ -2135,11 +2135,11 @@
   letter-spacing: -.115em;
   line-height: .72;
   -webkit-background-clip: text;
-  -webkit-text-stroke: clamp(2px, .22vw, 4px) #3446ca;
+  -webkit-text-stroke: clamp(2px, .22vw, 4px) #2f5b3d;
   text-shadow:
-    0 4px 0 #3242bc,
-    0 9px 0 #273591,
-    0 18px 24px rgba(54, 55, 163, .22);
+    0 4px 0 #2f5b3d,
+    0 9px 0 #1f3d29,
+    0 18px 24px rgba(41, 90, 55, .22);
   animation: hero-wordmark-shimmer 7.5s ease-in-out infinite alternate;
 }
 
@@ -2263,7 +2263,7 @@
   .heroWordmark .heroLetter {
     font-size: clamp(78px, 24vw, 112px);
     -webkit-text-stroke-width: 2px;
-    text-shadow: 0 3px 0 #3242bc, 0 6px 0 #273591, 0 12px 18px rgba(54, 55, 163, .2);
+    text-shadow: 0 3px 0 #2f5b3d, 0 6px 0 #1f3d29, 0 12px 18px rgba(41, 90, 55, .2);
   }
 
   .heroCopy > .eyebrow {
@@ -3514,7 +3514,7 @@
   width: auto;
   height: auto;
   color: transparent;
-  background: linear-gradient(145deg, #9b61f4 3%, #6857ed 28%, #3e78f8 57%, #42d8f0 84%, #a5fbff 100%);
+  background: linear-gradient(145deg, #4f8a5c 3%, #2f5b3d 28%, #6fa172 57%, #a8cd9f 84%, #eef8ec 100%);
   background-clip: text;
   background-size: 180% 180%;
   object-fit: unset;
@@ -3524,11 +3524,11 @@
   letter-spacing: -.115em;
   line-height: .72;
   -webkit-background-clip: text;
-  -webkit-text-stroke: clamp(2px, .22vw, 4px) #3446ca;
+  -webkit-text-stroke: clamp(2px, .22vw, 4px) #2f5b3d;
   text-shadow:
-    0 4px 0 #3242bc,
-    0 9px 0 #273591,
-    0 18px 24px rgba(54, 55, 163, .22);
+    0 4px 0 #2f5b3d,
+    0 9px 0 #1f3d29,
+    0 18px 24px rgba(41, 90, 55, .22);
   animation: hero-wordmark-shimmer 7.5s ease-in-out infinite alternate;
 }
 
@@ -3600,7 +3600,7 @@
   .heroWordmark .heroLetterSlot .heroLetter {
     font-size: clamp(66px, 20vw, 94px);
     -webkit-text-stroke-width: 2px;
-    text-shadow: 0 3px 0 #3242bc, 0 6px 0 #273591, 0 12px 18px rgba(54, 55, 163, .2);
+    text-shadow: 0 3px 0 #2f5b3d, 0 6px 0 #1f3d29, 0 12px 18px rgba(41, 90, 55, .2);
   }
 
   .heroCopy > .eyebrow {
