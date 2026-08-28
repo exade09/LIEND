@@ -43,11 +43,11 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
       </div>
       <div className="nav-shell">
         <div className="nav-identity">
-          <Link className="brand-compact" href="/" aria-label="Liend home" onClick={() => setOpen(false)}>
+          <Link className="brand-compact" href="/" aria-label="STAYFI home" onClick={() => setOpen(false)}>
             <span className="brand-compact__avatar">
               <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized priority />
             </span>
-            <span>Liend</span>
+            <span>STAYFI</span>
           </Link>
         </div>
 
@@ -60,16 +60,16 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         </nav>
 
         <div className="nav-actions">
-          <PumpFunLink className="header-chip header-chip--pump" aria-label="LIEND on Pump.fun">
+          <PumpFunLink className="header-chip header-chip--pump" aria-label="STAYFI on Pump.fun">
             <Icon name="pump-fun" size={18} />
             <span>Pump.fun</span>
           </PumpFunLink>
-          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="LIEND Docs">
+          <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="STAYFI Docs">
             <Icon name="docs" size={18} />
             <span>Docs</span>
           </ProductLink>
           <div className="nav-utility" aria-label="Social links">
-            <ProductLink href={project.xUrl} aria-label="LIEND on X">
+            <ProductLink href={project.xUrl} aria-label="STAYFI on X">
               <Icon name="x" size={15} />
               <span className="sr-only">X</span>
             </ProductLink>

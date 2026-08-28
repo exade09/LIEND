@@ -1,5 +1,5 @@
 /** Minimal root layout. This deployment serves API route handlers only. */
-export const metadata = { title: "LIEND API" }
+export const metadata = { title: "STAYFI API" }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

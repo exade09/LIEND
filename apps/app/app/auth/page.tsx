@@ -52,7 +52,7 @@ function AuthPageInner() {
   async function connect(wallet: DiscoveredWallet) {
     const client = getApiClient()
     if (!client) {
-      setError("The LIEND API is not configured for this deployment")
+      setError("The STAYFI API is not configured for this deployment")
       return
     }
     setBusy(wallet.name)
@@ -76,13 +76,13 @@ function AuthPageInner() {
       <header className="page-head">
         <div>
           <h1>Connect wallet</h1>
-          <p>Verify control of a Solana wallet to access your LIEND account</p>
+          <p>Verify control of a Solana wallet to access your STAYFI account</p>
         </div>
       </header>
 
       {!apiConfigured && (
         <div className="notice">
-          <strong>LIEND API not configured</strong>
+          <strong>STAYFI API not configured</strong>
           <p>
             Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment.
           </p>
@@ -90,10 +90,10 @@ function AuthPageInner() {
       )}
 
       <div className="notice">
-        <strong>LIEND is non-custodial</strong>
+        <strong>STAYFI is non-custodial</strong>
         <p>
           You will be asked to sign a plain-text message to prove you control the wallet. This
-          creates no transaction and costs no fees. LIEND never asks for a seed phrase or private
+          creates no transaction and costs no fees. STAYFI never asks for a seed phrase or private
           key.
         </p>
       </div>

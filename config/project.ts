@@ -87,8 +87,8 @@ const extensionUrl =
   (extensionMode === "webstore" ? chromeWebStoreUrl : null)
 
 export const project = {
-  name: "LIEND",
-  ticker: "LIEND",
+  name: "STAYFI",
+  ticker: "STAYFI",
   network: "Solana",
   cluster: "mainnet-beta",
 

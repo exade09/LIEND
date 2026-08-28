@@ -98,18 +98,18 @@ export function deriveUtilityAccess(input: {
 export function describeUtilityAccess(access: UtilityAccess): string {
   switch (access.state) {
     case "disconnected":
-      return "Connect a wallet to check LIEND utility access"
+      return "Connect a wallet to check STAYFI utility access"
     case "token-not-launched":
-      return "LIEND utility is available for this wallet"
+      return "STAYFI utility is available for this wallet"
     case "holder-check-pending":
-      return "Checking your LIEND balance"
+      return "Checking your STAYFI balance"
     case "not-eligible":
       return access.required === null
-        ? "The LIEND holding requirement has not been published yet"
-        : "This wallet does not meet the LIEND holding requirement"
+        ? "The STAYFI holding requirement has not been published yet"
+        : "This wallet does not meet the STAYFI holding requirement"
     case "eligible":
-      return "LIEND utility is available for this wallet"
+      return "STAYFI utility is available for this wallet"
     case "error":
-      return "LIEND access could not be verified"
+      return "STAYFI access could not be verified"
   }
 }

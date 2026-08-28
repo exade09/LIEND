@@ -34,9 +34,9 @@ function stateFromAccess(access: HolderAccessDto): GateState {
 
 const idleCopy: Record<GateState, string> = {
   "NOT CONNECTED": "Connect a Solana wallet to begin the eligibility check",
-  CHECKING: "Checking LIEND balance and active access parameters",
-  ELIGIBLE: "LIEND utility is available for this wallet",
-  "NOT ELIGIBLE": "This wallet does not meet the LIEND holding requirement",
+  CHECKING: "Checking STAYFI balance and active access parameters",
+  ELIGIBLE: "STAYFI utility is available for this wallet",
+  "NOT ELIGIBLE": "This wallet does not meet the STAYFI holding requirement",
   "WRONG NETWORK": "Switch the wallet provider to the configured Solana network",
 }
 
@@ -109,7 +109,7 @@ export function HolderGate() {
       setState("CHECKING")
       setMessage(
         access.state === "holder-check-pending"
-          ? "LIEND holdings could not be verified yet"
+          ? "STAYFI holdings could not be verified yet"
           : access.reason,
       )
       setFailed(true)
@@ -190,14 +190,14 @@ export function HolderGate() {
         <div className="holder-copy">
           <div className="section-kicker">HOLDER ACCESS</div>
           <h2>Enter the <span className="accent-text">utility layer</span></h2>
-          <p>LIEND utility is available after a connected wallet is verified</p>
+          <p>STAYFI utility is available after a connected wallet is verified</p>
 
           <div className="access-flow" aria-label="Access sequence">
             {[
-              ["01", "Obtain LIEND after migration", "Open the official Pump.fun destination"],
+              ["01", "Obtain STAYFI after migration", "Open the official Pump.fun destination"],
               ["02", "Connect a Solana wallet", "Use a standard wallet provider"],
               ["03", "Verify the position", "Read balance through the configured adapter"],
-              ["04", "Use LIEND utility", "Available after wallet verification"],
+              ["04", "Use STAYFI utility", "Available after wallet verification"],
             ].map(([index, title, copy]) => (
               <div key={index}>
                 <span>{index}</span>
@@ -209,7 +209,7 @@ export function HolderGate() {
 
           <PumpFunLink className="inline-link">
             <Icon name="pump-fun" size={18} />
-            Open LIEND on Pump.fun
+            Open STAYFI on Pump.fun
             <Icon name="external-link" size={14} />
           </PumpFunLink>
         </div>
@@ -221,7 +221,7 @@ export function HolderGate() {
 
           <div className="gate-identity">
             <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={128} height={128} unoptimized />
-            <div><span>REQUIRED POSITION</span><strong>Liend</strong></div>
+            <div><span>REQUIRED POSITION</span><strong>STAYFI</strong></div>
             <span className="network-chip">{project.network}</span>
           </div>
 
@@ -231,13 +231,13 @@ export function HolderGate() {
             <small>
               {state === "NOT CONNECTED"
                 ? "Resolved from the connected wallet"
-                : "Resolved from this wallet and its LIEND holdings"}
+                : "Resolved from this wallet and its STAYFI holdings"}
             </small>
           </div>
 
           <dl className={`gate-readout ${state === "CHECKING" && !failed ? "is-checking" : ""}`}>
             <div>
-              <dt><Icon name="liquidity" size={15} /> LIEND Balance</dt>
+              <dt><Icon name="liquidity" size={15} /> STAYFI Balance</dt>
               <dd>{state === "CHECKING" && !failed ? <span className="skeleton-line" /> : balanceLabel}</dd>
             </div>
             <div>
@@ -290,7 +290,7 @@ export function HolderGate() {
               Enter App <Icon name="arrow" size={17} />
             </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
-            <PumpFunLink className="button button--primary button--wide">Get LIEND <Icon name="external-link" size={15} /></PumpFunLink>
+            <PumpFunLink className="button button--primary button--wide">Get STAYFI <Icon name="external-link" size={15} /></PumpFunLink>
           ) : state === "WRONG NETWORK" ? (
             <button
               className="button button--primary button--wide"
@@ -306,7 +306,7 @@ export function HolderGate() {
             </button>
           ) : state === "CHECKING" && busy === "check" && !failed ? (
             <button className="button button--primary button--wide" type="button" disabled>
-              <span className="button-spinner" /> Checking LIEND Balance
+              <span className="button-spinner" /> Checking STAYFI Balance
             </button>
           ) : failed ? (
             <button className="button button--primary button--wide" type="button" onClick={retryCheck} disabled={busy !== null}>
@@ -318,7 +318,7 @@ export function HolderGate() {
             </button>
           )}
 
-          <p className="security-copy">LIEND never requests seed phrases, private keys or wallet passwords</p>
+          <p className="security-copy">STAYFI never requests seed phrases, private keys or wallet passwords</p>
         </div>
       </div>
     </section>

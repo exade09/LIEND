@@ -53,7 +53,7 @@ export async function GET(request: Request) {
   }
 
   return Response.json(
-    { state: "error", wallet, reason: "LIEND access could not be verified" },
+    { state: "error", wallet, reason: "STAYFI access could not be verified" },
     { headers: { "cache-control": "no-store" } },
   )
 }

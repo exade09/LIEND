@@ -25,7 +25,7 @@ function ConsoleChrome({ children }: { children: ReactNode }) {
       <div className={styles.windowBar}>
         <span className={styles.windowBrand}>
           <i aria-hidden="true" />
-          LIEND / SITE CONTROL
+          STAYFI / SITE CONTROL
         </span>
         <span className={styles.secure}>SECURE CHANNEL</span>
         <span className={styles.windowControls} aria-hidden="true">
@@ -187,7 +187,7 @@ export function AdminConsole() {
         <p className={styles.eyebrow}>TERMINAL OFFLINE</p>
         <h1 className={styles.title}>ADMIN NOT CONFIGURED</h1>
         <p className={styles.copy}>
-          Set <code>LIEND_ADMIN_PASSWORD</code> on this host, then reload the console.
+          Set the admin password environment variable on this host, then reload the console.
         </p>
       </ConsoleChrome>
     )

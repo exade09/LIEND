@@ -9,7 +9,7 @@ export function DocsArticle({ slug }: { slug: string }) {
   return (
     <div className={styles.shell}>
       <div className={styles.titlebar}>
-        <span>LIEND GitBook</span>
+        <span>STAYFI GitBook</span>
         <span>{page.kicker}</span>
       </div>
       <nav className={styles.nav} aria-label="Docs">

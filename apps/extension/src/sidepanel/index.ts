@@ -49,7 +49,7 @@ function renderHeader(snapshot: PanelSnapshot): HTMLElement {
   mark.alt = ""
   mark.width = 18
   mark.height = 18
-  brand.append(mark, document.createTextNode("Liend"))
+  brand.append(mark, document.createTextNode("STAYFI"))
   head.append(brand)
 
   const connected = snapshot.connection === "connected"
@@ -125,14 +125,14 @@ function render(snapshot: PanelSnapshot): void {
     el(
       "p",
       "muted",
-      "LIEND reads only the token address on supported pages. It never accesses wallet keys or your browsing history.",
+      "STAYFI reads only the token address on supported pages. It never accesses wallet keys or your browsing history.",
     ),
   )
   if (snapshot.connection === "connected") {
     foot.append(button("Disconnect this browser", "DISCONNECT", "quiet"))
   }
   const meta = el("div", "meta")
-  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "liend.app"))
+  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "STAYFI"))
   foot.append(meta)
 
   root.append(renderHeader(snapshot), body, foot)

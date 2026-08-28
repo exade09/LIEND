@@ -20,7 +20,7 @@ const steps: Array<{
   {
     number: "02",
     title: "VERIFY",
-    description: "LIEND reads wallet positions and supported markets",
+    description: "STAYFI reads wallet positions and supported markets",
     icon: "status",
   },
   {

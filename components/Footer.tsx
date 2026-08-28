@@ -20,9 +20,9 @@ export function Footer({ initialMint = null }: { initialMint?: string | null }) 
     <footer className="site-footer">
       <div className="site-footer__shell">
         <div className="site-footer__main">
-          <Link className="site-footer__brand" href="/" aria-label="Liend home">
+          <Link className="site-footer__brand" href="/" aria-label="STAYFI home">
             <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={64} height={64} unoptimized />
-            <span>Liend</span>
+            <span>STAYFI</span>
           </Link>
 
           <nav className="site-footer__nav" aria-label="Footer navigation">
@@ -33,12 +33,12 @@ export function Footer({ initialMint = null }: { initialMint?: string | null }) 
             ))}
           </nav>
 
-          <nav className="site-footer__social" aria-label="LIEND social links">
-            <ProductLink href={project.xUrl} aria-label="LIEND on X">
+          <nav className="site-footer__social" aria-label="STAYFI social links">
+            <ProductLink href={project.xUrl} aria-label="STAYFI on X">
               <Icon name="x" size={17} />
               <span>X</span>
             </ProductLink>
-            <PumpFunLink aria-label="LIEND on Pump.fun">
+            <PumpFunLink aria-label="STAYFI on Pump.fun">
               <Icon name="pump-fun" size={18} />
               <span>Pump.fun</span>
             </PumpFunLink>

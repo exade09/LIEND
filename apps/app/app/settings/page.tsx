@@ -34,7 +34,7 @@ export default function SettingsPage() {
         </div>
 
         <div className="panel">
-          <h2>LIEND utility access</h2>
+          <h2>STAYFI utility access</h2>
           <div className="row" style={{ marginTop: 8 }}>
             <UtilityBadge access={access} />
             <span className="muted">
@@ -48,7 +48,7 @@ export default function SettingsPage() {
         <div className="panel">
           <h2>Browser connections</h2>
           <p className="muted" style={{ marginTop: 6 }}>
-            Manage browsers paired with the LIEND extension.
+            Manage browsers paired with the STAYFI extension.
           </p>
           <p style={{ marginTop: 12 }}>
             <Link className="button button--ghost" href="/settings/devices">Manage devices</Link>
@@ -58,7 +58,7 @@ export default function SettingsPage() {
         <div className="panel">
           <h2>Security</h2>
           <p className="muted" style={{ marginTop: 6 }}>
-            LIEND is non-custodial. It never requests a seed phrase or private key, and never signs
+            STAYFI is non-custodial. It never requests a seed phrase or private key, and never signs
             a transaction without your explicit wallet approval.
           </p>
         </div>

@@ -22,7 +22,7 @@ export function CaPlaque({ variant, initialMint = null, live = true }: CaPlaqueP
     <article
       className={`${styles.plaque} ${styles[variant]}`}
       data-state={mint ? "live" : "waiting"}
-      aria-label="LIEND contract address"
+      aria-label="STAYFI contract address"
       title={mint ?? undefined}
     >
       <span className={styles.kicker}>CA:</span>

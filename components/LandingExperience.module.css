@@ -119,7 +119,7 @@
   overflow: hidden;
 }
 
-.headerCa :global([aria-label="LIEND contract address"]) {
+.headerCa :global([aria-label="STAYFI contract address"]) {
   width: 100%;
   min-width: 0;
   height: auto;
@@ -129,8 +129,8 @@
   box-shadow: none;
 }
 
-.headerCa :global([aria-label="LIEND contract address"] > span),
-.headerCa :global([aria-label="LIEND contract address"] > a) {
+.headerCa :global([aria-label="STAYFI contract address"] > span),
+.headerCa :global([aria-label="STAYFI contract address"] > a) {
   overflow: hidden;
   color: var(--ink);
   font-family: var(--font-silk), monospace;
@@ -139,7 +139,7 @@
   white-space: nowrap;
 }
 
-.headerCa :global([aria-label="LIEND contract address"] > span:first-child) {
+.headerCa :global([aria-label="STAYFI contract address"] > span:first-child) {
   color: var(--blue);
   font-size: 10px;
 }
@@ -1455,7 +1455,7 @@
   border-top: 1px solid rgba(255,255,255,.24);
 }
 
-.footerBottom :global([aria-label="LIEND contract address"]) {
+.footerBottom :global([aria-label="STAYFI contract address"]) {
   max-width: min(720px, 70vw);
   padding: 0;
   border: 0;
@@ -1463,8 +1463,8 @@
   box-shadow: none;
 }
 
-.footerBottom :global([aria-label="LIEND contract address"] > span),
-.footerBottom :global([aria-label="LIEND contract address"] > a) {
+.footerBottom :global([aria-label="STAYFI contract address"] > span),
+.footerBottom :global([aria-label="STAYFI contract address"] > a) {
   overflow: hidden;
   color: #fff;
   font-family: var(--font-silk), monospace;
@@ -1473,7 +1473,7 @@
   white-space: nowrap;
 }
 
-.footerBottom :global([aria-label="LIEND contract address"] > span:first-child) {
+.footerBottom :global([aria-label="STAYFI contract address"] > span:first-child) {
   color: var(--cyan);
   font-size: 11px;
 }
@@ -1620,7 +1620,7 @@
     padding: 0;
     transform: translateY(-50%);
   }
-  .headerCa :global([aria-label="LIEND contract address"]) { justify-content: flex-start; }
+  .headerCa :global([aria-label="STAYFI contract address"]) { justify-content: flex-start; }
   .menuButton {
     position: fixed;
     z-index: 80;
@@ -1731,7 +1731,7 @@
   .footerBrand strong { font-size: 22vw; }
   .footerLinks { gap: 22px; }
   .footerBottom { align-items: flex-start; flex-direction: column; gap: 18px; }
-  .footerBottom :global([aria-label="LIEND contract address"]) { max-width: 100%; }
+  .footerBottom :global([aria-label="STAYFI contract address"]) { max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1765,9 +1765,9 @@
   overflow: visible;
 }
 
-.headerCa :global([aria-label="LIEND contract address"]),
-.headerCa :global([aria-label="LIEND contract address"] > span),
-.headerCa :global([aria-label="LIEND contract address"] > a) {
+.headerCa :global([aria-label="STAYFI contract address"]),
+.headerCa :global([aria-label="STAYFI contract address"] > span),
+.headerCa :global([aria-label="STAYFI contract address"] > a) {
   overflow: visible;
   text-overflow: clip;
 }
@@ -2759,6 +2759,40 @@
   display: none;
 }
 
+.allIn.sceneWindow,
+.controlSection.sceneWindow,
+.finalCta.sceneWindow {
+  isolation: isolate;
+}
+
+.atmosphereBackdrop {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .4;
+  mix-blend-mode: normal;
+}
+
+.allIn.sceneWindow > .sectionIntro,
+.allIn.sceneWindow > .orbitScene,
+.controlSection.sceneWindow > .controlCopy,
+.controlSection.sceneWindow > .controlVisual {
+  position: relative;
+  z-index: 1;
+}
+
+.finalCta.sceneWindow > .finalCoin {
+  z-index: 1;
+}
+
+.finalCta.sceneWindow > .atmosphereBackdrop {
+  position: absolute;
+  opacity: .24;
+}
+
 @media (max-width: 720px) {
   .site main {
     padding-bottom: 8px;
@@ -3338,15 +3372,15 @@
   overflow: visible;
 }
 
-.headerCa :global([aria-label="LIEND contract address"]),
-.headerCa :global([aria-label="LIEND contract address"] > span),
-.headerCa :global([aria-label="LIEND contract address"] > a) {
+.headerCa :global([aria-label="STAYFI contract address"]),
+.headerCa :global([aria-label="STAYFI contract address"] > span),
+.headerCa :global([aria-label="STAYFI contract address"] > a) {
   overflow: visible;
   text-overflow: clip;
 }
 
-.headerCa :global([aria-label="LIEND contract address"] > a),
-.headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+.headerCa :global([aria-label="STAYFI contract address"] > a),
+.headerCa :global([aria-label="STAYFI contract address"] > span:last-child) {
   font-family: var(--font-plex), monospace;
   font-size: clamp(7px, .66vw, 10px);
   letter-spacing: -.035em;
@@ -3412,7 +3446,7 @@
   background-size: 180% 180%;
   object-fit: unset;
   font-family: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
-  font-size: clamp(132px, 18vw, 282px);
+  font-size: clamp(110px, 15vw, 235px);
   font-weight: 900;
   letter-spacing: -.115em;
   line-height: .72;
@@ -3478,8 +3512,8 @@
     padding-inline: 8px;
   }
 
-  .headerCa :global([aria-label="LIEND contract address"] > a),
-  .headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+  .headerCa :global([aria-label="STAYFI contract address"] > a),
+  .headerCa :global([aria-label="STAYFI contract address"] > span:last-child) {
     font-size: 7px;
     letter-spacing: -.055em;
   }
@@ -3491,7 +3525,7 @@
   }
 
   .heroWordmark .heroLetterSlot .heroLetter {
-    font-size: clamp(78px, 24vw, 112px);
+    font-size: clamp(66px, 20vw, 94px);
     -webkit-text-stroke-width: 2px;
     text-shadow: 0 3px 0 #3242bc, 0 6px 0 #273591, 0 12px 18px rgba(54, 55, 163, .2);
   }
@@ -3503,12 +3537,12 @@
 }
 
 @media (max-width: 480px) {
-  .headerCa :global([aria-label="LIEND contract address"]) {
+  .headerCa :global([aria-label="STAYFI contract address"]) {
     align-items: center;
   }
 
-  .headerCa :global([aria-label="LIEND contract address"] > a),
-  .headerCa :global([aria-label="LIEND contract address"] > span:last-child) {
+  .headerCa :global([aria-label="STAYFI contract address"] > a),
+  .headerCa :global([aria-label="STAYFI contract address"] > span:last-child) {
     overflow-wrap: anywhere;
     font-size: 7px;
     letter-spacing: -.04em;

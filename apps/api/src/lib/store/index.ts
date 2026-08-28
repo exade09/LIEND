@@ -27,7 +27,7 @@ export class PersistenceUnavailableError extends Error {
   constructor() {
     super(
       "No durable persistence is configured. Set DATABASE_URL to a Postgres " +
-        "connection string before running the LIEND API in production.",
+        "connection string before running the STAYFI API in production.",
     )
     this.name = "PersistenceUnavailableError"
   }

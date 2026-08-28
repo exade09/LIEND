@@ -138,7 +138,7 @@ export function AddToChromeBadge({ className }: { className?: string }) {
       className={["chrome-badge", className].filter(Boolean).join(" ")}
       href={href}
       {...(isArchive ? { download: "liend-extension.zip" } : { target: "_blank", rel: "noreferrer" })}
-      aria-label="Add LIEND to Chrome"
+      aria-label="Add STAYFI to Chrome"
     >
       <ChromeMark />
       <span>Add to Chrome</span>
@@ -159,7 +159,7 @@ function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) 
     "Open chrome://extensions",
     "Enable Developer mode",
     "Choose Load unpacked",
-    "Select the extracted LIEND folder",
+    "Select the extracted STAYFI folder",
   ]
 
   return (
@@ -167,12 +167,12 @@ function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) 
       className="install-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label="Install the LIEND extension"
+      aria-label="Install the STAYFI extension"
       onClick={onClose}
     >
       <div className="install-panel" onClick={(event) => event.stopPropagation()}>
         <div className="install-panel__head">
-          <span>Install LIEND</span>
+          <span>Install STAYFI</span>
           <button type="button" onClick={onClose} aria-label="Close">
             <Icon name="close" size={18} />
           </button>
@@ -193,7 +193,7 @@ function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) 
         </a>
 
         <p className="install-note">
-          LIEND is not yet on the Chrome Web Store, so this installs in developer mode.
+          STAYFI is not yet on the Chrome Web Store, so this installs in developer mode.
         </p>
       </div>
     </div>

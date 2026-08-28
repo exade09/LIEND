@@ -47,7 +47,7 @@ describe("base58Decode", () => {
 describe("verifyWalletSignature", () => {
   it("accepts a genuine signature over the exact message", () => {
     const { address, privateKey } = makeWallet()
-    const message = "LIEND authentication\nNonce: abc"
+    const message = "STAYFI authentication\nNonce: abc"
     const signature = nodeSign(null, Buffer.from(message, "utf8"), privateKey).toString("base64")
     expect(verifyWalletSignature(address, message, signature)).toBe(true)
   })
@@ -61,7 +61,7 @@ describe("verifyWalletSignature", () => {
   it("rejects a signature from a different wallet", () => {
     const alice = makeWallet()
     const bob = makeWallet()
-    const message = "LIEND authentication"
+    const message = "STAYFI authentication"
     const signature = nodeSign(null, Buffer.from(message, "utf8"), alice.privateKey).toString("base64")
     expect(verifyWalletSignature(bob.address, message, signature)).toBe(false)
   })

@@ -4,9 +4,9 @@ import { project } from "@/config/project";
 
 const questions = [
   {
-    question: "What is LIEND",
+    question: "What is STAYFI",
     answer:
-      "LIEND is a utility layer for borrowing against supported migrated token positions on Solana",
+      "STAYFI is a utility layer for borrowing against supported migrated token positions on Solana",
   },
   {
     question: "Why would I borrow instead of sell",
@@ -21,16 +21,16 @@ const questions = [
   {
     question: "Which tokens are supported",
     answer:
-      "Support depends on available liquidity, market conditions and active LIEND parameters",
+      "Support depends on available liquidity, market conditions and active STAYFI parameters",
   },
   {
-    question: "Do I need LIEND to use the platform",
-    answer: "LIEND utility is available after a connected wallet is verified",
+    question: "Do I need STAYFI to use the platform",
+    answer: "STAYFI utility is available after a connected wallet is verified",
   },
   {
-    question: "Where can I get LIEND",
+    question: "Where can I get STAYFI",
     answer:
-      "LIEND can be accessed through the official Pump.fun link available on the website",
+      "STAYFI can be accessed through the official Pump.fun link available on the website",
   },
   {
     question: "What can I borrow",
@@ -44,7 +44,7 @@ const questions = [
   {
     question: "How is collateral valued",
     answer:
-      "LIEND can use onchain market and liquidity information when evaluating supported positions",
+      "STAYFI can use onchain market and liquidity information when evaluating supported positions",
   },
   {
     question: "Are transactions visible onchain",
@@ -54,17 +54,17 @@ const questions = [
   {
     question: "Can I inspect the complete route",
     answer:
-      "Yes, LIEND provides a detailed transaction trace for supported activity",
+      "Yes, STAYFI provides a detailed transaction trace for supported activity",
   },
   {
-    question: "Does LIEND include swaps",
+    question: "Does STAYFI include swaps",
     answer:
       "The platform architecture includes swap routing for flows where an exchange step is required",
   },
   {
     question: "Where can I read the documentation",
     answer:
-      "The Docs control in the header opens the LIEND GitBook",
+      "The Docs control in the header opens the STAYFI GitBook",
     link: true,
   },
 ] as const;

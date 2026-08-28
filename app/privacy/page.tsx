@@ -2,34 +2,34 @@ import type { Metadata } from "next"
 import styles from "./privacy.module.css"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Liend",
+  title: "Privacy Policy | STAYFI",
   description:
-    "How the Liend Chrome extension and related Liend surfaces handle data on supported Solana token pages.",
+    "How the STAYFI Chrome extension and related STAYFI surfaces handle data on supported Solana token pages.",
 }
 
 export default function PrivacyPage() {
   return (
     <div className={styles.shell}>
       <div className={styles.titlebar}>
-        <span>Liend</span>
+        <span>STAYFI</span>
         <span>Privacy</span>
       </div>
       <article className={styles.article}>
         <p className={styles.kicker}>Chrome extension</p>
         <h1>Privacy Policy</h1>
         <p className={styles.lede}>
-          Last updated 20 August 2026. This policy covers the Liend Chrome extension
-          and how it talks to the Liend App and Liend API.
+          Last updated 20 August 2026. This policy covers the STAYFI Chrome extension
+          and how it talks to the STAYFI App and STAYFI API.
         </p>
 
         <section className={styles.section}>
-          <h2>What Liend is</h2>
+          <h2>What STAYFI is</h2>
           <p>
-            Liend is a utility layer for supported migrated token positions on Solana.
+            STAYFI is a utility layer for supported migrated token positions on Solana.
             The Chrome extension adds liquidity context on supported token pages. It
             currently runs on pump.fun coin pages. It is not a wallet, not a trading
             bot, and not a sniper. It does not sign transactions. Signing stays in the
-            Liend App with the user&apos;s own wallet.
+            STAYFI App with the user&apos;s own wallet.
           </p>
         </section>
 
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               A device identifier and a device credential in Chrome local storage after
-              you pair this browser with the Liend App. Those let the extension mint a
+              you pair this browser with the STAYFI App. Those let the extension mint a
               short-lived access token. They are not a seed phrase, private key, or
               wallet password.
             </li>
@@ -78,15 +78,15 @@ export default function PrivacyPage() {
         <section className={styles.section}>
           <h2>Where data goes</h2>
           <p>
-            Pairing and session requests go only to the Liend API origin baked into
+            Pairing and session requests go only to the STAYFI API origin baked into
             the extension at build time. The extension does not load remote JavaScript
             or Wasm. All extension scripts ship inside the Chrome Web Store package.
           </p>
           <p>
-            Liend does not sell this data. It is not used to determine creditworthiness
+            STAYFI does not sell this data. It is not used to determine creditworthiness
             or for lending decisions about you as a person. It is not used for purposes
             unrelated to showing liquidity context and connecting this browser to the
-            Liend App.
+            STAYFI App.
           </p>
         </section>
 
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
           <p>
             Device credentials stay in chrome.storage.local so pairing survives a
             browser restart. Access tokens stay in chrome.storage.session and expire
-            after about one hour. You can disconnect this browser in the Liend App
+            after about one hour. You can disconnect this browser in the STAYFI App
             under Settings, Browser connections. That revokes the credential. You can
             also remove the extension in Chrome, which deletes local extension storage.
           </p>
@@ -104,9 +104,9 @@ export default function PrivacyPage() {
         <section className={styles.section}>
           <h2>Contact</h2>
           <p>
-            Questions about this policy: use Liend App Settings to manage or revoke
-            this browser, or write through the Liend presence on this site. The
-            public policy URL is /privacy on the Liend website.
+            Questions about this policy: use STAYFI App Settings to manage or revoke
+            this browser, or write through the STAYFI presence on this site. The
+            public policy URL is /privacy on the STAYFI website.
           </p>
         </section>
       </article>

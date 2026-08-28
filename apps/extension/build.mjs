@@ -34,7 +34,7 @@ const API_URL = (process.env.LIEND_API_URL ?? "").trim()
 
 if (!APP_URL || !API_URL) {
   console.warn(
-    "[liend] WARNING: LIEND_APP_URL / LIEND_API_URL not set.\n" +
+    "[stayfi] WARNING: app/API origins are not set.\n" +
       "         The extension will build but render a 'not configured' state.\n" +
       "         Set both and rebuild before distributing.",
   )
@@ -49,13 +49,13 @@ if (!APP_URL || !API_URL) {
  */
 const manifest = {
   manifest_version: 3,
-  name: "LIEND",
+  name: "STAYFI",
   version: VERSION,
   description: "Liquidity context for supported Solana token pages.",
   minimum_chrome_version: "116",
   icons: { 16: "icons/icon16.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   action: {
-    default_title: "LIEND",
+    default_title: "STAYFI",
     default_icon: { 16: "icons/icon16.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   },
   background: { service_worker: "background.js", type: "module" },
@@ -163,10 +163,10 @@ async function zip() {
 
 await bundle()
 const files = await listFiles(dist)
-console.log(`[liend] built ${files.length} files into dist/`)
+console.log(`[stayfi] built ${files.length} files into dist/`)
 for (const file of files) console.log(`        ${file}`)
 
 if (process.argv.includes("--zip")) {
   const target = await zip()
-  console.log(`[liend] packaged ${path.relative(root, target)}`)
+  console.log(`[stayfi] packaged ${path.relative(root, target)}`)
 }

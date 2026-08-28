@@ -16,16 +16,16 @@ export const docsPages: DocsPage[] = [
   {
     slug: "",
     href: "/docs",
-    title: "LIEND Docs",
+    title: "STAYFI Docs",
     kicker: "GitBook",
-    summary: "Product documentation for the LIEND utility layer on Solana.",
+    summary: "Product documentation for the STAYFI utility layer on Solana.",
     sections: [
       {
-        heading: "What LIEND is",
+        heading: "What STAYFI is",
         body: [
-          "LIEND is a utility layer for borrowing against supported migrated token positions on Solana.",
+          "STAYFI is a utility layer for borrowing against supported migrated token positions on Solana.",
           "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as SOL.",
-          "The landing, the LIEND App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
+          "The landing, the STAYFI App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains.",
         ],
       },
       {
@@ -39,8 +39,8 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Who it is for",
         body: [
-          "LIEND is for holders of supported migrated tokens who want a second route besides selling.",
-          "A verified wallet can use LIEND utility. When a mint and minimum balance are published, the App and API apply that holder check.",
+          "STAYFI is for holders of supported migrated tokens who want a second route besides selling.",
+          "A verified wallet can use STAYFI utility. When a mint and minimum balance are published, the App and API apply that holder check.",
         ],
       },
     ],
@@ -48,29 +48,29 @@ export const docsPages: DocsPage[] = [
   {
     slug: "token",
     href: "/docs/token",
-    title: "LIEND token",
+    title: "STAYFI token",
     kicker: "Access",
     summary: "How the token, Pump.fun and holder access fit together.",
     sections: [
       {
         heading: "Token status",
         body: [
-          "The LIEND token is not launched yet. There is no mint in product config and no published holder threshold.",
+          "The STAYFI token is not launched yet. There is no mint in product config and no published holder threshold.",
           "The Pump.fun buttons follow the published CA from the admin console. Empty CA opens the public board at https://pump.fun. Published text opens https://pump.fun/coin/ followed by that same text.",
         ],
       },
       {
         heading: "Holder access",
         body: [
-          "LIEND utility is available after a connected wallet is verified.",
+          "STAYFI utility is available after a connected wallet is verified.",
           "When a mint and minimum balance are published, the App and API check wallet holdings against those values.",
         ],
       },
       {
-        heading: "Where to get LIEND",
+        heading: "Where to get STAYFI",
         body: [
           "The official acquisition path is Pump.fun. Use the Pump.fun control in the header. Do not follow unofficial ticker pages.",
-          "LIEND never asks for a seed phrase, a private key or a wallet password.",
+          "STAYFI never asks for a seed phrase, a private key or a wallet password.",
         ],
       },
     ],
@@ -85,14 +85,14 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Connect",
         body: [
-          "A user connects a Solana wallet through a standard wallet provider. LIEND asks for a plain-text signature to prove control of the address.",
+          "A user connects a Solana wallet through a standard wallet provider. STAYFI asks for a plain-text signature to prove control of the address.",
           "That signature creates no transaction and costs no fees.",
         ],
       },
       {
         heading: "Verify",
         body: [
-          "LIEND reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet.",
+          "STAYFI reads wallet positions and supported markets through the configured adapter. No seed material leaves the wallet.",
         ],
       },
       {
@@ -118,14 +118,14 @@ export const docsPages: DocsPage[] = [
   {
     slug: "app",
     href: "/docs/app",
-    title: "LIEND App",
+    title: "STAYFI App",
     kicker: "Product",
     summary: "The wallet-connected surface for positions, pairing and settings.",
     sections: [
       {
         heading: "Launch App",
         body: [
-          "Launch App in the header opens the LIEND App origin. The App talks to the LIEND API for auth, sessions and extension pairing.",
+          "Launch App in the header opens the STAYFI App origin. The App talks to the STAYFI API for auth, sessions and extension pairing.",
         ],
       },
       {
@@ -138,7 +138,7 @@ export const docsPages: DocsPage[] = [
         heading: "Pairing the extension",
         body: [
           "A signed-in user can approve a pairing request from the Chrome extension. Approval binds the device to that wallet.",
-          "The device credential is shown once. LIEND stores only a hash. Revoking a device in settings invalidates sessions derived from it.",
+          "The device credential is shown once. STAYFI stores only a hash. Revoking a device in settings invalidates sessions derived from it.",
         ],
       },
       {
@@ -160,7 +160,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Install",
         body: [
-          "LIEND is not on the Chrome Web Store yet. Add to Chrome downloads a packed archive. Load it unpacked from chrome://extensions with Developer mode enabled.",
+          "STAYFI is not on the Chrome Web Store yet. Add to Chrome downloads a packed archive. Load it unpacked from chrome://extensions with Developer mode enabled.",
         ],
       },
       {
@@ -173,7 +173,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Pairing",
         body: [
-          "The extension pairs through the LIEND App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key.",
+          "The extension pairs through the STAYFI App. After pairing, short-lived API sessions let the side panel read status without storing the wallet key.",
         ],
       },
     ],
@@ -188,7 +188,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Non-custodial",
         body: [
-          "LIEND never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet.",
+          "STAYFI never takes custody of keys. Authentication is a signed message. Execution, when it exists, is a user-approved transaction from the connected wallet.",
         ],
       },
       {
@@ -206,7 +206,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Truthful empty states",
         body: [
-          "If the API, the App origin or the database is missing, the UI says so. LIEND does not invent a mint, a holder threshold or a Pump.fun coin page.",
+          "If the API, the App origin or the database is missing, the UI says so. STAYFI does not invent a mint, a holder threshold or a Pump.fun coin page.",
         ],
       },
     ],

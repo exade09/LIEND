@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 
 import { ActivityTape } from "@/components/ActivityTape"
+import { AtmosphereBackdrop } from "@/components/AtmosphereBackdrop"
 import { CaPlaque } from "@/components/CaPlaque"
 import { AddToChromeBadge, LaunchAppLink, ProductLink } from "@/components/ProductLink"
 import { PhoneShowcase } from "@/components/PhoneShowcase"
@@ -27,19 +28,19 @@ type TransitionScene = {
   snapshotScale: number
 }
 
-const heroLetters = ["L", "i", "e", "n", "d"] as const
+const heroLetters = ["S", "T", "A", "Y", "F", "I"] as const
 
 const routeSteps = [
-  { number: "01", title: "Read the position", body: "LIEND reads supported migrated token balances from the connected Solana wallet", badge: "Wallet context" },
+  { number: "01", title: "Read the position", body: "STAYFI reads supported migrated token balances from the connected Solana wallet", badge: "Wallet context" },
   { number: "02", title: "Review the route", body: "The interface shows available liquidity, collateral context and the terms before anything is submitted", badge: "Clear terms" },
   { number: "03", title: "Borrow SOL", body: "Approve the prepared transaction and keep the underlying position while accessing SOL liquidity", badge: "Direct execution" },
 ] as const
 
 const faqs = [
-  { question: "What is LIEND", answer: "LIEND is a utility interface for borrowing against supported migrated token positions on Solana" },
+  { question: "What is STAYFI", answer: "STAYFI is a utility interface for borrowing against supported migrated token positions on Solana" },
   { question: "Why borrow instead of sell", answer: "Borrowing can provide liquidity while maintaining exposure to the underlying position, subject to collateral and liquidation risk" },
-  { question: "What does the Chrome extension do", answer: "The extension adds a compact LIEND surface to the browser and pairs with the web app for supported account actions" },
-  { question: "Where can I review a transaction", answer: "LIEND presents the route and terms before wallet approval, and published transactions can be inspected on Solscan" },
+  { question: "What does the Chrome extension do", answer: "The extension adds a compact STAYFI surface to the browser and pairs with the web app for supported account actions" },
+  { question: "Where can I review a transaction", answer: "STAYFI presents the route and terms before wallet approval, and published transactions can be inspected on Solscan" },
 ] as const
 
 function PixelSprite({ kind, className = "" }: { kind: "key" | "coin" | "wallet"; className?: string }) {
@@ -113,7 +114,7 @@ function HeroArtifacts() {
 
       <span className={`${styles.heroArtifact} ${styles.vectorCoin}`}>
         <i className={styles.coinRim} />
-        <b>L</b>
+        <b>S</b>
         <i className={styles.coinGlint} />
       </span>
 
@@ -122,7 +123,7 @@ function HeroArtifacts() {
         <i className={styles.walletCardMid} />
         <span className={styles.walletFace}>
           <i className={styles.walletSignal} />
-          <b>LIEND</b>
+          <b>STAYFI</b>
           <i className={styles.walletClasp}><span /></i>
         </span>
       </span>
@@ -365,9 +366,9 @@ export function LandingExperience() {
       )}
 
       <header className={styles.header}>
-        <a className={styles.brand} href="#top" aria-label="LIEND home" onClick={(event) => routeToSection(event, "#top", "blue")}>
+        <a className={styles.brand} href="#top" aria-label="STAYFI home" onClick={(event) => routeToSection(event, "#top", "blue")}>
           <DropletMark />
-          <span>LIEND</span>
+          <span>STAYFI</span>
         </a>
         <nav className={styles.nav} aria-label="Primary navigation">
           {navigation.map((item) => (
@@ -395,7 +396,7 @@ export function LandingExperience() {
               <span>0{index + 1}</span>{item.label}
             </a>
           ))}
-          <LaunchAppLink className={styles.mobileLaunch} onClick={() => setMenuOpen(false)}><MotionLabel>Enter LIEND</MotionLabel></LaunchAppLink>
+          <LaunchAppLink className={styles.mobileLaunch} onClick={() => setMenuOpen(false)}><MotionLabel>Enter STAYFI</MotionLabel></LaunchAppLink>
         </div>
       </header>
       <button className={styles.menuButton} type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
@@ -407,8 +408,8 @@ export function LandingExperience() {
           <div className={styles.heroGrid} aria-hidden="true" />
           <HeroArtifacts />
           <div className={styles.heroCopy}>
-            <h1 className={styles.heroWordmark} id="hero-title" aria-label="LIEND" data-intro="wordmark">
-              <span className={styles.srOnly}>LIEND</span>
+            <h1 className={styles.heroWordmark} id="hero-title" aria-label="STAYFI" data-intro="wordmark">
+              <span className={styles.srOnly}>STAYFI</span>
               {heroLetters.map((letter, index) => (
                 <span
                   className={styles.heroLetterSlot}
@@ -432,7 +433,7 @@ export function LandingExperience() {
           </div>
         </section>
 
-        <div className={styles.marquee} aria-label="LIEND product summary">
+        <div className={styles.marquee} aria-label="STAYFI product summary">
           <div>
             <span>KEEP THE POSITION</span><i /><span>ACCESS LIQUIDITY</span><i /><span>REVIEW EVERY ROUTE</span><i />
             <span>KEEP THE POSITION</span><i /><span>ACCESS LIQUIDITY</span><i /><span>REVIEW EVERY ROUTE</span>
@@ -440,16 +441,17 @@ export function LandingExperience() {
         </div>
 
         <section className={`${styles.allIn} ${styles.sceneWindow}`} id="product">
+          <AtmosphereBackdrop className={styles.atmosphereBackdrop} tone={0} />
           <div className={styles.sectionIntro} data-liend-reveal>
             <p className={styles.eyebrow}>A focused utility layer</p>
             <RevealHeadline lines={["Your position", "stays in view"]} />
-            <p>Wallet context, borrow terms and transaction review live in one continuous LIEND route</p>
+            <p>Wallet context, borrow terms and transaction review live in one continuous STAYFI route</p>
           </div>
           <div className={styles.orbitScene} data-liend-reveal>
             <div className={styles.orbit} aria-hidden="true"><span /><span /><span /></div>
             <PixelSprite kind="coin" className={styles.orbitCoin} />
             <div className={styles.routeWindow}>
-              <header><span>LIEND / POSITION ROUTE</span><i>LIVE</i></header>
+              <header><span>STAYFI / POSITION ROUTE</span><i>LIVE</i></header>
               <div className={styles.routeBalance}>
                 <small>Available liquidity</small><strong>Ready when connected</strong><span>Calculated from supported wallet positions</span>
               </div>
@@ -463,7 +465,7 @@ export function LandingExperience() {
         <section className={`${styles.routeSection} ${styles.sceneWindow}`} id="route">
           <div className={styles.routeSticky}>
             <div className={styles.routeHeading} data-liend-reveal>
-              <p className={styles.eyebrow}>The LIEND route</p>
+              <p className={styles.eyebrow}>The STAYFI route</p>
               <RevealHeadline lines={["Liquidity without", "making a sale", "the first move"]} />
               <p>A legible path from a supported wallet position to a reviewed SOL borrow</p>
             </div>
@@ -489,7 +491,7 @@ export function LandingExperience() {
           </div>
           <div className={styles.demoStage} data-liend-reveal>
             <div className={styles.demoToolbar}>
-              <span><DropletMark /> LIEND APP</span>
+              <span><DropletMark /> STAYFI APP</span>
               <nav><i data-active="true">Overview</i><i>Positions</i><i>Loans</i></nav>
               <b>Connect wallet</b>
             </div>
@@ -513,7 +515,7 @@ export function LandingExperience() {
 
         <section className={`${styles.surfaces} ${styles.sceneWindow}`} id="surfaces-grid">
           <div className={styles.surfacesTitle} data-liend-reveal>
-            <p className={styles.eyebrow}>LIEND where you need it</p><RevealHeadline lines={["One utility", "Three surfaces"]} />
+            <p className={styles.eyebrow}>STAYFI where you need it</p><RevealHeadline lines={["One utility", "Three surfaces"]} />
           </div>
           <div className={styles.surfaceGrid}>
             <article className={styles.surfaceCard} data-tone="blue" data-liend-reveal>
@@ -524,15 +526,15 @@ export function LandingExperience() {
             </article>
             <article className={styles.surfaceCard} data-tone="lime" data-liend-reveal>
               <div className={styles.extensionMock}>
-                <header><DropletMark /> LIEND</header>
-                <div><span>Position</span><strong>Ready</strong></div><button type="button">Open LIEND</button>
+                <header><DropletMark /> STAYFI</header>
+                <div><span>Position</span><strong>Ready</strong></div><button type="button">Open STAYFI</button>
               </div>
               <span>02 / CHROME</span><h3>Utility in the browser</h3>
-              <p>Pair the extension with LIEND and keep the route close to the page</p>
+              <p>Pair the extension with STAYFI and keep the route close to the page</p>
               <AddToChromeBadge className={styles.textLink} />
             </article>
             <article className={styles.surfaceCard} data-tone="violet" data-liend-reveal>
-              <div className={styles.docsArt} aria-hidden="true"><span>LIEND</span><span>ROUTES</span><span>RISK</span></div>
+              <div className={styles.docsArt} aria-hidden="true"><span>STAYFI</span><span>ROUTES</span><span>RISK</span></div>
               <span>03 / DOCS</span><h3>Read before routing</h3>
               <p>Understand the product flow, collateral context and interface states</p>
               <ProductLink className={styles.textLink} href={project.docsUrl}>Read docs ↗</ProductLink>
@@ -541,10 +543,11 @@ export function LandingExperience() {
         </section>
 
         <section className={`${styles.controlSection} ${styles.sceneWindow}`}>
+          <AtmosphereBackdrop className={styles.atmosphereBackdrop} tone={0.45} />
           <div className={styles.controlCopy} data-liend-reveal>
             <p className={styles.eyebrow}>Designed for control</p><RevealHeadline lines={["Nothing moves", "until you approve it"]} />
-            <p>LIEND keeps route context, terms and wallet approval in the same visual flow</p>
-            <LaunchAppLink className={styles.lightButton}><MotionLabel>Enter LIEND</MotionLabel></LaunchAppLink>
+            <p>STAYFI keeps route context, terms and wallet approval in the same visual flow</p>
+            <LaunchAppLink className={styles.lightButton}><MotionLabel>Enter STAYFI</MotionLabel></LaunchAppLink>
           </div>
           <div className={styles.controlVisual} data-liend-reveal>
             <div className={styles.approvalCard}>
@@ -572,6 +575,7 @@ export function LandingExperience() {
         </section>
 
         <section className={`${styles.finalCta} ${styles.sceneWindow}`}>
+          <AtmosphereBackdrop className={styles.atmosphereBackdrop} tone={1} />
           <div className={styles.finalFluid} aria-hidden="true"><Image src="/assets/liend-final-material-v2.png" alt="" fill sizes="100vw" /></div>
           <PixelSprite kind="coin" className={styles.finalCoin} />
           <p className={styles.eyebrow}>Your position has another route</p>
@@ -582,7 +586,7 @@ export function LandingExperience() {
 
       <footer className={styles.footer}>
         <div className={styles.footerBrand}>
-          <DropletMark /><strong>LIEND</strong><p>Utility liquidity for supported migrated token positions on Solana</p>
+          <DropletMark /><strong>STAYFI</strong><p>Utility liquidity for supported migrated token positions on Solana</p>
         </div>
         <div className={styles.footerLinks}>
           <div>
@@ -598,7 +602,7 @@ export function LandingExperience() {
             <a className={styles.footerNavLink} href="#faq">FAQ</a>
           </div>
         </div>
-        <div className={styles.footerBottom}><CaPlaque variant="footer" /><span>LIEND / SOLANA / 2026</span></div>
+        <div className={styles.footerBottom}><CaPlaque variant="footer" /><span>STAYFI / SOLANA / 2026</span></div>
       </footer>
     </div>
   )

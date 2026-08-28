@@ -44,7 +44,7 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
   if (!apiConfigured) {
     return (
       <div className="notice">
-        <strong>LIEND API not configured</strong>
+        <strong>STAYFI API not configured</strong>
         <p>
           Set <code className="mono">NEXT_PUBLIC_API_URL</code> for this deployment to enable
           account and utility features.
@@ -53,13 +53,13 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (loading) return <div className="empty">Loading your LIEND access…</div>
+  if (loading) return <div className="empty">Loading your STAYFI access…</div>
 
   if (!authenticated) {
     return (
       <div className="notice">
         <strong>Connect a wallet</strong>
-        <p>Connect and verify a Solana wallet to see your LIEND utility access.</p>
+        <p>Connect and verify a Solana wallet to see your STAYFI utility access.</p>
         <p style={{ marginTop: 12 }}>
           <Link className="button button--primary" href="/auth">
             Connect wallet
@@ -75,15 +75,15 @@ export function UtilityGate({ children }: { children: React.ReactNode }) {
     <div className="notice">
       <strong>{describeUtilityAccess(access)}</strong>
       {access.state === "holder-check-pending" ? (
-        <p>Your LIEND balance could not be verified yet. This does not mean you are ineligible.</p>
+        <p>Your STAYFI balance could not be verified yet. This does not mean you are ineligible.</p>
       ) : access.state === "not-eligible" ? (
         <p>
           {access.required === null
-            ? "The required LIEND balance has not been published yet."
-            : "Acquire the required LIEND balance to unlock utility for this wallet."}
+            ? "The required STAYFI balance has not been published yet."
+            : "Acquire the required STAYFI balance to unlock utility for this wallet."}
         </p>
       ) : (
-        <p>LIEND access could not be verified. Try again shortly.</p>
+        <p>STAYFI access could not be verified. Try again shortly.</p>
       )}
     </div>
   )

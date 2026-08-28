@@ -23,7 +23,7 @@ export function POST(request: Request) {
     const nonce = randomId()
     const issuedAt = new Date().toISOString()
     const message = [
-      "LIEND authentication",
+      "STAYFI authentication",
       "",
       "Sign this message to prove you control this wallet.",
       "This request will not create a transaction and costs no fees.",

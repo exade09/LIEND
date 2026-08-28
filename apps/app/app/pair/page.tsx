@@ -86,12 +86,12 @@ function PairPageInner() {
       <header className="page-head">
         <div>
           <h1>Connect browser</h1>
-          <p>Approve the LIEND extension for this browser</p>
+          <p>Approve the STAYFI extension for this browser</p>
         </div>
       </header>
 
       {!apiConfigured ? (
-        <div className="empty">The LIEND API is not configured for this deployment.</div>
+        <div className="empty">The STAYFI API is not configured for this deployment.</div>
       ) : loading ? (
         <div className="empty">Loading…</div>
       ) : !authenticated ? (
@@ -116,7 +116,7 @@ function PairPageInner() {
           <strong>{result === "approved" ? "Browser connected" : "Request rejected"}</strong>
           <p>
             {result === "approved"
-              ? "You can return to the LIEND extension."
+              ? "You can return to the STAYFI extension."
               : "This pairing request was rejected and cannot be reused."}
           </p>
         </div>
@@ -134,7 +134,7 @@ function PairPageInner() {
           <div className="notice">
             <strong>Check the code matches</strong>
             <p>
-              Approve only if this code is identical to the one shown in your LIEND extension. If
+              Approve only if this code is identical to the one shown in your STAYFI extension. If
               it differs, reject this request.
             </p>
           </div>

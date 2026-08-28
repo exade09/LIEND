@@ -93,7 +93,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     try {
       response = await doFetch(`${root}${path}`, { ...init, headers, credentials })
     } catch {
-      throw new LiendApiError("internal", "Could not reach the LIEND API", 0)
+      throw new LiendApiError("internal", "Could not reach the STAYFI API", 0)
     }
 
     const text = await response.text()
@@ -102,7 +102,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
       try {
         body = JSON.parse(text)
       } catch {
-        throw new LiendApiError("internal", "Malformed response from the LIEND API", response.status)
+        throw new LiendApiError("internal", "Malformed response from the STAYFI API", response.status)
       }
     }
 
@@ -122,7 +122,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     const parsed = schema.safeParse(body)
     if (!parsed.success) {
       // Contract drift is an error, not something to render partially.
-      throw new LiendApiError("internal", "Unexpected response shape from the LIEND API", response.status)
+      throw new LiendApiError("internal", "Unexpected response shape from the STAYFI API", response.status)
     }
     return parsed.data
   }

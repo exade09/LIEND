@@ -18,7 +18,7 @@ export default function DashboardPage() {
         <div>
           <p className="eyebrow">Overview</p>
           <h1>Dashboard</h1>
-          <p>Your LIEND position and utility status</p>
+          <p>Your STAYFI position and utility status</p>
         </div>
         <div className="page-head__actions">
           {!loading && <UtilityBadge access={access} />}

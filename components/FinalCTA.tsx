@@ -29,7 +29,7 @@ export function FinalCTA() {
           <ExtensionCta className="button button--secondary" />
         </div>
 
-        <nav className={styles.links} aria-label="LIEND external links">
+        <nav className={styles.links} aria-label="STAYFI external links">
           <PumpFunLink>
             <Icon name="pump-fun" size={17} />
             Pump.fun

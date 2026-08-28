@@ -66,7 +66,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const fail = useCallback((caught: unknown) => {
-    setError(caught instanceof Error ? caught.message : "Could not reach the LIEND API")
+    setError(caught instanceof Error ? caught.message : "Could not reach the STAYFI API")
     setAccess({ state: "error", wallet: null, reason: "API unavailable" })
   }, [])
 

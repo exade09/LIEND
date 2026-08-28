@@ -83,7 +83,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     context: null,
     utility: { state: "unknown" },
     loading: false,
-    error: isConfigured() ? null : "LIEND is not configured in this build",
+    error: isConfigured() ? null : "STAYFI is not configured in this build",
     version: VERSION,
   }
 
@@ -131,7 +131,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     const response = await apiFetch("/api/utility-access")
     if (!response) return { ...base, connection: "session-expired" }
     if (response.status === 401) return { ...base, connection: "session-expired" }
-    if (!response.ok) return { ...base, error: "LIEND data is unavailable" }
+    if (!response.ok) return { ...base, error: "STAYFI data is unavailable" }
 
     const dto = (await response.json()) as UtilityDto
     switch (dto.state) {
@@ -154,7 +154,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     if (error instanceof DeviceRevokedError) {
       return { ...base, connection: "disconnected", error: "This browser connection was revoked" }
     }
-    return { ...base, error: "Could not reach the LIEND API" }
+    return { ...base, error: "Could not reach the STAYFI API" }
   }
 
   return base

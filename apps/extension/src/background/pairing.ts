@@ -111,7 +111,7 @@ export async function awaitApproval(
       if (!response.ok) throw new Error("lookup failed")
       status = String((await response.json()).status)
     } catch {
-      return { outcome: "error", message: "Could not reach the LIEND API" }
+      return { outcome: "error", message: "Could not reach the STAYFI API" }
     }
 
     if (status === "rejected") {

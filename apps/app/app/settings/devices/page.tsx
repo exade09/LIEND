@@ -65,7 +65,7 @@ export default function DevicesPage() {
       <header className="page-head">
         <div>
           <h1>Browser connections</h1>
-          <p>Browsers paired with the LIEND extension</p>
+          <p>Browsers paired with the STAYFI extension</p>
         </div>
       </header>
 
@@ -77,14 +77,14 @@ export default function DevicesPage() {
       )}
 
       {!apiConfigured ? (
-        <div className="empty">The LIEND API is not configured for this deployment.</div>
+        <div className="empty">The STAYFI API is not configured for this deployment.</div>
       ) : !authenticated ? (
         <div className="empty">Connect a wallet to see paired browsers.</div>
       ) : devices === null ? (
         <div className="empty">Loading…</div>
       ) : devices.length === 0 ? (
         <div className="empty">
-          No browsers are paired with this wallet. Pairing becomes available with the LIEND
+          No browsers are paired with this wallet. Pairing becomes available with the STAYFI
           extension.
         </div>
       ) : (

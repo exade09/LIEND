@@ -74,7 +74,7 @@ export function PhoneShowcase() {
   return (
     <div ref={showcaseRef} className={styles.showcase} data-mode={mode} data-visible={visible ? "true" : "false"}>
       <div className={styles.stageTop}>
-        <span><i /> LIEND MOBILE ROUTE</span>
+        <span><i /> STAYFI MOBILE ROUTE</span>
         <span>LIVE PRODUCT PREVIEW</span>
       </div>
 
@@ -89,7 +89,7 @@ export function PhoneShowcase() {
               <div className={styles.phoneStatus}><span>9:41</span><span>5G&nbsp;&nbsp;100%</span></div>
               <div className={styles.mobileBrand}>
                 <Image src="/assets/logo/pixel/liend-mark.png" alt="" width={42} height={42} unoptimized />
-                <strong>LIEND</strong>
+                <strong>STAYFI</strong>
                 <i />
               </div>
 
@@ -162,13 +162,13 @@ export function PhoneShowcase() {
                 <span aria-hidden="true">-&gt;</span>
               </LaunchAppLink>
 
-              <p className={styles.disclaimer}>Preview only / final terms appear in the LIEND app</p>
+              <p className={styles.disclaimer}>Preview only / final terms appear in the STAYFI app</p>
             </div>
           </div>
         </div>
 
         <div className={styles.stageSignal} aria-hidden="true">
-          <span>01</span><i /><i /><i /><span>LIEND / MOBILE</span>
+          <span>01</span><i /><i /><i /><span>STAYFI / MOBILE</span>
         </div>
       </div>
     </div>
