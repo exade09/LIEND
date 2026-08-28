@@ -125,23 +125,30 @@ function HeroArtifacts() {
       <LiquidRibbon className={styles.ribbonTop} gradientId="liend-ribbon-top" />
       <LiquidRibbon className={styles.ribbonBottom} gradientId="liend-ribbon-bottom" />
 
-      <BrandKey className={`${styles.heroArtifact} ${styles.vectorKey}`} />
+      <Image
+        src="/assets/hero-key.png"
+        alt=""
+        width={912}
+        height={820}
+        priority
+        className={`${styles.heroArtifact} ${styles.vectorKey}`}
+      />
 
-      <span className={`${styles.heroArtifact} ${styles.vectorCoin}`}>
-        <i className={styles.coinRim} />
-        <b>L</b>
-        <i className={styles.coinGlint} />
-      </span>
+      <Image
+        src="/assets/hero-coin.png"
+        alt=""
+        width={812}
+        height={904}
+        className={`${styles.heroArtifact} ${styles.vectorCoin}`}
+      />
 
-      <span className={`${styles.heroArtifact} ${styles.vectorWallet}`}>
-        <i className={styles.walletCardBack} />
-        <i className={styles.walletCardMid} />
-        <span className={styles.walletFace}>
-          <i className={styles.walletSignal} />
-          <b>LONS</b>
-          <i className={styles.walletClasp}><span /></i>
-        </span>
-      </span>
+      <Image
+        src="/assets/hero-wallet.png"
+        alt=""
+        width={1032}
+        height={930}
+        className={`${styles.heroArtifact} ${styles.vectorWallet}`}
+      />
     </div>
   )
 }
