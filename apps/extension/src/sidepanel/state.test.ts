@@ -36,7 +36,7 @@ describe("deriveView", () => {
 
   it("surfaces a configuration problem distinctly from a runtime error", () => {
     expect(
-      deriveView(snap({ connection: "disconnected", error: "LONS is not configured in this build" })),
+      deriveView(snap({ connection: "disconnected", error: "Lons is not configured in this build" })),
     ).toBe("not-configured")
     expect(deriveView(snap({ connection: "disconnected", error: "Network down" }))).toBe("error")
   })
@@ -118,7 +118,7 @@ describe("copyFor", () => {
   })
 
   it("offers a deep link only where a token context makes it meaningful", () => {
-    expect(copyFor("eligible", snap()).primary?.action).toBe("OPEN_IN_LIEND")
+    expect(copyFor("eligible", snap()).primary?.action).toBe("OPEN_IN_LONS")
     expect(copyFor("unsupported-page", snap()).primary?.action).toBe("OPEN_APP")
   })
 })

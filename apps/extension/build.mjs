@@ -1,5 +1,5 @@
 /**
- * LIEND extension build.
+ * Lons extension build.
  *
  * Plain esbuild plus a generated manifest — no extension framework. That
  * keeps the manifest (where the whole permission story lives) fully explicit
@@ -9,7 +9,7 @@
  * custom domain appears in source. Migrating domains is a rebuild.
  *
  *   node build.mjs          -> dist/
- *   node build.mjs --zip    -> dist/ + release/liend-extension.zip
+ *   node build.mjs --zip    -> dist/ + release/lons-extension.zip
  */
 
 import { build } from "esbuild"
@@ -49,13 +49,13 @@ if (!APP_URL || !API_URL) {
  */
 const manifest = {
   manifest_version: 3,
-  name: "LONS",
+  name: "Lons",
   version: VERSION,
-  description: "Liquidity context for supported Robinhood Chain token pages.",
+  description: "Lons liquidity context for supported Robinhood Chain token pages.",
   minimum_chrome_version: "116",
   icons: { 16: "icons/icon16.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   action: {
-    default_title: "LONS",
+    default_title: "Lons",
     default_icon: { 16: "icons/icon16.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   },
   background: { service_worker: "background.js", type: "module" },
@@ -98,10 +98,10 @@ async function bundle() {
     sourcemap: false,
     legalComments: "none",
     define: {
-      __LIEND_APP_URL__: JSON.stringify(APP_URL),
-      __LIEND_API_URL__: JSON.stringify(API_URL),
-      __LIEND_VERSION__: JSON.stringify(VERSION),
-      __LIEND_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
+      __LONS_APP_URL__: JSON.stringify(APP_URL),
+      __LONS_API_URL__: JSON.stringify(API_URL),
+      __LONS_VERSION__: JSON.stringify(VERSION),
+      __LONS_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
     alias: { "@": path.join(root, "src") },
@@ -117,10 +117,10 @@ async function bundle() {
     minify: true,
     legalComments: "none",
     define: {
-      __LIEND_APP_URL__: JSON.stringify(APP_URL),
-      __LIEND_API_URL__: JSON.stringify(API_URL),
-      __LIEND_VERSION__: JSON.stringify(VERSION),
-      __LIEND_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
+      __LONS_APP_URL__: JSON.stringify(APP_URL),
+      __LONS_API_URL__: JSON.stringify(API_URL),
+      __LONS_VERSION__: JSON.stringify(VERSION),
+      __LONS_DEBUG__: JSON.stringify((process.env.LONS_DEBUG ?? process.env.LIEND_DEBUG) === "1"),
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
     alias: { "@": path.join(root, "src") },
@@ -148,7 +148,7 @@ async function listFiles(dir, prefix = "") {
  */
 async function zip() {
   await mkdir(release, { recursive: true })
-  const target = path.join(release, "liend-extension.zip")
+  const target = path.join(release, "lons-extension.zip")
   await rm(target, { force: true })
 
   // PowerShell's Compress-Archive is available on Windows without extra deps.

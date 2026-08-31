@@ -71,7 +71,7 @@ export const FromPanelSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("CANCEL_PAIRING") }),
   z.object({ type: z.literal("DISCONNECT") }),
   z.object({ type: z.literal("REFRESH") }),
-  z.object({ type: z.literal("OPEN_IN_LIEND") }),
+  z.object({ type: z.literal("OPEN_IN_LONS") }),
   z.object({ type: z.literal("OPEN_APP") }),
 ])
 export type FromPanel = z.infer<typeof FromPanelSchema>

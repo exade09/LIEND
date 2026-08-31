@@ -132,7 +132,7 @@ export function AddToChromeBadge({ className }: { className?: string }) {
     <a
       className={["chrome-badge", className].filter(Boolean).join(" ")}
       href={href}
-      {...(isArchive ? { download: "liend-extension.zip" } : { target: "_blank", rel: "noreferrer" })}
+      {...(isArchive ? { download: "lons-extension.zip" } : { target: "_blank", rel: "noreferrer" })}
       aria-label="Add LONS to Chrome"
     >
       <ChromeMark />
@@ -182,7 +182,7 @@ function InstallGuide({ href, onClose }: { href: string; onClose: () => void }) 
           ))}
         </ol>
 
-        <a className="button button--primary button--wide" href={href} download="liend-extension.zip">
+        <a className="button button--primary button--wide" href={href} download="lons-extension.zip">
           Download archive
           <Icon name="arrow" size={17} />
         </a>

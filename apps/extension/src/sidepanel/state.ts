@@ -85,11 +85,11 @@ export type PanelAction =
   | "CANCEL_PAIRING"
   | "DISCONNECT"
   | "REFRESH"
-  | "OPEN_IN_LIEND"
+  | "OPEN_IN_LONS"
   | "OPEN_APP"
 
 /**
- * Copy for every state. No string here implies a value LIEND cannot produce,
+ * Copy for every state. No string here implies a value Lons cannot produce,
  * and none of them use "beta", "demo" or "test" — the pre-launch state is a
  * real product state, not a disclaimer.
  */
@@ -97,22 +97,22 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
   switch (view) {
     case "first-install":
       return {
-        title: "Welcome to LONS",
-        body: "LONS shows liquidity context for supported Robinhood Chain token pages. Connect to get started",
-        primary: { label: "Connect LONS", action: "START_PAIRING" },
-        secondary: { label: "Open LONS", action: "OPEN_APP" },
+        title: "Welcome to Lons",
+        body: "Lons shows liquidity context for supported Robinhood Chain token pages. Connect to get started",
+        primary: { label: "Connect Lons", action: "START_PAIRING" },
+        secondary: { label: "Open Lons", action: "OPEN_APP" },
       }
     case "disconnected":
       return {
         title: "Connect this browser",
-        body: "Approve this browser in the LONS app to see liquidity context here",
-        primary: { label: "Connect LONS", action: "START_PAIRING" },
-        secondary: { label: "Open LONS", action: "OPEN_APP" },
+        body: "Approve this browser in the Lons app to see liquidity context here",
+        primary: { label: "Connect Lons", action: "START_PAIRING" },
+        secondary: { label: "Open Lons", action: "OPEN_APP" },
       }
     case "pairing":
       return {
         title: "Waiting for approval",
-        body: `Approve this browser in the LONS app. Check the code matches: ${
+        body: `Approve this browser in the Lons app. Check the code matches: ${
           snapshot.pairing?.userCode ?? "…"
         }`,
         primary: null,
@@ -121,36 +121,36 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
     case "session-expired":
       return {
         title: "Reconnect required",
-        body: "Your LONS session expired or this browser was revoked",
+        body: "Your Lons session expired or this browser was revoked",
         primary: { label: "Reconnect", action: "START_PAIRING" },
         secondary: { label: "Disconnect", action: "DISCONNECT" },
       }
     case "not-configured":
       return {
         title: "Not configured",
-        body: "This build has no LONS app or API address. Rebuild with the app and API origins configured",
+        body: "This build has no Lons app or API address. Rebuild with the app and API origins configured",
         primary: null,
         secondary: null,
       }
     case "error":
       return {
         title: "Something went wrong",
-        body: snapshot.error ?? "LONS data is unavailable right now",
+        body: snapshot.error ?? "Lons data is unavailable right now",
         primary: { label: "Retry", action: "REFRESH" },
         secondary: null,
       }
     case "unsupported-page":
       return {
         title: "No supported page",
-        body: "Open a token page on ponsfamily.com to see LONS context",
-        primary: { label: "Open LONS", action: "OPEN_APP" },
+        body: "Open a token page on ponsfamily.com to see Lons context",
+        primary: { label: "Open Lons", action: "OPEN_APP" },
         secondary: null,
       }
     case "supported-no-token":
       return {
         title: "No token detected",
-        body: "Open a specific token page to see its LONS context",
-        primary: { label: "Open LONS", action: "OPEN_APP" },
+        body: "Open a specific token page to see its Lons context",
+        primary: { label: "Open Lons", action: "OPEN_APP" },
         secondary: null,
       }
     case "detecting":
@@ -163,17 +163,17 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
     case "detection-failed":
       return {
         title: "Could not read this page",
-        body: "LONS could not identify the token on this page",
+        body: "Lons could not identify the token on this page",
         primary: { label: "Retry", action: "REFRESH" },
-        secondary: { label: "Open LONS", action: "OPEN_APP" },
+        secondary: { label: "Open Lons", action: "OPEN_APP" },
       }
     case "token-loading":
-      return { title: "Loading", body: "Checking LONS context for this token", primary: null, secondary: null }
+      return { title: "Loading", body: "Checking Lons context for this token", primary: null, secondary: null }
     case "token-not-launched":
       return {
-        title: "LONS utility available",
-        body: "Continue in the LONS app to review this position and available liquidity",
-        primary: { label: "Open in LONS", action: "OPEN_IN_LIEND" },
+        title: "Lons utility available",
+        body: "Continue in the Lons app to review this position and available liquidity",
+        primary: { label: "Open in Lons", action: "OPEN_IN_LONS" },
         secondary: null,
       }
     case "holder-check-pending":
@@ -181,7 +181,7 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
         title: "Checking your LONS balance",
         body: "Your LONS holdings could not be verified yet. This does not mean you are ineligible",
         primary: { label: "Retry", action: "REFRESH" },
-        secondary: { label: "Open in LONS", action: "OPEN_IN_LIEND" },
+        secondary: { label: "Open in Lons", action: "OPEN_IN_LONS" },
       }
     case "not-eligible":
       return {
@@ -190,14 +190,14 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
           snapshot.utility.state === "not-eligible" && !snapshot.utility.requirementPublished
             ? "The LONS holding requirement has not been published yet"
             : "This wallet does not meet the LONS holding requirement",
-        primary: { label: "Open in LONS", action: "OPEN_IN_LIEND" },
+        primary: { label: "Open in Lons", action: "OPEN_IN_LONS" },
         secondary: null,
       }
     case "eligible":
       return {
-        title: "LONS utility available",
-        body: "Continue in the LONS app to review this position and available liquidity",
-        primary: { label: "Open in LONS", action: "OPEN_IN_LIEND" },
+        title: "Lons utility available",
+        body: "Continue in the Lons app to review this position and available liquidity",
+        primary: { label: "Open in Lons", action: "OPEN_IN_LONS" },
         secondary: null,
       }
   }

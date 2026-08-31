@@ -16,7 +16,7 @@ import type { SiteAdapter } from "@/adapters/types"
 import { createDetectionController, type DetectionController } from "./controller"
 import type { FromContent } from "@/shared/messages"
 
-declare const __LIEND_DEBUG__: boolean
+declare const __LONS_DEBUG__: boolean
 
 let adapter: SiteAdapter | null = null
 let controller: DetectionController | null = null
@@ -53,7 +53,7 @@ function start(): void {
     events: {
       onDiagnostic: (info) => {
         // Compiled out of production builds. Carries no secrets or auth data.
-        if (__LIEND_DEBUG__) console.debug("[liend] detect", info)
+        if (__LONS_DEBUG__) console.debug("[lons] detect", info)
       },
       onNavigating: (pageUrl, identity, generation) => {
         // Drop the trigger immediately so it can never point at the token we

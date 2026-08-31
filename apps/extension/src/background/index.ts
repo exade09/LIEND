@@ -83,7 +83,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     context: null,
     utility: { state: "unknown" },
     loading: false,
-    error: isConfigured() ? null : "LONS is not configured in this build",
+    error: isConfigured() ? null : "Lons is not configured in this build",
     version: VERSION,
   }
 
@@ -131,7 +131,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     const response = await apiFetch("/api/utility-access")
     if (!response) return { ...base, connection: "session-expired" }
     if (response.status === 401) return { ...base, connection: "session-expired" }
-    if (!response.ok) return { ...base, error: "LONS data is unavailable" }
+    if (!response.ok) return { ...base, error: "Lons data is unavailable" }
 
     const dto = (await response.json()) as UtilityDto
     switch (dto.state) {
@@ -154,7 +154,7 @@ async function buildSnapshot(): Promise<PanelSnapshot> {
     if (error instanceof DeviceRevokedError) {
       return { ...base, connection: "disconnected", error: "This browser connection was revoked" }
     }
-    return { ...base, error: "Could not reach the LONS API" }
+    return { ...base, error: "Could not reach the Lons API" }
   }
 
   return base
@@ -168,7 +168,7 @@ async function pushSnapshot(): Promise<void> {
 
 // --- deep links --------------------------------------------------------------
 
-async function openInLiend(): Promise<void> {
+async function openInLons(): Promise<void> {
   const tab = await activeTab()
   const resolved =
     tab?.id != null ? resolveForDisplay(await readTabState(tab.id), identifyUrl(tab.url)) : null
@@ -273,8 +273,8 @@ chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
         await clearDeviceIdentity()
         sendResponse(await buildSnapshot())
         return
-      case "OPEN_IN_LIEND":
-        await openInLiend()
+      case "OPEN_IN_LONS":
+        await openInLons()
         sendResponse({ ok: true })
         return
       case "OPEN_APP":

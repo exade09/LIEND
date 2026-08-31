@@ -81,7 +81,7 @@ describe("panel message validation", () => {
       "CANCEL_PAIRING",
       "DISCONNECT",
       "REFRESH",
-      "OPEN_IN_LIEND",
+      "OPEN_IN_LONS",
       "OPEN_APP",
     ]) {
       expect(parseFromPanel({ type })?.type).toBe(type)

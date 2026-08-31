@@ -110,7 +110,7 @@ export const project = {
   extensionMode,
 
   /** Packaged MV3 archive served from this site for developer-mode install. */
-  extensionArchive: "/liend-extension.zip",
+  extensionArchive: "/lons-extension.zip",
 
   /**
    * Static pons destination. Landing chips ignore this once a CA is

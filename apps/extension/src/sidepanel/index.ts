@@ -49,7 +49,7 @@ function renderHeader(snapshot: PanelSnapshot): HTMLElement {
   mark.alt = ""
   mark.width = 18
   mark.height = 18
-  brand.append(mark, document.createTextNode("LONS"))
+  brand.append(mark, document.createTextNode("Lons"))
   head.append(brand)
 
   const connected = snapshot.connection === "connected"
@@ -120,14 +120,14 @@ function render(snapshot: PanelSnapshot): void {
     el(
       "p",
       "muted",
-      "LONS reads only the token address on supported pages. It never accesses wallet keys or your browsing history",
+      "Lons reads only the token address on supported pages. It never accesses wallet keys or your browsing history",
     ),
   )
   if (snapshot.connection === "connected") {
     foot.append(button("Disconnect this browser", "DISCONNECT", "quiet"))
   }
   const meta = el("div", "meta")
-  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "LONS"))
+  meta.append(el("span", undefined, `v${snapshot.version}`), el("span", undefined, "Lons"))
   foot.append(meta)
 
   root.append(renderHeader(snapshot), body, foot)
