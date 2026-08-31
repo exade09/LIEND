@@ -20,7 +20,7 @@ const silkscreen = Silkscreen({
 })
 
 export const metadata: Metadata = {
-  title: "Lona",
+  title: "Lons",
   description:
     "Borrow against supported migrated token positions on Robinhood Chain without making a market sale your first move",
   metadataBase: new URL(project.siteUrl),
