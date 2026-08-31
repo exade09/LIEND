@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest"
 import { parseBlockscoutBalances } from "./evm-rpc"
 import { clipLabel, pickDexPair } from "./token-markets"
-import { formatTokenAmount, toWalletPositions, uiAmount } from "./wallet-positions"
+import { formatTokenAmount, qaWalletPositions, toWalletPositions, uiAmount } from "./wallet-positions"
 
 const PONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
 const WALLET = "0x1111111111111111111111111111111111111111"
+const QA_WALLET = "0xa55974C267a535114B8cC27cD16300B2A5E61893"
 
 describe("parseBlockscoutBalances", () => {
   it("keeps positive ERC-20 balances and drops malformed rows", () => {
@@ -90,5 +91,30 @@ describe("toWalletPositions", () => {
       null,
     )
     expect(response.positions[0]?.valueUsd).toBeNull()
+  })
+})
+
+describe("QA wallet position", () => {
+  it("provides exactly $10 of PONS for the allowlisted walkthrough wallet", () => {
+    expect(qaWalletPositions(QA_WALLET, 123)).toEqual({
+      wallet: QA_WALLET,
+      asOf: 123,
+      ethUsd: 4_000,
+      positions: [
+        {
+          mint: PONS,
+          symbol: "PONS",
+          name: "Pons",
+          decimals: 18,
+          amount: "500",
+          amountRaw: "500000000000000000000",
+          valueUsd: 10,
+        },
+      ],
+    })
+  })
+
+  it("does not inject a position for any other wallet", () => {
+    expect(qaWalletPositions(WALLET, 123)).toBeNull()
   })
 })

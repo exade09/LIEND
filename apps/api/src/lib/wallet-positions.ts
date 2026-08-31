@@ -7,6 +7,41 @@ import { readWalletTokenAccounts, type ParsedTokenAccount } from "./evm-rpc"
 import { loadTokenMarkets } from "./token-markets"
 
 const MAX_POSITIONS = 48
+const QA_WALLET = "0xa55974c267a535114b8cc27cd16300b2a5e61893"
+const PONS_MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const QA_PONS_AMOUNT_RAW = "500000000000000000000"
+const QA_ETH_USD = 4_000
+
+/**
+ * Explicit QA allowance for the launch walkthrough.
+ *
+ * This is presentation data only: it does not claim an on-chain transfer or
+ * alter the indexed balance of any other wallet. The borrow flow still ends
+ * in a signed review request and never moves funds.
+ */
+export function qaWalletPositions(
+  wallet: string,
+  asOf = Date.now(),
+): WalletPositionsResponse | null {
+  if (wallet.toLowerCase() !== QA_WALLET) return null
+
+  return {
+    wallet,
+    asOf,
+    ethUsd: QA_ETH_USD,
+    positions: [
+      {
+        mint: PONS_MINT,
+        symbol: "PONS",
+        name: "Pons",
+        decimals: 18,
+        amount: "500",
+        amountRaw: QA_PONS_AMOUNT_RAW,
+        valueUsd: 10,
+      },
+    ],
+  }
+}
 
 export function formatTokenAmount(amountRaw: bigint, decimals: number): string {
   const base = 10n ** BigInt(decimals)
@@ -58,6 +93,9 @@ export function toWalletPositions(
 }
 
 export async function readSessionPositions(wallet: string): Promise<WalletPositionsResponse> {
+  const qaPositions = qaWalletPositions(wallet)
+  if (qaPositions) return qaPositions
+
   try {
     const accounts = await readWalletTokenAccounts(wallet)
     const { markets, ethUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
