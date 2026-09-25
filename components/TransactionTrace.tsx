@@ -21,7 +21,7 @@ type TransactionTraceProps = {
 const simpleRoute = [
   { label: "POSITION", icon: "collateral" as const },
   { label: "BORROW", icon: "borrow" as const },
-  { label: "ETH", icon: "eth" as const },
+  { label: "ETH", icon: "sol" as const },
 ] as const
 
 export function TransactionTrace({

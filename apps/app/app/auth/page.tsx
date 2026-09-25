@@ -59,8 +59,8 @@ function AuthPageInner() {
     setError(null)
     try {
       const { address } = await wallet.connect()
-      const challenge = await client.authChallenge(address, 4663)
-      const signature = await wallet.signMessage(challenge.message, address)
+      const challenge = await client.authChallenge(address)
+      const signature = await wallet.signMessage(challenge.message)
       await client.authVerify(address, challenge.nonce, signature)
       await refresh()
       router.replace(returnTo)

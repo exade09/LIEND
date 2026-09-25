@@ -1,16 +1,16 @@
-/** ERC-20 positions for the authenticated Robinhood Chain account. */
+/** SPL and Token-2022 positions for the authenticated Solana account. */
 
 import { parseMint } from "@liend/config"
 import type { WalletPositionsResponse } from "@liend/domain"
 import { ApiFailure } from "./http"
-import { readWalletTokenAccounts, type ParsedTokenAccount } from "./evm-rpc"
+import { readWalletTokenAccounts, type ParsedTokenAccount } from "./solana-rpc"
 import { loadTokenMarkets } from "./token-markets"
 
 const MAX_POSITIONS = 48
-const QA_WALLET = "0xa55974c267a535114b8cc27cd16300b2a5e61893"
-const PONS_MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
-const QA_PONS_AMOUNT_RAW = "500000000000000000000"
-const QA_ETH_USD = 4_000
+const QA_WALLET = "28QNhhh6F7phFNWDtnuRgZKRQes3zYteSeFhdbzCJCEK"
+const PONS_MINT = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+const QA_PONS_AMOUNT_RAW = "500000000000"
+const QA_SOL_USD = 200
 
 /**
  * Explicit QA allowance for the launch walkthrough.
@@ -23,18 +23,18 @@ export function qaWalletPositions(
   wallet: string,
   asOf = Date.now(),
 ): WalletPositionsResponse | null {
-  if (wallet.toLowerCase() !== QA_WALLET) return null
+  if (wallet !== QA_WALLET) return null
 
   return {
     wallet,
     asOf,
-    ethUsd: QA_ETH_USD,
+    solUsd: QA_SOL_USD,
     positions: [
       {
         mint: PONS_MINT,
         symbol: "PONS",
         name: "Pons",
-        decimals: 18,
+        decimals: 9,
         amount: "500",
         amountRaw: QA_PONS_AMOUNT_RAW,
         valueUsd: 10,
@@ -62,7 +62,7 @@ export function toWalletPositions(
   wallet: string,
   accounts: ParsedTokenAccount[],
   markets: Map<string, { symbol: string; name: string; priceUsd: number | null }>,
-  ethUsd: number | null,
+  solUsd: number | null,
   asOf = Date.now(),
 ): WalletPositionsResponse {
   const positions = accounts
@@ -89,7 +89,7 @@ export function toWalletPositions(
     .slice(0, MAX_POSITIONS)
     .map(({ rank: _rank, ...position }) => position)
 
-  return { wallet, asOf, ethUsd, positions }
+  return { wallet, asOf, solUsd, positions }
 }
 
 export async function readSessionPositions(wallet: string): Promise<WalletPositionsResponse> {
@@ -98,8 +98,8 @@ export async function readSessionPositions(wallet: string): Promise<WalletPositi
 
   try {
     const accounts = await readWalletTokenAccounts(wallet)
-    const { markets, ethUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
-    return toWalletPositions(wallet, accounts, markets, ethUsd)
+    const { markets, solUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
+    return toWalletPositions(wallet, accounts, markets, solUsd)
   } catch (caught) {
     const message = caught instanceof Error ? caught.message : "Robinhood Chain positions could not be read"
     throw new ApiFailure("adapter_unavailable", message)

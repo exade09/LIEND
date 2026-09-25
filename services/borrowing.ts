@@ -56,9 +56,9 @@ export const demoBorrowingAdapter: BorrowingProvider = {
     }
 
     const collateralAmount = Math.max(request.collateralAmount, 0);
-    const borrowAmountEth = Math.max(request.borrowAmountEth, 0);
+    const borrowAmountSol = Math.max(request.borrowAmountSol, 0);
     const collateralValueUsd = collateralAmount * market.priceUsd;
-    const borrowValueUsd = borrowAmountEth * DEMO_ETH_PRICE_USD;
+    const borrowValueUsd = borrowAmountSol * DEMO_ETH_PRICE_USD;
     const estimatedLtvPercent =
       collateralValueUsd > 0
         ? (borrowValueUsd / collateralValueUsd) * 100
@@ -67,7 +67,7 @@ export const demoBorrowingAdapter: BorrowingProvider = {
       market.eligible &&
       market.liquid &&
       collateralAmount > 0 &&
-      borrowAmountEth > 0;
+      borrowAmountSol > 0;
 
     return {
       quoteId: `demo-borrow-${market.id}`,
@@ -76,14 +76,14 @@ export const demoBorrowingAdapter: BorrowingProvider = {
       collateralAmount,
       collateralValueUsd,
       borrowAsset: "ETH",
-      borrowAmountEth,
+      borrowAmountSol,
       borrowValueUsd,
       remainingPositionUsd: null,
       estimatedLtvPercent,
       estimatedHealth: hasRoute
         ? getHealthState(estimatedLtvPercent)
         : "Unavailable",
-      protocolFeeEth: borrowAmountEth * DEMO_PROTOCOL_FEE_RATE,
+      protocolFeeEth: borrowAmountSol * DEMO_PROTOCOL_FEE_RATE,
       estimatedNetworkCostEth: DEMO_NETWORK_COST_ETH,
       route: hasRoute ? demoRoute(market.ticker) : [],
       expiresAt: null,

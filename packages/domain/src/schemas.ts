@@ -23,7 +23,7 @@ export const BaseUnitAmount = z
 
 export const DeepLinkSourceSchema = z.enum(["pons", "landing", "extension"])
 
-export const RobinhoodChainIdSchema = z.literal(4663)
+export const SolanaClusterSchema = z.literal("mainnet-beta")
 
 // ---------------------------------------------------------------------------
 // Identity
@@ -31,7 +31,7 @@ export const RobinhoodChainIdSchema = z.literal(4663)
 
 export const WalletIdentitySchema = z.object({
   address: EvmAddress,
-  chainId: RobinhoodChainIdSchema,
+  cluster: SolanaClusterSchema,
   /** Wallet app name as reported by the EIP-1193 provider. Display only. */
   label: z.string().min(1).max(64).nullable(),
 })
@@ -53,7 +53,7 @@ export const TokenIdentitySchema = z.object({
  */
 export const TokenContextSchema = z.object({
   source: DeepLinkSourceSchema,
-  chain: z.literal("robinhood"),
+  chain: z.literal("solana"),
   mint: EvmAddress,
   pageUrl: z.string().url(),
   detectedAt: z.number().int().positive(),
@@ -87,7 +87,7 @@ export const WalletPositionSchema = z.object({
 export const WalletPositionsResponseSchema = z.object({
   wallet: EvmAddress,
   asOf: z.number().int().positive(),
-  ethUsd: z.number().positive().nullable(),
+  solUsd: z.number().positive().nullable(),
   positions: z.array(WalletPositionSchema),
 })
 
@@ -126,7 +126,7 @@ export const UtilityAccessSchema = z.discriminatedUnion("state", [
 
 export const AuthChallengeRequestSchema = z.object({
   address: EvmAddress,
-  chainId: RobinhoodChainIdSchema,
+  cluster: SolanaClusterSchema,
 })
 
 export const AuthChallengeSchema = z.object({

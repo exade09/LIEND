@@ -1,80 +1,127 @@
 "use client"
 
-/** Minimal EIP-1193 surface exposed by MetaMask. */
-type EthereumProvider = {
-  isMetaMask?: boolean
-  request: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>
-  on?: (event: "accountsChanged" | "chainChanged", listener: (value: unknown) => void) => void
-  removeListener?: (event: "accountsChanged" | "chainChanged", listener: (value: unknown) => void) => void
+/**
+ * Solana wallets, through the provider they inject.
+ *
+ * The EVM build had one job the Solana build does not: making sure the wallet
+ * was pointed at the right network, and adding it if it was not. Solana wallets
+ * are on Solana, so `ensureRobinhoodChain` has no equivalent and is gone.
+ *
+ * Phantom, Solflare and Backpack expose the same methods, so one path covers
+ * all three and the flags below only decide what the button calls itself.
+ */
+
+type SolanaProvider = {
+  isPhantom?: boolean
+  isSolflare?: boolean
+  isBackpack?: boolean
+  publicKey?: { toString(): string } | null
+  connect: (options?: { onlyIfTrusted?: boolean }) => Promise<{ publicKey?: { toString(): string } }>
+  disconnect?: () => Promise<void>
+  signMessage?: (message: Uint8Array, encoding?: string) => Promise<{ signature: Uint8Array } | Uint8Array>
+  on?: (event: "connect" | "disconnect" | "accountChanged", listener: (value: unknown) => void) => void
+  removeListener?: (event: "connect" | "disconnect" | "accountChanged", listener: (value: unknown) => void) => void
 }
 
-const ROBINHOOD_CHAIN_ID = "0x1237"
-
-function injectedMetaMask(): EthereumProvider | null {
-  if (typeof window === "undefined") return null
-  const provider = (window as Window & { ethereum?: EthereumProvider }).ethereum
-  return provider?.isMetaMask && typeof provider.request === "function" ? provider : null
+type SolanaWindow = Window & {
+  phantom?: { solana?: SolanaProvider }
+  solana?: SolanaProvider
+  solflare?: SolanaProvider
+  backpack?: SolanaProvider
 }
 
-async function ensureRobinhoodChain(provider: EthereumProvider): Promise<void> {
-  const current = await provider.request({ method: "eth_chainId" })
-  if (current === ROBINHOOD_CHAIN_ID) return
-  try {
-    await provider.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: ROBINHOOD_CHAIN_ID }],
-    })
-  } catch (caught) {
-    const code = (caught as { code?: number }).code
-    if (code !== 4902) throw caught
-    await provider.request({
-      method: "wallet_addEthereumChain",
-      params: [{
-        chainId: ROBINHOOD_CHAIN_ID,
-        chainName: "Robinhood Chain",
-        nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-        rpcUrls: ["https://rpc.mainnet.chain.robinhood.com"],
-        blockExplorerUrls: ["https://robinhoodchain.blockscout.com"],
-      }],
-    })
-  }
-}
+const CANDIDATES: Array<{ name: string; pick: (win: SolanaWindow) => SolanaProvider | null | undefined }> = [
+  { name: "Phantom", pick: (win) => win.phantom?.solana ?? (win.solana?.isPhantom ? win.solana : null) },
+  { name: "Solflare", pick: (win) => (win.solflare?.isSolflare ? win.solflare : null) },
+  { name: "Backpack", pick: (win) => (win.backpack?.isBackpack ? win.backpack : null) },
+]
 
 export type DiscoveredWallet = {
   name: string
-  connect: () => Promise<{ address: string; chainId: 4663 }>
+  connect: () => Promise<{ address: string; cluster: "mainnet-beta" }>
   disconnect?: () => Promise<void>
   onAccountChange?: (listener: (address: string | null) => void) => () => void
 }
 
 export function discoverWallets(): DiscoveredWallet[] {
-  const provider = injectedMetaMask()
-  if (!provider) return []
+  if (typeof window === "undefined") return []
+  const win = window as SolanaWindow
 
-  return [{
-    name: "MetaMask",
-    async connect() {
-      const accounts = await provider.request({ method: "eth_requestAccounts" }) as string[]
-      const address = accounts[0]
-      if (!address) throw new Error("MetaMask returned no account")
-      await ensureRobinhoodChain(provider)
-      return { address, chainId: 4663 }
-    },
-    onAccountChange(listener) {
-      if (!provider.on) return () => undefined
-      const accountsChanged = (value: unknown) => {
-        const accounts = Array.isArray(value) ? value as string[] : []
-        listener(accounts[0] ?? null)
-      }
-      const chainChanged = (value: unknown) => {
-        if (value !== ROBINHOOD_CHAIN_ID) listener(null)
-      }
-      provider.on("accountsChanged", accountsChanged)
-      provider.on("chainChanged", chainChanged)
-      return () => {
-        provider.removeListener?.("accountsChanged", accountsChanged)
-        provider.removeListener?.("chainChanged", chainChanged)
-      }
-    },
-  }]
+  return CANDIDATES.flatMap(({ name, pick }) => {
+    const provider = pick(win)
+    if (!provider || typeof provider.connect !== "function") return []
+
+    return [{
+      name,
+      async connect() {
+        const result = await provider.connect()
+        const address = (result?.publicKey ?? provider.publicKey)?.toString()
+        if (!address) throw new Error(`${name} returned no account`)
+        return { address, cluster: "mainnet-beta" as const }
+      },
+      async disconnect() {
+        await provider.disconnect?.()
+      },
+      onAccountChange(listener) {
+        if (!provider.on) return () => undefined
+        const accountChanged = (value: unknown) => {
+          const key = value as { toString(): string } | null
+          listener(key ? key.toString() : null)
+        }
+        const disconnected = () => listener(null)
+        provider.on("accountChanged", accountChanged)
+        provider.on("disconnect", disconnected)
+        return () => {
+          provider.removeListener?.("accountChanged", accountChanged)
+          provider.removeListener?.("disconnect", disconnected)
+        }
+      },
+    }]
+  })
+}
+
+const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+/**
+ * Base58, written without BigInt so it runs under the target this bundle
+ * compiles to. The carry loop is the standard one: each byte is folded into a
+ * base-58 accumulator, and leading zero bytes become leading ones.
+ */
+export function base58Encode(raw: Uint8Array): string {
+  const digits: number[] = [0]
+  for (const byte of raw) {
+    let carry = byte
+    for (let i = 0; i < digits.length; i += 1) {
+      carry += digits[i] << 8
+      digits[i] = carry % 58
+      carry = (carry / 58) | 0
+    }
+    while (carry > 0) {
+      digits.push(carry % 58)
+      carry = (carry / 58) | 0
+    }
+  }
+  let out = ""
+  for (let i = 0; i < raw.length && raw[i] === 0; i += 1) out += "1"
+  for (let i = digits.length - 1; i >= 0; i -= 1) out += BASE58[digits[i]]
+  return out
+}
+
+/**
+ * Asks the wallet to sign the login challenge.
+ *
+ * Returned base58, which is what Solana tooling writes signatures in and what
+ * the API decodes first.
+ */
+export async function signChallenge(walletName: string, message: string): Promise<string> {
+  if (typeof window === "undefined") throw new Error("No wallet in this context")
+  const win = window as SolanaWindow
+  const entry = CANDIDATES.find((candidate) => candidate.name === walletName)
+  const provider = entry?.pick(win)
+  if (!provider?.signMessage) throw new Error(`${walletName} cannot sign messages`)
+
+  const encoded = new TextEncoder().encode(message)
+  const result = await provider.signMessage(encoded, "utf8")
+  const bytes = result instanceof Uint8Array ? result : result.signature
+  return base58Encode(bytes)
 }

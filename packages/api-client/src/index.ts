@@ -135,10 +135,10 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
 
     session: () => request("/api/auth/session", SessionSchema),
 
-    authChallenge: (address: string, chainId: number) =>
+    authChallenge: (address: string, cluster: "mainnet-beta" = "mainnet-beta") =>
       request("/api/auth/challenge", AuthChallengeSchema, {
         method: "POST",
-        body: JSON.stringify({ address, chainId }),
+        body: JSON.stringify({ address, cluster }),
       }),
 
     authVerify: (address: string, nonce: string, signature: string) =>

@@ -1,7 +1,7 @@
 import { EvmAddress } from "@liend/domain"
 import { ApiFailure, handle, json, preflight } from "@/lib/http"
 import { readServerEnv } from "@/lib/env"
-import { readWalletTokenAccounts } from "@/lib/evm-rpc"
+import { readWalletTokenAccounts } from "@/lib/solana-rpc"
 import { resolveUtilityAccess, toDto } from "@/lib/utility-access"
 import { formatTokenAmount } from "@/lib/wallet-positions"
 

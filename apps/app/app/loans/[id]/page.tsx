@@ -36,11 +36,11 @@ export default function LoanDetailPage({ params }: { params: Promise<{ id: strin
                 </div>
                 <div className="list__row">
                   <span>Principal</span>
-                  <span>{eth(loan.principalEth)}</span>
+                  <span>{eth(loan.principalSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Outstanding</span>
-                  <span>{eth(loan.outstandingEth)}</span>
+                  <span>{eth(loan.outstandingSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>

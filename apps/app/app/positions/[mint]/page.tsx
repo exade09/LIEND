@@ -5,7 +5,7 @@ import { use } from "react"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, loanLabel, maxBorrowEth, reservedLoan, eth, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, reservedLoan, eth, usd } from "@/lib/unbacked-book"
 
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -13,7 +13,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
   const { book, loadingPositions } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
   const reserved = valid ? reservedLoan(book, valid) : null
-  const ceiling = position ? maxBorrowEth(position, book.ethUsd) : 0
+  const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
 
   if (!valid) {
     return (
@@ -63,7 +63,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                 </div>
                 <div className="list__row">
                   <span>Available to borrow</span>
-                  <span>{reserved ? loanLabel(reserved.status) : eth(maxBorrowEth(position, book.ethUsd))}</span>
+                  <span>{reserved ? loanLabel(reserved.status) : eth(maxBorrowSol(position, book.solUsd))}</span>
                 </div>
               </div>
             </div>

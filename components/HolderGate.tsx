@@ -15,7 +15,7 @@ import {
 } from "@/lib/holder-access"
 import { discoverWallets, type DiscoveredWallet } from "@/lib/wallet"
 
-type GateState = "NOT CONNECTED" | "CHECKING" | "ELIGIBLE" | "NOT ELIGIBLE" | "WRONG NETWORK"
+type GateState = "NOT CONNECTED" | "CHECKING" | "ELIGIBLE" | "NOT ELIGIBLE"
 
 function stateFromAccess(access: HolderAccessDto): GateState {
   switch (access.state) {
@@ -37,7 +37,6 @@ const idleCopy: Record<GateState, string> = {
   CHECKING: "Checking LONS balance and active access parameters",
   ELIGIBLE: "LONS utility is available for this wallet",
   "NOT ELIGIBLE": "This wallet does not meet the LONS holding requirement",
-  "WRONG NETWORK": "Switch MetaMask to Robinhood Chain",
 }
 
 export function HolderGate() {
@@ -84,7 +83,7 @@ export function HolderGate() {
     setWalletAddress(null)
   }, [])
 
-  const resolveAccess = useCallback(async (address: string, chainId?: number) => {
+  const resolveAccess = useCallback(async (address: string) => {
     const requestId = ++requestRef.current
     setBusy("check")
     setFailed(false)
@@ -93,14 +92,6 @@ export function HolderGate() {
     setBalanceLabel("--")
     setWalletAddress(address)
     setWalletLabel(shortenAddress(address))
-
-    if (chainId && chainId !== project.chainId) {
-      if (requestId !== requestRef.current) return
-      setState("WRONG NETWORK")
-      setMessage("Switch MetaMask to Robinhood Chain")
-      setBusy(null)
-      return
-    }
 
     const access = await fetchHolderAccess(address)
     if (requestId !== requestRef.current) return
@@ -125,7 +116,7 @@ export function HolderGate() {
   }, [])
 
   const attachWallet = useCallback(
-    (wallet: DiscoveredWallet, address: string, chainId?: number) => {
+    (wallet: DiscoveredWallet, address: string) => {
       unsubscribeRef.current?.()
       unsubscribeRef.current = wallet.onAccountChange
         ? wallet.onAccountChange((next) => {
@@ -136,7 +127,7 @@ export function HolderGate() {
             void resolveAccess(next)
           })
         : null
-      void resolveAccess(address, chainId)
+      void resolveAccess(address)
     },
     [resetGate, resolveAccess],
   )
@@ -149,7 +140,7 @@ export function HolderGate() {
       setMessage("")
       try {
         const result = await wallet.connect()
-        attachWallet(wallet, result.address, result.chainId)
+        attachWallet(wallet, result.address)
       } catch (error) {
         setBusy(null)
         setState("NOT CONNECTED")
@@ -250,8 +241,8 @@ export function HolderGate() {
               </dd>
             </div>
             <div>
-              <dt><Icon name="eth" size={15} /> Network</dt>
-              <dd>{state === "WRONG NETWORK" ? "Unsupported network" : project.network}</dd>
+              <dt><Icon name="sol" size={15} /> Network</dt>
+              <dd>{project.network}</dd>
             </div>
             <div>
               <dt><Icon name="wallet" size={15} /> Wallet</dt>
@@ -291,19 +282,6 @@ export function HolderGate() {
             </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
             <PonsLink className="button button--primary button--wide">Get LONS <Icon name="external-link" size={15} /></PonsLink>
-          ) : state === "WRONG NETWORK" ? (
-            <button
-              className="button button--primary button--wide"
-              type="button"
-              disabled={busy !== null}
-              onClick={startConnect}
-            >
-              {busy === "connect" ? (
-                <><span className="button-spinner" /> Connecting</>
-              ) : (
-                <>Switch to Robinhood Chain</>
-              )}
-            </button>
           ) : state === "CHECKING" && busy === "check" && !failed ? (
             <button className="button button--primary button--wide" type="button" disabled>
               <span className="button-spinner" /> Checking LONS Balance

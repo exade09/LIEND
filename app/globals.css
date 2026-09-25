@@ -2272,7 +2272,7 @@ button:disabled {
 }
 
 .token-avatar,
-.eth-avatar {
+.sol-avatar {
   --token-accent: #7b5cff;
   display: inline-grid;
   width: 33px;
@@ -2306,7 +2306,7 @@ button:disabled {
   object-fit: contain;
 }
 
-.eth-avatar {
+.sol-avatar {
   --token-accent: #25cedc;
   color: #ffffff;
 }

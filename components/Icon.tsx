@@ -4,7 +4,7 @@ export type IconName =
   | "wallet"
   | "token"
   | "borrow"
-  | "eth"
+  | "sol"
   | "swap"
   | "transaction"
   | "explorer"
@@ -54,11 +54,11 @@ const glyphs: Record<IconName, ReactNode> = {
       <path d="M7.5 16.25v-1.5m9 1.5v-1.5" />
     </>
   ),
-  eth: (
+  sol: (
     <>
-      <path d="M12 2.75 5.75 12 12 15.7 18.25 12 12 2.75Z" />
-      <path d="m5.75 12 6.25 9.25L18.25 12 12 15.7 5.75 12Z" />
-      <path d="M12 2.75V15.7" />
+      <path d="M6.2 7.4h11.1l-2.3 2.4H3.9L6.2 7.4Z" />
+      <path d="M6.2 11.2h11.1l-2.3 2.4H3.9l2.3-2.4Z" />
+      <path d="M6.2 15h11.1l-2.3 2.4H3.9L6.2 15Z" />
     </>
   ),
   swap: (

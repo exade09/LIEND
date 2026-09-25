@@ -12,20 +12,20 @@ export interface DataEnvelope<T> extends DataProvenance {
   notice?: string;
 }
 
-export type RobinhoodChainId = 4663;
+export type SolanaCluster = "mainnet-beta";
 
 export type WalletStatus =
   | "Disconnected"
   | "Connecting"
   | "Connected"
-  | "Wrong Network"
+  
   | "Checking Eligibility";
 
 export interface WalletConnection {
   status: WalletStatus;
   address: string | null;
   providerName: string | null;
-  chainId: RobinhoodChainId;
+  cluster: SolanaCluster;
   error?: string;
 }
 
@@ -33,7 +33,7 @@ export interface WalletProvider {
   name: string;
   connect: () => Promise<{
     address: string;
-    chainId?: RobinhoodChainId;
+    cluster?: SolanaCluster;
   }>;
   disconnect?: () => Promise<void>;
 }
@@ -119,7 +119,7 @@ export interface CalculatorInput {
 export interface CalculatorResult {
   positionValueUsd: number;
   collateralValueUsd: number;
-  estimatedEth: number;
+  estimatedSol: number;
   remainingExposureUsd: number;
   exampleLtvPercent: number;
   healthState: HealthState;
@@ -135,7 +135,7 @@ export interface BorrowQuoteRequest {
   marketId: string;
   walletAddress?: string;
   collateralAmount: number;
-  borrowAmountEth: number;
+  borrowAmountSol: number;
 }
 
 export interface BorrowQuote extends DataProvenance {
@@ -145,7 +145,7 @@ export interface BorrowQuote extends DataProvenance {
   collateralAmount: number;
   collateralValueUsd: number;
   borrowAsset: "ETH";
-  borrowAmountEth: number;
+  borrowAmountSol: number;
   borrowValueUsd: number;
   remainingPositionUsd: number | null;
   estimatedLtvPercent: number;
@@ -232,7 +232,7 @@ export interface TokenChange {
 
 export interface EthChange {
   owner: string;
-  amountEth: number;
+  amountSol: number;
 }
 
 export interface DemoTransaction extends DataProvenance {
@@ -241,7 +241,7 @@ export interface DemoTransaction extends DataProvenance {
   asset: string;
   collateralValueUsd: number;
   borrowValueUsd: number;
-  ethReceived: number;
+  solReceived: number;
   instructionCount: number;
   status: "DEMO";
   signature: string;

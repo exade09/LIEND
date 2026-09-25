@@ -11,6 +11,12 @@
  */
 
 import { parseOrigin, resolveEnvironment, type DeploymentEnvironment } from "./origins"
+
+/**
+ * Solana has no chain id. What an EVM app carried in `chainId` is a cluster
+ * name here, and the only one this product runs against is mainnet.
+ */
+export type SolanaCluster = "mainnet-beta"
 import { resolveProjectLinks, type ProjectLinks } from "./links"
 import { resolveTokenLaunchState, type TokenLaunchState } from "./token"
 
@@ -22,7 +28,7 @@ export type PublicConfig = {
   apiUrl: string | null
   links: ProjectLinks
   token: TokenLaunchState
-  chainId: 4663
+  cluster: SolanaCluster
 }
 
 /**
@@ -50,6 +56,6 @@ export function readPublicConfig(): PublicConfig {
       process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT,
       process.env.NEXT_PUBLIC_LONS_MIN_HOLDER_BALANCE,
     ),
-    chainId: 4663,
+    cluster: "mainnet-beta",
   }
 }

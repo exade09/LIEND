@@ -21,7 +21,7 @@ export type ServerEnv = {
   allowedOrigins: string[]
   /** HMAC key for session cookies. Required in production. */
   sessionSecret: string | null
-  /** Robinhood Chain JSON-RPC endpoint. Public mainnet is used when unset. */
+  /** Solana JSON-RPC endpoint. Public mainnet-beta is used when unset. */
   rpcUrl: string | null
   token: TokenLaunchState
   /** Postgres DSN (DATABASE_URL). Absent means no durable store is configured. */
@@ -42,8 +42,8 @@ export function readServerEnv(): ServerEnv {
     allowedOrigins: resolveAllowedOrigins(process.env.LONS_ALLOWED_ORIGINS ?? process.env.LIEND_ALLOWED_ORIGINS),
     sessionSecret: process.env.LONS_SESSION_SECRET?.trim() || process.env.LIEND_SESSION_SECRET?.trim() || null,
     rpcUrl:
-      process.env.LONS_ROBINHOOD_RPC_URL?.trim() ||
-      "https://rpc.mainnet.chain.robinhood.com",
+      process.env.LONS_SOLANA_RPC_URL?.trim() ||
+      "https://api.mainnet-beta.solana.com",
     token: resolveTokenLaunchState(
       process.env.LONS_TOKEN_CONTRACT ?? process.env.LIEND_TOKEN_MINT,
       process.env.LONS_MIN_HOLDER_BALANCE ?? process.env.LIEND_MIN_HOLDER_BALANCE,

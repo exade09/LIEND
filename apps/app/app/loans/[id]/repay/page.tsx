@@ -27,7 +27,7 @@ export default function RepayPage({ params }: { params: Promise<{ id: string }> 
               <div className="list">
                 <div className="list__row">
                   <span>Due</span>
-                  <span>{eth(loan.outstandingEth)}</span>
+                  <span>{eth(loan.outstandingSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Collateral released</span>

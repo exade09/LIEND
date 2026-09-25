@@ -29,7 +29,7 @@ export function formatNumber(
   }).format(Number.isFinite(value) ? value : 0);
 }
 
-export function formatEth(value: number, maximumFractionDigits = 4): string {
+export function formatSol(value: number, maximumFractionDigits = 4): string {
   return `${formatNumber(value, maximumFractionDigits)} ETH`;
 }
 

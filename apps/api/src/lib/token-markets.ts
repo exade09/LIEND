@@ -61,7 +61,7 @@ async function fetchDexPairs(contracts: string[]): Promise<DexPair[]> {
 
 export async function loadTokenMarkets(contracts: string[]): Promise<{
   markets: Map<string, TokenMarket>
-  ethUsd: number | null
+  solUsd: number | null
 }> {
   const unique = [...new Set(contracts)]
   const priced = unique.some((address) => address.toLowerCase() === WETH.toLowerCase())
@@ -84,5 +84,5 @@ export async function loadTokenMarkets(contracts: string[]): Promise<{
 
   const ethPair = pickDexPair(pairs, WETH)
   const rawEthUsd = Number(ethPair?.priceUsd)
-  return { markets, ethUsd: Number.isFinite(rawEthUsd) && rawEthUsd > 0 ? rawEthUsd : null }
+  return { markets, solUsd: Number.isFinite(rawEthUsd) && rawEthUsd > 0 ? rawEthUsd : null }
 }

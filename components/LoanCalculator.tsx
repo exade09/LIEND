@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react"
 import { SectionHeading } from "@/components/SectionHeading"
 import { calculateLoanEstimate } from "@/lib/calculations"
-import { formatCurrency, formatPercent, formatEth } from "@/lib/formatting"
+import { formatCurrency, formatPercent, formatSol } from "@/lib/formatting"
 
 export function LoanCalculator() {
   const [tokenValue, setTokenValue] = useState(5000)
@@ -54,7 +54,7 @@ export function LoanCalculator() {
             <header><span>ESTIMATED OUTPUT</span></header>
             <div className="calculator-output__primary">
               <span>Estimated ETH</span>
-              <strong>{formatEth(result.estimatedEth, 4)}</strong>
+              <strong>{formatSol(result.estimatedSol, 4)}</strong>
               <small>Using an illustrative ETH price of $150</small>
             </div>
             <dl>

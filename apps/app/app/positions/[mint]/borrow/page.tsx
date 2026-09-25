@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, loanLabel, maxBorrowEth, quoteBorrow, reservedLoan, eth, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, quoteBorrow, reservedLoan, eth, usd } from "@/lib/unbacked-book"
 
 export default function BorrowPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -15,9 +15,9 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
   const { book, setQuote } = useUnbackedBook()
   const position = valid ? findPosition(book, valid) : null
   const reserved = valid ? reservedLoan(book, valid) : null
-  const ceiling = position ? maxBorrowEth(position, book.ethUsd) : 0
+  const ceiling = position ? maxBorrowSol(position, book.solUsd) : 0
   const [amount, setAmount] = useState("0")
-  const quote = position ? quoteBorrow(position, Number(amount) || 0, book.ethUsd) : null
+  const quote = position ? quoteBorrow(position, Number(amount) || 0, book.solUsd) : null
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -67,11 +67,11 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
                 </div>
                 <div className="list__row">
                   <span>You receive</span>
-                  <span>{eth(quote.borrowEth)}</span>
+                  <span>{eth(quote.borrowSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Fee</span>
-                  <span>{eth(quote.feeEth)}</span>
+                  <span>{eth(quote.feeSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>
@@ -94,7 +94,7 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
               <button
                 className="button button--primary"
                 type="button"
-                disabled={quote.borrowEth <= 0}
+                disabled={quote.borrowSol <= 0}
                 onClick={() => {
                   setQuote(quote)
                   router.push(`/positions/${valid}/borrow/review`)

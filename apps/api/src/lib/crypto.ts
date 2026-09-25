@@ -3,15 +3,76 @@
  *
  * No primitive is invented here. Signature verification uses Node's built-in
  * ed25519 support (`crypto.verify`), which is the same audited implementation
- * used elsewhere in the platform. This file only verifies EIP-191 messages;
- * decoding and wrapping a raw 32-byte key in the DER envelope Node expects.
+ * used everywhere else. This file only decodes the address and wraps the raw
+ * 32-byte key in the DER envelope Node expects.
+ *
+ * On Solana a wallet address IS an ed25519 public key, which makes this
+ * simpler than the EVM equivalent: there is no recovery step and no address
+ * derivation to check afterwards. The key is the address, so verifying the
+ * signature against it is the whole proof.
  */
 
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto"
-import { getAddress, verifyMessage, type Address, type Hex } from "viem"
+import { createHmac, createPublicKey, randomBytes, timingSafeEqual, verify } from "node:crypto"
+
+const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+/** Base58 decode. Leading ones are leading zero bytes, which is the part a
+ *  naive implementation drops and the reason some valid keys would be
+ *  rejected without it. */
+export function base58Decode(value: string): Uint8Array | null {
+  if (!value || /[^1-9A-HJ-NP-Za-km-z]/.test(value)) return null
+  let number = 0n
+  for (const char of value) {
+    const index = BASE58.indexOf(char)
+    if (index < 0) return null
+    number = number * 58n + BigInt(index)
+  }
+  const digits: number[] = []
+  while (number > 0n) {
+    digits.unshift(Number(number % 256n))
+    number /= 256n
+  }
+  let leading = 0
+  while (leading < value.length && value[leading] === "1") leading += 1
+  return Uint8Array.from([...new Array<number>(leading).fill(0), ...digits])
+}
 
 /**
- * Verifies the EIP-191 personal-sign result returned by MetaMask.
+ * The DER prefix for an Ed25519 SubjectPublicKeyInfo. Node will not take a
+ * bare 32-byte key, and this is the twelve bytes that turn one into a key
+ * object: sequence, algorithm identifier 1.3.101.112, bit string.
+ */
+const ED25519_SPKI_PREFIX = Buffer.from("302a300506032b6570032100", "hex")
+
+function publicKeyFromAddress(address: string) {
+  const raw = base58Decode(address.trim())
+  if (!raw || raw.length !== 32) return null
+  return createPublicKey({
+    key: Buffer.concat([ED25519_SPKI_PREFIX, Buffer.from(raw)]),
+    format: "der",
+    type: "spki",
+  })
+}
+
+/** Wallets hand the signature back base58 or base64 depending on the adapter. */
+function decodeSignature(signature: string): Buffer | null {
+  const trimmed = signature.trim()
+  const asBase58 = base58Decode(trimmed)
+  if (asBase58 && asBase58.length === 64) return Buffer.from(asBase58)
+  try {
+    const asBase64 = Buffer.from(trimmed, "base64")
+    if (asBase64.length === 64) return asBase64
+  } catch {
+    return null
+  }
+  return null
+}
+
+/**
+ * Verifies the ed25519 signature a Solana wallet returns from signMessage.
+ *
+ * Returns a promise so every caller keeps the shape it already had; the
+ * verification itself is synchronous.
  */
 export async function verifyWalletSignature(
   address: string,
@@ -19,9 +80,10 @@ export async function verifyWalletSignature(
   signature: string,
 ): Promise<boolean> {
   try {
-    const checksummed = getAddress(address) as Address
-    if (!/^0x[a-fA-F0-9]{130}$/.test(signature)) return false
-    return await verifyMessage({ address: checksummed, message, signature: signature as Hex })
+    const key = publicKeyFromAddress(address)
+    const bytes = decodeSignature(signature)
+    if (!key || !bytes) return false
+    return verify(null, Buffer.from(message, "utf8"), key, bytes)
   } catch {
     return false
   }

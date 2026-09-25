@@ -84,7 +84,7 @@ export function UnbackedBookProvider({ children }: { children: React.ReactNode }
           const next: UnbackedBook = {
             ...current,
             positions: response.positions.map(toPosition),
-            ethUsd: response.ethUsd ?? current.ethUsd ?? DEFAULT_ETH_USD,
+            solUsd: response.solUsd ?? current.solUsd ?? DEFAULT_ETH_USD,
           }
           saveBook(wallet, next)
           return next

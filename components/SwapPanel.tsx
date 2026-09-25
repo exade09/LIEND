@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Icon } from "@/components/Icon"
 import { Modal } from "@/components/Modal"
-import { formatNumber, formatPercent, formatEth } from "@/lib/formatting"
+import { formatNumber, formatPercent, formatSol } from "@/lib/formatting"
 import { getSwapQuote } from "@/services/swaps"
 import type { Market, SwapQuote } from "@/types"
 
@@ -111,7 +111,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
           <header><span>You Receive</span><small>Estimated Output</small></header>
           <div className="swap-field__input">
             <output aria-live="polite">{loading ? "..." : formatNumber(activeRoute?.estimatedOutput ?? 0, 5)}</output>
-            <span className="token-select token-select--static"><span className="eth-avatar"><Icon name="eth" size={18} /></span>ETH</span>
+            <span className="token-select token-select--static"><span className="sol-avatar"><Icon name="sol" size={18} /></span>ETH</span>
           </div>
           <small className="input-caption">Estimated output</small>
         </section>
@@ -136,7 +136,7 @@ export function SwapPanel({ markets, initialMarket }: SwapPanelProps) {
         <div><dt>Estimated Output</dt><dd>{formatNumber(activeRoute?.estimatedOutput ?? 0, 5)} ETH</dd></div>
         <div><dt>Route</dt><dd>{activeRoute?.label ?? "Unavailable"}</dd></div>
         <div><dt>Price Impact</dt><dd>{formatPercent(activeRoute?.priceImpactPercent ?? 0, 2)} <small>EST</small></dd></div>
-        <div><dt>Network Fee</dt><dd>{formatEth(activeRoute?.estimatedNetworkFeeEth ?? 0, 5)} <small>EST</small></dd></div>
+        <div><dt>Network Fee</dt><dd>{formatSol(activeRoute?.estimatedNetworkFeeEth ?? 0, 5)} <small>EST</small></dd></div>
       </dl>
 
       <div className="swap-panel__action">

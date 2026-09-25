@@ -1,39 +1,41 @@
 import { describe, expect, it } from "vitest"
-import { parseBlockscoutBalances } from "./evm-rpc"
+import { parseTokenAccounts } from "./solana-rpc"
 import { clipLabel, pickDexPair } from "./token-markets"
 import { formatTokenAmount, qaWalletPositions, toWalletPositions, uiAmount } from "./wallet-positions"
 
-const PONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
-const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
-const WALLET = "0x1111111111111111111111111111111111111111"
-const QA_WALLET = "0xa55974C267a535114B8cC27cD16300B2A5E61893"
+const PONS = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+const WSOL = "So11111111111111111111111111111111111111112"
+const WALLET = "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"
+const QA_WALLET = "28QNhhh6F7phFNWDtnuRgZKRQes3zYteSeFhdbzCJCEK"
 
-describe("parseBlockscoutBalances", () => {
-  it("keeps positive ERC-20 balances and drops malformed rows", () => {
-    const parsed = parseBlockscoutBalances([
-      {
-        value: "1500000000000000000",
-        token: { address_hash: PONS, decimals: "18", symbol: "PONS", name: "Pons" },
-      },
-      { value: "0", token: { address_hash: WETH, decimals: "18" } },
-      { value: "10", token: { address_hash: "not-an-address", decimals: "18" } },
-    ])
-
-    expect(parsed).toEqual([
-      {
-        mint: PONS,
-        amountRaw: 1_500_000_000_000_000_000n,
-        decimals: 18,
-        symbol: "PONS",
-        name: "Pons",
-      },
-    ])
+describe("parseTokenAccounts", () => {
+  const account = (mint: string, amount: string, decimals: number) => ({
+    account: { data: { parsed: { info: { mint, tokenAmount: { amount, decimals } } } } },
   })
 
-  it("accepts the wrapped Blockscout items shape", () => {
-    expect(parseBlockscoutBalances({
-      items: [{ value: "1", token: { address: WETH, decimals: 18 } }],
-    })).toHaveLength(1)
+  it("keeps positive balances and drops malformed rows", () => {
+    const parsed = parseTokenAccounts({
+      value: [
+        account(PONS, "1500000000", 9),
+        account(WSOL, "0", 9),
+        account("not-an-address", "10", 9),
+      ],
+    })
+
+    expect(parsed).toEqual([{ mint: PONS, amountRaw: 1_500_000_000n, decimals: 9 }])
+  })
+
+  it("sums one mint held across several token accounts", () => {
+    const parsed = parseTokenAccounts({
+      value: [account(PONS, "400", 6), account(PONS, "600", 6)],
+    })
+
+    expect(parsed).toEqual([{ mint: PONS, amountRaw: 1_000n, decimals: 6 }])
+  })
+
+  it("returns nothing for an empty or absent value", () => {
+    expect(parseTokenAccounts({ value: [] })).toEqual([])
+    expect(parseTokenAccounts(null)).toEqual([])
   })
 })
 
@@ -51,7 +53,7 @@ describe("market pair selection", () => {
       [
         { baseToken: { address: PONS, symbol: "PONS" }, liquidity: { usd: 100 }, priceUsd: "1" },
         { baseToken: { address: PONS, symbol: "PONS" }, liquidity: { usd: 9_000 }, priceUsd: "0.02" },
-        { baseToken: { address: WETH, symbol: "WETH" }, liquidity: { usd: 50_000 }, priceUsd: "4000" },
+        { baseToken: { address: WSOL, symbol: "WSOL" }, liquidity: { usd: 50_000 }, priceUsd: "4000" },
       ],
       PONS,
     )
@@ -80,14 +82,14 @@ describe("toWalletPositions", () => {
       amount: "10",
       valueUsd: 0.2,
     })
-    expect(response.ethUsd).toBe(4_000)
+    expect(response.solUsd).toBe(4_000)
   })
 
   it("keeps a null valuation when no market price exists", () => {
     const response = toWalletPositions(
       WALLET,
-      [{ mint: WETH, amountRaw: 1_000_000_000_000_000_000n, decimals: 18 }],
-      new Map([[WETH, { symbol: "WETH", name: "Wrapped Ether", priceUsd: null }]]),
+      [{ mint: WSOL, amountRaw: 1_000_000_000_000_000_000n, decimals: 18 }],
+      new Map([[WSOL, { symbol: "WSOL", name: "Wrapped Ether", priceUsd: null }]]),
       null,
     )
     expect(response.positions[0]?.valueUsd).toBeNull()
@@ -99,15 +101,15 @@ describe("QA wallet position", () => {
     expect(qaWalletPositions(QA_WALLET, 123)).toEqual({
       wallet: QA_WALLET,
       asOf: 123,
-      ethUsd: 4_000,
+      solUsd: 200,
       positions: [
         {
           mint: PONS,
           symbol: "PONS",
           name: "Pons",
-          decimals: 18,
+          decimals: 9,
           amount: "500",
-          amountRaw: "500000000000000000000",
+          amountRaw: "500000000000",
           valueUsd: 10,
         },
       ],

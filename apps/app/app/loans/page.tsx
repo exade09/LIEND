@@ -30,7 +30,7 @@ export default function LoansPage() {
                       {loanLabel(loan.status)}
                     </p>
                   </div>
-                  <span>{eth(loan.outstandingEth)}</span>
+                  <span>{eth(loan.outstandingSol)}</span>
                 </Link>
               ))}
             </div>

@@ -45,7 +45,7 @@ const steps: Array<{
     number: "06",
     title: "RECEIVE",
     description: "Receive ETH after successful execution",
-    icon: "eth",
+    icon: "sol",
   },
 ]
 

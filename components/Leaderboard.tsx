@@ -7,7 +7,7 @@ import { Modal } from "@/components/Modal"
 import { shortenAddress } from "@/lib/addresses"
 import { formatCompactCurrency, formatTimestamp } from "@/lib/formatting"
 import { getLeaderboard } from "@/services/leaderboard"
-import { getProtocolActivity } from "@/services/robinhood"
+import { getProtocolActivity } from "@/services/solana"
 import type {
   DataEnvelope,
   LeaderboardMetric,

@@ -85,9 +85,9 @@ const extensionUrl = url(process.env.NEXT_PUBLIC_EXTENSION_URL)
 export const project = {
   name: "LONS",
   ticker: "LONS",
-  network: "Robinhood Chain",
-  chainId: 4663,
-  nativeCurrency: "ETH",
+  network: "Solana",
+  cluster: "mainnet-beta",
+  nativeCurrency: "SOL",
 
   /**
    * Own origin, for metadata. Next requires an absolute URL for

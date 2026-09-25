@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading"
 import { TransactionTrace } from "@/components/TransactionTrace"
 import { demoTransactions } from "@/data/demoTransactions"
 import { getExplorerTransactionUrl, shortenAddress } from "@/lib/addresses"
-import { formatCurrency, formatNumber, formatEth, formatTimestamp } from "@/lib/formatting"
+import { formatCurrency, formatNumber, formatSol, formatTimestamp } from "@/lib/formatting"
 import type { DemoTransaction } from "@/types"
 
 function isFixtureWalletOwner(owner: string, transaction: DemoTransaction) {
@@ -70,7 +70,7 @@ function TransactionChanges({ transaction }: { transaction: DemoTransaction }) {
 
       <section className="onchain-changes__group" aria-labelledby="eth-changes-title">
         <header>
-          <Icon name="eth" size={17} />
+          <Icon name="sol" size={17} />
           <h3 id="eth-changes-title">ETH changes</h3>
         </header>
         <ul>
@@ -84,8 +84,8 @@ function TransactionChanges({ transaction }: { transaction: DemoTransaction }) {
                     <CopyButton value={transaction.wallet} label="Copy wallet" />
                   ) : null}
                 </div>
-                <strong className={change.amountEth >= 0 ? "is-positive" : "is-negative"}>
-                  {change.amountEth >= 0 ? "+" : ""}{formatEth(change.amountEth)}
+                <strong className={change.amountSol >= 0 ? "is-positive" : "is-negative"}>
+                  {change.amountSol >= 0 ? "+" : ""}{formatSol(change.amountSol)}
                 </strong>
               </li>
             )
@@ -156,7 +156,7 @@ export function OnchainExamples() {
               </div>
               <div>
                 <dt>ETH Received</dt>
-                <dd>{formatEth(transaction.ethReceived)}</dd>
+                <dd>{formatSol(transaction.solReceived)}</dd>
               </div>
               <div>
                 <dt>Instructions</dt>
@@ -215,7 +215,7 @@ export function OnchainExamples() {
               </div>
               <div>
                 <dt>ETH received</dt>
-                <dd>{formatEth(selectedTransaction.ethReceived)}</dd>
+                <dd>{formatSol(selectedTransaction.solReceived)}</dd>
               </div>
             </dl>
 

@@ -8,7 +8,7 @@ const demoTrace = (
   signature: string,
   slot: number,
   asset: string,
-  ethReceived: number,
+  solReceived: number,
 ): TransactionTraceStep[] => [
   {
     id: "wallet",
@@ -62,7 +62,7 @@ const demoTrace = (
     signature,
     slot,
     status: "DEMO",
-    value: `${ethReceived.toFixed(2)} ETH`,
+    value: `${solReceived.toFixed(2)} ETH`,
     details: ["Borrow request evaluated", "Health state calculated"],
   },
   {
@@ -95,7 +95,7 @@ const demoTrace = (
     signature,
     slot,
     status: "DEMO",
-    value: `${ethReceived.toFixed(2)} ETH`,
+    value: `${solReceived.toFixed(2)} ETH`,
     details: ["Settlement instruction prepared", "Demo only"],
   },
   {
@@ -106,7 +106,7 @@ const demoTrace = (
     signature,
     slot,
     status: "DEMO",
-    value: `${ethReceived.toFixed(2)} ETH`,
+    value: `${solReceived.toFixed(2)} ETH`,
     details: ["Destination wallet selected", "No transfer is executed"],
   },
 ];
@@ -119,7 +119,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
     asset: "LONS",
     collateralValueUsd: 4_820,
     borrowValueUsd: 1_690,
-    ethReceived: 11.27,
+    solReceived: 11.27,
     instructionCount: 9,
     status: "DEMO",
     signature:
@@ -132,7 +132,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
       { owner: "7Yma...kW8a", ticker: "LONS", amount: -1_000_000 },
       { owner: "LONS vault", ticker: "LONS", amount: 1_000_000 },
     ],
-    ethChanges: [{ owner: "7Yma...kW8a", amountEth: 11.27 }],
+    ethChanges: [{ owner: "7Yma...kW8a", amountSol: 11.27 }],
     source: "demo",
     isDemo: true,
     dataLabel: "Demo data",
@@ -144,7 +144,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
     asset: "KITE",
     collateralValueUsd: 7_250,
     borrowValueUsd: 2_390,
-    ethReceived: 15.93,
+    solReceived: 15.93,
     instructionCount: 11,
     status: "DEMO",
     signature:
@@ -162,7 +162,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
       { owner: "3QvN...C4qV", ticker: "KITE", amount: -389_785 },
       { owner: "LONS vault", ticker: "KITE", amount: 389_785 },
     ],
-    ethChanges: [{ owner: "3QvN...C4qV", amountEth: 15.93 }],
+    ethChanges: [{ owner: "3QvN...C4qV", amountSol: 15.93 }],
     source: "demo",
     isDemo: true,
     dataLabel: "Demo data",
@@ -174,7 +174,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
     asset: "FOLI",
     collateralValueUsd: 3_410,
     borrowValueUsd: 1_090,
-    ethReceived: 7.27,
+    solReceived: 7.27,
     instructionCount: 10,
     status: "DEMO",
     signature:
@@ -187,7 +187,7 @@ const demoTransactionFixtures: DemoTransaction[] = [
       { owner: "9mC4...8cM3", ticker: "FOLI", amount: -466_484 },
       { owner: "LONS vault", ticker: "FOLI", amount: 466_484 },
     ],
-    ethChanges: [{ owner: "9mC4...8cM3", amountEth: 7.27 }],
+    ethChanges: [{ owner: "9mC4...8cM3", amountSol: 7.27 }],
     source: "demo",
     isDemo: true,
     dataLabel: "Demo data",
@@ -201,7 +201,7 @@ export const demoTransactions: DemoTransaction[] = demoTransactionFixtures.map((
     transaction.signature,
     transaction.slot,
     transaction.asset,
-    transaction.ethReceived,
+    transaction.solReceived,
   ),
 }));
 

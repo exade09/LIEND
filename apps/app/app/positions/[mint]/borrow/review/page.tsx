@@ -73,7 +73,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
               <div className="list">
                 <div className="list__row">
                   <span>Borrow</span>
-                  <span>{eth(quote.borrowEth)}</span>
+                  <span>{eth(quote.borrowSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Collateral</span>
@@ -87,7 +87,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
                 </div>
                 <div className="list__row">
                   <span>Fee</span>
-                  <span>{eth(quote.feeEth)}</span>
+                  <span>{eth(quote.feeSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>

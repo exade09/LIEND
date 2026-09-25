@@ -9,7 +9,7 @@ const routeIcons: Record<string, IconName> = {
   position: "collateral",
   "market-check": "status",
   borrow: "borrow",
-  "wallet-return": "eth",
+  "wallet-return": "sol",
 }
 
 const currentWalletBalance = "112.041 ETH"
@@ -116,7 +116,7 @@ export function OnchainJourney() {
 
               <div className={styles.context} aria-label="Route context">
                 <span>
-                  <Icon name="eth" size={15} />
+                  <Icon name="sol" size={15} />
                   {project.network}
                 </span>
               </div>

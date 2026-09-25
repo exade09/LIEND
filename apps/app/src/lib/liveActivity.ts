@@ -56,7 +56,7 @@ function hash(value: string): number {
   return next
 }
 
-async function ethUsd(): Promise<number | null> {
+async function solUsd(): Promise<number | null> {
   try {
     const response = await fetch(`${DEXSCREENER}/${WETH}`, {
       headers: { accept: "application/json" },
@@ -65,7 +65,7 @@ async function ethUsd(): Promise<number | null> {
     })
     if (!response.ok) return null
     const body = await response.json() as { pairs?: Array<{ chainId?: string; priceUsd?: string }> }
-    const pair = body.pairs?.find((row) => row.chainId === "robinhood")
+    const pair = body.pairs?.find((row) => row.chainId === "solana")
     const price = Number(pair?.priceUsd)
     return Number.isFinite(price) && price > 0 ? price : null
   } catch {
@@ -93,13 +93,13 @@ function present(row: BlockscoutTransfer, nativePrice: number | null): TapeEvent
   if (!wallet) return null
 
   const tokenAmount = Number(raw) / 10 ** decimals
-  const estimatedEth = nativePrice && tokenUsd > 0 ? (tokenAmount * tokenUsd) / nativePrice : null
+  const estimatedSol = nativePrice && tokenUsd > 0 ? (tokenAmount * tokenUsd) / nativePrice : null
   if (!Number.isFinite(tokenAmount) || tokenAmount <= 0) return null
-  if (estimatedEth !== null && (estimatedEth <= 0 || estimatedEth > MAX_EVENT_ETH)) return null
+  if (estimatedSol !== null && (estimatedSol <= 0 || estimatedSol > MAX_EVENT_ETH)) return null
 
   const symbol = (row.token?.symbol ?? "PONS").replace(/[^A-Za-z0-9]/g, "").slice(0, 10).toUpperCase() || "PONS"
   const tokens = compact(tokenAmount)
-  const native = estimatedEth === null ? "onchain" : `${compact(estimatedEth)} ETH`
+  const native = estimatedSol === null ? "onchain" : `${compact(estimatedSol)} ETH`
   const occurredAt = Date.parse(row.timestamp ?? "")
   const isBorrow = kind === "borrow"
 
@@ -116,7 +116,7 @@ function present(row: BlockscoutTransfer, nativePrice: number | null): TapeEvent
       ? `A Robinhood Chain wallet moved ${symbol} into a contract route. LONS marks it as borrow-side activity for review`
       : `A Robinhood Chain wallet received ${symbol} from a contract route. LONS marks it as repay-side activity for review`,
     tokenDelta: isBorrow ? `− ${tokens} ${symbol}` : `+ ${tokens} ${symbol}`,
-    nativeDelta: estimatedEth === null ? "value pending" : `${isBorrow ? "+" : "−"} ${compact(estimatedEth)} ETH`,
+    nativeDelta: estimatedSol === null ? "value pending" : `${isBorrow ? "+" : "−"} ${compact(estimatedSol)} ETH`,
     occurredAt: Number.isFinite(occurredAt) ? occurredAt : Date.now(),
   }
 }
@@ -128,7 +128,7 @@ async function refreshLiveActivity(): Promise<TapeEvent[]> {
       cache: "no-store",
       signal: AbortSignal.timeout(10_000),
     }),
-    ethUsd(),
+    solUsd(),
   ])
   if (!response.ok) throw new Error(`Robinhood Chain indexer returned ${response.status}`)
   const body = await response.json() as { items?: BlockscoutTransfer[] }

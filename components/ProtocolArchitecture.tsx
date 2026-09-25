@@ -30,7 +30,7 @@ const architecture = [
   {
     label: "ETH SETTLEMENT",
     description: "Liquidity returned to wallet",
-    icon: "eth" as IconName,
+    icon: "sol" as IconName,
   },
 ] as const;
 
@@ -53,7 +53,7 @@ export function ProtocolArchitecture() {
       </header>
 
       <div className="protocol-architecture__network" aria-label="Network">
-        <Icon name="eth" size={18} aria-hidden="true" />
+        <Icon name="sol" size={18} aria-hidden="true" />
         <span>{project.network}</span>
       </div>
 

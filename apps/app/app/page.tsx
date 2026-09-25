@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useSession } from "@/components/SessionProvider"
 import { useUnbackedBook } from "@/components/UnbackedBook"
 import { UtilityBadge, UtilityGate } from "@/components/UtilityGate"
-import { availableEth, outstandingEth, positionValueUsd, eth, usd } from "@/lib/unbacked-book"
+import { availableEth, outstandingSol, positionValueUsd, eth, usd } from "@/lib/unbacked-book"
 
 export default function DashboardPage() {
   const { access, loading, wallet } = useSession()
@@ -47,7 +47,7 @@ export default function DashboardPage() {
           </div>
           <div className="metric">
             <p className="metric__label">Outstanding debt</p>
-            <p className="metric__value">{eth(outstandingEth(book))}</p>
+            <p className="metric__value">{eth(outstandingSol(book))}</p>
             <p className="metric__hint">Across active loans</p>
           </div>
           <div className="metric">

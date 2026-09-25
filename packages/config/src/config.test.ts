@@ -4,16 +4,18 @@ import { parseMinimumBalance, parseMint, resolveTokenLaunchState } from "./token
 import { positionUrl, sanitizeReturnTo, pairUrl, authUrl } from "./deep-links"
 import { resolveExtensionMode } from "./links"
 
-const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const MINT = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 const APP = "https://app.example.test"
 
 describe("parseMint", () => {
-  it("accepts a valid EVM token contract", () => {
+  it("accepts a valid Solana mint", () => {
     expect(parseMint(MINT)).toBe(MINT)
   })
 
   it("rejects malformed input", () => {
-    expect(parseMint("0xnot-a-contract")).toBeNull()
+    // 0, O, I and l are outside the base58 alphabet on purpose
+    expect(parseMint("0OIl0OIl0OIl0OIl0OIl0OIl0OIl0OIl")).toBeNull()
+    expect(parseMint("0x39dBED3a2bd333467115dE45665cC57F813C4571")).toBeNull()
     expect(parseMint("tooshort")).toBeNull()
     expect(parseMint("")).toBeNull()
     expect(parseMint(null)).toBeNull()
