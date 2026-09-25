@@ -5,7 +5,7 @@ import { use } from "react"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, loanLabel, maxBorrowSol, reservedLoan, eth, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, reservedLoan, sol, usd } from "@/lib/unbacked-book"
 
 export default function PositionDetailPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -21,7 +21,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
         <header className="page-head">
           <div>
             <h1>Invalid token</h1>
-            <p>That address is not a valid Robinhood Chain mint</p>
+            <p>That address is not a valid Solana mint</p>
           </div>
         </header>
         <div className="empty">
@@ -63,7 +63,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                 </div>
                 <div className="list__row">
                   <span>Available to borrow</span>
-                  <span>{reserved ? loanLabel(reserved.status) : eth(maxBorrowSol(position, book.solUsd))}</span>
+                  <span>{reserved ? loanLabel(reserved.status) : sol(maxBorrowSol(position, book.solUsd))}</span>
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function PositionDetailPage({ params }: { params: Promise<{ mint:
                   href={`/positions/${valid}/borrow`}
                   aria-disabled={ceiling <= 0}
                 >
-                  Borrow ETH
+                  Borrow SOL
                 </Link>
               )}
             </div>

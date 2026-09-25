@@ -68,10 +68,10 @@ function TransactionChanges({ transaction }: { transaction: DemoTransaction }) {
         </ul>
       </section>
 
-      <section className="onchain-changes__group" aria-labelledby="eth-changes-title">
+      <section className="onchain-changes__group" aria-labelledby="sol-changes-title">
         <header>
           <Icon name="sol" size={17} />
-          <h3 id="eth-changes-title">ETH changes</h3>
+          <h3 id="sol-changes-title">SOL changes</h3>
         </header>
         <ul>
           {transaction.ethChanges.map((change, index) => {
@@ -111,7 +111,7 @@ export function OnchainExamples() {
         title={<span id="onchain-examples-title">See it onchain</span>}
         copy={
           <p>
-            Inspect the complete route from wallet approval to ETH settlement
+            Inspect the complete route from wallet approval to SOL settlement
           </p>
         }
       />
@@ -155,7 +155,7 @@ export function OnchainExamples() {
                 <dd>{formatCurrency(transaction.borrowValueUsd)}</dd>
               </div>
               <div>
-                <dt>ETH Received</dt>
+                <dt>SOL Received</dt>
                 <dd>{formatSol(transaction.solReceived)}</dd>
               </div>
               <div>
@@ -214,7 +214,7 @@ export function OnchainExamples() {
                 <dd>{formatCurrency(selectedTransaction.collateralValueUsd)}</dd>
               </div>
               <div>
-                <dt>ETH received</dt>
+                <dt>SOL received</dt>
                 <dd>{formatSol(selectedTransaction.solReceived)}</dd>
               </div>
             </dl>
@@ -251,7 +251,7 @@ export function OnchainExamples() {
                 rel="noreferrer"
               >
                 <Icon name="explorer" size={17} />
-                View on Blockscout
+                View on Solscan
                 <Icon name="external-link" size={14} />
               </a>
             </div>

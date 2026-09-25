@@ -89,7 +89,7 @@ export function ActivityFeed() {
         <p className="eyebrow section-eyebrow">PROTOCOL ACTIVITY</p>
         <h2 className="section-title" id="activity-feed-title">Protocol event stream</h2>
         <p className="section-description">
-          Public Robinhood Chain routes on this desk. LONS program records replace this when the book is onchain
+          Public Solana routes on this desk. LONS program records replace this when the book is onchain
         </p>
       </header>
 
@@ -99,7 +99,7 @@ export function ActivityFeed() {
             <span className="activity-feed__pulse" aria-hidden="true" />
             <span>{live ? "LIVE ROUTES" : "EVENT STREAM"}</span>
           </div>
-          <span className="activity-feed__network">{live ? "ROBINHOOD CHAIN • LIVE" : "ROBINHOOD CHAIN"}</span>
+          <span className="activity-feed__network">{live ? "SOLANA • LIVE" : "SOLANA"}</span>
         </div>
 
         {live ? (
@@ -158,7 +158,7 @@ export function ActivityFeed() {
                       ) : null}
                       {explorer ? (
                         <a href={explorer} target="_blank" rel="noreferrer">
-                          Blockscout
+                          Solscan
                         </a>
                       ) : null}
                     </div>

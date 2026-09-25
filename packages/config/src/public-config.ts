@@ -46,7 +46,7 @@ export function readPublicConfig(): PublicConfig {
     appUrl: parseOrigin(process.env.NEXT_PUBLIC_APP_URL),
     apiUrl: parseOrigin(process.env.NEXT_PUBLIC_API_URL),
     links: resolveProjectLinks({
-      pons: process.env.NEXT_PUBLIC_PONS_URL,
+      pump: process.env.NEXT_PUBLIC_PUMP_URL,
       x: process.env.NEXT_PUBLIC_X_URL,
       docs: process.env.NEXT_PUBLIC_DOCS_URL,
       extension: process.env.NEXT_PUBLIC_EXTENSION_URL,

@@ -1,5 +1,5 @@
 /**
- * pons launchpad adapter.
+ * pump.fun launchpad adapter.
  *
  * Detection uses the route pattern verified in Phase 1 research against the
  * live site: token pages are `/launchpad/<contract>`. Canonical and Open Graph
@@ -55,7 +55,7 @@ export function readOgUrlMint(doc: Document): string | null {
 /**
  * Evidence policy.
  *
- * The URL is the PRIMARY authority: `/launchpad/<valid contract>` is what pons
+ * The URL is the PRIMARY authority: `/launchpad/<valid contract>` is what pump.fun
  * routed to and what the user sees in the address bar. canonical and og:url
  * are corroboration, not permission.
  *
@@ -83,7 +83,7 @@ export function evaluateEvidence(
   if (!fromPath) return { status: "none" }
 
   const context = {
-    source: "pons" as const,
+    source: "pump.fun" as const,
     chain: "robinhood" as const,
     mint: fromPath,
     pageUrl: `${url.origin}${url.pathname}`,
@@ -102,7 +102,7 @@ export function evaluateEvidence(
 }
 
 export const ponsAdapter: SiteAdapter = {
-  id: "pons",
+  id: "pump.fun",
 
   matches(url) {
     return HOSTS.has(url.hostname)
@@ -112,8 +112,8 @@ export const ponsAdapter: SiteAdapter = {
     const mint = mintFromPath(url.pathname)
     // Token pages are identified by the mint alone, so ?tab=, #hash and
     // analytics parameters cannot masquerade as navigation.
-    if (mint) return `pons:${mint}`
-    return `pons:route:${stripTrailingSlash(url.pathname) || "/"}`
+    if (mint) return `pump:${mint}`
+    return `pump:route:${stripTrailingSlash(url.pathname) || "/"}`
   },
 
   detect(url, doc, allowUrlOnly) {
@@ -131,7 +131,7 @@ export const ponsAdapter: SiteAdapter = {
      */
     const notify = () => onChange()
 
-    // pons is a client-routed app, so no load event fires between tokens.
+    // pump.fun is a client-routed app, so no load event fires between tokens.
     // We observe History API calls without altering their behaviour — the
     // original is always invoked and its return value passed through.
     const originalPush = history.pushState

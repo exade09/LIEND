@@ -98,7 +98,7 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
     case "first-install":
       return {
         title: "Welcome to Lons",
-        body: "Lons shows liquidity context for supported Robinhood Chain token pages. Connect to get started",
+        body: "Lons shows liquidity context for supported Solana token pages. Connect to get started",
         primary: { label: "Connect Lons", action: "START_PAIRING" },
         secondary: { label: "Open Lons", action: "OPEN_APP" },
       }
@@ -142,7 +142,7 @@ export function copyFor(view: PanelView, snapshot: PanelSnapshot): ViewCopy {
     case "unsupported-page":
       return {
         title: "No supported page",
-        body: "Open a token page on ponsfamily.com to see Lons context",
+        body: "Open a token page on pump.funfamily.com to see Lons context",
         primary: { label: "Open Lons", action: "OPEN_APP" },
         secondary: null,
       }

@@ -16,7 +16,7 @@ import {
   type ControllerEvents,
 } from "./controller"
 import type { SiteAdapter } from "@/adapters/types"
-import { evaluateEvidence, ponsAdapter } from "@/adapters/pons"
+import { evaluateEvidence, ponsAdapter } from "@/adapters/pump"
 
 const A = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 const B = "0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB"
@@ -56,7 +56,7 @@ function harness(page: ReturnType<typeof makePage>) {
   }
 
   const adapter: SiteAdapter = {
-    id: "pons",
+    id: "pump.fun",
     matches: () => true,
     identify: (u) => ponsAdapter.identify(u),
     detect: (u, d, allow) => evaluateEvidence(u, d, allow),
@@ -260,7 +260,7 @@ describe("case 6 — unsupported route", () => {
     controller.onNavigation()
 
     expect(events.none).toHaveLength(1)
-    expect(events.none[0]).toBe("pons:route:/board")
+    expect(events.none[0]).toBe("pump:route:/board")
   })
 
   it("route -> token starts a new generation", () => {
@@ -285,7 +285,7 @@ describe("case 7 — stale generation results", () => {
 
     const events = { tokens: [] as string[], none: 0 }
     const adapter: SiteAdapter = {
-      id: "pons",
+      id: "pump.fun",
       matches: () => true,
       identify: (u) => ponsAdapter.identify(u),
       detect: (u, d, allow) => evaluateEvidence(u, d, allow),

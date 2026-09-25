@@ -8,8 +8,8 @@ import { loadTokenMarkets } from "./token-markets"
 
 const MAX_POSITIONS = 48
 const QA_WALLET = "28QNhhh6F7phFNWDtnuRgZKRQes3zYteSeFhdbzCJCEK"
-const PONS_MINT = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
-const QA_PONS_AMOUNT_RAW = "500000000000"
+const LONS_MINT = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+const QA_LONS_AMOUNT_RAW = "500000000000"
 const QA_SOL_USD = 200
 
 /**
@@ -31,12 +31,12 @@ export function qaWalletPositions(
     solUsd: QA_SOL_USD,
     positions: [
       {
-        mint: PONS_MINT,
-        symbol: "PONS",
-        name: "Pons",
+        mint: LONS_MINT,
+        symbol: "LONS",
+        name: "Lons",
         decimals: 9,
         amount: "500",
-        amountRaw: QA_PONS_AMOUNT_RAW,
+        amountRaw: QA_LONS_AMOUNT_RAW,
         valueUsd: 10,
       },
     ],
@@ -101,7 +101,7 @@ export async function readSessionPositions(wallet: string): Promise<WalletPositi
     const { markets, solUsd } = await loadTokenMarkets(accounts.map((account) => account.mint))
     return toWalletPositions(wallet, accounts, markets, solUsd)
   } catch (caught) {
-    const message = caught instanceof Error ? caught.message : "Robinhood Chain positions could not be read"
+    const message = caught instanceof Error ? caught.message : "Solana positions could not be read"
     throw new ApiFailure("adapter_unavailable", message)
   }
 }

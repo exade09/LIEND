@@ -21,7 +21,7 @@ export function isLikelyEvmAddress(address: string): boolean {
 }
 
 export function getExplorerAddressUrl(address: string): string {
-  return `${project.explorerUrl}/address/${encodeURIComponent(address)}`;
+  return `${project.explorerUrl}/account/${encodeURIComponent(address)}`;
 }
 
 export function getExplorerTransactionUrl(signature: string): string {

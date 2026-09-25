@@ -175,7 +175,7 @@ export function ActivityTape() {
                 <strong>{selected.tokenDelta}</strong>
               </div>
               <div>
-                <span>ETH</span>
+                <span>SOL</span>
                 <strong>{selected.nativeDelta}</strong>
               </div>
               <div>
@@ -207,7 +207,7 @@ export function ActivityTape() {
                 rel="noreferrer"
               >
                 <Icon name="explorer" size={16} />
-                Open Blockscout
+                Open Solscan
                 <Icon name="external-link" size={13} />
               </a>
               <a
@@ -217,7 +217,7 @@ export function ActivityTape() {
                 rel="noreferrer"
               >
                 <Icon name="wallet" size={16} />
-                Wallet on Blockscout
+                Wallet on Solscan
               </a>
             </div>
           </div>

@@ -87,7 +87,7 @@ describe("sanitizeReturnTo", () => {
 
 describe("deep links", () => {
   it("builds a position link from config, never a literal origin", () => {
-    expect(positionUrl(APP, MINT, "pons")).toBe(`${APP}/positions/${MINT}?src=pons`)
+    expect(positionUrl(APP, MINT, "pump.fun")).toBe(`${APP}/positions/${MINT}?src=pump.fun`)
   })
 
   it("refuses to build a link for an invalid mint", () => {
@@ -95,7 +95,7 @@ describe("deep links", () => {
   })
 
   it("carries no financial values", () => {
-    const url = new URL(positionUrl(APP, MINT, "pons")!)
+    const url = new URL(positionUrl(APP, MINT, "pump.fun")!)
     expect([...url.searchParams.keys()]).toEqual(["src"])
   })
 

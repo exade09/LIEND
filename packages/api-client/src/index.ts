@@ -160,7 +160,7 @@ export function createLiendApiClient(options: LiendApiClientOptions) {
     holderCheck: (wallet: string) =>
       request(`/api/holder-check?wallet=${encodeURIComponent(wallet)}`, UtilityAccessSchema),
 
-    /** On-chain ERC-20 balances for the authenticated session wallet. */
+    /** On-chain SPL balances for the authenticated session wallet. */
     walletPositions: () => request("/api/positions", WalletPositionsResponseSchema),
 
     createPairingRequest: () =>

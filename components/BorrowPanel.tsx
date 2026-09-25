@@ -30,7 +30,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
   const canReview = market.eligible && collateralAmount > 0 && borrowAmount > 0 && ltv <= 65
 
   const route = useMemo(
-    () => ["Position check", "Market verify", "Collateral", "LONS program", "ETH settlement"],
+    () => ["Position check", "Market verify", "Collateral", "LONS program", "SOL settlement"],
     [],
   )
 
@@ -57,10 +57,10 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
       <div className="panel-heading">
         <div>
           <span className="overline">BORROWING ROUTE</span>
-          <h3>Configure a ETH borrow</h3>
+          <h3>Configure a SOL borrow</h3>
         </div>
         <div className="panel-heading__meta">
-          <span className="network-chip">Robinhood Chain</span>
+          <span className="network-chip">Solana</span>
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
 
           <div className="selected-asset">
             <span className="sol-avatar"><Icon name="sol" size={20} /></span>
-            <div><strong>Robinhood Chain</strong><small>ETH</small></div>
+            <div><strong>Solana</strong><small>SOL</small></div>
             <span className="selected-asset__tag">BORROW ASSET</span>
           </div>
 
@@ -124,9 +124,9 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
                 step="0.1"
                 value={borrowAmount}
                 onChange={(event) => setBorrowAmount(Number(event.target.value))}
-                aria-label="Borrow amount in ETH"
+                aria-label="Borrow amount in SOL"
               />
-              <strong>ETH</strong>
+              <strong>SOL</strong>
             </div>
             <small>Estimated value {formatCurrency(borrowValue)}</small>
           </label>
@@ -157,7 +157,7 @@ export function BorrowPanel({ market }: BorrowPanelProps) {
           <div><dt>Borrowed</dt><dd>{formatSol(borrowAmount)}</dd></div>
           <div><dt>Remaining Position</dt><dd className="muted">-- <small>WALLET REQUIRED</small></dd></div>
           <div><dt>Protocol Fee</dt><dd>{formatSol(fee, 5)} <small>EST</small></dd></div>
-          <div><dt>Network Cost</dt><dd>0.00002 ETH <small>EST</small></dd></div>
+          <div><dt>Network Cost</dt><dd>0.00002 SOL <small>EST</small></dd></div>
         </dl>
         <div className="borrow-summary__action">
           {ltv > 65 ? <span className="field-error">Reduce borrow amount to review this route</span> : null}

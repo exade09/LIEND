@@ -1,12 +1,12 @@
-/** Public market metadata for Robinhood Chain ERC-20 positions. */
+/** Public market metadata for Solana SPL positions. */
 
 const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
-const PONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const LONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 const DEXSCREENER_CHUNK = 30
 
 const WELL_KNOWN: Record<string, { symbol: string; name: string }> = {
   [WETH.toLowerCase()]: { symbol: "WETH", name: "Wrapped Ether" },
-  [PONS.toLowerCase()]: { symbol: "PONS", name: "Pons" },
+  [LONS.toLowerCase()]: { symbol: "LONS", name: "Lons" },
 }
 
 type DexPair = {

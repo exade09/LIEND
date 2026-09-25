@@ -4,7 +4,7 @@ import { use } from "react"
 import { useRouter } from "next/navigation"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findLoan, eth } from "@/lib/unbacked-book"
+import { findLoan, sol } from "@/lib/unbacked-book"
 
 export default function RepayPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -27,7 +27,7 @@ export default function RepayPage({ params }: { params: Promise<{ id: string }> 
               <div className="list">
                 <div className="list__row">
                   <span>Due</span>
-                  <span>{eth(loan.outstandingSol)}</span>
+                  <span>{sol(loan.outstandingSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Collateral released</span>

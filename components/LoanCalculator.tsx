@@ -47,15 +47,15 @@ export function LoanCalculator() {
           </div>
 
           <div className="calculator-route" aria-hidden="true">
-            <span>POSITION</span><i /><span>COLLATERAL</span><i /><span>ETH</span>
+            <span>POSITION</span><i /><span>COLLATERAL</span><i /><span>SOL</span>
           </div>
 
           <div className="calculator-output">
             <header><span>ESTIMATED OUTPUT</span></header>
             <div className="calculator-output__primary">
-              <span>Estimated ETH</span>
+              <span>Estimated SOL</span>
               <strong>{formatSol(result.estimatedSol, 4)}</strong>
-              <small>Using an illustrative ETH price of $150</small>
+              <small>Using an illustrative SOL price of $150</small>
             </div>
             <dl>
               <div><dt>Position Value</dt><dd>{formatCurrency(result.positionValueUsd)}</dd></div>

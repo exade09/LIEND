@@ -21,7 +21,7 @@ export interface BorrowingProvider {
 
 const demoRoute = (ticker: string): RouteInstruction[] => [
   {
-    program: "ERC-20 Contract",
+    program: "SPL Contract",
     instruction: "Verify token balance",
     description: `Read the ${ticker} position`,
   },
@@ -38,12 +38,12 @@ const demoRoute = (ticker: string): RouteInstruction[] => [
   {
     program: "LONS Program",
     instruction: "Request borrow",
-    description: "Evaluate the ETH borrow request",
+    description: "Evaluate the SOL borrow request",
   },
   {
-    program: "Robinhood Chain",
+    program: "Solana",
     instruction: "Prepare settlement",
-    description: "Prepare the ETH destination instruction",
+    description: "Prepare the SOL destination instruction",
   },
 ];
 
@@ -75,7 +75,7 @@ export const demoBorrowingAdapter: BorrowingProvider = {
       collateralTicker: market.ticker,
       collateralAmount,
       collateralValueUsd,
-      borrowAsset: "ETH",
+      borrowAsset: "SOL",
       borrowAmountSol,
       borrowValueUsd,
       remainingPositionUsd: null,

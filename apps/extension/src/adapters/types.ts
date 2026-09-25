@@ -71,7 +71,7 @@ export interface SiteAdapter {
   mountTrigger(onOpen: () => void): () => void
 }
 
-/** Robinhood Chain contracts use the canonical 20-byte EVM address shape. */
+/** Solana contracts use the canonical 20-byte EVM address shape. */
 const MINT_RE = /^0x[a-fA-F0-9]{40}$/
 
 export function isValidMint(value: string | null | undefined): value is string {

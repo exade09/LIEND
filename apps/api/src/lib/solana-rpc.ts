@@ -110,10 +110,10 @@ export async function readTokenBalance(owner: string, mint: string): Promise<big
 /**
  * Every token a wallet holds.
  *
- * The EVM build needed Blockscout for this because standard JSON-RPC cannot
- * enumerate ERC-20 balances. Solana can: token accounts are real accounts
- * owned by a token program, so one call per program lists them and no indexer
- * sits between us and the chain.
+ * The EVM build needed a block explorer for this, because standard JSON-RPC
+ * cannot enumerate ERC-20 balances. Solana can: token accounts are real
+ * accounts owned by a token program, so one call per program lists them and
+ * no indexer sits between us and the chain.
  *
  * What the RPC does not return is a symbol or a name - those live in metadata
  * rather than in the token account - so both stay undefined here and are

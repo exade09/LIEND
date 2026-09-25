@@ -84,7 +84,7 @@ the repo root, which is what makes the workspace linking work.
 | `NEXT_PUBLIC_LANDING_URL` | no | Back-to-landing links. |
 | `NEXT_PUBLIC_LONS_TOKEN_CONTRACT` | no | **Leave unset until launch.** Unset ⇒ `token-not-launched`. |
 | `NEXT_PUBLIC_LONS_MIN_HOLDER_BALANCE` | no | Base units, integer string. Unset ⇒ requirement not published. |
-| `NEXT_PUBLIC_PONS_URL` / `_X_URL` / `_DOCS_URL` | no | pons defaults to its verified launchpad root; other destinations remain configurable. |
+| `NEXT_PUBLIC_PUMP_URL` / `_X_URL` / `_DOCS_URL` | no | pump.fun defaults to its verified launchpad root; other destinations remain configurable. |
 | `NEXT_PUBLIC_EXTENSION_MODE` | no | `webstore` (default) or `download` for archive builds. |
 
 **API** (`liend-api`)
@@ -94,8 +94,8 @@ the repo root, which is what makes the workspace linking work.
 | `DATABASE_URL` | **yes in production** | Postgres connection string. See *Persistence*. |
 | `LONS_ALLOWED_ORIGINS` | **yes** | Comma-separated exact origins. Deny-by-default: empty blocks all cross-origin browser access. |
 | `LONS_SESSION_SECRET` | **yes in production** | HMAC key for session cookies. Generate with `openssl rand -base64 32`. |
-| `LONS_ROBINHOOD_RPC_URL` | no | Robinhood Chain JSON-RPC. Defaults to the official public mainnet endpoint. |
-| `LONS_TOKEN_CONTRACT` | no | Server-side ERC-20 contract. Unset ⇒ utility is `token-not-launched`. |
+| `LONS_ROBINHOOD_RPC_URL` | no | Solana JSON-RPC. Defaults to the official public mainnet endpoint. |
+| `LONS_TOKEN_CONTRACT` | no | Server-side SPL contract. Unset ⇒ utility is `token-not-launched`. |
 | `LONS_MIN_HOLDER_BALANCE` | no | Base units, integer string. |
 | `LONS_API_VERSION` | no | Reported by `/api/health`. |
 

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   const wallet = new URL(request.url).searchParams.get("wallet")?.trim() ?? ""
   if (!isLikelyEvmAddress(wallet)) {
     return Response.json(
-      { error: { code: "bad_request", message: "A valid Robinhood Chain wallet address is required" } },
+      { error: { code: "bad_request", message: "A valid Solana wallet address is required" } },
       { status: 400, headers: { "cache-control": "no-store" } },
     )
   }

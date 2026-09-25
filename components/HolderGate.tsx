@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Icon } from "@/components/Icon"
 import { LaunchAppLink } from "@/components/ProductLink"
-import { PonsLink } from "@/components/PonsLink"
+import { PumpLink } from "@/components/PumpLink"
 import { project } from "@/config/project"
 import { shortenAddress } from "@/lib/addresses"
 import {
@@ -33,7 +33,7 @@ function stateFromAccess(access: HolderAccessDto): GateState {
 }
 
 const idleCopy: Record<GateState, string> = {
-  "NOT CONNECTED": "Connect MetaMask to begin the eligibility check",
+  "NOT CONNECTED": "Connect Phantom to begin the eligibility check",
   CHECKING: "Checking LONS balance and active access parameters",
   ELIGIBLE: "LONS utility is available for this wallet",
   "NOT ELIGIBLE": "This wallet does not meet the LONS holding requirement",
@@ -155,7 +155,7 @@ export function HolderGate() {
   const startConnect = useCallback(() => {
     const found = refreshWallets()
     if (found.length === 0) {
-      setMessage("MetaMask was not detected in this browser")
+      setMessage("Phantom was not detected in this browser")
       return
     }
     if (found.length === 1 && found[0]) {
@@ -185,9 +185,9 @@ export function HolderGate() {
 
           <div className="access-flow" aria-label="Access sequence">
             {[
-              ["01", "Obtain LONS after migration", "Open the official pons destination"],
-              ["02", "Connect MetaMask", "Switch to Robinhood Chain in one approval"],
-              ["03", "Verify the position", "Read ERC-20 balances from Robinhood Chain"],
+              ["01", "Obtain LONS after migration", "Open the official pump.fun destination"],
+              ["02", "Connect Phantom", "Switch to Solana in one approval"],
+              ["03", "Verify the position", "Read SPL balances from Solana"],
               ["04", "Use LONS utility", "Available after wallet verification"],
             ].map(([index, title, copy]) => (
               <div key={index}>
@@ -198,11 +198,11 @@ export function HolderGate() {
             ))}
           </div>
 
-          <PonsLink className="inline-link">
+          <PumpLink className="inline-link">
             <Icon name="token" size={18} />
-            Open LONS on pons
+            Open LONS on pump.fun
             <Icon name="external-link" size={14} />
-          </PonsLink>
+          </PumpLink>
         </div>
 
         <div className="holder-gate-card">
@@ -281,7 +281,7 @@ export function HolderGate() {
               Enter App <Icon name="arrow" size={17} />
             </LaunchAppLink>
           ) : state === "NOT ELIGIBLE" ? (
-            <PonsLink className="button button--primary button--wide">Get LONS <Icon name="external-link" size={15} /></PonsLink>
+            <PumpLink className="button button--primary button--wide">Get LONS <Icon name="external-link" size={15} /></PumpLink>
           ) : state === "CHECKING" && busy === "check" && !failed ? (
             <button className="button button--primary button--wide" type="button" disabled>
               <span className="button-spinner" /> Checking LONS Balance

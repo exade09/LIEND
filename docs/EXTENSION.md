@@ -1,6 +1,6 @@
 # LONS Extension
 
-Chrome Manifest V3 extension providing liquidity context on supported Robinhood Chain
+Chrome Manifest V3 extension providing liquidity context on supported Solana
 token pages.
 
 ## Installing
@@ -16,7 +16,7 @@ Use the unpacked workflow below only for local development.
 5. Click **Load unpacked**.
 6. Select the extracted folder (the one containing `manifest.json`).
 7. Optionally pin LONS via the puzzle-piece icon so it stays in the toolbar.
-8. Open a token page on pons, e.g. `https://www.ponsfamily.com/launchpad/<contract>`.
+8. Open a token page on pump.fun, e.g. `https://www.ponsfamily.com/launchpad/<contract>`.
 9. Click the **LONS · Check liquidity** button at the lower left, or the
    toolbar icon, to open the side panel.
 10. Choose **Connect LONS** and approve this browser in the LONS app.
@@ -81,8 +81,8 @@ its host permission, only once real page evidence exists.
 
 The extension observes:
 
-- that the active tab is on ponsfamily.com,
-- the ERC-20 contract parsed from that page's URL,
+- that the active tab is on pump.funfamily.com,
+- the SPL contract parsed from that page's URL,
 - its own version and a device identifier.
 
 It does **not** observe browsing history, page content beyond the URL-derived
@@ -92,7 +92,7 @@ ponsfamily.com, so it is never injected anywhere else — enforced by the manife
 by convention.
 
 It never requests or stores a seed phrase or private key, and never signs a
-transaction. Signing stays in the LONS app with the user's own MetaMask account.
+transaction. Signing stays in the LONS app with the user's own Phantom account.
 
 ## Security model
 
@@ -171,7 +171,7 @@ available in the build environment). Use this checklist after loading unpacked:
 - [ ] Rejecting, or letting it expire, returns the panel to disconnected
 - [ ] After a full Chrome restart the panel is still Connected (no re-pairing)
 - [ ] Revoking the browser in the app returns the panel to disconnected
-- [ ] **Open in LONS** opens `/positions/<contract>?src=pons`
+- [ ] **Open in LONS** opens `/positions/<contract>?src=pump.fun`
 - [ ] With the app logged out, that link routes through auth and returns to the
       same position — no need to paste the contract again
 - [ ] The panel never displays a balance, price or liquidity figure

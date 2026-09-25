@@ -18,13 +18,13 @@ export const docsPages: DocsPage[] = [
     href: "/docs",
     title: "LONS Docs",
     kicker: "GitBook",
-    summary: "Product documentation for the LONS utility layer on Robinhood Chain",
+    summary: "Product documentation for the LONS utility layer on Solana",
     sections: [
       {
         heading: "What LONS is",
         body: [
-          "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain",
-          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as ETH",
+          "LONS is a utility layer for borrowing against supported migrated token positions on Solana",
+          "The product is built so a holder can access liquidity without making a market sale the first move. Collateral stays in the position. Borrowed value is requested as SOL",
           "The landing, the LONS App, the API and the Chrome extension are four surfaces of the same product. They share configuration, not hardcoded domains",
         ],
       },
@@ -32,7 +32,7 @@ export const docsPages: DocsPage[] = [
         heading: "What is live today",
         body: [
           "The marketing site, the App, the API and the extension install path are deployed",
-          "MetaMask authentication, sessions, extension pairing and Robinhood Chain ERC-20 position reads are in place",
+          "Phantom authentication, sessions, extension pairing and Solana SPL position reads are in place",
           "Borrow and repay flows prepare reviewable requests in the App. They do not claim onchain settlement until a lending contract is deployed",
         ],
       },
@@ -50,13 +50,13 @@ export const docsPages: DocsPage[] = [
     href: "/docs/token",
     title: "LONS token",
     kicker: "Access",
-    summary: "How the token, pons and holder access fit together",
+    summary: "How the token, pump.fun and holder access fit together",
     sections: [
       {
         heading: "Token status",
         body: [
-          "The LONS token is not launched yet. There is no ERC-20 contract in product config and no published holder threshold",
-          "The pons buttons follow the published CA from the admin console. A valid EVM contract opens its pons launchpad page; an empty or pre-launch label opens the launchpad root",
+          "The LONS token is not launched yet. There is no SPL contract in product config and no published holder threshold",
+          "The pump.fun buttons follow the published CA from the admin console. A valid EVM contract opens its pump.fun launchpad page; an empty or pre-launch label opens the launchpad root",
         ],
       },
       {
@@ -69,7 +69,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Where to get LONS",
         body: [
-          "The official acquisition path is pons. Use the pons control in the header. Do not follow unofficial ticker pages",
+          "The official acquisition path is pump.fun. Use the pump.fun control in the header. Do not follow unofficial ticker pages",
           "LONS never asks for a seed phrase, a private key or a wallet password",
         ],
       },
@@ -80,12 +80,12 @@ export const docsPages: DocsPage[] = [
     href: "/docs/how-it-works",
     title: "How it works",
     kicker: "Flow",
-    summary: "The six-step path from a connected wallet to ETH liquidity",
+    summary: "The six-step path from a connected wallet to SOL liquidity",
     sections: [
       {
         heading: "Connect",
         body: [
-          "A user connects MetaMask on Robinhood Chain. LONS asks for an EIP-191 plain-text signature to prove control of the address",
+          "A user connects Phantom on Solana. LONS asks for an EIP-191 plain-text signature to prove control of the address",
           "That signature creates no transaction and costs no fees",
         ],
       },
@@ -110,7 +110,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Execute and receive",
         body: [
-          "The user reviews the full route before confirming. After a successful execution, ETH is received in the destination wallet",
+          "The user reviews the full route before confirming. After a successful execution, SOL is received in the destination wallet",
         ],
       },
     ],
@@ -144,8 +144,8 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Positions and loans",
         body: [
-          "The App lists ERC-20 positions indexed for the connected Robinhood Chain account and prepares ETH borrow or repay requests for review",
-          "Draft requests remain clearly separated from public Blockscout activity until settlement contracts are live",
+          "The App lists SPL positions indexed for the connected Solana account and prepares SOL borrow or repay requests for review",
+          "Draft requests remain clearly separated from public Solscan activity until settlement contracts are live",
         ],
       },
     ],
@@ -155,7 +155,7 @@ export const docsPages: DocsPage[] = [
     href: "/docs/extension",
     title: "Chrome extension",
     kicker: "Context",
-    summary: "Side panel context on pons without taking custody of the wallet",
+    summary: "Side panel context on pump.fun without taking custody of the wallet",
     sections: [
       {
         heading: "Install",
@@ -166,7 +166,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "What it reads",
         body: [
-          "On supported pons token pages the extension identifies the ERC-20 contract from the URL and opens liquidity context in the side panel",
+          "On supported pump.fun token pages the extension identifies the SPL contract from the URL and opens liquidity context in the side panel",
           "It does not request seed phrases. It does not inject transactions into the page",
         ],
       },
@@ -206,7 +206,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Truthful empty states",
         body: [
-          "If the API, the App origin or the database is missing, the UI says so. LONS does not invent a mint, a holder threshold or a pons coin page",
+          "If the API, the App origin or the database is missing, the UI says so. LONS does not invent a mint, a holder threshold or a pump.fun coin page",
         ],
       },
     ],

@@ -13,7 +13,7 @@
  * its host permission are added only once real page evidence exists.
  */
 
-import { ponsAdapter } from "./pons"
+import { ponsAdapter } from "./pump"
 import type { SiteAdapter } from "./types"
 
 const ADAPTERS: readonly SiteAdapter[] = [ponsAdapter]

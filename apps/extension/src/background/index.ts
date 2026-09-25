@@ -45,11 +45,11 @@ function identifyUrl(raw: string | null | undefined): string | null {
 
   const parts = url.pathname.split("/").filter(Boolean)
   if (parts.length >= 2 && parts[0] === "launchpad" && MINT_RE.test(parts[1])) {
-    return `pons:${parts[1]}`
+    return `pump:${parts[1]}`
   }
   let path = url.pathname
   while (path.length > 0 && path.endsWith("/")) path = path.slice(0, -1)
-  return `pons:route:${path || "/"}`
+  return `pump:route:${path || "/"}`
 }
 
 // --- per-tab state -----------------------------------------------------------
@@ -176,7 +176,7 @@ async function openInLons(): Promise<void> {
 
   // Carries navigation context only — mint and source. No balance, no
   // eligibility, no quote. The App re-fetches all of that itself.
-  const url = context ? positionUrl(APP_URL, context.mint, "pons") : dashboardUrl(APP_URL)
+  const url = context ? positionUrl(APP_URL, context.mint, "pump.fun") : dashboardUrl(APP_URL)
   if (url) await chrome.tabs.create({ url })
 }
 

@@ -20,7 +20,7 @@ export interface SwapProvider {
 }
 
 const demoTokenPrice = (mint: string, symbol: string): number | null => {
-  if (symbol.toUpperCase() === "ETH" || mint.toUpperCase() === "ETH") {
+  if (symbol.toUpperCase() === "SOL" || mint.toUpperCase() === "SOL") {
     return DEMO_ETH_PRICE_USD;
   }
 
@@ -54,7 +54,7 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-direct-route",
       label: "Direct route",
-      programs: ["LONS Swap Adapter", "ERC-20 Contract"],
+      programs: ["LONS Swap Adapter", "SPL Contract"],
       estimatedOutput,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT,
       estimatedNetworkFeeEth: DEMO_NETWORK_FEE_ETH,
@@ -65,7 +65,7 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
           description: "Use the demonstration direct route",
         },
         {
-          program: "ERC-20 Contract",
+          program: "SPL Contract",
           instruction: "Prepare token changes",
           description: "Preview input and output account changes",
         },
@@ -75,7 +75,7 @@ const buildDemoRoutes = (request: SwapQuoteRequest): SwapRoute[] => {
     {
       id: "demo-split-route",
       label: "Split route",
-      programs: ["LONS Swap Adapter", "Demo Liquidity Route", "ERC-20 Contract"],
+      programs: ["LONS Swap Adapter", "Demo Liquidity Route", "SPL Contract"],
       estimatedOutput: estimatedOutput * 0.998,
       priceImpactPercent: DEMO_PRICE_IMPACT_PERCENT + 0.08,
       estimatedNetworkFeeEth: DEMO_NETWORK_FEE_ETH * 1.6,

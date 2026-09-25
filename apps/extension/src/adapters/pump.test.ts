@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { evaluateEvidence, mintFromPath, mintFromUrl } from "./pons"
+import { evaluateEvidence, mintFromPath, mintFromUrl } from "./pump"
 import { isValidMint } from "./types"
 import { selectAdapter } from "./registry"
 
@@ -126,8 +126,8 @@ describe("evaluateEvidence — three-way outcome", () => {
 
 describe("adapter registry", () => {
   it("selects ponsfamily.com for supported hosts", () => {
-    expect(selectAdapter(new URL("https://ponsfamily.com/"))?.id).toBe("pons")
-    expect(selectAdapter(new URL("https://www.ponsfamily.com/board"))?.id).toBe("pons")
+    expect(selectAdapter(new URL("https://ponsfamily.com/"))?.id).toBe("pump.fun")
+    expect(selectAdapter(new URL("https://www.ponsfamily.com/board"))?.id).toBe("pump.fun")
   })
 
   it("selects nothing elsewhere — Axiom stays disabled until verified", () => {

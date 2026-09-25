@@ -8,16 +8,18 @@ export const EMPTY_CA: PublishedCa = {
   updatedAt: null,
 }
 
-export const PONS_URL = "https://www.ponsfamily.com"
+export const PUMP_URL = "https://pump.fun"
 
 /**
- * Landing pons destination driven by the published CA text.
- * Empty CA stays on the board. Any published text is appended after /coin/.
+ * Landing destination driven by the published CA text.
+ *
+ * An empty or malformed CA stays on the launch board rather than linking to a
+ * coin page that does not exist. A published mint goes straight to its coin.
  */
-export function ponsTokenUrl(contract: string | null | undefined): string {
-  const address = contract?.trim() ?? ""
-  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) return `${PONS_URL}/launchpad`
-  return `${PONS_URL}/launchpad/${address}`
+export function pumpTokenUrl(mint: string | null | undefined): string {
+  const address = mint?.trim() ?? ""
+  if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) return `${PUMP_URL}/board`
+  return `${PUMP_URL}/coin/${address}`
 }
 
 export function parsePublishedCa(value: unknown): PublishedCa {

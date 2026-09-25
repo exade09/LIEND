@@ -1,6 +1,6 @@
 import type { Market } from "../types";
 
-// Static interface fixtures only. None of these values are fetched from Robinhood Chain.
+// Static interface fixtures only. None of these values are fetched from Solana.
 export const demoMarkets: Market[] = [
   {
     id: "demo-lons",

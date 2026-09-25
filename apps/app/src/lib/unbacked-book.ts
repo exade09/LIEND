@@ -3,7 +3,7 @@
  *
  * Positions come from on-chain token accounts. Quotes, loans and activity
  * stay in the browser until a lending program exists — nothing here is
- * settled on Robinhood Chain.
+ * settled on Solana.
  */
 
 export type UnbackedPosition = {
@@ -202,7 +202,7 @@ export function openLoan(
     kind: "borrow-review",
     mint: quote.mint,
     symbol: quote.symbol,
-    amount: `${loan.principalSol.toFixed(3)} ETH`,
+    amount: `${loan.principalSol.toFixed(3)} SOL`,
     occurredAt: loan.openedAt,
   }
   return {
@@ -224,7 +224,7 @@ export function repayLoan(book: UnbackedBook, id: string): UnbackedBook {
     kind: "repayment",
     mint: loan.mint,
     symbol: loan.symbol,
-    amount: `${loan.outstandingSol.toFixed(3)} ETH`,
+    amount: `${loan.outstandingSol.toFixed(3)} SOL`,
     occurredAt: closed.closedAt ?? Date.now(),
   }
   return {
@@ -260,8 +260,8 @@ export function usd(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
 
-export function eth(value: number) {
-  return `${value.toFixed(3)} ETH`
+export function sol(value: number) {
+  return `${value.toFixed(3)} SOL`
 }
 
 export function activityLabel(kind: UnbackedActivity["kind"]) {
@@ -278,7 +278,7 @@ export function borrowRequestMessage(wallet: string, quote: UnbackedQuote) {
     `wallet: ${wallet}`,
     `token: ${quote.symbol}`,
     `contract: ${quote.mint}`,
-    `borrow: ${quote.borrowSol.toFixed(4)} ETH`,
+    `borrow: ${quote.borrowSol.toFixed(4)} SOL`,
     `collateral: ${quote.collateralAmount} ${quote.symbol}`,
     "",
     "this request is submitted for review",

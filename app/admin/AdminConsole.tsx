@@ -3,8 +3,8 @@
 import { FormEvent, useCallback, useEffect, useState, type ReactNode } from "react"
 
 import { CaPlaque } from "@/components/CaPlaque"
-import { PonsLink } from "@/components/PonsLink"
-import { parsePublishedCa, ponsTokenUrl, type PublishedCa } from "@/lib/ca"
+import { PumpLink } from "@/components/PumpLink"
+import { parsePublishedCa, pumpTokenUrl, type PublishedCa } from "@/lib/ca"
 import { announcePublishedCa } from "@/lib/usePublishedCa"
 
 import styles from "./admin.module.css"
@@ -139,7 +139,7 @@ export function AdminConsole() {
       }
       const published = applyCa(body)
       announcePublishedCa(published)
-      setNote(published.mint ? "published to CA plaques and pons links" : "waiting state published")
+      setNote(published.mint ? "published to CA plaques and pump.fun links" : "waiting state published")
     } catch {
       setError("the contract address could not be published")
     } finally {
@@ -238,7 +238,7 @@ export function AdminConsole() {
       </div>
 
       <p className={styles.copy}>
-        Publish any text once. The same value is shown after CA: and appended after https://www.ponsfamily.com/launchpad/ on every pons link on the site
+        Publish any text once. The same value is shown after CA: and appended after https://www.ponsfamily.com/launchpad/ on every pump.fun link on the site
       </p>
 
       <dl className={styles.readout}>
@@ -277,7 +277,7 @@ export function AdminConsole() {
             setNote("")
           }}
         />
-        <p className={styles.inputHint}>SAME VALUE FOR CA: AND PONS/LAUNCHPAD/ · LEAVE EMPTY FOR WAITING AND THE PONS BOARD</p>
+        <p className={styles.inputHint}>SAME VALUE FOR CA: AND LONS/LAUNCHPAD/ · LEAVE EMPTY FOR WAITING AND THE LONS BOARD</p>
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         {note ? <p className={styles.status} role="status">{note}</p> : null}
         <div className={styles.actions}>
@@ -293,14 +293,14 @@ export function AdminConsole() {
       <div className={styles.preview}>
         <div className={styles.previewBar}>
           <span>LIVE PREVIEW</span>
-          <span>HEADER / FOOTER / PONS</span>
+          <span>HEADER / FOOTER / LONS</span>
         </div>
         <CaPlaque variant="footer" initialMint={mint.trim() || null} live={false} />
         <div className={styles.pumpPreview}>
-          <span className={styles.pumpPreviewLabel}>PONS</span>
-          <PonsLink className={styles.pumpPreviewUrl} mint={mint.trim() || null}>
-            {ponsTokenUrl(mint.trim() || null)}
-          </PonsLink>
+          <span className={styles.pumpPreviewLabel}>LONS</span>
+          <PumpLink className={styles.pumpPreviewUrl} mint={mint.trim() || null}>
+            {pumpTokenUrl(mint.trim() || null)}
+          </PumpLink>
         </div>
       </div>
     </ConsoleChrome>

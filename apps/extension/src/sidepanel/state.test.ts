@@ -10,7 +10,7 @@ function snap(overrides: Partial<PanelSnapshot> = {}): PanelSnapshot {
     pairing: null,
     page: "token",
     context: {
-      source: "pons",
+      source: "pump.fun",
       chain: "robinhood",
       mint: MINT,
       pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
@@ -113,7 +113,7 @@ describe("copyFor", () => {
       const text = `${copy.title} ${copy.body}`
       // No currency figures, percentages or token amounts anywhere.
       expect(text).not.toMatch(/\$\s?\d/)
-      expect(text).not.toMatch(/\d+(\.\d+)?\s?(ETH|USD|%)/i)
+      expect(text).not.toMatch(/\d+(\.\d+)?\s?(SOL|USD|%)/i)
     }
   })
 

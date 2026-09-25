@@ -5,7 +5,7 @@
  *
  * The EVM build had one job the Solana build does not: making sure the wallet
  * was pointed at the right network, and adding it if it was not. Solana wallets
- * are on Solana, so `ensureRobinhoodChain` has no equivalent and is gone.
+ * are on Solana, so `ensureSolana` has no equivalent and is gone.
  *
  * Phantom, Solflare and Backpack expose the same methods, so one path covers
  * all three and the flags below only decide what the button calls itself.

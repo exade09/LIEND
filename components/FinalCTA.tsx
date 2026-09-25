@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Icon"
 import { ExtensionCta, LaunchAppLink, ProductLink } from "@/components/ProductLink"
-import { PonsLink } from "@/components/PonsLink"
+import { PumpLink } from "@/components/PumpLink"
 import { project } from "@/config/project"
 import styles from "./FinalCTA.module.css"
 
@@ -21,7 +21,7 @@ export function FinalCTA() {
           <span className={styles.titleLine}>ACCESS THE LIQUIDITY</span>
         </h2>
         <p className={styles.copy}>
-          A second route for supported migrated token positions on Robinhood Chain
+          A second route for supported migrated token positions on Solana
         </p>
 
         <div className={styles.actions}>
@@ -30,10 +30,10 @@ export function FinalCTA() {
         </div>
 
         <nav className={styles.links} aria-label="LONS external links">
-          <PonsLink>
+          <PumpLink>
             <Icon name="pump-fun" size={17} />
-            pons
-          </PonsLink>
+            pump.fun
+          </PumpLink>
           <ProductLink href={project.xUrl}>
             <Icon name="x" size={16} />
             X

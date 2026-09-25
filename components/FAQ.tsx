@@ -6,7 +6,7 @@ const questions = [
   {
     question: "What is LONS",
     answer:
-      "LONS is a utility layer for borrowing against supported migrated token positions on Robinhood Chain",
+      "LONS is a utility layer for borrowing against supported migrated token positions on Solana",
   },
   {
     question: "Why would I borrow instead of sell",
@@ -30,11 +30,11 @@ const questions = [
   {
     question: "Where can I get LONS",
     answer:
-      "LONS can be accessed through the official pons link available on the website",
+      "LONS can be accessed through the official pump.fun link available on the website",
   },
   {
     question: "What can I borrow",
-    answer: "The initial interface should be designed around borrowing ETH",
+    answer: "The initial interface should be designed around borrowing SOL",
   },
   {
     question: "Can my position be liquidated",
@@ -49,7 +49,7 @@ const questions = [
   {
     question: "Are transactions visible onchain",
     answer:
-      "Yes, Robinhood Chain transaction activity can be inspected through supported explorers",
+      "Yes, Solana transaction activity can be inspected through supported explorers",
   },
   {
     question: "Can I inspect the complete route",

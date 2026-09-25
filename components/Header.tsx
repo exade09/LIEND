@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { project } from "@/config/project"
 import { Icon } from "@/components/Icon"
 import { LaunchAppLink, ProductLink, AddToChromeBadge } from "@/components/ProductLink"
-import { PonsLink } from "@/components/PonsLink"
+import { PumpLink } from "@/components/PumpLink"
 
 const navigation = [
   { label: "Product", href: "/#product" },
@@ -60,10 +60,10 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         </nav>
 
         <div className="nav-actions">
-          <PonsLink className="header-chip header-chip--pump" aria-label="LONS on pons">
+          <PumpLink className="header-chip header-chip--pump" aria-label="LONS on pump.fun">
             <Icon name="pump-fun" size={18} />
-            <span>pons</span>
-          </PonsLink>
+            <span>pump.fun</span>
+          </PumpLink>
           <ProductLink className="header-chip header-chip--docs" href={project.docsUrl} aria-label="LONS Docs">
             <Icon name="docs" size={18} />
             <span>Docs</span>
@@ -107,9 +107,9 @@ export function Header({ initialMint = null }: { initialMint?: string | null }) 
         <div className="mobile-menu__utility">
           <CaPlaque variant="menu" initialMint={initialMint} />
           <AddToChromeBadge />
-          <PonsLink className="header-chip header-chip--pump">
-            <Icon name="pump-fun" /> pons
-          </PonsLink>
+          <PumpLink className="header-chip header-chip--pump">
+            <Icon name="pump-fun" /> pump.fun
+          </PumpLink>
           <ProductLink className="header-chip header-chip--docs" href={project.docsUrl}>
             <Icon name="docs" /> Docs
           </ProductLink>

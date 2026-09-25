@@ -30,7 +30,7 @@ export function formatNumber(
 }
 
 export function formatSol(value: number, maximumFractionDigits = 4): string {
-  return `${formatNumber(value, maximumFractionDigits)} ETH`;
+  return `${formatNumber(value, maximumFractionDigits)} SOL`;
 }
 
 export function formatPercent(value: number, maximumFractionDigits = 1): string {

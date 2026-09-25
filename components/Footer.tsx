@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CaPlaque } from "@/components/CaPlaque";
 import { Icon } from "@/components/Icon";
 import { ProductLink } from "@/components/ProductLink";
-import { PonsLink } from "@/components/PonsLink";
+import { PumpLink } from "@/components/PumpLink";
 import { project } from "@/config/project";
 
 const footerLinks = [
@@ -38,10 +38,10 @@ export function Footer({ initialMint = null }: { initialMint?: string | null }) 
               <Icon name="x" size={17} />
               <span>X</span>
             </ProductLink>
-            <PonsLink aria-label="LONS on pons">
+            <PumpLink aria-label="LONS on pump.fun">
               <Icon name="pump-fun" size={18} />
-              <span>pons</span>
-            </PonsLink>
+              <span>pump.fun</span>
+            </PumpLink>
           </nav>
         </div>
 

@@ -144,7 +144,7 @@ export interface BorrowQuote extends DataProvenance {
   collateralTicker: string;
   collateralAmount: number;
   collateralValueUsd: number;
-  borrowAsset: "ETH";
+  borrowAsset: "SOL";
   borrowAmountSol: number;
   borrowValueUsd: number;
   remainingPositionUsd: number | null;
@@ -255,7 +255,7 @@ export interface DemoTransaction extends DataProvenance {
 
 export type ProtocolAction =
   | "Borrow opened"
-  | "ETH received"
+  | "SOL received"
   | "Position repaid"
   | "Collateral unlocked"
   | "Market added"

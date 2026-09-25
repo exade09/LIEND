@@ -7,7 +7,7 @@ import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useSession } from "@/components/SessionProvider"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { borrowRequestMessage, reservedLoan, eth, usd } from "@/lib/unbacked-book"
+import { borrowRequestMessage, reservedLoan, sol, usd } from "@/lib/unbacked-book"
 import { signWithSessionWallet } from "@/lib/wallet"
 
 export default function BorrowReviewPage({ params }: { params: Promise<{ mint: string }> }) {
@@ -64,7 +64,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
             <div className="notice">
               <strong>Wallet signature required</strong>
               <p>
-                MetaMask will show a borrow request. Sign it to reserve this token. The request goes
+                Phantom will show a borrow request. Sign it to reserve this token. The request goes
                 to review and does not transfer funds
               </p>
             </div>
@@ -73,7 +73,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
               <div className="list">
                 <div className="list__row">
                   <span>Borrow</span>
-                  <span>{eth(quote.borrowSol)}</span>
+                  <span>{sol(quote.borrowSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Collateral</span>
@@ -87,7 +87,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
                 </div>
                 <div className="list__row">
                   <span>Fee</span>
-                  <span>{eth(quote.feeSol)}</span>
+                  <span>{sol(quote.feeSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>

@@ -12,7 +12,7 @@ const routeIcons: Record<string, IconName> = {
   "wallet-return": "sol",
 }
 
-const currentWalletBalance = "112.041 ETH"
+const currentWalletBalance = "112.041 SOL"
 
 const routeSteps = [
   {
@@ -28,12 +28,12 @@ const routeSteps = [
   {
     id: "borrow",
     label: "BORROW",
-    instruction: "Confirm the ETH amount",
+    instruction: "Confirm the SOL amount",
   },
   {
     id: "wallet-return",
     label: "WALLET",
-    instruction: "Receive ETH in the destination wallet",
+    instruction: "Receive SOL in the destination wallet",
     value: currentWalletBalance,
   },
 ] as const
@@ -110,7 +110,7 @@ export function OnchainJourney() {
                 <span>all the way through</span>
               </h2>
               <p className={styles.lede}>
-                See the client path from a supported position to borrowed ETH,
+                See the client path from a supported position to borrowed SOL,
                 with only the checks and wallet information needed to understand the route
               </p>
 
@@ -126,7 +126,7 @@ export function OnchainJourney() {
                 <Icon name="arrow" size={15} aria-hidden="true" />
                 <span>BORROW</span>
                 <Icon name="arrow" size={15} aria-hidden="true" />
-                <span>ETH</span>
+                <span>SOL</span>
               </div>
             </header>
 
@@ -172,12 +172,12 @@ export function OnchainJourney() {
               <h3 id="client-route-summary">What this route means</h3>
               <p>
                 Choose a supported position, review the available borrow route,
-                confirm the amount, and receive ETH in the destination wallet
+                confirm the amount, and receive SOL in the destination wallet
               </p>
               <dl className={styles.routeFacts}>
                 <div>
                   <dt>FLOW</dt>
-                  <dd>POSITION / BORROW / ETH</dd>
+                  <dd>POSITION / BORROW / SOL</dd>
                 </div>
                 <div>
                   <dt>DESTINATION</dt>

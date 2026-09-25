@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import type { TapeEvent } from "@/lib/liveActivity"
 import styles from "./ActivityTape.module.css"
 
-const EXPLORER = "https://robinhoodchain.blockscout.com"
+const EXPLORER = "https://solscan.io"
 
 const kindLabel: Record<TapeEvent["kind"], string> = {
   borrow: "BORROW",
@@ -185,7 +185,7 @@ export function ActivityTape() {
                 <strong>{selected.tokenDelta}</strong>
               </div>
               <div>
-                <span>ETH</span>
+                <span>SOL</span>
                 <strong>{selected.nativeDelta}</strong>
               </div>
               <div>
@@ -216,15 +216,15 @@ export function ActivityTape() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Open Blockscout
+                Open Solscan
               </a>
               <a
                 className="button button--ghost"
-                href={`${EXPLORER}/address/${encodeURIComponent(selected.wallet)}`}
+                href={`${EXPLORER}/account/${encodeURIComponent(selected.wallet)}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                Wallet on Blockscout
+                Wallet on Solscan
               </a>
             </div>
           </section>

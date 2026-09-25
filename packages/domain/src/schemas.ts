@@ -21,7 +21,7 @@ export const BaseUnitAmount = z
   .string()
   .regex(/^\d+$/, "Amount must be an integer string in base units")
 
-export const DeepLinkSourceSchema = z.enum(["pons", "landing", "extension"])
+export const DeepLinkSourceSchema = z.enum(["pump.fun", "landing", "extension"])
 
 export const SolanaClusterSchema = z.literal("mainnet-beta")
 
@@ -32,7 +32,7 @@ export const SolanaClusterSchema = z.literal("mainnet-beta")
 export const WalletIdentitySchema = z.object({
   address: EvmAddress,
   cluster: SolanaClusterSchema,
-  /** Wallet app name as reported by the EIP-1193 provider. Display only. */
+  /** Wallet app name as reported by the wallet provider provider. Display only. */
   label: z.string().min(1).max(64).nullable(),
 })
 
@@ -139,7 +139,7 @@ export const AuthChallengeSchema = z.object({
 export const AuthVerifyRequestSchema = z.object({
   address: EvmAddress,
   nonce: z.string().min(32),
-  /** EIP-191 signature produced by MetaMask. */
+  /** EIP-191 signature produced by Phantom. */
   signature: z.string().regex(/^0x[a-fA-F0-9]{130}$/, "Not a valid EVM signature"),
 })
 

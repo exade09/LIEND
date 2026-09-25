@@ -1,7 +1,7 @@
 /**
  * External LIEND destinations.
  *
- * PRODUCT FACT: pons is the verified Robinhood Chain launch surface. X and
+ * PRODUCT FACT: pump.fun is the verified Solana launch surface. X and
  * exist yet. Every entry is nullable and unset by default. A null link means
  * the surface must hide or disable that affordance — never render a guessed
  * docs remain configured destinations rather than guessed URLs.
@@ -21,7 +21,7 @@ import { parseOrigin } from "./origins"
 export type ExtensionDistributionMode = "download" | "webstore"
 
 export type ProjectLinks = {
-  pons: string | null
+  pump: string | null
   x: string | null
   docs: string | null
   /** Archive download or Web Store listing, depending on `extensionMode`. */
@@ -34,14 +34,14 @@ export function resolveExtensionMode(raw: string | undefined | null): ExtensionD
 }
 
 export function resolveProjectLinks(env: {
-  pons?: string | null
+  pump?: string | null
   x?: string | null
   docs?: string | null
   extension?: string | null
   extensionMode?: string | null
 }): ProjectLinks {
   return {
-    pons: parseOrigin(env.pons) ?? "https://www.ponsfamily.com",
+    pump: parseOrigin(env.pump) ?? "https://www.ponsfamily.com",
     x: parseOrigin(env.x),
     docs: parseOrigin(env.docs),
     extension: parseOrigin(env.extension),

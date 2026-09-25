@@ -318,7 +318,7 @@ export function Leaderboard() {
 
               {walletActivity && !walletActivityLoading ? (
                 <p className="wallet-activity-panel__notice">
-                  {walletActivity.notice ?? "Activity supplied by the configured Robinhood Chain provider"}
+                  {walletActivity.notice ?? "Activity supplied by the configured Solana provider"}
                 </p>
               ) : null}
             </div>

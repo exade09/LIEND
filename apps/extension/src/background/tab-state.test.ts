@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest"
 import { acceptUpdate, resolveForDisplay, shouldEnterDetecting, type TabState } from "./tab-state"
 
-const A = "pons:0x39dBED3a2bd333467115dE45665cC57F813C4571"
-const B = "pons:0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB"
+const A = "pump:0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const B = "pump:0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB"
 
 function state(identity: string, generation: number, phase: TabState["phase"]): TabState {
   return {
@@ -12,7 +12,7 @@ function state(identity: string, generation: number, phase: TabState["phase"]): 
     context:
       phase === "token"
         ? {
-            source: "pons",
+            source: "pump.fun",
             chain: "robinhood",
             mint: identity.split(":")[1],
             pageUrl: `https://ponsfamily.com/launchpad/${identity.split(":")[1]}`,

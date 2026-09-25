@@ -12,14 +12,14 @@ const routeCopy = {
   borrow: {
     eyebrow: "Borrow route",
     metricLabel: "You receive",
-    metric: "Live ETH quote",
+    metric: "Live SOL quote",
     action: "Review borrow",
     status: "Ready to borrow",
   },
   repay: {
     eyebrow: "Repay route",
     metricLabel: "Amount due",
-    metric: "Live ETH quote",
+    metric: "Live SOL quote",
     action: "Review repayment",
     status: "Ready to repay",
   },
@@ -27,15 +27,15 @@ const routeCopy = {
 
 function PonsMark() {
   return (
-    <svg className={styles.pumpMark} viewBox="0 0 64 64" aria-label="pons">
+    <svg className={styles.pumpMark} viewBox="0 0 64 64" aria-label="pump.fun">
       <defs>
-        <linearGradient id="pons-gradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+        <linearGradient id="pump.fun-gradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
           <stop stopColor="#c8ff4d" />
           <stop offset="1" stopColor="#00a971" />
         </linearGradient>
       </defs>
       <rect x="5" y="5" width="54" height="54" rx="18" fill="#111716" stroke="#c8ff4d" strokeWidth="3" />
-      <path d="M19 47V17h15.5c8.2 0 13.5 4.7 13.5 12s-5.3 12-13.5 12H28v6h-9Zm9-14h6c3.2 0 5-1.4 5-4s-1.8-4-5-4h-6v8Z" fill="url(#pons-gradient)" />
+      <path d="M19 47V17h15.5c8.2 0 13.5 4.7 13.5 12s-5.3 12-13.5 12H28v6h-9Zm9-14h6c3.2 0 5-1.4 5-4s-1.8-4-5-4h-6v8Z" fill="url(#pump.fun-gradient)" />
     </svg>
   )
 }
@@ -98,7 +98,7 @@ export function PhoneShowcase() {
               <section className={styles.balance}>
                 <span>Portfolio value</span>
                 <strong>$150.00</strong>
-                <small>PONS POSITION</small>
+                <small>LONS POSITION</small>
               </section>
 
               <div className={styles.routeTabs} role="group" aria-label="Preview route">
@@ -118,7 +118,7 @@ export function PhoneShowcase() {
               <section className={styles.positionCard}>
                 <div className={styles.tokenRow}>
                   <span className={styles.tokenMark}><PonsMark /></span>
-                  <div><strong>pons token</strong><small>Robinhood Chain position</small></div>
+                  <div><strong>pump.fun token</strong><small>Solana position</small></div>
                   <b>$150.00</b>
                 </div>
                 <div className={styles.positionMeta}>
@@ -143,20 +143,20 @@ export function PhoneShowcase() {
               <div className={styles.phoneStatus}><span>9:41</span><span>5G&nbsp;&nbsp;100%</span></div>
               <header className={styles.routeHeader}>
                 <span>{copy.eyebrow}</span>
-                <strong>{mode === "borrow" ? "Position to ETH" : "ETH to position"}</strong>
+                <strong>{mode === "borrow" ? "Position to SOL" : "SOL to position"}</strong>
               </header>
 
               <section className={styles.receiveCard} aria-live="polite">
                 <span>{copy.metricLabel}</span>
                 <strong>{copy.metric}</strong>
-                <small>Calculated from the connected $150 pons position</small>
+                <small>Calculated from the connected $150 pump.fun position</small>
               </section>
 
               <section className={styles.reviewCard}>
-                <div><span>Position</span><strong>pons token</strong></div>
+                <div><span>Position</span><strong>pump.fun token</strong></div>
                 <div><span>Position value</span><strong>$150.00</strong></div>
-                <div><span>Network</span><strong>Robinhood Chain</strong></div>
-                <div><span>Approval</span><strong>MetaMask</strong></div>
+                <div><span>Network</span><strong>Solana</strong></div>
+                <div><span>Approval</span><strong>Phantom</strong></div>
               </section>
 
               <LaunchAppLink className={styles.reviewButton}>

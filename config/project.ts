@@ -6,9 +6,9 @@
  * domain is an env change plus a redeploy — never a code change.
  *
  * PRODUCT FACTS (approved, and encoded here rather than guessed):
- *  - The LONS token is not launched: there is no ERC-20 contract and no published
+ *  - The LONS token is not launched: there is no SPL contract and no published
  *    holder requirement.
- *  - pons is the launch surface on Robinhood Chain. A published CA remains
+ *  - pump.fun is the launch surface on Solana. A published CA remains
  *    visible as the verified contract; the launchpad root is always safe.
  *  - Docs ship on this site at `/docs` until a GitBook origin is configured.
  *  - The packaged zip archive is the primary extension distribution channel
@@ -113,10 +113,10 @@ export const project = {
   extensionArchive: "/lons-extension.zip",
 
   /**
-   * Static pons destination. Landing chips ignore this once a CA is
+   * Static pump.fun destination. Landing chips ignore this once a CA is
    * published and instead open https://www.ponsfamily.com/launchpad/{CA text}.
    */
-  ponsUrl: url(process.env.NEXT_PUBLIC_PONS_URL) ?? "https://www.ponsfamily.com",
+  pumpUrl: url(process.env.NEXT_PUBLIC_PUMP_URL) ?? "https://www.ponsfamily.com",
   xUrl: url(process.env.NEXT_PUBLIC_X_URL),
   /**
    * Docs. Relative `/docs` is the in-product GitBook. Override with an absolute
@@ -125,7 +125,7 @@ export const project = {
   docsUrl: url(process.env.NEXT_PUBLIC_DOCS_URL) ?? "/docs",
 
   /** Public block explorer — a real third-party service, not a LIEND claim. */
-  explorerUrl: "https://robinhoodchain.blockscout.com",
+  explorerUrl: "https://solscan.io",
   rpcUrl: "https://rpc.mainnet.chain.robinhood.com",
 
   token: {

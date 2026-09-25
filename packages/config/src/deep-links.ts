@@ -13,9 +13,9 @@
 import { parseMint } from "./token"
 
 /** Where an extension-originated link came from. Attribution only — never affects authorization. */
-export type DeepLinkSource = "pons" | "landing" | "extension"
+export type DeepLinkSource = "pump.fun" | "landing" | "extension"
 
-const SOURCES: readonly DeepLinkSource[] = ["pons", "landing", "extension"]
+const SOURCES: readonly DeepLinkSource[] = ["pump.fun", "landing", "extension"]
 
 export function isDeepLinkSource(value: unknown): value is DeepLinkSource {
   return typeof value === "string" && (SOURCES as readonly string[]).includes(value)

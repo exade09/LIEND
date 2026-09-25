@@ -4,7 +4,7 @@ import styles from "./privacy.module.css"
 export const metadata: Metadata = {
   title: "Privacy Policy | LONS",
   description:
-    "How the LONS Chrome extension and related LONS surfaces handle data on supported Robinhood Chain token pages",
+    "How the LONS Chrome extension and related LONS surfaces handle data on supported Solana token pages",
 }
 
 export default function PrivacyPage() {
@@ -25,9 +25,9 @@ export default function PrivacyPage() {
         <section className={styles.section}>
           <h2>What LONS is</h2>
           <p>
-            LONS is a utility layer for supported migrated token positions on Robinhood Chain.
+            LONS is a utility layer for supported migrated token positions on Solana.
             The Chrome extension adds liquidity context on supported token pages. It
-            currently runs on pons coin pages. It is not a wallet, not a trading
+            currently runs on pump.fun coin pages. It is not a wallet, not a trading
             bot, and not a sniper. It does not sign transactions. Signing stays in the
             LONS App with the user&apos;s own wallet
           </p>
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
           <p>The extension only processes what it needs for that single purpose:</p>
           <ul>
             <li>
-              The active tab URL on pons, plus the page&apos;s canonical and Open
+              The active tab URL on pump, plus the page&apos;s canonical and Open
               Graph URL when present, to read the token mint from a coin route
             </li>
             <li>
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
           <p>
-            The content script is declared only for pons. It is not injected on
+            The content script is declared only for pump.fun. It is not injected on
             other sites. It does not read wallets, cookies, keystrokes, form fields,
             prices, or balances from the host page
           </p>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             data, location, browsing history as a list of visited pages, messages, or
             a record of clicks and keystrokes. It does not scrape the host page for
             financial figures. The side panel does not display a balance, price, or
-            liquidity number from pons
+            liquidity number from pump.fun
           </p>
         </section>
 

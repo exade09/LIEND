@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { parseMint } from "@liend/config"
 import { UtilityGate } from "@/components/UtilityGate"
 import { useUnbackedBook } from "@/components/UnbackedBook"
-import { findPosition, loanLabel, maxBorrowSol, quoteBorrow, reservedLoan, eth, usd } from "@/lib/unbacked-book"
+import { findPosition, loanLabel, maxBorrowSol, quoteBorrow, reservedLoan, sol, usd } from "@/lib/unbacked-book"
 
 export default function BorrowPage({ params }: { params: Promise<{ mint: string }> }) {
   const { mint } = use(params)
@@ -31,7 +31,7 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
       <header className="page-head">
         <div>
           <h1>Borrow</h1>
-          <p>{position ? `${position.symbol} → ETH` : valid ?? "Invalid mint"}</p>
+          <p>{position ? `${position.symbol} → SOL` : valid ?? "Invalid mint"}</p>
         </div>
       </header>
       <UtilityGate>
@@ -54,7 +54,7 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
               />
-              <span className="muted">Max {eth(ceiling)}</span>
+              <span className="muted">Max {sol(ceiling)}</span>
             </label>
             <div className="panel">
               <h2>Quote</h2>
@@ -67,11 +67,11 @@ export default function BorrowPage({ params }: { params: Promise<{ mint: string 
                 </div>
                 <div className="list__row">
                   <span>You receive</span>
-                  <span>{eth(quote.borrowSol)}</span>
+                  <span>{sol(quote.borrowSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>Fee</span>
-                  <span>{eth(quote.feeSol)}</span>
+                  <span>{sol(quote.feeSol)}</span>
                 </div>
                 <div className="list__row">
                   <span>LTV</span>
