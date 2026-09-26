@@ -21,7 +21,25 @@ import type { TapeEvent, TapeKind } from "@/data/activityTape"
 
 const LONS_TOKEN = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 const WSOL = "So11111111111111111111111111111111111111112"
-const RPC = process.env.NEXT_PUBLIC_SOLANA_RPC_URL ?? "https://api.mainnet-beta.solana.com"
+/**
+ * Endpoints for the tape, in the order they are tried.
+ *
+ * Measured against the two calls this file actually makes rather than assumed:
+ * the official endpoint serves both, publicnode serves both, and ankr, drpc,
+ * omniatech, onfinality and blockeden refuse outright with 403, 400, 521, 429
+ * and 402. publicnode is therefore a real second chance here - though not for
+ * balances, where it answers 403 and is deliberately absent.
+ *
+ * The keyed endpoint is read from a SERVER variable, never a NEXT_PUBLIC_ one.
+ * This module is imported only by the activity-tape route, so it never reaches
+ * the browser - and a keyed URL behind NEXT_PUBLIC_ would be inlined into the
+ * client bundle and handed to every visitor along with the key in it.
+ */
+const RPC_ENDPOINTS = [
+  process.env.LONS_SOLANA_RPC_URL,
+  "https://api.mainnet-beta.solana.com",
+  "https://solana-rpc.publicnode.com",
+].filter((url): url is string => Boolean(url))
 const DEXSCREENER = "https://api.dexscreener.com/latest/dex/tokens"
 const CACHE_MS = 18_000
 const MAX_EVENT_SOL = 8
@@ -56,17 +74,31 @@ function hash(value: string): number {
 }
 
 async function rpc(method: string, params: unknown[]): Promise<unknown> {
-  const response = await fetch(RPC, {
-    method: "POST",
-    headers: { "content-type": "application/json", accept: "application/json" },
-    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-    cache: "no-store",
-    signal: AbortSignal.timeout(10_000),
-  })
-  if (!response.ok) throw new Error(`Solana RPC returned ${response.status}`)
-  const body = await response.json() as { result?: unknown; error?: { message?: string } }
-  if (body.error) throw new Error(body.error.message ?? "Solana RPC refused the call")
-  return body.result
+  let lastError = "no Solana endpoint answered"
+  for (const url of RPC_ENDPOINTS) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "content-type": "application/json", accept: "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+        cache: "no-store",
+        signal: AbortSignal.timeout(10_000),
+      })
+      if (!response.ok) {
+        lastError = `Solana RPC returned ${response.status}`
+        continue
+      }
+      const body = await response.json() as { result?: unknown; error?: { message?: string } }
+      if (body.error) {
+        lastError = body.error.message ?? "Solana RPC refused the call"
+        continue
+      }
+      return body.result
+    } catch (caught) {
+      lastError = caught instanceof Error ? caught.message : lastError
+    }
+  }
+  throw new Error(lastError)
 }
 
 async function priceOf(mint: string): Promise<number | null> {
