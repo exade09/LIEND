@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { connection } from "next/server"
 
-import { parsePublishedCa, type PublishedCa } from "@/lib/ca"
+import { parseMintText, parsePublishedCa, type PublishedCa } from "@/lib/ca"
 
 const KV_KEY = "liend:published-ca"
 const FILE_NAME = "published-ca.json"
@@ -24,7 +24,9 @@ function filePath(): string {
 }
 
 function envMint(): string | null {
-  return process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT?.trim() || null
+  // Parsed, not just trimmed: the seed is as capable of holding a pre-port EVM
+  // address as the store is, and it must not be served as a contract either.
+  return parseMintText(process.env.NEXT_PUBLIC_LONS_TOKEN_CONTRACT)
 }
 
 function envSeed(): PublishedCa {
@@ -191,8 +193,14 @@ export async function getPublishedCa(): Promise<PublishedCa> {
 }
 
 export async function setPublishedCa(mint: string | null): Promise<PublishedCa> {
+  // An address that is not a Solana mint is not stored. Clearing is explicit -
+  // an empty string - so a typo cannot silently unpublish the real one either.
+  const cleared = mint === null || mint.trim() === ""
+  const parsed = cleared ? null : parseMintText(mint)
+  if (!cleared && !parsed) throw new Error("Not a valid Solana mint")
+
   const value: PublishedCa = {
-    mint,
+    mint: parsed,
     updatedAt: new Date().toISOString(),
   }
   await writeConfiguredStore(value)

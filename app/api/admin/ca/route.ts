@@ -1,4 +1,5 @@
 import { isAdminConfigured, isAdminRequest } from "@/lib/admin-session"
+import { parseMintText } from "@/lib/ca"
 import { getPublishedCa, setPublishedCa, storeKind } from "@/lib/published-ca"
 
 export const dynamic = "force-dynamic"
@@ -32,6 +33,15 @@ export async function PUT(request: Request) {
     mint = typeof body.mint === "string" ? body.mint.trim() : ""
   } catch {
     mint = ""
+  }
+
+  // A mistyped address and an unreachable store are different failures, and
+  // the operator needs to be told which one happened.
+  if (mint && !parseMintText(mint)) {
+    return Response.json(
+      { error: "that is not a valid Solana mint" },
+      { status: 400, headers: { "cache-control": "no-store" } },
+    )
   }
 
   try {
