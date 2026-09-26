@@ -13,7 +13,7 @@ function state(identity: string, generation: number, phase: TabState["phase"]): 
       phase === "token"
         ? {
             source: "pump.fun",
-            chain: "robinhood",
+            chain: "solana",
             mint: identity.split(":")[1],
             pageUrl: `https://ponsfamily.com/launchpad/${identity.split(":")[1]}`,
             detectedAt: 1,

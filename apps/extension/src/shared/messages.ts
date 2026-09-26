@@ -23,7 +23,7 @@ export type SupportedSource = z.infer<typeof SupportedSourceSchema>
 
 export const TokenContextSchema = z.object({
   source: SupportedSourceSchema,
-  chain: z.literal("robinhood"),
+  chain: z.literal("solana"),
   mint: EvmAddress,
   pageUrl: z.string().url(),
   detectedAt: z.number().int().positive(),

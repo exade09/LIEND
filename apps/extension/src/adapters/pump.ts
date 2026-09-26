@@ -84,7 +84,7 @@ export function evaluateEvidence(
 
   const context = {
     source: "pump.fun" as const,
-    chain: "robinhood" as const,
+    chain: "solana" as const,
     mint: fromPath,
     pageUrl: `${url.origin}${url.pathname}`,
     detectedAt: Date.now(),

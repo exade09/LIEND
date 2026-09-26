@@ -126,7 +126,7 @@ export const project = {
 
   /** Public block explorer — a real third-party service, not a LIEND claim. */
   explorerUrl: "https://solscan.io",
-  rpcUrl: "https://rpc.mainnet.chain.robinhood.com",
+  rpcUrl: process.env.NEXT_PUBLIC_SOLANA_RPC_URL ?? "https://api.mainnet-beta.solana.com",
 
   token: {
     /** No contract exists yet. Set NEXT_PUBLIC_LONS_TOKEN_CONTRACT at launch. */

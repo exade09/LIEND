@@ -11,7 +11,7 @@ function snap(overrides: Partial<PanelSnapshot> = {}): PanelSnapshot {
     page: "token",
     context: {
       source: "pump.fun",
-      chain: "robinhood",
+      chain: "solana",
       mint: MINT,
       pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
       detectedAt: Date.now(),

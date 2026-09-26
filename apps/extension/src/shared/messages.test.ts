@@ -6,7 +6,7 @@ const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
 function context(overrides: Record<string, unknown> = {}) {
   return {
     source: "pump.fun",
-    chain: "robinhood",
+    chain: "solana",
     mint: MINT,
     pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
     detectedAt: Date.now(),
