@@ -1,12 +1,18 @@
-/** Public market metadata for Solana SPL positions. */
+/**
+ * Public market metadata for Solana SPL positions.
+ *
+ * Every comparison in this file is exact, and that is the whole point. An EVM
+ * address is case-insensitive, so the original lowercased both sides before
+ * matching. A Solana mint is base58, which IS case-sensitive - lowercasing one
+ * produces a different address, so that comparison matched nothing and every
+ * position came back with no price at all.
+ */
 
-const WETH = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
-const LONS = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const WSOL = "So11111111111111111111111111111111111111112"
 const DEXSCREENER_CHUNK = 30
 
 const WELL_KNOWN: Record<string, { symbol: string; name: string }> = {
-  [WETH.toLowerCase()]: { symbol: "WETH", name: "Wrapped Ether" },
-  [LONS.toLowerCase()]: { symbol: "LONS", name: "Lons" },
+  [WSOL]: { symbol: "SOL", name: "Wrapped SOL" },
 }
 
 type DexPair = {
@@ -23,9 +29,9 @@ function chunks<T>(items: T[], size: number): T[][] {
   return groups
 }
 
-export function pickDexPair(pairs: DexPair[], contract: string): DexPair | null {
-  const needle = contract.toLowerCase()
-  const matches = pairs.filter((pair) => pair.baseToken?.address?.toLowerCase() === needle)
+export function pickDexPair(pairs: DexPair[], mint: string): DexPair | null {
+  // Exact, never lowercased: see the note at the top of this file.
+  const matches = pairs.filter((pair) => pair.baseToken?.address === mint)
   return matches.sort((a, b) => (b.liquidity?.usd ?? 0) - (a.liquidity?.usd ?? 0))[0] ?? null
 }
 
@@ -34,10 +40,10 @@ export function clipLabel(value: string, max: number): string {
   return trimmed.length > max ? trimmed.slice(0, max) : trimmed
 }
 
-function fallbackLabel(contract: string) {
-  return WELL_KNOWN[contract.toLowerCase()] ?? {
-    symbol: `${contract.slice(0, 6)}…${contract.slice(-4)}`,
-    name: contract,
+function fallbackLabel(mint: string) {
+  return WELL_KNOWN[mint] ?? {
+    symbol: `${mint.slice(0, 4)}…${mint.slice(-4)}`,
+    name: mint,
   }
 }
 
@@ -64,15 +70,14 @@ export async function loadTokenMarkets(contracts: string[]): Promise<{
   solUsd: number | null
 }> {
   const unique = [...new Set(contracts)]
-  const priced = unique.some((address) => address.toLowerCase() === WETH.toLowerCase())
-    ? unique
-    : [...unique, WETH]
+  // SOL is always priced, because every borrow figure is denominated in it.
+  const priced = unique.includes(WSOL) ? unique : [...unique, WSOL]
   const pairs = await fetchDexPairs(priced)
   const markets = new Map<string, TokenMarket>()
 
   for (const contract of unique) {
     const pair = pickDexPair(pairs, contract)
-    const known = WELL_KNOWN[contract.toLowerCase()]
+    const known = WELL_KNOWN[contract]
     const fallback = fallbackLabel(contract)
     const rawPrice = Number(pair?.priceUsd)
     markets.set(contract, {
@@ -82,7 +87,7 @@ export async function loadTokenMarkets(contracts: string[]): Promise<{
     })
   }
 
-  const ethPair = pickDexPair(pairs, WETH)
-  const rawEthUsd = Number(ethPair?.priceUsd)
-  return { markets, solUsd: Number.isFinite(rawEthUsd) && rawEthUsd > 0 ? rawEthUsd : null }
+  const solPair = pickDexPair(pairs, WSOL)
+  const rawSolUsd = Number(solPair?.priceUsd)
+  return { markets, solUsd: Number.isFinite(rawSolUsd) && rawSolUsd > 0 ? rawSolUsd : null }
 }

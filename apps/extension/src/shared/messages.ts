@@ -15,7 +15,7 @@
  */
 
 import { z } from "zod"
-import { EvmAddress } from "@liend/domain"
+import { SolanaAddress } from "@liend/domain"
 
 /** Sites the extension is allowed to act on. Axiom is defined but disabled. */
 export const SupportedSourceSchema = z.enum(["pump.fun"])
@@ -24,7 +24,7 @@ export type SupportedSource = z.infer<typeof SupportedSourceSchema>
 export const TokenContextSchema = z.object({
   source: SupportedSourceSchema,
   chain: z.literal("solana"),
-  mint: EvmAddress,
+  mint: SolanaAddress,
   pageUrl: z.string().url(),
   detectedAt: z.number().int().positive(),
 })

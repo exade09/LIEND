@@ -7,14 +7,15 @@
  * was pointed at the right network, and adding it if it was not. Solana wallets
  * are on Solana, so `ensureSolana` has no equivalent and is gone.
  *
- * Phantom, Solflare and Backpack expose the same methods, so one path covers
- * all three and the flags below only decide what the button calls itself.
+ * Every supported wallet exposes the same methods, so one path covers them all
+ * and the list below only decides what a button is allowed to call itself.
  */
 
 type SolanaProvider = {
   isPhantom?: boolean
   isSolflare?: boolean
   isBackpack?: boolean
+  isOkxWallet?: boolean
   publicKey?: { toString(): string } | null
   connect: (options?: { onlyIfTrusted?: boolean }) => Promise<{ publicKey?: { toString(): string } }>
   disconnect?: () => Promise<void>
@@ -28,12 +29,25 @@ type SolanaWindow = Window & {
   solana?: SolanaProvider
   solflare?: SolanaProvider
   backpack?: SolanaProvider
+  okxwallet?: { solana?: SolanaProvider }
 }
 
+/**
+ * Ordered roughly by how many Solana holders actually have them installed.
+ *
+ * Every one of these injects the same three methods, so the list only decides
+ * what a button is allowed to call itself. A wallet that is not installed
+ * contributes nothing: `pick` returns null and it never appears.
+ *
+ * Phantom and OKX hang their provider off a namespace rather than the bare
+ * window, so reading `window.solana` alone would find whichever of them won
+ * the race to claim it and miss the other.
+ */
 const CANDIDATES: Array<{ name: string; pick: (win: SolanaWindow) => SolanaProvider | null | undefined }> = [
   { name: "Phantom", pick: (win) => win.phantom?.solana ?? (win.solana?.isPhantom ? win.solana : null) },
   { name: "Solflare", pick: (win) => (win.solflare?.isSolflare ? win.solflare : null) },
   { name: "Backpack", pick: (win) => (win.backpack?.isBackpack ? win.backpack : null) },
+  { name: "OKX Wallet", pick: (win) => win.okxwallet?.solana ?? (win.solana?.isOkxWallet ? win.solana : null) },
 ]
 
 export type DiscoveredWallet = {

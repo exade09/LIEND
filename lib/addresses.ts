@@ -1,6 +1,6 @@
 import { project } from "../config/project";
 
-const EVM_ADDRESS_PATTERN = /^0x[a-fA-F0-9]{40}$/;
+const SOLANA_ADDRESS_PATTERN = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 
 export function shortenAddress(
   address: string,
@@ -16,8 +16,8 @@ export function shortenAddress(
 
 export const formatAddress = shortenAddress;
 
-export function isLikelyEvmAddress(address: string): boolean {
-  return EVM_ADDRESS_PATTERN.test(address);
+export function isLikelySolanaAddress(address: string): boolean {
+  return SOLANA_ADDRESS_PATTERN.test(address);
 }
 
 export function getExplorerAddressUrl(address: string): string {

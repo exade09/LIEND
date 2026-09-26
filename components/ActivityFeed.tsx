@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { Icon, type IconName } from "@/components/Icon"
 import { kindLabel, type TapeEvent, type TapeKind } from "@/data/activityTape"
-import { getExplorerTransactionUrl, isLikelyEvmAddress, shortenAddress } from "@/lib/addresses"
+import { getExplorerTransactionUrl, isLikelySolanaAddress, shortenAddress } from "@/lib/addresses"
 
 function kindIcon(kind: TapeKind): IconName {
   if (kind === "borrow") return "borrow"
@@ -132,7 +132,7 @@ export function ActivityFeed() {
           ) : events.length > 0 ? (
             <ol className="activity-list" aria-label="Protocol events">
               {events.map((item) => {
-                const copyableWallet = isLikelyEvmAddress(item.wallet)
+                const copyableWallet = isLikelySolanaAddress(item.wallet)
                 const explorer = getExplorerTransactionUrl(item.signature)
 
                 return (

@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest"
 import { parseFromContent, parseFromPanel } from "./messages"
 
-const MINT = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
+const MINT = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 
 function context(overrides: Record<string, unknown> = {}) {
   return {
     source: "pump.fun",
     chain: "solana",
     mint: MINT,
-    pageUrl: `https://ponsfamily.com/launchpad/${MINT}`,
+    pageUrl: `https://pump.fun/coin/${MINT}`,
     detectedAt: Date.now(),
     ...overrides,
   }

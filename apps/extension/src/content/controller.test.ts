@@ -18,11 +18,11 @@ import {
 import type { SiteAdapter } from "@/adapters/types"
 import { evaluateEvidence, ponsAdapter } from "@/adapters/pump"
 
-const A = "0x39dBED3a2bd333467115dE45665cC57F813C4571"
-const B = "0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB"
-const C = "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73"
+const A = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+const B = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
+const C = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
 
-const coin = (mint: string) => `https://ponsfamily.com/launchpad/${mint}`
+const coin = (mint: string) => `https://pump.fun/coin/${mint}`
 
 function makePage(url: string, canonicalMint: string | null, ogMint = canonicalMint) {
   return {
@@ -254,7 +254,7 @@ describe("case 6 — unsupported route", () => {
     const { controller, events } = harness(page)
     controller.start()
 
-    page.url = "https://ponsfamily.com/board"
+    page.url = "https://pump.fun/board"
     page.canonicalMint = null
     page.ogMint = null
     controller.onNavigation()
@@ -264,7 +264,7 @@ describe("case 6 — unsupported route", () => {
   })
 
   it("route -> token starts a new generation", () => {
-    const page = makePage("https://ponsfamily.com/board", null)
+    const page = makePage("https://pump.fun/board", null)
     const { controller, events } = harness(page)
     controller.start()
 

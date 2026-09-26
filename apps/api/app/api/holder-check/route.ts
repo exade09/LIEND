@@ -1,4 +1,4 @@
-import { EvmAddress } from "@liend/domain"
+import { SolanaAddress } from "@liend/domain"
 import { ApiFailure, handle, json, preflight } from "@/lib/http"
 import { readServerEnv } from "@/lib/env"
 import { readWalletTokenAccounts } from "@/lib/solana-rpc"
@@ -21,9 +21,9 @@ export function OPTIONS(request: Request) {
 export function GET(request: Request) {
   return handle(request, async () => {
     const raw = new URL(request.url).searchParams.get("wallet")
-    const parsed = EvmAddress.safeParse(raw)
+    const parsed = SolanaAddress.safeParse(raw)
     if (!parsed.success) {
-      throw new ApiFailure("bad_request", "A valid EVM wallet address is required")
+      throw new ApiFailure("bad_request", "A valid Solana wallet address is required")
     }
 
     const wallet = parsed.data

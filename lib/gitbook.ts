@@ -56,7 +56,7 @@ export const docsPages: DocsPage[] = [
         heading: "Token status",
         body: [
           "The LONS token is not launched yet. There is no SPL contract in product config and no published holder threshold",
-          "The pump.fun buttons follow the published CA from the admin console. A valid EVM contract opens its pump.fun launchpad page; an empty or pre-launch label opens the launchpad root",
+          "The pump.fun buttons follow the published CA from the admin console. A valid Solana mint opens its pump.fun launchpad page; an empty or pre-launch label opens the launchpad root",
         ],
       },
       {

@@ -31,7 +31,7 @@ const ALLOWED_HOSTS = new Set(["ponsfamily.com", "www.ponsfamily.com"])
  * The worker needs it to reconcile stored state against the tab's live URL
  * without loading adapter code (which pulls in DOM-only helpers).
  */
-const MINT_RE = /^0x[a-fA-F0-9]{40}$/
+const MINT_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
 
 function identifyUrl(raw: string | null | undefined): string | null {
   if (!raw) return null

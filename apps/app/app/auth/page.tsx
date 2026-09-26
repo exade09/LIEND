@@ -107,8 +107,8 @@ function AuthPageInner() {
 
       {wallets.length === 0 ? (
         <div className="empty">
-          No Solana wallet was detected in this browser. Phantom, Solflare and Backpack all
-          work here - install one, then reload this page
+          No Solana wallet was detected in this browser. Phantom, Solflare, Backpack and OKX
+          all work here - install one, then reload this page
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 380 }}>

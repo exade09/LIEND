@@ -71,8 +71,11 @@ export interface SiteAdapter {
   mountTrigger(onOpen: () => void): () => void
 }
 
-/** Solana contracts use the canonical 20-byte EVM address shape. */
-const MINT_RE = /^0x[a-fA-F0-9]{40}$/
+/**
+ * A Solana mint in base58. The alphabet drops 0, O, I and l, which is exactly
+ * why a lookalike like "0OIl…" must be rejected rather than trimmed.
+ */
+const MINT_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
 
 export function isValidMint(value: string | null | undefined): value is string {
   return typeof value === "string" && MINT_RE.test(value)
