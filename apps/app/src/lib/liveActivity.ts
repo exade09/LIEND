@@ -1,3 +1,5 @@
+import { readPublicConfig } from "@liend/config"
+
 export type TapeKind = "borrow" | "repay"
 
 export type TapeEvent = {
@@ -39,7 +41,18 @@ export const kindLabel: Record<TapeKind, string> = {
  * window is deliberately small and the cache does the rest.
  */
 
-const LONS_TOKEN = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+/**
+ * The tape follows the configured token, and there is no fallback.
+ *
+ * It briefly pointed at a constant that was pump.fun's PROGRAM id rather than
+ * a mint. getSignaturesForAddress answered happily, because that program is
+ * busy, but no token balance carries a program as its mint - so every
+ * transaction was fetched and every one produced nothing.
+ */
+function configuredMint(): string | null {
+  const token = readPublicConfig().token
+  return token.status === "launched" ? token.mint : null
+}
 const WSOL = "So11111111111111111111111111111111111111112"
 /**
  * Endpoints for the tape, in the order they are tried.
@@ -145,19 +158,19 @@ async function priceOf(mint: string): Promise<number | null> {
  * account - so the largest movement is the one the event describes, which is
  * the trader's side and the one a reader recognises.
  */
-function movement(meta: {
-  preTokenBalances?: TokenBalance[]
-  postTokenBalances?: TokenBalance[]
-}): { owner: string; delta: number } | null {
+function movement(
+  meta: { preTokenBalances?: TokenBalance[]; postTokenBalances?: TokenBalance[] },
+  mint: string,
+): { owner: string; delta: number } | null {
   const before = new Map<string, number>()
   const after = new Map<string, number>()
 
   for (const row of meta.preTokenBalances ?? []) {
-    if (row.mint !== LONS_TOKEN || !row.owner) continue
+    if (row.mint !== mint || !row.owner) continue
     before.set(row.owner, (before.get(row.owner) ?? 0) + Number(row.uiTokenAmount?.uiAmountString ?? 0))
   }
   for (const row of meta.postTokenBalances ?? []) {
-    if (row.mint !== LONS_TOKEN || !row.owner) continue
+    if (row.mint !== mint || !row.owner) continue
     after.set(row.owner, (after.get(row.owner) ?? 0) + Number(row.uiTokenAmount?.uiAmountString ?? 0))
   }
 
@@ -213,12 +226,17 @@ function present(
 }
 
 async function refreshLiveActivity(): Promise<TapeEvent[]> {
+  const mint = configuredMint()
+  // No configured token means there is nothing to watch, and saying so costs
+  // nothing. Querying an invented address would cost fourteen calls to say it.
+  if (!mint) return []
+
   const [signatures, nativePrice, tokenPrice] = await Promise.all([
-    rpc("getSignaturesForAddress", [LONS_TOKEN, { limit: SIGNATURE_WINDOW }]) as Promise<
+    rpc("getSignaturesForAddress", [mint, { limit: SIGNATURE_WINDOW }]) as Promise<
       Array<{ signature?: string; blockTime?: number | null; err?: unknown }>
     >,
     priceOf(WSOL),
-    priceOf(LONS_TOKEN),
+    priceOf(mint),
   ])
 
   const confirmed = (signatures ?? [])
@@ -232,10 +250,9 @@ async function refreshLiveActivity(): Promise<TapeEvent[]> {
           row.signature,
           { encoding: "jsonParsed", maxSupportedTransactionVersion: 0 },
         ]) as { meta?: { preTokenBalances?: TokenBalance[]; postTokenBalances?: TokenBalance[] } } | null
-        const moved = tx?.meta ? movement(tx.meta) : null
+        const moved = tx?.meta ? movement(tx.meta, mint) : null
         return moved ? present(row.signature as string, row.blockTime ?? null, moved, nativePrice, tokenPrice) : null
       } catch {
-        // One unreadable transaction must not empty the tape.
         return null
       }
     }),
