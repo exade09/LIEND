@@ -76,7 +76,7 @@ function AuthPageInner() {
       <header className="page-head">
         <div>
           <h1>Connect wallet</h1>
-          <p>Verify your Phantom account on Solana to access LONS</p>
+          <p>Verify your Solana wallet to access LONS</p>
         </div>
       </header>
 
@@ -107,7 +107,8 @@ function AuthPageInner() {
 
       {wallets.length === 0 ? (
         <div className="empty">
-          Phantom was not detected in this browser. Install Phantom, then reload this page
+          No Solana wallet was detected in this browser. Phantom, Solflare and Backpack all
+          work here - install one, then reload this page
         </div>
       ) : (
         <div className="stack" style={{ maxWidth: 380 }}>

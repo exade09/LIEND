@@ -33,7 +33,7 @@ function stateFromAccess(access: HolderAccessDto): GateState {
 }
 
 const idleCopy: Record<GateState, string> = {
-  "NOT CONNECTED": "Connect Phantom to begin the eligibility check",
+  "NOT CONNECTED": "Connect a Solana wallet to begin the eligibility check",
   CHECKING: "Checking LONS balance and active access parameters",
   ELIGIBLE: "LONS utility is available for this wallet",
   "NOT ELIGIBLE": "This wallet does not meet the LONS holding requirement",
@@ -155,7 +155,7 @@ export function HolderGate() {
   const startConnect = useCallback(() => {
     const found = refreshWallets()
     if (found.length === 0) {
-      setMessage("Phantom was not detected in this browser")
+      setMessage("No Solana wallet was detected in this browser")
       return
     }
     if (found.length === 1 && found[0]) {
@@ -186,7 +186,7 @@ export function HolderGate() {
           <div className="access-flow" aria-label="Access sequence">
             {[
               ["01", "Obtain LONS after migration", "Open the official pump.fun destination"],
-              ["02", "Connect Phantom", "Switch to Solana in one approval"],
+              ["02", "Connect a wallet", "Approve once, on Solana"],
               ["03", "Verify the position", "Read SPL balances from Solana"],
               ["04", "Use LONS utility", "Available after wallet verification"],
             ].map(([index, title, copy]) => (

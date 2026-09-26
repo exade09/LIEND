@@ -64,7 +64,7 @@ export default function BorrowReviewPage({ params }: { params: Promise<{ mint: s
             <div className="notice">
               <strong>Wallet signature required</strong>
               <p>
-                Phantom will show a borrow request. Sign it to reserve this token. The request goes
+                Your wallet will show a borrow request. Sign it to reserve this token. The request goes
                 to review and does not transfer funds
               </p>
             </div>

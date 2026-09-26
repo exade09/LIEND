@@ -139,7 +139,7 @@ export const AuthChallengeSchema = z.object({
 export const AuthVerifyRequestSchema = z.object({
   address: EvmAddress,
   nonce: z.string().min(32),
-  /** EIP-191 signature produced by Phantom. */
+  /** ed25519 signature produced by the wallet, base58 or base64. */
   signature: z.string().regex(/^0x[a-fA-F0-9]{130}$/, "Not a valid EVM signature"),
 })
 

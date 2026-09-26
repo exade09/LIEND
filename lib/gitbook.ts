@@ -32,7 +32,7 @@ export const docsPages: DocsPage[] = [
         heading: "What is live today",
         body: [
           "The marketing site, the App, the API and the extension install path are deployed",
-          "Phantom authentication, sessions, extension pairing and Solana SPL position reads are in place",
+          "Wallet authentication, sessions, extension pairing and Solana SPL position reads are in place",
           "Borrow and repay flows prepare reviewable requests in the App. They do not claim onchain settlement until a lending contract is deployed",
         ],
       },
@@ -85,7 +85,7 @@ export const docsPages: DocsPage[] = [
       {
         heading: "Connect",
         body: [
-          "A user connects Phantom on Solana. LONS asks for an EIP-191 plain-text signature to prove control of the address",
+          "A user connects a Solana wallet. LONS asks for a plain-text message signature to prove control of the address",
           "That signature creates no transaction and costs no fees",
         ],
       },
