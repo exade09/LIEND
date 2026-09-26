@@ -1,8 +1,9 @@
 .plaque {
+  position: relative;
   display: inline-flex;
   min-width: 0;
   max-width: 100%;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
   overflow: hidden;
   color: #ffffff;
@@ -31,13 +32,68 @@
   white-space: nowrap;
 }
 
+/* A button, so the address copies on click, styled as the text it replaced. */
 .mint {
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
   text-decoration: none;
 }
 
 .mint:hover {
   color: #5ef0ff;
+}
+
+.mint:focus-visible,
+.action:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+
+.actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+}
+
+.action {
+  display: inline-grid;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.55;
+  place-items: center;
+  transition: opacity 140ms ease, color 140ms ease;
+}
+
+.action:hover {
+  opacity: 1;
+}
+
+/* The check stays lit for the moment the copy is confirmed. */
+.plaque[data-copied="true"] .action:first-child {
+  color: #55ff71;
+  opacity: 1;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .waiting {
@@ -136,5 +192,29 @@
   .footer .mint,
   .footer .waiting {
     font-size: 10px;
+  }
+}
+
+/*
+ * The header pill is a fixed width and the address is forty-four characters,
+ * so the icons have to be the part that never gets pushed out - the address
+ * gives up its tail first. Below the narrow breakpoint even that is not
+ * enough, and the explorer steps aside: copying is what the plaque is for,
+ * and the address still opens Solscan from the footer.
+ */
+.plaque.header .mint {
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header .actions {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 580px) {
+  .header .explorerAction {
+    display: none;
   }
 }

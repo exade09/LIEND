@@ -129,6 +129,7 @@
 }
 
 .headerCa :global([aria-label="LONS contract address"] > span),
+.headerCa :global([aria-label="LONS contract address"] > button),
 .headerCa :global([aria-label="LONS contract address"] > a) {
   overflow: hidden;
   color: var(--ink);
@@ -1790,6 +1791,7 @@
 
 .headerCa :global([aria-label="LONS contract address"]),
 .headerCa :global([aria-label="LONS contract address"] > span),
+.headerCa :global([aria-label="LONS contract address"] > button),
 .headerCa :global([aria-label="LONS contract address"] > a) {
   overflow: visible;
   text-overflow: clip;
@@ -3257,6 +3259,7 @@
 
 .headerCa :global([aria-label="LONS contract address"]),
 .headerCa :global([aria-label="LONS contract address"] > span),
+.headerCa :global([aria-label="LONS contract address"] > button),
 .headerCa :global([aria-label="LONS contract address"] > a) {
   overflow: visible;
   text-overflow: clip;

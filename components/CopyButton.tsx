@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react"
 import { Icon } from "@/components/Icon"
+import { copyText } from "@/lib/clipboard"
 
 type CopyButtonProps = {
   value: string
@@ -14,14 +15,10 @@ export function CopyButton({ value, label = "Copy", className = "" }: CopyButton
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(value)
-      setCopied(true)
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => setCopied(false), 1600)
-    } catch {
-      setCopied(false)
-    }
+    if (!(await copyText(value))) return
+    setCopied(true)
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => setCopied(false), 1600)
   }
 
   return (
