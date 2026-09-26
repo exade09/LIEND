@@ -22,10 +22,14 @@ function timeAgo(occurredAt: number, now: number) {
   return `${Math.floor(delta / 3600)}h`
 }
 
-function nextDelay(revealCount: number) {
-  return revealCount < 2
-    ? 30_000 + Math.floor(Math.random() * 20_001)
-    : 120_000 + Math.floor(Math.random() * 60_001)
+/**
+ * Twenty to fifty seconds, redrawn every time.
+ *
+ * A fixed cadence reads as a carousel. Real traffic does not arrive on a
+ * metronome, so neither does the tape.
+ */
+function nextDelay() {
+  return 20_000 + Math.floor(Math.random() * 30_001)
 }
 
 async function loadPool(): Promise<TapeEvent[]> {
@@ -72,11 +76,9 @@ export function ActivityTape() {
     let cancelled = false
     let timer = 0
     let pool: TapeEvent[] = []
-    let revealCount = 0
     const seen = new Set<string>()
 
     const reveal = (event: TapeEvent) => {
-      revealCount += 1
       seen.add(event.signature)
       setFreshId(event.signature)
       setEvents((current) => [event, ...current.filter((item) => item.signature !== event.signature)].slice(0, 8))
@@ -98,13 +100,17 @@ export function ActivityTape() {
           if (!cancelled && fresh.length > 0) pool = fresh
         })
       }
-      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
+      if (!cancelled) timer = window.setTimeout(() => void tick(), nextDelay())
     }
 
     void (async () => {
       pool = await loadPool()
       if (cancelled) return
-      timer = window.setTimeout(() => void tick(), nextDelay(revealCount))
+      // One route is on the tape the moment the page settles, so a visitor is
+      // never met with an empty strip while the first timer runs down.
+      const first = pool[Math.floor(Math.random() * pool.length)]
+      if (first) reveal(first)
+      timer = window.setTimeout(() => void tick(), nextDelay())
     })()
 
     return () => {
@@ -208,6 +214,13 @@ export function ActivityTape() {
                   <CopyField value={selected.signature} label="Copy" />
                 </dd>
               </div>
+              <div>
+                <dt>Mint</dt>
+                <dd>
+                  <span className="mono">{shorten(selected.mint, 8, 8)}</span>
+                  <CopyField value={selected.mint} label="Copy" />
+                </dd>
+              </div>
             </dl>
             <div className={styles.actions}>
               <a
@@ -225,6 +238,14 @@ export function ActivityTape() {
                 rel="noreferrer"
               >
                 Wallet on Solscan
+              </a>
+              <a
+                className="button button--ghost"
+                href={`${EXPLORER}/token/${encodeURIComponent(selected.mint)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Token on Solscan
               </a>
             </div>
           </section>

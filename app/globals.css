@@ -4384,22 +4384,113 @@ button:disabled {
 }
 
 .activity-item {
-  display: grid;
-  min-height: 65px;
-  align-items: center;
-  padding: 0 15px;
   border-bottom: 1px solid var(--line);
-  grid-template-columns: 38px 175px 1fr 180px 130px;
-  gap: 12px;
-  transition: background 150ms ease;
 }
 
 .activity-item:last-child {
   border-bottom: 0;
 }
 
-.activity-item:hover {
+/* The row carries the grid so the detail panel can sit under it full width. */
+.activity-item__row {
+  display: grid;
+  width: 100%;
+  min-height: 65px;
+  align-items: center;
+  padding: 0 15px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  grid-template-columns: 38px 175px 1fr 180px 130px 20px;
+  gap: 12px;
+  text-align: left;
+  transition: background 150ms ease;
+}
+
+.activity-item__row:hover,
+.activity-item[data-open="true"] .activity-item__row {
   background: rgba(255, 255, 255, 0.016);
+  cursor: pointer;
+}
+
+.activity-item__row:focus-visible {
+  outline: 1px solid var(--cyan);
+  outline-offset: -2px;
+}
+
+.activity-item__chevron {
+  display: grid;
+  color: #ffffff;
+  place-items: center;
+  opacity: 0.45;
+  transition: transform 160ms ease, opacity 160ms ease;
+  transform: rotate(90deg);
+}
+
+.activity-item[data-open="true"] .activity-item__chevron {
+  opacity: 0.9;
+  transform: rotate(270deg);
+}
+
+.activity-item__detail {
+  padding: 2px 15px 16px 65px;
+  animation: activity-detail 180ms ease;
+}
+
+@keyframes activity-detail {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.activity-item__description {
+  max-width: 68ch;
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 9px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.activity-item__facts {
+  display: grid;
+  margin: 0 0 12px;
+  gap: 9px 22px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.activity-item__facts dt {
+  margin-bottom: 3px;
+  color: #ffffff;
+  font-size: 7px;
+  letter-spacing: 0.09em;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.activity-item__facts dd {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  gap: 6px;
+  color: #ffffff;
+  font-size: 9px;
+}
+
+.activity-item__fact--wide {
+  grid-column: 1 / -1;
+}
+
+.activity-item__address {
+  overflow-wrap: anywhere;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 8px;
+}
+
+.activity-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .activity-item__icon {
@@ -4790,7 +4881,7 @@ button:disabled {
   .leaderboard__intro { grid-template-columns: 0.55fr 1.45fr; }
   .activity-feed__intro .section-description,
   .leaderboard__intro .section-description { grid-column: 2; }
-  .activity-item { grid-template-columns: 36px 145px 1fr 145px 100px; }
+  .activity-item__row { grid-template-columns: 36px 145px 1fr 145px 100px 18px; }
 }
 
 @media (max-width: 760px) {
@@ -4817,7 +4908,9 @@ button:disabled {
   .leaderboard__intro { gap: 18px; grid-template-columns: 1fr; }
   .activity-feed__intro .section-description,
   .leaderboard__intro .section-description { grid-column: 1; }
-  .activity-item { min-height: 78px; padding-block: 10px; grid-template-columns: 34px 1fr auto; }
+  .activity-item__row { min-height: 78px; padding-block: 10px; grid-template-columns: 34px 1fr auto; }
+  .activity-item__chevron { display: none; }
+  .activity-item__detail { padding-left: 15px; }
   .activity-item__time { order: 4; grid-column: 2; }
   .activity-item__summary { grid-column: 2; grid-row: 1; }
   .activity-item__wallet { display: none; }
@@ -4844,7 +4937,7 @@ button:disabled {
   .transaction-trace__controls { align-items: flex-start; flex-direction: column; }
   .activity-feed__provenance > span:nth-child(2),
   .leaderboard__provenance > span:nth-child(2) { display: none; }
-  .activity-item { grid-template-columns: 32px 1fr; }
+  .activity-item__row { grid-template-columns: 32px 1fr; }
   .activity-item__value { margin-top: 3px; grid-column: 2; grid-row: 2; text-align: left; }
   .activity-item__time { grid-row: 3; }
   .leaderboard__metric-tabs { width: 100%; }

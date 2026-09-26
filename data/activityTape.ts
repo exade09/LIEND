@@ -5,6 +5,8 @@ export type TapeEvent = {
   kind: TapeKind
   wallet: string
   signature: string
+  /** The token traded, so a reader can open the mint as well as the trade. */
+  mint: string
   asset: string
   title: string
   route: string
