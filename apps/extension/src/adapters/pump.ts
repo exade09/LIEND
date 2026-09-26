@@ -1,9 +1,9 @@
 /**
- * pump.fun launchpad adapter.
+ * pump.fun coin adapter.
  *
- * Detection uses the route pattern verified in Phase 1 research against the
- * live site: token pages are `/launchpad/<contract>`. Canonical and Open Graph
- * URLs are used only as optional corroboration.
+ * Detection uses the route pattern the live site actually serves: token pages
+ * are `/coin/<mint>`. Canonical and Open Graph URLs are used only as optional
+ * corroboration.
  *
  * Deliberately NOT used: CSS class names, DOM structure, or any displayed
  * price/liquidity figure. Those change with every redesign, and scraped
@@ -101,7 +101,7 @@ export function evaluateEvidence(
   return { status: "pending" }
 }
 
-export const ponsAdapter: SiteAdapter = {
+export const pumpAdapter: SiteAdapter = {
   id: "pump.fun",
 
   matches(url) {

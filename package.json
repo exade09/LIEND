@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "typecheck:all": "npm run typecheck --workspaces --if-present && npm run typecheck",
-    "test:all": "npm run test --workspaces --if-present"
+    "test:all": "npm run test --workspaces --if-present",
+    "package:extension": "node scripts/package-extension.mjs",
+    "prebuild": "node scripts/package-extension.mjs"
   },
   "dependencies": {
     "next": "latest",

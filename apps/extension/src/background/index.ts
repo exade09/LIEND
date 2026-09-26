@@ -23,10 +23,10 @@ import {
 import { parseFromContent, parseFromPanel, type PanelSnapshot } from "@/shared/messages"
 
 const STATE_PREFIX = "liend.tab."
-const ALLOWED_HOSTS = new Set(["ponsfamily.com", "www.ponsfamily.com"])
+const ALLOWED_HOSTS = new Set(["pump.fun", "www.pump.fun"])
 
 /**
- * Mirrors the ponsfamily.com adapter's identity function.
+ * Mirrors the pump.fun adapter's identity function.
  *
  * The worker needs it to reconcile stored state against the tab's live URL
  * without loading adapter code (which pulls in DOM-only helpers).
@@ -44,7 +44,7 @@ function identifyUrl(raw: string | null | undefined): string | null {
   if (!ALLOWED_HOSTS.has(url.hostname)) return null
 
   const parts = url.pathname.split("/").filter(Boolean)
-  if (parts.length >= 2 && parts[0] === "launchpad" && MINT_RE.test(parts[1])) {
+  if (parts.length >= 2 && parts[0] === "coin" && MINT_RE.test(parts[1])) {
     return `pump:${parts[1]}`
   }
   let path = url.pathname

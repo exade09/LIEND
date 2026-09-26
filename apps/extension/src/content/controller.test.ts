@@ -16,7 +16,7 @@ import {
   type ControllerEvents,
 } from "./controller"
 import type { SiteAdapter } from "@/adapters/types"
-import { evaluateEvidence, ponsAdapter } from "@/adapters/pump"
+import { evaluateEvidence, pumpAdapter } from "@/adapters/pump"
 
 const A = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 const B = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"
@@ -58,7 +58,7 @@ function harness(page: ReturnType<typeof makePage>) {
   const adapter: SiteAdapter = {
     id: "pump.fun",
     matches: () => true,
-    identify: (u) => ponsAdapter.identify(u),
+    identify: (u) => pumpAdapter.identify(u),
     detect: (u, d, allow) => evaluateEvidence(u, d, allow),
     observeNavigation: () => () => {},
     mountTrigger: () => () => {},
@@ -287,7 +287,7 @@ describe("case 7 — stale generation results", () => {
     const adapter: SiteAdapter = {
       id: "pump.fun",
       matches: () => true,
-      identify: (u) => ponsAdapter.identify(u),
+      identify: (u) => pumpAdapter.identify(u),
       detect: (u, d, allow) => evaluateEvidence(u, d, allow),
       observeNavigation: () => () => {},
       mountTrigger: () => () => {},

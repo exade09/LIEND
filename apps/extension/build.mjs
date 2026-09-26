@@ -62,13 +62,13 @@ const manifest = {
   side_panel: { default_path: "sidepanel.html" },
   permissions: ["sidePanel", "storage", "tabs"],
   host_permissions: [
-    "https://ponsfamily.com/*",
-    "https://www.ponsfamily.com/*",
+    "https://pump.fun/*",
+    "https://www.pump.fun/*",
     ...(API_URL ? [`${API_URL.replace(/\/$/, "")}/*`] : []),
   ],
   content_scripts: [
     {
-      matches: ["https://ponsfamily.com/*", "https://www.ponsfamily.com/*"],
+      matches: ["https://pump.fun/*", "https://www.pump.fun/*"],
       js: ["content.js"],
       run_at: "document_idle",
       all_frames: false,
