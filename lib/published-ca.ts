@@ -141,8 +141,11 @@ async function readPostgres(): Promise<PublishedCa | null> {
   )
   const row = rows[0]
   if (!row) return null
+  // Parsed like every other read. This row is where the pre-port EVM address
+  // was actually sitting, and building the object by hand here is exactly how
+  // it slipped past the validation the other two stores go through.
   return {
-    mint: row.mint?.trim() || null,
+    mint: parseMintText(row.mint),
     updatedAt: row.updated_at ? new Date(row.updated_at).toISOString() : null,
   }
 }
