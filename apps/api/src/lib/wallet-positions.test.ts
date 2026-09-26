@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest"
 import { parseTokenAccounts } from "./solana-rpc"
-import { clipLabel, pickDexPair } from "./token-markets"
+import { clipLabel, marketFromPairs, pickDexPair } from "./token-markets"
 import { formatTokenAmount, qaWalletPositions, toWalletPositions, uiAmount } from "./wallet-positions"
 
 const LONS = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
 const WSOL = "So11111111111111111111111111111111111111112"
+const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
 const WALLET = "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"
 const QA_WALLET = "28QNhhh6F7phFNWDtnuRgZKRQes3zYteSeFhdbzCJCEK"
 
@@ -59,6 +60,38 @@ describe("market pair selection", () => {
     )
     expect(chosen?.priceUsd).toBe("0.02")
     expect(clipLabel("  Lons family  ", 8)).toBe("Lons fam")
+  })
+
+  it("reads a mint that sits on the quote side of its only pair", () => {
+    // A stablecoin is what other tokens are priced against, so it is rarely the
+    // base token. priceUsd is the BASE token in USD and priceNative is that
+    // same base in quote units, so their ratio is one quote token in USD.
+    const market = marketFromPairs(
+      [{
+        baseToken: { address: LONS, symbol: "LONS", name: "Lons" },
+        quoteToken: { address: USDC, symbol: "USDC", name: "USD Coin" },
+        liquidity: { usd: 40_000 },
+        priceUsd: "2",
+        priceNative: "2",
+      }],
+      USDC,
+    )
+    expect(market).toEqual({ symbol: "USDC", name: "USD Coin", priceUsd: 1 })
+  })
+
+  it("prefers the base side when the mint appears on both", () => {
+    const market = marketFromPairs(
+      [
+        { quoteToken: { address: LONS, symbol: "wrong" }, liquidity: { usd: 90_000 }, priceUsd: "2", priceNative: "2" },
+        { baseToken: { address: LONS, symbol: "LONS", name: "Lons" }, liquidity: { usd: 10 }, priceUsd: "0.5" },
+      ],
+      LONS,
+    )
+    expect(market).toEqual({ symbol: "LONS", name: "Lons", priceUsd: 0.5 })
+  })
+
+  it("returns nothing for a mint no pair mentions", () => {
+    expect(marketFromPairs([{ baseToken: { address: WSOL } }], LONS)).toBeNull()
   })
 })
 

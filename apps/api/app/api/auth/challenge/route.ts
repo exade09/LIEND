@@ -29,7 +29,7 @@ export function POST(request: Request) {
       "This request will not create a transaction and costs no fees",
       "",
       `Wallet: ${body.address}`,
-      "Network: Solana (4663)",
+      `Network: Solana ${body.cluster}`,
       `Nonce: ${nonce}`,
       `Issued: ${issuedAt}`,
     ].join("\n")
